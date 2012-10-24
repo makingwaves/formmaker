@@ -1,0 +1,157 @@
+/* 
+    Document   : style
+    Created on : Aug 22, 2012, 7:48:32 AM
+    Author     : developer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+.formField, .formDefinition {
+    padding: 10px;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+}
+.formField {
+    cursor: move;
+}
+.addField {
+    background-image: url('../../../design/admin2/images/icons/add.png');
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    text-align: right;
+    width: 45px;
+    padding-left: 20px;
+}
+.removeField {
+    float: right;
+    background-image: url('../../../design/admin2/images/icons/delete.png');
+    height: 16px;
+    width: 16px;
+    margin-top: -28px;
+    margin-right: -4px;
+}
+.mwezforms_remove_form {
+    background-image: url('../../../design/admin2/images/icons/delete.png');    
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-right: 5px;
+}
+.mwezforms_edit_form {
+    background-image: url('../../../design/admin2/images/icons/application_edit.png');    
+    background-repeat: no-repeat;
+    padding-left: 20px;
+    padding-right: 5px;
+}
+
+/*.formFieldTemplate_text, #formFieldTemplate_textarea, #formFieldTemplate_checkbox {*/
+.formFieldTemplate {
+    display: none;
+}
+
+
+#dialog-confirm {
+    height: 80px;
+    display: none;
+}
+
+
+.formField {
+    padding: 10px;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    cursor: move;
+    background-color: white;
+}
+
+.confirmationMsg {
+    color: green;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid lawngreen;
+    width: 47%;
+    text-align: center;
+}
+/* ---- /form editing ---- */
+
+.mwezforms-attribute {
+    margin: 5px 0 5px 10px;
+    float: left;
+    width: 300px;
+    height: 40px;
+}
+
+.mwezforms-attribute input {
+    width: 250px;
+}
+
+.mwform_attribute_required {
+    color: red;
+    font-weight: bold;
+}
+
+.mwform_error {
+    color: red;
+    font-weight: bold;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 0 5px 10px;
+}
+
+#content-sub-items-list {
+    overflow: hidden;
+}
+
+.mwezforms-language-information {
+    font-style: italic;
+    margin: 15px 0;
+    width: 48%;
+}
+
+#noneAttributesWarning {
+    margin-bottom: 15px;
+}
+
+.spc {
+    color: grey;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.spc.clear {
+    clear: both;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.clear {
+    clear: both;
+}
+
+.mwezforms_no_forms {
+    font-weight: bold;
+    padding: 20px !important;
+    text-align: center !important;
+}
+
+.mwezform-list-name {
+    width: 45%;
+}
+
+.controlbar {
+    margin-bottom: 35px;
+}
+
+.long {
+    width: 660px;
+}
+
+.ui-icon ui-icon-alert {
+    float: left; margin: 0 7px 0px 0;
+}
+
+.right.translation img {
+    vertical-align: middle;
+}

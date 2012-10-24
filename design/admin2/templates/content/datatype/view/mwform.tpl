@@ -1,0 +1,1 @@
+{$attribute.content.mwform_name|wash()}

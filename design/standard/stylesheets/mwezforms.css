@@ -1,0 +1,50 @@
+/* 
+    Document   : mwform
+    Created on : Aug 20, 2012, 11:34:23 AM
+    Author     : Making Waves
+    Description:
+        Stylesheet for MWezforms extension
+*/
+
+#mwezform div {
+    margin-bottom: 10px;
+}
+
+.mwform_error {
+    color:red;
+    font-weight: bold;
+}
+
+.mwform_container {
+    margin: 2%;
+    padding: 2%;
+    width: 94%;
+    border: 1px solid #63a5c8;
+    background-color: #eef6f9;
+    border-radius: 3px;   
+}
+
+.mwform_label_checkbox {
+    display: inline;
+}
+
+.mwform_attribute_required {
+    color: red;
+    font-weight: bold;
+}
+
+.mwform_element_container {
+    overflow: hidden;
+    border-bottom: 1px solid #dfcbd1;
+    padding: 2px;
+}
+
+.mwform_attribute_content {
+    width: 40%;
+    float: left;
+}
+
+.mwform_error_content {
+    float: left;
+    width: 55%;
+}

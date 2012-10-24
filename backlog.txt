@@ -1,0 +1,22 @@
+BACKLOG:
+
+forms editing
+- copy an attribute
+- each attribute should have a checkbox "Send by email", because not all attributes should be sent every time
+
+forms list
+- can't remove if assigned to any node - pls remove nodes first
+- copy feature (opens edit view with all fields filled as in original)
+		
+general:
+- nice css styling, look and feel improvements
+- add Polish translations :)
+- we should display somewhere which nodes are using the form
+
+IDEAS:
+- possibility to store data in db
+- handling file uploads
+- folders in list view to organize forms ( at least one level, then 'move', 'paste' features needed )
+
+- POTENTIAL PROBLEMS:
+- add more than one mwezforms to one class. There should be no such possibility (at least for now).
