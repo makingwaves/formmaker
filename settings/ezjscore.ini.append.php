@@ -1,10 +1,10 @@
 <?php /* #?ini charset="utf-8"?
 
 [ezjscServer] 
-FunctionList[]=mwezforms
+FunctionList[]=formmaker
 
-[ezjscServer_mwezforms]
-Class=mwEzFormsAjaxServerCallFunctions
-File=extension/mwezforms/classes/mwezformsajaxservercallfunctions.php
-Functions[]=mwezforms
+[ezjscServer_formmaker]
+Class=formAjaxServerCallFunctions
+File=extension/formmaker/classes/formmakerajaxservercallfunctions.php
+Functions[]=formmaker
  */ ?>

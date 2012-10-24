@@ -10,13 +10,13 @@ $tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'view_parameters', $viewParameters );
 $tpl->setVariable( 'persistent_variable', false );
-$tpl->setVariable( 'forms', mwEzFormsDefinitions::getAllForms() );
+$tpl->setVariable( 'forms', formDefinitions::getAllForms() );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:forms/list.tpl' );
 
 $Result['path']    = array( array( 'tag_id' => 0,
-                                   'text'   => ezpI18n::tr( 'extension/mwezforms/admin', 'Making Waves eZForms Dashboard' ),
+                                   'text'   => ezpI18n::tr( 'extension/formmaker/admin', 'Making Waves eZForms Dashboard' ),
                                    'url'    => false ) );
 
 $Result['left_menu'] = "design:forms/left_menu.tpl";

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class interface for mwezforms_validators SQL table
+ * Class interface for formmaker_validators SQL table
  */
-class mwEzFormsAttrvalid extends eZPersistentObject 
+class formAttrvalid extends eZPersistentObject 
 {
     /**
      * ID of the "required" validator
@@ -33,9 +33,9 @@ class mwEzFormsAttrvalid extends eZPersistentObject
                                                                   "required" => true ) ),
                       "keys" => array('attribute_id', 'validator_id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
-                      "class_name" => "mwEzFormsAttrvalid",
+                      "class_name" => "formAttrvalid",
                       "sort" => array(),
-                      "name" => "mwezforms_attr_valid" );
+                      "name" => "form_attr_valid" );
         return $def;
     }    
     

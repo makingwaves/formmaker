@@ -9,7 +9,7 @@ if ( isset( $Params['id'] ) )
 
 
 // remove row
-mwEzFormsDefinitions::removeContentObject($id);
+formDefinitions::removeContentObject($id);
 
 
 $server = $_SERVER['SERVER_NAME'];

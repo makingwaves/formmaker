@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class interface for mwezforms_attributes SQL table
+ * Class interface for formmaker_attributes SQL table
  */
-class mwEzFormsAttributes extends eZPersistentObject 
+class formAttributes extends eZPersistentObject 
 {
     /**
      * Constructor
@@ -44,9 +44,9 @@ class mwEzFormsAttributes extends eZPersistentObject
                       "keys" => array('id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
-                      "class_name" => "mwEzFormsAttributes",
+                      "class_name" => "formAttributes",
                       "sort" => array('attr_order' => 'asc'),
-                      "name" => "mwezforms_attributes" );
+                      "name" => "form_attributes" );
         return $def;
     }    
     
@@ -80,7 +80,7 @@ class mwEzFormsAttributes extends eZPersistentObject
     /**
      * Returns attribute with given ID or null in case of incorrect ID
      * @param int $id
-     * @return null|mwEzFormsAttributes
+     * @return null|formAttributes
      */
     public static function getAttribute($id)
     {
@@ -99,7 +99,7 @@ class mwEzFormsAttributes extends eZPersistentObject
      */
     public function getAttributeValidators()
     {
-        return mwEzFormsAttrvalid::getValidatorsByAttribute($this->attribute('id'));
+        return formAttrvalid::getValidatorsByAttribute($this->attribute('id'));
     }
     
     /**
@@ -119,7 +119,7 @@ class mwEzFormsAttributes extends eZPersistentObject
                 continue;
             }
             
-            $validator_row = mwEzFormsValidators::getValidator($attr_valid->attribute('validator_id'));
+            $validator_row = formValidators::getValidator($attr_valid->attribute('validator_id'));
             $class_name = 'Validate_' . $validator_row->attribute('type');
             $validator_object = new $class_name;
 
@@ -162,11 +162,11 @@ class mwEzFormsAttributes extends eZPersistentObject
         foreach( $removed as $id ) {
             
             $cond = array( 'id' => $id );
-            eZPersistentObject::removeObject( mwEzFormsAttributes::definition(), $cond );
+            eZPersistentObject::removeObject( formAttributes::definition(), $cond );
             
             // remove also validators info
             $cond = array( 'attribute_id' => $id );
-            eZPersistentObject::removeObject( mwEzFormsAttrvalid::definition(), $cond );
+            eZPersistentObject::removeObject( formAttrvalid::definition(), $cond );
             
         }
         
@@ -204,13 +204,13 @@ class mwEzFormsAttributes extends eZPersistentObject
             
             // check if alredy in DB
             $cond = array( 'id' => $item['id'] );
-            $simpleObj = eZPersistentObject::fetchObject( mwEzFormsAttributes::definition(), null, $cond );
+            $simpleObj = eZPersistentObject::fetchObject( formAttributes::definition(), null, $cond );
             
             $cond = array( 'attribute_id' => $item['id'] );
-            $activeValidatorsList = eZPersistentObject::fetchObjectList( mwEzFormsAttrvalid::definition(), null, $cond );
+            $activeValidatorsList = eZPersistentObject::fetchObjectList( formAttrvalid::definition(), null, $cond );
             
             foreach( $activeValidatorsList as $activeValidator ) {
-                eZPersistentObject::removeObject( mwEzFormsAttrvalid::definition(), $cond );
+                eZPersistentObject::removeObject( formAttrvalid::definition(), $cond );
             }
             
             // update existing
@@ -218,7 +218,7 @@ class mwEzFormsAttributes extends eZPersistentObject
             {
                 
                // $cond = array( 'id' => $id );
-                //eZPersistentObject::removeObject( mwEzFormsAttributes::definition(), $cond );
+                //eZPersistentObject::removeObject( formAttributes::definition(), $cond );
                 
                 // update validators
                 foreach( $item['validators'] as $validatorId ) {
@@ -227,7 +227,7 @@ class mwEzFormsAttributes extends eZPersistentObject
                         continue;
                     }
 
-                    $validator = new mwEzFormsAttrvalid( array( 'attribute_id' => $item['id'],
+                    $validator = new formAttrvalid( array( 'attribute_id' => $item['id'],
                                                             'validator_id' => $validatorId,
                                                             ));
                     $validator->store();
@@ -246,7 +246,7 @@ class mwEzFormsAttributes extends eZPersistentObject
             else
             {
                 
-                $simpleObj = new mwEzFormsAttributes( array( 'id' => '', 
+                $simpleObj = new formAttributes( array( 'id' => '', 
                                                    'attr_order' => $key,
                                                    'definition_id' => $item['definition_id'],
                                                    'type' => $item['type'],
@@ -265,7 +265,7 @@ class mwEzFormsAttributes extends eZPersistentObject
                         continue;
                     }                    
                     
-                    $validator = new mwEzFormsAttrvalid( array( 'attribute_id' => $simpleObj->attribute('id'),
+                    $validator = new formAttrvalid( array( 'attribute_id' => $simpleObj->attribute('id'),
                                                             'validator_id' => $validatorId,
                                                             ));
                     $validator->store();

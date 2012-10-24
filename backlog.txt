@@ -19,4 +19,4 @@ IDEAS:
 - folders in list view to organize forms ( at least one level, then 'move', 'paste' features needed )
 
 - POTENTIAL PROBLEMS:
-- add more than one mwezforms to one class. There should be no such possibility (at least for now).
+- add more than one formmaker to one class. There should be no such possibility (at least for now).

@@ -9,14 +9,14 @@
      $selected = ''}
 
 <div id="dialog-confirm" title="Remove attribute">
-    <p><span class="ui-icon ui-icon-alert"></span>{'Are you sure?'|i18n( 'extension/mwezforms/admin' )}</p>
+    <p><span class="ui-icon ui-icon-alert"></span>{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</p>
 </div>
 
 {if $id}
-<h2>{'Editing form'|i18n( 'extension/mwezforms/admin' )} `{$form_name}`</h2>
+<h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name}`</h2>
 
-<div class="mwezforms-language-information">
-    {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'extension/mwezforms/admin' )}
+<div class="formmaker-language-information">
+    {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'extension/formmaker/admin' )}
 </div>
 {else}
     <h2>New form</h2>
@@ -27,11 +27,11 @@
 
 {if and( not($form_attributes), $id )} {* if form has any attributes... *}
 <p class="info" id="noneAttributesWarning">
-    {'This form does not have any fields. Add some!'|i18n( 'extension/mwezforms/admin' )}
+    {'This form does not have any fields. Add some!'|i18n( 'extension/formmaker/admin' )}
 </p>
 {/if}
 
-{def $action = concat('/mwezforms/edit/', $id)}
+{def $action = concat('/formmaker/edit/', $id)}
 <form action={$action|ezurl()} method="post" enctype="multipart/form-data" id="tagadd" name="tagadd">
 
 <h3>Definition</h3>
@@ -41,7 +41,7 @@
 <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
     <div class="mwform_error">{$error_message}</div>
     {foreach $form_elements as $identifier => $element}
-        <div class="mwezforms-attribute">
+        <div class="formmaker-attribute">
             <label>
                 <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="mwform_attribute_required"> *</span>{/if}<br/>
                 <input type="text" name="{$identifier}" value="{$element.value}"/>
@@ -108,7 +108,7 @@
     {* /hidden - used by js *}    
 
 
-    <a class="addField">{'Add field'|i18n( 'extension/mwezforms/admin' )}</a>
+    <a class="addField">{'Add field'|i18n( 'extension/formmaker/admin' )}</a>
 
     <div class="clear"></div>
 

@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
  
 [ExtensionSettings]
-DesignExtensions[]=mwezforms
+DesignExtensions[]=formmaker
 
 [JavaScriptSettings]
 #FrontendJavaScriptList[]=ezjsc::jquery

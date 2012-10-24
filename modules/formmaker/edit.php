@@ -13,7 +13,7 @@ $form_elements = array( 'name' => array('required' => true, 'label' => 'Form nam
                       );
 
 // adding info about validators to each attribute
-$formAttributesObjects = mwEzFormsAttributes::getFormAttributes($form_id);
+$formAttributesObjects = formAttributes::getFormAttributes($form_id);
 foreach($formAttributesObjects as $formAttribute)
 {
     $attr_validators = (array) $formAttribute->getAttributeValidators();
@@ -25,7 +25,7 @@ foreach($formAttributesObjects as $formAttribute)
 // When form is being edited, we need to fill up its definition data from database
 if (is_numeric($form_id))
 {
-    $definition = mwEzFormsDefinitions::getForm($form_id);
+    $definition = formDefinitions::getForm($form_id);
     $original_name = $definition->attribute('name');
     foreach ($form_elements as $key => $data) {
         $form_elements[$key]['value'] = $definition->attribute($key);
@@ -41,7 +41,7 @@ if( $http->hasPostVariable('name') )
         $form_elements[$key]['value'] = $http->postVariable($key);
         if ($data['required'] && empty($form_elements[$key]['value']))
         {
-            $error_message = ezpI18n::tr('extension/mwezforms/admin', 'Please fill all required fields');
+            $error_message = ezpI18n::tr('extension/formmaker/admin', 'Please fill all required fields');
         }
     }
         
@@ -51,11 +51,11 @@ if( $http->hasPostVariable('name') )
         if (empty($error_message)) 
         {
             // and there were no errors!
-            mwEzFormsDefinitions::updateForm($form_id, $form_elements);
-            mwEzFormsAttributes::updateFormAttributes($_POST);
+            formDefinitions::updateForm($form_id, $form_elements);
+            formAttributes::updateFormAttributes($_POST);
 
             // clearing the cache for nodes which uses this form
-            mwEzFormsDefinitions::clearFormCache($form_id);
+            formDefinitions::clearFormCache($form_id);
         }       
     }
     // it's a brand new form
@@ -65,15 +65,15 @@ if( $http->hasPostVariable('name') )
         if (empty($error_message)) 
         {
             // redirecting to edit page (adding attributes)
-            $saved_object = mwEzFormsDefinitions::addForm($_POST);
-            $href = 'mwezforms/edit/' . $saved_object->attribute('id');
+            $saved_object = formDefinitions::addForm($_POST);
+            $href = 'formmaker/edit/' . $saved_object->attribute('id');
             eZURI::transformURI($href);
             eZHTTPTool::redirect($href);
         }      
     }
 }
 
-$validators = mwEzFormsValidators::getValidators(false);
+$validators = formValidators::getValidators(false);
 $tpl->setVariable('error_message', $error_message);
 $tpl->setVariable('form_elements', $form_elements);
 $tpl->setVariable('form_attributes', $formAttributesArray);
@@ -95,7 +95,7 @@ else
 }
 
 $Result['path']    = array( array( 'tag_id' => 0,
-                                   'text'   => ezpI18n::tr( 'extension/mwezforms/admin', 'Making Waves eZForms Dashboard' ),
+                                   'text'   => ezpI18n::tr( 'extension/formmaker/admin', 'Making Waves eZForms Dashboard' ),
                                    'url'    => false ) );
 
 $Result['left_menu'] = "design:forms/left_menu.tpl";

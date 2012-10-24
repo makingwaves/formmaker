@@ -2,7 +2,7 @@
 - $result - boolean value *}
 
 {if $result}
-    {'Thank you for sending us the information.'|i18n( 'extension/mwezforms/front' )}
+    {'Thank you for sending us the information.'|i18n( 'extension/formmaker/front' )}
 {else}
-    {'Sorry, there were some problems with sending the email message. Please try again later.'|i18n( 'extension/mwezforms/front' )}
+    {'Sorry, there were some problems with sending the email message. Please try again later.'|i18n( 'extension/formmaker/front' )}
 {/if}

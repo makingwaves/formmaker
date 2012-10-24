@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
     
-    jQuery('a.mwezforms_remove_form').click(function(event) {
+    jQuery('a.formmaker_remove_form').click(function(event) {
           
         // wtf
         event.preventDefault();

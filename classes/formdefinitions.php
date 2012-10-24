@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class interface for mwezforms_definitions SQL table
+ * Class interface for formmaker_definitions SQL table
  */
-class mwEzFormsDefinitions extends eZPersistentObject 
+class formDefinitions extends eZPersistentObject 
 {
     /**
      * Constructor
@@ -44,9 +44,9 @@ class mwEzFormsDefinitions extends eZPersistentObject
                       "keys" => array('id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
-                      "class_name" => "mwEzFormsDefinitions",
+                      "class_name" => "formDefinitions",
                       "sort" => array(),
-                      "name" => "mwezforms_definitions" );
+                      "name" => "form_definitions" );
         return $def;
     }    
     
@@ -105,7 +105,7 @@ class mwEzFormsDefinitions extends eZPersistentObject
     
     public static function removeContentObject($id) 
     {         
-        return eZPersistentObject::removeObject( mwEzFormsDefinitions::definition(), array( 'id' => $id ) );
+        return eZPersistentObject::removeObject( formDefinitions::definition(), array( 'id' => $id ) );
     }
 
     /**
@@ -116,7 +116,7 @@ class mwEzFormsDefinitions extends eZPersistentObject
     public static function addForm( $data )
     {
         
-        $object = new mwEzFormsDefinitions( array( 'id' => null, 
+        $object = new formDefinitions( array( 'id' => null, 
                                            'name' => $data['name'],
                                            'create_date' => null,
                                            'owner_user_id' => 14,

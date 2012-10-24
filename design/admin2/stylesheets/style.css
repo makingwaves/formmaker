@@ -32,13 +32,13 @@
     margin-top: -28px;
     margin-right: -4px;
 }
-.mwezforms_remove_form {
+.formmaker_remove_form {
     background-image: url('../../../design/admin2/images/icons/delete.png');    
     background-repeat: no-repeat;
     padding-left: 20px;
     padding-right: 5px;
 }
-.mwezforms_edit_form {
+.formmaker_edit_form {
     background-image: url('../../../design/admin2/images/icons/application_edit.png');    
     background-repeat: no-repeat;
     padding-left: 20px;
@@ -75,14 +75,14 @@
 }
 /* ---- /form editing ---- */
 
-.mwezforms-attribute {
+.formmaker-attribute {
     margin: 5px 0 5px 10px;
     float: left;
     width: 300px;
     height: 40px;
 }
 
-.mwezforms-attribute input {
+.formmaker-attribute input {
     width: 250px;
 }
 
@@ -103,7 +103,7 @@
     overflow: hidden;
 }
 
-.mwezforms-language-information {
+.formmaker-language-information {
     font-style: italic;
     margin: 15px 0;
     width: 48%;
@@ -130,7 +130,7 @@
     clear: both;
 }
 
-.mwezforms_no_forms {
+.formmaker_no_forms {
     font-weight: bold;
     padding: 20px !important;
     text-align: center !important;

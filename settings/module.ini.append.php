@@ -1,8 +1,8 @@
 <?php /*
 
 [ModuleSettings]
-ExtensionRepositories[]=mwezforms
-ModuleList[]=mwezforms
+ExtensionRepositories[]=formmaker
+ModuleList[]=formmaker
 
 */
 ?>

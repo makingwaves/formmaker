@@ -14,12 +14,12 @@
     </select>
     
     <input type="hidden" name="ids[]" disabled="disabled" value=""> <span class="spc">|</span>
-    {'label'|i18n( 'extension/mwezforms/admin' )}: <input disabled="disabled" name="labels[]" type="text"></input> <span class="spc">|</span>
-    {'mandatory'|i18n( 'extension/mwezforms/admin' )}: <input type="checkbox" disabled="disabled" name="mandatories[]" type="text" value="on"></input> <span class="spc clear"></span>
+    {'label'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="labels[]" type="text"></input> <span class="spc">|</span>
+    {'mandatory'|i18n( 'extension/formmaker/admin' )}: <input type="checkbox" disabled="disabled" name="mandatories[]" type="text" value="on"></input> <span class="spc clear"></span>
     <input type="hidden" name="mandatoriesValue[]" value="0" disabled="disabled" />
     
     <select disabled="disabled" name="validators[]">
-        <option value="- validation -">- {'validation'|i18n( 'extension/mwezforms/admin' )} -</option>
+        <option value="- validation -">- {'validation'|i18n( 'extension/formmaker/admin' )} -</option>
         {foreach $validators as $key => $validator}
         <option value="{$validator.id}">{$validator.description}</option>
         {/foreach}
@@ -27,7 +27,7 @@
     
     <span class="spc">|</span>
     
-    {'css class'|i18n( 'extension/mwezforms/admin' )}: <input disabled="disabled" name="css_classes[]" type="text"></input> <span class="spc clear"></span>
+    {'css class'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="css_classes[]" type="text"></input> <span class="spc clear"></span>
         
     <input type="hidden" disabled="disabled" name="placeholders[]" value="" />
     <input type="hidden" disabled="disabled" name="placeholdersValue[]" value="0" />
@@ -54,12 +54,12 @@
     
     <span class="spc">|</span>
     
-    {'label'|i18n( 'extension/mwezforms/admin' )}: <input name="labels[]" type="text" value="{$item.label}"></input> <span class="spc">|</span>
-    {'mandatory'|i18n( 'extension/mwezforms/admin' )}: <input type="checkbox" name="mandatories[]" {if $activeValidatorsIDs|contains(5)}checked="checked"{/if} value="on"></input><span class="spc clear"></span>
+    {'label'|i18n( 'extension/formmaker/admin' )}: <input name="labels[]" type="text" value="{$item.label}"></input> <span class="spc">|</span>
+    {'mandatory'|i18n( 'extension/formmaker/admin' )}: <input type="checkbox" name="mandatories[]" {if $activeValidatorsIDs|contains(5)}checked="checked"{/if} value="on"></input><span class="spc clear"></span>
     <input type="hidden" name="mandatoriesValue[]" value="{if $activeValidatorsIDs|contains(5)}1{else}0{/if}" />
     
     <select name="validators[]">
-        <option value="- validation -">- {'validation'|i18n( 'extension/mwezforms/admin' )} -</option>
+        <option value="- validation -">- {'validation'|i18n( 'extension/formmaker/admin' )} -</option>
         {foreach $validators as $key => $validator}
         {set $selected = ''}   
         {if $activeValidatorsIDs|contains($validator.id) }
@@ -71,7 +71,7 @@
     
     <span class="spc">|</span>
     
-    {'css class'|i18n( 'extension/mwezforms/admin' )}: <input name="css_classes[]" type="text" value="{$item.css_class}"></input> <span class="spc clear"></span>
+    {'css class'|i18n( 'extension/formmaker/admin' )}: <input name="css_classes[]" type="text" value="{$item.css_class}"></input> <span class="spc clear"></span>
     
     <input type="hidden" name="placeholders[]" value="" />
     <input type="hidden" name="placeholdersValue[]" value="0" />

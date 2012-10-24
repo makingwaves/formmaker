@@ -1,17 +1,17 @@
 <?php /*
 
 [NavigationPart]
-Part[mwezformsnavigationpart]=mwezforms
+Part[formmakernavigationpart]=formmaker
 
 [TopAdminMenu]
-Tabs[]=mwezforms
+Tabs[]=formmaker
 
-[Topmenu_mwezforms]
-NavigationPartIdentifier=mwezformsnavigationpart
-Name=mwezforms
+[Topmenu_formmaker]
+NavigationPartIdentifier=formmakernavigationpart
+Name=Form maker
 Tooltip=forms generator
 URL[]
-URL[default]=mwezforms/list
+URL[default]=formmaker/list
 Enabled[]
 Enabled[default]=true
 Enabled[browse]=false
@@ -21,15 +21,15 @@ Shown[default]=true
 Shown[edit]=true
 Shown[navigation]=true
 Shown[browse]=false
-PolicyList[]=mwezforms/edit
+PolicyList[]=formmaker/edit
 
-[Leftmenu_mwezforms]
-Name=mwezforms
+[Leftmenu_formmaker]
+Name=Form maker
 Links[]
 LinkNames[]
-Links[list]=mwezforms/list
-PolicyList_list[]=mwezforms/edit
-Links[edit]=mwezforms/edit
-PolicyList_edit[]=mwezforms/edit
+Links[list]=formmaker/list
+PolicyList_list[]=formmaker/edit
+Links[edit]=formmaker/edit
+PolicyList_edit[]=formmaker/edit
 
 */ ?>

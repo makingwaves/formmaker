@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class interface for mwezforms_validators SQL table
+ * Class interface for formmaker_validators SQL table
  */
-class mwEzFormsValidators extends eZPersistentObject 
+class formValidators extends eZPersistentObject 
 {
     /**
      * Constructor
@@ -32,9 +32,9 @@ class mwEzFormsValidators extends eZPersistentObject
                       "keys" => array('id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
-                      "class_name" => "mwEzFormsValidators",
+                      "class_name" => "formValidators",
                       "sort" => array(),
-                      "name" => "mwezforms_validators" );
+                      "name" => "form_validators" );
         return $def;
     }    
     
@@ -54,7 +54,7 @@ class mwEzFormsValidators extends eZPersistentObject
     /**
      * Method returns array containing validator data
      * @param int $validator_id
-     * @return null|mwEzFormsValidators
+     * @return null|formValidators
      */
     public static function getValidator($validator_id)
     {

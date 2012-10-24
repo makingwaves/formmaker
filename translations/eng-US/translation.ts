@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>extension/mwezforms/front</name>
+    <name>extension/formmaker/front</name>
     <message>
         <source>Send</source>
         <translation type="unfinished" />
@@ -17,7 +17,7 @@
     </message>        
 </context>
 <context>
-    <name>extension/mwezforms/email</name>
+    <name>extension/formmaker/email</name>
     <message>
         <source>Yes</source>
         <translation type="unfinished" />
@@ -28,7 +28,7 @@
     </message>       
 </context>
 <context>
-    <name>extension/mwezforms/front/validation</name>
+    <name>extension/formmaker/front/validation</name>
     <message>
         <source>'%value%' must contain only digits</source>
         <translation type="unfinished" />
@@ -127,7 +127,7 @@
     </message>                                    
 </context>
 <context>
-    <name>extension/mwezforms/admin</name>
+    <name>extension/formmaker/admin</name>
     <message>
         <source>List</source>
         <translation type="unfinished" />
@@ -236,14 +236,14 @@
 <context>
     <name>kernel/navigationpart</name>
     <message>
-        <source>mwezforms</source>
+        <source>formmaker</source>
         <translation type="unfinished" />
     </message>      
 </context>
 <context>
-    <name>design/admin/parts/mwezforms/menu</name>
+    <name>design/admin/parts/formmaker/menu</name>
     <message>
-        <source>mwezforms</source>
+        <source>Form maker</source>
         <translation type="unfinished" />
     </message>      
 </context>

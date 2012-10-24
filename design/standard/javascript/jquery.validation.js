@@ -30,7 +30,7 @@ jQuery(document).ready(function(){
             var post_data       = 'id=' + id + '&value=' + work_object.val();   
             var content_element = $('#mwform_element_' + id + ' .mwform_notification');
 
-            $.ez( 'mwezforms::validate', post_data, function( data ) {
+            $.ez( 'formmaker::validate', post_data, function( data ) {
                 if (data.content && data.content.length){
                     content_element.html(data.content);
                 } else if(data.content) {

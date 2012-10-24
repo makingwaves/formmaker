@@ -1,6 +1,6 @@
 <h2>Form has been saved</h2>
 
-<a href={concat('mwezforms/edit/', $form_definition)|ezurl()}>Back to editing.</a>
+<a href={concat('formmaker/edit/', $form_definition)|ezurl()}>Back to editing.</a>
 
 {*<br/>*}
 

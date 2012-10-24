@@ -4,7 +4,7 @@
  * Class to implement ezjscore methods
  * @author Piotr Szczygieł <piotr.szczygieł@makingwaves.pl>
  */
-class mwEzFormsAjaxServerCallFunctions extends ezjscServerFunctions
+class formAjaxServerCallFunctions extends ezjscServerFunctions
 {
     /**
      * Method validates single form element. Returns true in case of validation was OK, false in case of errors during exexution and string with html
@@ -19,7 +19,7 @@ class mwEzFormsAjaxServerCallFunctions extends ezjscServerFunctions
         if ($http->hasPostVariable('id') && $http->hasPostVariable('value'))
         {
             $id = $http->postVariable('id');
-            $attribute = mwEzFormsAttributes::getAttribute($id);
+            $attribute = formAttributes::getAttribute($id);
             
             $validation = $attribute->validate($http->postVariable('value'));
             $errors = array();

@@ -1,11 +1,11 @@
 <?php /*
 
 [RoleSettings]
-#PolicyOmitList[]=mwezforms/list
-#PolicyOmitList[]=mwezforms/create
+#PolicyOmitList[]=formmaker/list
+#PolicyOmitList[]=formmaker/create
 
 [RegionalSettings]
-TranslationExtensions[]=mwezforms
+TranslationExtensions[]=formmaker
 
 */
 ?>

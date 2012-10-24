@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 
 [DataTypeSettings]
-ExtensionDirectories[]=mwezforms
+ExtensionDirectories[]=formmaker
 AvailableDataTypes[]=mwform
 
 [AvailableTypes]

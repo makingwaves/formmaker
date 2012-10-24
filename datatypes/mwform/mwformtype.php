@@ -36,7 +36,7 @@ class mwformType extends eZDataType
                 $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'MWForm required.' ) );
                 return eZInputValidator::STATE_INVALID;                
             }
-            elseif (is_numeric($mwform_id) && !count(mwEzFormsDefinitions::getForm($mwform_id)))
+            elseif (is_numeric($mwform_id) && !count(formDefinitions::getForm($mwform_id)))
             {
                 $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', "Given MWForm ID doesn't exist" ) );
                 return eZInputValidator::STATE_INVALID;                 
@@ -74,14 +74,14 @@ class mwformType extends eZDataType
     {
         $data = explode('|', $contentObjectAttribute->attribute('data_text'));
         $form_id = $data[0];
-        $form_data = mwEzFormsDefinitions::getForm($form_id);
+        $form_data = formDefinitions::getForm($form_id);
         $form_name = '';
         if (!empty($form_data))
         {
             $form_name = $form_data->attribute('name');
         }
         
-        return array( 'forms_list'  => mwEzFormsDefinitions::getAllForms(),
+        return array( 'forms_list'  => formDefinitions::getAllForms(),
                       'mwform_id'   => $form_id,
                       'mwform_name' => $form_name);
     }

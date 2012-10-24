@@ -1,4 +1,4 @@
 Piotr:
-mysqldump -uroot -ppass mwezforms mwezforms_validators mwezforms_definitions mwezforms_attributes mwezforms_attr_valid > sql/update.sql
+mysqldump -uroot -ppass ezpublish47 form_validators form_definitions form_attributes form_attr_valid > sql/update.sql
 
 Bogdan:

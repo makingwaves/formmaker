@@ -24,8 +24,8 @@ class mwEzFormsFunctionCollection
      */  
     public function fetchFormData($form_id)
     {
-        $form_attributes    = mwEzFormsAttributes::getFormAttributes($form_id);
-        $form_definition    = mwEzFormsDefinitions::getForm($form_id);
+        $form_attributes    = formAttributes::getFormAttributes($form_id);
+        $form_definition    = formDefinitions::getForm($form_id);
         $this->http         = eZHTTPTool::instance();
         $result = $errors = $posted_values = array();
 
@@ -57,7 +57,7 @@ class mwEzFormsFunctionCollection
                 throw new Exception('Security exception');
             }
             // checking time security and displaying innocent text if failed
-            elseif(!eZSession::issetkey('mwezforms') || time() - eZSession::get('mwezforms') < self::MIN_PROCESS_TIME) {
+            elseif(!eZSession::issetkey('formmaker') || time() - eZSession::get('formmaker') < self::MIN_PROCESS_TIME) {
                 $errors[0] = array('Please make sure that all fields are OK.');
             }
             
@@ -79,7 +79,7 @@ class mwEzFormsFunctionCollection
                 $tpl = eZTemplate::factory();
                 $tpl->setVariable('result', $operation_result);
                 $result['success'] = $tpl->fetch( 'design:mwform_processed.tpl' );  
-                ezSession::set('mwezforms', time() );
+                ezSession::set('formmaker', time() );
             }
             // there are validation errors, so we need to pass them to the template
             else
@@ -94,13 +94,13 @@ class mwEzFormsFunctionCollection
         // If there is no post varaibles, we need to store current timestamp in session
         else
         {
-            ezSession::set('mwezforms', time() );
+            ezSession::set('formmaker', time() );
         }
         
         $result = array_merge($result, array( 'definition'          => $form_definition,
                                               'attributes'          => $form_attributes,
                                               'validation'          => $errors,
-                                              'counted_validators'  => mwEzFormsAttrvalid::countValidatorsForAttributes()));
+                                              'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }
     
@@ -136,7 +136,7 @@ class mwEzFormsFunctionCollection
             {
                 case 'checkbox':
                     $answer = ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No';
-                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/mwezforms/email', $answer);
+                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', $answer);
                     break;
                 
                 default:
@@ -172,7 +172,7 @@ class mwEzFormsFunctionCollection
      */
     public function isAttributeRequired($attribute_id) 
     {
-        return array('result' => mwEzFormsAttrvalid::isAttributeRequired($attribute_id));
+        return array('result' => formAttrvalid::isAttributeRequired($attribute_id));
     }
     
 }

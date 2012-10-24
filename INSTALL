@@ -2,14 +2,14 @@ MWeZForms 1.0 installation
 
 0. Get the extension 
 Go to your `extension` folder within your eZ installation, then run:
-git clone git@github.com:bogdanjuszczak/mwezforms.git
+git clone git@github.com:makingwaves/formmaker.git
 
 1. Enable extension adding entry to site.ini.append.php:
 [ExtensionSettings]
-ActiveExtensions[]=mwezforms
+ActiveExtensions[]=formmaker
 
 2. Log in to admin panel as administrator, go to Setup -> Packages and click "Import new package". 
-Now browse for package which is included in mwezforms/package and import it. 
+Now browse for package which is included in formmaker/package and import it. 
 After successfull import process, you will be asked to install package, so please perform.
 In case of any errors please check if proper file rights write are set on your `var` folder.
 
@@ -26,13 +26,13 @@ mysql -u {mysql-username} -p {your-ezpublish-database} < update.sql
 
 7. If you have editor users in your project and you want them to have a possibility to add/remove forms, you need to grant them proper privilages.
 Go to User accounts => Roles and policies and click on your editor's group. Now click "Edit" button and add "New policy".
-As a module please select "mwezforms" and choose "create" function. Then accept it by clicking "Grant full access". You can perform same action for "remove" function.
+As a module please select "formmaker" and choose "create" function. Then accept it by clicking "Grant full access". You can perform same action for "remove" function.
 
 8. Additionaly, if you want to have AJAX (ezjscore) form validation, you need to add following privilages to Anonymous user group:
-module: ezjscore, function: call, function limitation: mwezforms
+module: ezjscore, function: call, function limitation: formmaker
 
-9. Now you can use "mwezforms" tab, which is displayed in your admin panel. After you will create your form, you can assign it to MWForm class object. 
+9. Now you can use "formmaker" tab, which is displayed in your admin panel. After you will create your form, you can assign it to MWForm class object. 
 It is also possible to add MWForm attribute (datatype) into your own class.
 
 Troubles...
-If "mwezforms" tab loads blank page, please be sure that you have cleared the cache. Perform clearing from the admin panel once more.
+If "formmaker" tab loads blank page, please be sure that you have cleared the cache. Perform clearing from the admin panel once more.

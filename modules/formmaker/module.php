@@ -1,6 +1,6 @@
 <?php
 
-$Module = array( 'name' => 'mwezforms' );
+$Module = array( 'name' => 'formmaker' );
 
 $ViewList = array();
 $FunctionList = array();
@@ -17,7 +17,7 @@ $ViewList['list'] = array(
     'ui_context' => 'read',
     'script' => 'list.php',
     'params' => array( 'ObjectID' ),
-    'default_navigation_part' => 'mwezformsnavigationpart'
+    'default_navigation_part' => 'formmakernavigationpart'
 );
 
 /*
@@ -26,7 +26,7 @@ $ViewList['list'] = array(
 $ViewList['remove'] = array(
     'functions' => array( 'remove' ),
     'script' => 'remove.php',
-    'default_navigation_part' => 'mwezformsnavigationpart',
+    'default_navigation_part' => 'formmakernavigationpart',
     'params' => array( 'id' )
 );
 
@@ -36,6 +36,6 @@ $ViewList['remove'] = array(
 $ViewList['edit'] = array(
     'functions' => array('edit'),
     'script' => 'edit.php',
-    'default_navigation_part' => 'mwezformsnavigationpart',
+    'default_navigation_part' => 'formmakernavigationpart',
     'params' => array( 'id' )
 );
