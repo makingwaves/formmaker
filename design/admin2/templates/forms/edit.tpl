@@ -41,11 +41,21 @@
 <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
     <div class="mwform_error">{$error_message}</div>
     {foreach $form_elements as $identifier => $element}
-        <div class="formmaker-attribute">
-            <label>
-                <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="mwform_attribute_required"> *</span>{/if}<br/>
-                <input type="text" name="{$identifier}" value="{$element.value}"/>
-            </label>
+        <div class="{$element.css_class} formmaker-attribute">
+            {switch match=$element.type}
+                {case match='text'}
+                    <label>
+                        <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="mwform_attribute_required"> *</span>{/if}<br/>
+                        <input type="text" name="{$identifier}" value="{$element.value}"/>
+                    </label>
+                {/case}
+                {case match='checkbox'}
+                    <label>
+                        <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
+                        <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="mwform_attribute_required"> *</span>{/if}<br/>
+                    </label>
+                {/case}                
+            {/switch}
         </div>
     {/foreach}
 </div>

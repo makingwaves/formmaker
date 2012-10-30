@@ -231,7 +231,15 @@
     <message>
         <source>Created</source>
         <translation type="unfinished" />
-    </message>        
+    </message>    
+    <message>
+        <source>Send email to recipients</source>
+        <translation type="unfinished" />
+    </message>  
+    <message>
+        <source>Store user data in database</source>
+        <translation type="unfinished" />
+    </message>              
 </context>
 <context>
     <name>kernel/navigationpart</name>

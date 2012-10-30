@@ -155,3 +155,11 @@
 .right.translation img {
     vertical-align: middle;
 }
+
+.attribute-full-width {
+    width: 600px;
+}
+
+.attribute-full-width input {
+    width: 560px;
+}
