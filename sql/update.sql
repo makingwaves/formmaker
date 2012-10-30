@@ -52,13 +52,14 @@ CREATE TABLE `form_definitions` (
   `name` varchar(255) DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `owner_user_id` int(11) DEFAULT NULL,
-  `post_action` enum('email','table') DEFAULT NULL,
   `recipients` text,
   `css_class` varchar(255) DEFAULT NULL,
+  `send_email` tinyint(4) NOT NULL DEFAULT '1',
+  `store_data` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +68,7 @@ CREATE TABLE `form_definitions` (
 
 LOCK TABLES `form_definitions` WRITE;
 /*!40000 ALTER TABLE `form_definitions` DISABLE KEYS */;
-INSERT INTO `form_definitions` VALUES (1,'Our first form','2012-10-22 19:59:58',14,'email','my@mail.com','form-class');
+INSERT INTO `form_definitions` VALUES (1,'Our first form','2012-10-22 19:59:58',14,'my@mail.com','form-class',1,1);
 /*!40000 ALTER TABLE `form_definitions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +90,7 @@ CREATE TABLE `form_attributes` (
   PRIMARY KEY (`id`),
   KEY `definition_id` (`definition_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-24 15:15:00
+-- Dump completed on 2012-10-30 14:01:41

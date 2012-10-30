@@ -65,14 +65,14 @@ class mwEzFormsFunctionCollection
             if (empty($errors))
             {
                 // Sending email message
-                if ($form_definition->attribute('post_action') == 'email')
+                if ($form_definition->attribute('send_email') == 1)
                 {
                     $operation_result = $this->generateEmailContent($form_definition, $form_attributes);
                 }
-                // TODO: Storing data in database
-                else 
+                // Storing data in database
+                if ($form_definition->attribute('store_data') == 1)
                 {
-                    $operation_result = false;
+                    
                 }
 
                 // rendering success template

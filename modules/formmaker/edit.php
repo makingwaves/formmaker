@@ -7,9 +7,31 @@ $form_id                = isset($Params['id']) ? $Params['id'] : '';
 $original_name          = '';
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
-$form_elements = array( 'name' => array('required' => true, 'label' => 'Form name', 'value' => ''), 
-                        'css_class' => array('required' => false, 'label' => 'CSS class', 'value' => ''),
-                        'recipients' => array('required' => true, 'label' => 'E-mail recipients (separated by semicolon)', 'value' => ''),
+$form_elements = array( 'name'          => array(   'required' => true, 
+                                                    'type' => 'text',
+                                                    'label' => 'Form name', 
+                                                    'value' => '', 
+                                                    'css_class' => ''), 
+                        'css_class'     => array(   'required' => false,  
+                                                    'type' => 'text',
+                                                    'label' => 'CSS class', 
+                                                    'value' => '', 
+                                                    'css_class' => ''),
+                        'recipients'    => array(   'required' => true,  
+                                                    'type' => 'text',
+                                                    'label' => 'E-mail recipients (separated by semicolon)', 
+                                                    'value' => '', 
+                                                    'css_class' => 'attribute-full-width'),
+                        'send_email'    => array(   'required' => false,  
+                                                    'type' => 'checkbox',
+                                                    'label' => 'Send email to recipients', 
+                                                    'value' => 1, 
+                                                    'css_class' => ''),    
+                        'store_data'    => array(   'required' => false,  
+                                                    'type' => 'checkbox',
+                                                    'label' => 'Store user data in database', 
+                                                    'value' => 1, 
+                                                    'css_class' => ''),
                       );
 
 // adding info about validators to each attribute
@@ -38,7 +60,13 @@ if( $http->hasPostVariable('name') )
     // validating required fields
     foreach ($form_elements as $key => $data)
     {
-        $form_elements[$key]['value'] = $http->postVariable($key);
+        if ($form_elements[$key]['type'] == 'checkbox') {
+            $form_elements[$key]['value'] = !$http->hasPostVariable($key) ? 0 : 1;
+        } 
+        else {
+            $form_elements[$key]['value'] = $http->postVariable($key);
+        }
+        
         if ($data['required'] && empty($form_elements[$key]['value']))
         {
             $error_message = ezpI18n::tr('extension/formmaker/admin', 'Please fill all required fields');
@@ -65,7 +93,7 @@ if( $http->hasPostVariable('name') )
         if (empty($error_message)) 
         {
             // redirecting to edit page (adding attributes)
-            $saved_object = formDefinitions::addForm($_POST);
+            $saved_object = formDefinitions::addForm($form_elements);
             $href = 'formmaker/edit/' . $saved_object->attribute('id');
             eZURI::transformURI($href);
             eZHTTPTool::redirect($href);

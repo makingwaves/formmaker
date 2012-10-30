@@ -32,9 +32,12 @@ class formDefinitions extends eZPersistentObject
                                          "owner_user_id"    => array( "name" => "owner_user_id",
                                                                       "datatype" => "integer",
                                                                       "required" => true ),
-                                         "post_action"      => array( "name" => "post_action",
-                                                                      "datatype" => "string",
+                                         "send_email"       => array( "name" => "send_email",
+                                                                      "datatype" => "integer",
                                                                       "required" => true ),
+                                         "store_data"       => array( "name" => "store_data",
+                                                                      "datatype" => "integer",
+                                                                      "required" => true ),            
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
                                                                       "required" => false ),
@@ -110,19 +113,20 @@ class formDefinitions extends eZPersistentObject
 
     /**
      * Use to create a new object, set the values and store in a db record
-     * @param array $data
-     * @return null|\oneTimeLogin
+     * @param array $form_elements - defined in edit.php
+     * @return formDefinitions
      */
-    public static function addForm( $data )
+    public static function addForm($form_elements)
     {
+        $data= array(  'id' => null,
+                       'create_date' => null,
+                       'owner_user_id' => 14 );
         
-        $object = new formDefinitions( array( 'id' => null, 
-                                           'name' => $data['name'],
-                                           'create_date' => null,
-                                           'owner_user_id' => 14,
-                                           'post_action' => 'email',
-                                           'recipients' => $data['recipients'],
-                                           'css_class' => $data['css_class'] ) );
+        foreach ($form_elements as $id => $element) {
+            $data[$id] = $element['value'];
+        }
+        
+        $object = new formDefinitions($data);
         $object->store();
         return $object;
     }    
