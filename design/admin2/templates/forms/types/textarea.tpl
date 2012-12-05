@@ -56,19 +56,6 @@
     {'mandatory'|i18n( 'extension/formmaker/admin' )}: <input type="checkbox" name="mandatories[]" {if $activeValidatorsIDs|contains(5)}checked="checked"{/if} value="on"></input><span class="spc clear"></span>
     <input type="hidden" name="mandatoriesValue[]" value="{if $activeValidatorsIDs|contains(5)}1{else}0{/if}" />
     
-    <select name="validators[]">
-        <option value="- validation -">- {'validation'|i18n( 'extension/formmaker/admin' )} -</option>
-        {foreach $validators as $key => $validator}
-        {set $selected = ''}   
-        {if $activeValidatorsIDs|contains($validator.id) }
-            {set $selected = 'selected="selected"'}
-        {/if}
-        <option value="{$validator.id}" {$selected}>{$validator.description}</option>
-        {/foreach}
-    </select>
-    
-    <span class="spc">|</span>
-    
     <input type="hidden" name="placeholders[]" value="" />
     <input type="hidden" name="placeholdersValue[]" value="0" />
     
