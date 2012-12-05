@@ -22,8 +22,6 @@
     {'default value'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="placeholders[]" type="checkbox"></input> <span class="spc">|</span>
     <input type="hidden" name="placeholdersValue[]" value="0" disabled="disabled" />
     
-    {'css class'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="css_classes[]" type="text"></input>
-    
     <input disabled="disabled" type="hidden" name="validators[]" value="- validation -"></input>
     
     <a class="removeField"></a>
@@ -51,8 +49,6 @@
 
     {'default value'|i18n( 'extension/formmaker/admin' )}: <input name="placeholders[]" type="checkbox" {if $item.default_value}checked="checked"{/if} value="on"></input> <span class="spc">|</span>
     <input type="hidden" value="{if $item.default_value}on{else}0{/if}" name="placeholdersValue[]" value="on" />
-    
-    {'css class'|i18n( 'extension/formmaker/admin' )}: <input name="css_classes[]" type="text" value="{$item.css_class}"></input>
     
     <input type="hidden" name="validators[]" value="- validation -"></input>
     

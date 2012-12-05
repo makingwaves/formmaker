@@ -33,8 +33,6 @@
     {'default value'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="placeholders[]" type="text"></input> <span class="spc">|</span>
     <input type="hidden" name="placeholdersValue[]" value="0" disabled="disabled" />
     
-    {'css class'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="css_classes[]" type="text"></input>
-    
     <a class="removeField"></a>
 
 </div>
@@ -75,8 +73,6 @@
 
         {'default value'|i18n( 'extension/formmaker/admin' )}: <input name="placeholders[]" type="text" value="{$item.default_value}"></input><span class="spc">|</span>
         <input type="hidden" name="placeholdersValue[]" value="0" />
-
-        {'css class'|i18n( 'extension/formmaker/admin' )}: <input name="css_classes[]" type="text" value="{$item.css_class}"></input>
         
         <a class="removeField"></a>
 

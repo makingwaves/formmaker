@@ -26,8 +26,6 @@
     </select>
     
     <span class="spc">|</span>
-    
-    {'css class'|i18n( 'extension/formmaker/admin' )}: <input disabled="disabled" name="css_classes[]" type="text"></input> <span class="spc clear"></span>
         
     <input type="hidden" disabled="disabled" name="placeholders[]" value="" />
     <input type="hidden" disabled="disabled" name="placeholdersValue[]" value="0" />
@@ -70,8 +68,6 @@
     </select>
     
     <span class="spc">|</span>
-    
-    {'css class'|i18n( 'extension/formmaker/admin' )}: <input name="css_classes[]" type="text" value="{$item.css_class}"></input> <span class="spc clear"></span>
     
     <input type="hidden" name="placeholders[]" value="" />
     <input type="hidden" name="placeholdersValue[]" value="0" />

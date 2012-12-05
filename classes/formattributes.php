@@ -37,10 +37,7 @@ class formAttributes extends eZPersistentObject
                                                                       "required" => false ),
                                          "label"            => array( "name" => "label",
                                                                       "datatype" => "string",
-                                                                      "required" => true ),
-                                         "css_class"        => array( "name" => "css_class",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ) ),
+                                                                      "required" => true ) ),
                       "keys" => array('id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
@@ -193,7 +190,6 @@ class formAttributes extends eZPersistentObject
                 'type' => $data['types'][$key],
                 'default_value' => $data['placeholders'][$key],
                 'label' => $data['labels'][$key],
-                'css_class' => $data['css_classes'][$key],
                 'validators' => $validators
             );
             
@@ -238,7 +234,6 @@ class formAttributes extends eZPersistentObject
                 $simpleObj->setAttribute( 'type', $item['type'] );
                 $simpleObj->setAttribute( 'default_value', $item['default_value'] );
                 $simpleObj->setAttribute( 'label', $item['label'] );
-                $simpleObj->setAttribute( 'css_class', $item['css_class'] );
                 $simpleObj->store();
                 
             }
@@ -251,8 +246,7 @@ class formAttributes extends eZPersistentObject
                                                    'definition_id' => $item['definition_id'],
                                                    'type' => $item['type'],
                                                    'default_value' => $item['default_value'],
-                                                   'label' => $item['label'],
-                                                   'css_class' => $item['css_class']
+                                                   'label' => $item['label']
                                                    ));
                 
                 // first store the object, we need id for validators' table

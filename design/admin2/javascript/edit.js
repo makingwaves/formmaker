@@ -63,7 +63,6 @@ jQuery(document).ready( function() {
         attributeData.label = $(this).parent().find('input[name="labels[]"]').val();
         attributeData.mandatory = $(this).parent().find('input[name="mandatories[]"]').val();
         attributeData.defaultValue = $(this).parent().find('input[name="placeholders[]"]').val();
-        attributeData.cssClass = $(this).parent().find('input[name="css_classes[]"]').val();
         
         var pattern = jQuery(type).clone();
         pattern.removeAttr('id');
@@ -75,7 +74,6 @@ jQuery(document).ready( function() {
         pattern.find('input[name="labels[]"]').val( attributeData.label );
         pattern.find('input[name="mandatories[]"]').val( attributeData.mandatory );
         pattern.find('input[name="placeholders[]"]').val( attributeData.defaultValue );
-        pattern.find('input[name="css_classes[]"]').val( attributeData.cssClass );
 
         $(this).parent().replaceWith( pattern );
         

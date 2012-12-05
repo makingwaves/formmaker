@@ -37,9 +37,6 @@ class formDefinitions extends eZPersistentObject
                                                                       "required" => true ),
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
-                                                                      "required" => false ),
-                                         "css_class"        => array( "name" => "css_class",
-                                                                      "datatype" => "string",
                                                                       "required" => false ) ),
                       "keys" => array('id'),
                       "function_attributes" => array( 'object' => 'getContentObject' ),
@@ -121,8 +118,7 @@ class formDefinitions extends eZPersistentObject
                                            'create_date' => null,
                                            'owner_user_id' => 14,
                                            'post_action' => 'email',
-                                           'recipients' => $data['recipients'],
-                                           'css_class' => $data['css_class'] ) );
+                                           'recipients' => $data['recipients']) );
         $object->store();
         return $object;
     }    

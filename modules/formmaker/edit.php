@@ -8,7 +8,6 @@ $original_name          = '';
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
 $form_elements = array( 'name' => array('required' => true, 'label' => 'Form name', 'value' => ''), 
-                        'css_class' => array('required' => false, 'label' => 'CSS class', 'value' => ''),
                         'recipients' => array('required' => true, 'label' => 'E-mail recipients (separated by semicolon)', 'value' => ''),
                       );
 

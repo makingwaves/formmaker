@@ -26,7 +26,7 @@
         {$form_data.success}
     {else}
         {include uri="design:mwform_error.tpl" errors=$errors attribute_id=0}
-        <form id="mwezform" method="POST" class="{$form_definition.css_class}" action={$node.url_alias|ezurl()}>
+        <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
 
             <input type="hidden" name="mwform_id" value="{$form_definition.id}"/>
             <input type="hidden" name="node_id" value="{$node.node_id}"/>
@@ -34,7 +34,7 @@
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
                 <div class="mwform_element_container" id="mwform_element_{$attribute.id}">
                     
-                    <div class="{if and( is_set( $counted_validators[$attribute.id] ), $counted_validators[$attribute.id] )}validate-it{/if} mwform_attribute_content {$attribute.css_class}">
+                    <div class="{if and( is_set( $counted_validators[$attribute.id] ), $counted_validators[$attribute.id] )}validate-it{/if} mwform_attribute_content">
                         {include uri=concat('design:form_attributes/', $attribute.type, '.tpl') attribute=$attribute is_required=$attr_required}
                     </div>
                     <div class="mwform_error_content">
