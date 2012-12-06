@@ -3,7 +3,7 @@
 /**
  * Class definec custom template fetches
  */
-class mwEzFormsFunctionCollection
+class FormMakerFunctionCollection
 {  
     /**
      * Security constant - stores minimum execution time (in seconds) between displaying the form and processing them.

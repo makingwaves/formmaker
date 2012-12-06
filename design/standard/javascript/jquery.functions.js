@@ -1,6 +1,6 @@
 
 /**
- * Set of general functions used in MWeZForms
+ * Set of general functions used in Form Maker
  */
 jQuery(document).ready(function(){
     

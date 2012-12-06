@@ -6,7 +6,7 @@ $FunctionList['data'] = array(
     'name'              => 'data',
     'operation_types'   => array('read'),
     'call_method'       => array( 
-        'class'     => 'mwEzFormsFunctionCollection',
+        'class'     => 'FormMakerFunctionCollection',
         'method'    => 'fetchFormData'
     ),
     'parameter_type'    => 'standard',
@@ -23,7 +23,7 @@ $FunctionList['is_attrib_required'] = array(
     'name'              => 'is_attrib_required',
     'operation_types'   => array('read'),
     'call_method'       => array( 
-        'class'     => 'mwEzFormsFunctionCollection',
+        'class'     => 'FormMakerFunctionCollection',
         'method'    => 'isAttributeRequired'
     ),
     'parameter_type'    => 'standard',
