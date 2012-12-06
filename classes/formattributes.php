@@ -216,6 +216,7 @@ class formAttributes extends eZPersistentObject
             else 
             {
                 $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['default'], $item['label'] );
+                $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
                 {
