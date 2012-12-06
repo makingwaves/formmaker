@@ -39,7 +39,7 @@ class formAttrvalid extends eZPersistentObject
     }    
     
     /**
-     * Metgod creates, sotres in db and returns and new object of db record
+     * Method creates, sotres in db and returns and new object of db record
      * @param int $attribute_id
      * @param int $validator_id
      * @return \self
@@ -52,6 +52,19 @@ class formAttrvalid extends eZPersistentObject
         ) );
         $object->store();
         return $object;
+    }
+    
+    /**
+     * Method removes the record for given attributes
+     * @param int $attribute_id
+     * @param int $validator_id
+     */
+    public static function removeRecord( $attribute_id, $validator_id )
+    {
+        eZPersistentObject::removeObject( self::definition(), array(
+            'attribute_id'  => $attribute_id,
+            'validator_id'  => $validator_id
+        ) );
     }
     
     /**

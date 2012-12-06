@@ -52,6 +52,10 @@ class formAttributes extends eZPersistentObject
         return $def;
     }    
     
+    /**
+     * Mehtod returns empty inctance on attribute
+     * @return \self
+     */
     public static function createEmpty()
     {
         return new self();
@@ -112,18 +116,13 @@ class formAttributes extends eZPersistentObject
     }
     
     /**
-     * Returns attribute with given ID or null in case of incorrect ID
+     * Returns attribute with given ID or false in case of incorrect ID
      * @param int $id
-     * @return null|formAttributes
+     * @return false|formAttributes
      */
-    public static function getAttribute($id)
+    public static function getAttribute( $id )
     {
-        $attribute = eZPersistentObject::fetchObjectList(self::definition(), null, array('id' => $id));
-        if (isset($attribute[0]))
-        {
-            return $attribute[0];
-        }
-        return null;
+        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
         
     
@@ -184,7 +183,6 @@ class formAttributes extends eZPersistentObject
         return $result;
     }
     
-
     /*
      * adds new attributes or updates existing ones
      * @param array $data
@@ -210,7 +208,23 @@ class formAttributes extends eZPersistentObject
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
             if ( ctype_digit( $id ) )
             {
+                $processed_ids[] = $id;
+                $attribute = self::getAttribute( $id );
+                $attribute->setData( $order, $item['default'], $item['label'] );
+                $attribute->store();
                 
+                $correct_validators = array();
+                if ( isset( $item['validation'] ) && ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
+                {
+                    $correct_validators[] = $item['validation'];
+                }
+                
+                if ( isset( $item['mandatory'] ) && $item['mandatory'] == 'on' )
+                {
+                    $correct_validators[] = formAttrvalid::REQUIRED_ID;
+                }      
+                
+                $attribute->updateValidators( $correct_validators );
             }
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
@@ -222,11 +236,52 @@ class formAttributes extends eZPersistentObject
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), formAttrvalid::REQUIRED_ID );
                 }
                 // adding other validator
-                if ( isset( $item['validation'] ) && ctype_digit( $item['validation'] ) )
+                if ( isset( $item['validation'] ) && ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
                 {
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'] );
                 }
             }
+        }
+    }
+    
+    /**
+     * Method sets the changable data in current attribute object
+     * @param int $order
+     * @param string $default
+     * @param string $label
+     */
+    private function setData( $order, $default, $label )
+    {
+        $this->setAttribute( 'attr_order', $order );
+        $this->setAttribute( 'default_value', $default );
+        $this->setAttribute( 'label', $label);
+    }
+    
+    /**
+     * Method removed old validators and add new ones (for current attribute)
+     * @param array $correct_validators
+     */
+    private function updateValidators( $correct_validators )
+    {
+        $existing_correct = array();
+        foreach ( $this->getAttributeValidators() as $validator )
+        {
+            // removing an old attribute
+            if ( !in_array( $validator->attribute( 'id' ), $correct_validators ) )
+            {
+                formAttrvalid::removeRecord( $this->attribute( 'id' ), $validator->attribute( 'validator_id' ) );
+            }
+            else
+            {
+                // making an array of correct validators that already exists in database
+                $existing_correct[] = $validator->attribute( 'id' );
+            }
+        }
+        
+        // adding new entries to database
+        foreach ( array_diff( $correct_validators, $existing_correct ) as $validator_id )
+        {
+            formAttrvalid::addRecord( $this->attribute('id'), $validator_id );
         }
     }
 }
