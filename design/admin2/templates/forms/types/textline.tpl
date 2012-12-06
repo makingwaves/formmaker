@@ -7,23 +7,14 @@
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>
     <p><strong>{$input.name}</strong></p>
     <p>
-        {'Label: '|i18n( 'extension/formmaker/admin' )} <input type="text" value="{$data.label}" name="formelement_{$input_id}[label]" />
+        {include uri="design:forms/types/elements/label.tpl" label=$data.label input_id=$input_id}
         <span class="spc">|</span>
-        <span>
-            {'Mandatory: '|i18n( 'extension/formmaker/admin' )} <input type="checkbox" {if $data.is_mandatory}checked="checked"{/if} />
-            <input type="hidden" name="formelement_{$input_id}[mandatory]" value="{$data.is_mandatory}" />
-        </span>
+        {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
         <span class="spc">|</span>
-        {'Default value: '|i18n( 'extension/formmaker/admin' )} <input type="text" value="{$data.default_value}" name="formelement_{$input_id}[default]" />
+        {include uri="design:forms/types/elements/default_text.tpl" default_value=$data.default_value input_id=$input_id}
     </p>
     <p>
-        {'Validation: '|i18n( 'extension/formmaker/admin' )}
-        <select name="formelement_{$input_id}[validation]">
-            <option value="0">{'- no validation -'|i18n( 'extension/formmaker/admin' )}</option>
-            {foreach $input.validators as $validator}
-                <option {if $data.validator_ids|contains( $validator.id )}selected="selected"{/if} value="{$validator.id}">{$validator.description}</option>
-            {/foreach}            
-        </select>
+        {include uri="design:forms/types/elements/validation.tpl" validators=$input.validators validator_ids=$data.validator_ids input_id=$input_id}
     </p>
     <a class="removeField">{'Remove'|i18n( 'extension/formmaker/admin' )}</a>
 </div>
