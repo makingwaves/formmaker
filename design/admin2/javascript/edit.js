@@ -1,20 +1,4 @@
 jQuery(document).ready( function() {
-    
-    jQuery('.addField').live('click', function() {
-        
-        if( jQuery('#noneAttributesWarning').is(':visible') ) {
-            jQuery('#noneAttributesWarning').hide();
-        }
-        
-        var pattern = jQuery('#tpl_text').clone();
-        pattern.removeAttr('id');
-        pattern.addClass('formField');
-        pattern.children().removeAttr('disabled');
-        pattern.removeClass('formFieldTemplate');
-
-        jQuery('#tpl_text').before( pattern );
-        
-    });
 
     jQuery('.removeField:visible').live('click', function() {
           
@@ -35,13 +19,12 @@ jQuery(document).ready( function() {
                         if( $('.formField').size() == 0 ) {
                             jQuery('#noneAttributesWarning').show();
                         }
-                      
                   }
               }
           });
-        
     });
 
+    // setting the default checkbox value, works for all checkbox arrouded by <span> which contains also a hidden field
     jQuery('.formField input[type=checkbox]').live('click', function() {
         
         if ($(this).is(':checked')) {

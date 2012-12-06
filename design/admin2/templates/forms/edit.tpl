@@ -1,4 +1,9 @@
 {* Template renders create/edit page for the forms, parameters:
+- $error_message - string conatining error message comming from validation
+- $form_elements - array containing items if adding-new-form form
+- $form_attributes - array of attribute objects
+- $id - edited form id
+- $form_name
 - $input_types - array of all available input types *}
 
 {* jquery UI *}
@@ -67,27 +72,9 @@
                 <input type="hidden" name="definition_id" value="{$id}" />
 
                 <div class="sortable-attributes">
-                    {foreach $form_attributes as $key => $item}
-
-                        {set $activeValidatorsIDs = array()
-                             $activeValidators = array()}
-
-                        {foreach $item.validators as $validator}
-                        {set $activeValidators = $activeValidators|append($validator)}
-                        {/foreach}
-
-                        {foreach $activeValidators as $activeValidator}
-                            {set $activeValidatorsIDs = $activeValidatorsIDs|append($activeValidator.validator_id)}
-                        {/foreach}
-
-                        {if eq($item.type, 'text')}
-                            {include uri='design:forms/types/text.tpl' disabled=false()}
-                        {elseif eq($item.type, 'textarea')}
-                            {include uri='design:forms/types/textarea.tpl' disabled=false()}
-                        {elseif eq($item.type, 'checkbox')}
-                            {include uri='design:forms/types/checkbox.tpl' disabled=false()}
-                        {/if}
-
+                    {foreach $form_attributes as $attribute}
+                        {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute
+                                 input_id=$attribute.id input=$attribute.type_data}
                     {/foreach}
                 </div>
                 

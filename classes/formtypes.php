@@ -20,16 +20,22 @@ class formTypes extends eZPersistentObject
      */
     public static function definition()
     {
-        $def = array( "fields" => array( "id"      => array( "name" => "id",
-                                                             "datatype" => "integer",
-                                                             "required" => true ),         
-                                         "name"     => array( "name" => "name",
-                                                              "datatype" => "string",
-                                                              "required" => true ), 
-                                         "template" => array( "name" => "template",
-                                                              "datatype" => "string",
-                                                              "required" => true ) ),
+        $def = array( "fields" => array( "id"           => array( "name" => "id",
+                                                                  "datatype" => "integer",
+                                                                  "required" => true ),         
+                                         "name"         => array( "name" => "name",
+                                                                  "datatype" => "string",
+                                                                  "required" => true ), 
+                                         "validation"   => array( "name" => "validation",
+                                                                  "datatype" => "integer",
+                                                                  "required" => true ),             
+                                         "template"     => array( "name" => "template",
+                                                                  "datatype" => "string",
+                                                                  "required" => true ) ),
                       "keys" => array('id'),
+                      "function_attributes" => array(
+                          'validators'  => 'getTypeValidators'
+                      ),            
                       "increment_key" => "id",
                       "class_name" => "formTypes",
                       "sort" => array(),
@@ -54,6 +60,19 @@ class formTypes extends eZPersistentObject
     public static function fetchById( $id )
     {
         return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );    
+    }
+    
+    /**
+     * Returns validators array for current type, or false in case that type doesn's support validators
+     * @return boolean|array
+     */
+    public function getTypeValidators()
+    {
+        if ( $this->attribute( 'validation' ) == 0 )
+        {
+            return false;
+        }
+        return formValidators::getValidators(false);
     }
     
 }

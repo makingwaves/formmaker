@@ -1,16 +1,17 @@
 {* Template renders view the line for text line, parameters:
 - $input - textarea object
+- $data - attribute object conatining data (or empty object when adding new attribute)
 - $input_id - id of attribute stored in database or unique id for new attribute *}
 
 <div class="formField">
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>
     <p><strong>{$input.name}</strong></p>
     <p>
-        {'Label: '|i18n( 'extension/formmaker/admin' )} <input type="text" name="formelement_{$input_id}[label]" />
+        {'Label: '|i18n( 'extension/formmaker/admin' )} <input type="text" value="{$data.label}" name="formelement_{$input_id}[label]" />
         <span class="spc">|</span>
         <span>
-            {'Mandatory: '|i18n( 'extension/formmaker/admin' )} <input type="checkbox" />
-            <input type="hidden" name="formelement_{$input_id}[mandatory]" value="0" />
+            {'Mandatory: '|i18n( 'extension/formmaker/admin' )} <input type="checkbox" {if $data.is_mandatory}checked="checked"{/if} />
+            <input type="hidden" name="formelement_{$input_id}[mandatory]" value="{$data.is_mandatory}" />
         </span>
     </p>
     <a class="removeField">{'Remove'|i18n( 'extension/formmaker/admin' )}</a>

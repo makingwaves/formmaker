@@ -32,7 +32,6 @@ class formAttrvalid extends eZPersistentObject
                                                                   "datatype" => "integer",
                                                                   "required" => true ) ),
                       "keys" => array('attribute_id', 'validator_id'),
-                      "function_attributes" => array( 'object' => 'getContentObject' ),
                       "class_name" => "formAttrvalid",
                       "sort" => array(),
                       "name" => "form_attr_valid" );
@@ -40,16 +39,19 @@ class formAttrvalid extends eZPersistentObject
     }    
     
     /**
-     * Method returns content object
-     * @return type
+     * Metgod creates, sotres in db and returns and new object of db record
+     * @param int $attribute_id
+     * @param int $validator_id
+     * @return \self
      */
-    public function getContentObject() 
-    { 
-        return eZPersistentObject::fetchObject( eZContentObject::definition(),
-                    null, // all fields
-                    array( 'id' => $this->attribute( 'id' ) ), // conditions
-                    true // return as object
-                );        
+    public static function addRecord( $attribute_id, $validator_id )
+    {
+        $object = new self ( array(
+            'attribute_id'  => $attribute_id,
+            'validator_id'  => $validator_id
+        ) );
+        $object->store();
+        return $object;
     }
     
     /**

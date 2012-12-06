@@ -30,26 +30,12 @@ class formValidators extends eZPersistentObject
                                                                   "datatype" => "string",
                                                                   "required" => true ) ),
                       "keys" => array('id'),
-                      "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
                       "class_name" => "formValidators",
                       "sort" => array(),
                       "name" => "form_validators" );
         return $def;
     }    
-    
-    /**
-     * Method returns content object
-     * @return type
-     */
-    public function getContentObject() 
-    { 
-        return eZPersistentObject::fetchObject( eZContentObject::definition(),
-                    null, // all fields
-                    array( 'id' => $this->attribute( 'id' ) ), // conditions
-                    true // return as object
-                );        
-    }
     
     /**
      * Method returns array containing validator data

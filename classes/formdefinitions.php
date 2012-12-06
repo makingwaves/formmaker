@@ -39,7 +39,6 @@ class formDefinitions extends eZPersistentObject
                                                                       "datatype" => "string",
                                                                       "required" => false ) ),
                       "keys" => array('id'),
-                      "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
@@ -85,19 +84,6 @@ class formDefinitions extends eZPersistentObject
         }
         
         return $form->store();
-    }
-    
-    /**
-     * Method returns content object
-     * @return type
-     */    
-    public function getContentObject() 
-    { 
-        return eZPersistentObject::fetchObject( eZContentObject::definition(),
-                                null, // all fields
-                                array( 'id' => $this->attribute( 'id' ) ), // conditions
-                                true // return as object
-                                );
     }
     
     public static function removeContentObject($id) 

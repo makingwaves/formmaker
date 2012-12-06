@@ -89,7 +89,7 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,6 +98,7 @@ CREATE TABLE `form_attributes` (
 
 LOCK TABLES `form_attributes` WRITE;
 /*!40000 ALTER TABLE `form_attributes` DISABLE KEYS */;
+INSERT INTO `form_attributes` VALUES (3,1,5,3,'0','checkbox, pierwszy'),(4,2,5,1,'default','text line, drugi'),(5,1,5,1,'',''),(6,1,5,1,'','');
 /*!40000 ALTER TABLE `form_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,6 +125,7 @@ CREATE TABLE `form_attr_valid` (
 
 LOCK TABLES `form_attr_valid` WRITE;
 /*!40000 ALTER TABLE `form_attr_valid` DISABLE KEYS */;
+INSERT INTO `form_attr_valid` VALUES (6,2),(6,5);
 /*!40000 ALTER TABLE `form_attr_valid` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,6 +140,7 @@ CREATE TABLE `form_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `template` varchar(100) NOT NULL,
+  `validation` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -148,7 +151,7 @@ CREATE TABLE `form_types` (
 
 LOCK TABLES `form_types` WRITE;
 /*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
-INSERT INTO `form_types` VALUES (1,'Text line','textline.tpl'),(2,'Textarea','textarea.tpl'),(3,'Checkbox','checkbox.tpl');
+INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1),(2,'Textarea','textarea.tpl',0),(3,'Checkbox','checkbox.tpl',0);
 /*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +164,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-06  8:22:03
+-- Dump completed on 2012-12-06 10:22:49

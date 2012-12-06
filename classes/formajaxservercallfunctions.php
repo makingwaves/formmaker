@@ -61,11 +61,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         
         $tpl->setVariable( 'input', $type );
         $tpl->setVariable( 'input_id', uniqid() );
-        // validators only for textline
-        if ( $type_id == 1 )
-        {
-            $tpl->setVariable( 'validators', formValidators::getValidators(false) );
-        }
+        $tpl->setVariable( 'data', formAttributes::createEmpty());
         
         return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
     }
