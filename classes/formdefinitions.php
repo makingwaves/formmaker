@@ -56,18 +56,13 @@ class formDefinitions extends eZPersistentObject
     }
     
     /**
-     * Returns form with given ID or empty array in case of incorrect ID
+     * Returns form with given ID
      * @param int $id
-     * @return array
+     * @return formDefinitions
      */
     public static function getForm($id)
     {
-        $form = eZPersistentObject::fetchObjectList(self::definition(), null, array('id' => $id));
-        if (isset($form[0]))
-        {
-            return $form[0];
-        }
-        return array();
+        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
 
     /**
@@ -135,4 +130,28 @@ class formDefinitions extends eZPersistentObject
         
         return true;
     }    
+    
+    /**
+     * Method return all attributes of current form
+     * @return array
+     */
+    public function getAllAttributes()
+    {
+        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, array( 'definition_id' => $this->attribute( 'id' ) ) );
+    }
+    
+    /**
+     * Method removed unused attributes based on arraf of correct ones
+     * @param array $correct_attributes
+     */
+    public function removeUnusedAttributes( $correct_attributes )
+    {
+        foreach ( $this->getAllAttributes() as $attribute )
+        {
+            if ( !in_array($attribute->attribute( 'id' ), $correct_attributes ) )
+            {
+                $attribute->removeRecord();
+            }
+        }
+    }
 }

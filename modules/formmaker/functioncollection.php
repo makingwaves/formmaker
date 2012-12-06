@@ -24,8 +24,8 @@ class FormMakerFunctionCollection
      */  
     public function fetchFormData($form_id)
     {
-        $form_attributes    = formAttributes::getFormAttributes($form_id);
         $form_definition    = formDefinitions::getForm($form_id);
+        $form_attributes    = $form_definition->getAllAttributes();
         $this->http         = eZHTTPTool::instance();
         $result = $errors = $posted_values = array();
 

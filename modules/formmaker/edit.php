@@ -4,6 +4,7 @@ $http           = eZHTTPTool::instance();
 $tpl            = eZTemplate::factory();
 $form_id        = isset($Params['id']) ? $Params['id'] : ''; 
 $original_name  = '';
+$attributes     = array();
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
 $form_elements = array( 'name' => array('required' => true, 'label' => 'Form name', 'value' => ''), 
@@ -14,6 +15,7 @@ $form_elements = array( 'name' => array('required' => true, 'label' => 'Form nam
 if (is_numeric($form_id))
 {
     $definition = formDefinitions::getForm($form_id);
+    $attributes = $definition->getAllAttributes();
     $original_name = $definition->attribute('name');
     foreach ($form_elements as $key => $data) {
         $form_elements[$key]['value'] = $definition->attribute($key);
@@ -63,7 +65,7 @@ if( $http->hasPostVariable('name') )
 
 $tpl->setVariable( 'error_message', $error_message );
 $tpl->setVariable( 'form_elements', $form_elements );
-$tpl->setVariable( 'form_attributes', formAttributes::getFormAttributes( $form_id ) );
+$tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
 $tpl->setVariable( 'input_types', formTypes::getAllTypes() );

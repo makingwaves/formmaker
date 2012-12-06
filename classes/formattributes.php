@@ -102,20 +102,6 @@ class formAttributes extends eZPersistentObject
     }
     
     /**
-     * Method returns array containing all attributes of given MWForm ID
-     * @param int $form_id
-     * @return array
-     */
-    public static function getFormAttributes($form_id)
-    {   
-        if ( !ctype_digit( $form_id ) ) {
-            return array();
-        }
-        
-        return eZPersistentObject::fetchObjectList( self::definition(), null, array( 'definition_id' => $form_id ) );
-    }
-    
-    /**
      * Returns attribute with given ID or false in case of incorrect ID
      * @param int $id
      * @return false|formAttributes
@@ -242,6 +228,9 @@ class formAttributes extends eZPersistentObject
                 }
             }
         }
+        
+        $form = formDefinitions::getForm( $data['definition_id'] );
+        $form->removeUnusedAttributes( $processed_ids );
     }
     
     /**
@@ -283,5 +272,16 @@ class formAttributes extends eZPersistentObject
         {
             formAttrvalid::addRecord( $this->attribute('id'), $validator_id );
         }
+    }
+    
+    /**
+     * Meethod removed an attribute with given id
+     * @param int $id
+     */
+    public function removeRecord()
+    {
+        eZPersistentObject::removeObject( self::definition(), array(
+            'id'    => $this->attribute( 'id' )
+        ) );        
     }
 }
