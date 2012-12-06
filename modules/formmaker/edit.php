@@ -79,6 +79,7 @@ $tpl->setVariable('form_attributes', $formAttributesArray);
 $tpl->setVariable('id', $form_id);
 $tpl->setVariable('validators', $validators);
 $tpl->setVariable('form_name', $original_name);
+$tpl->setVariable( 'input_types', formTypes::getAllTypes() );
 
 $Result = array();
 

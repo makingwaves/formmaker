@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.28, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: nsc
+-- Host: localhost    Database: ezpublish47
 -- ------------------------------------------------------
 -- Server version	5.5.28-0ubuntu0.12.04.2
 
@@ -57,7 +57,7 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +66,7 @@ CREATE TABLE `form_definitions` (
 
 LOCK TABLES `form_definitions` WRITE;
 /*!40000 ALTER TABLE `form_definitions` DISABLE KEYS */;
+INSERT INTO `form_definitions` VALUES (4,'Hello :)','2012-12-05 07:46:07',14,'email','piotr.szczygiel@gmail.com'),(5,'Test form','2012-12-05 10:00:03',14,'email','sss');
 /*!40000 ALTER TABLE `form_definitions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,13 +81,15 @@ CREATE TABLE `form_attributes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `attr_order` int(5) DEFAULT NULL,
   `definition_id` int(11) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
+  `type_id` int(10) unsigned NOT NULL,
   `default_value` varchar(255) DEFAULT NULL,
   `label` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `definition_id` (`definition_id`),
-  CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  KEY `type_id` (`type_id`),
+  CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,6 +126,31 @@ LOCK TABLES `form_attr_valid` WRITE;
 /*!40000 ALTER TABLE `form_attr_valid` DISABLE KEYS */;
 /*!40000 ALTER TABLE `form_attr_valid` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `form_types`
+--
+
+DROP TABLE IF EXISTS `form_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_types` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `template` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `form_types`
+--
+
+LOCK TABLES `form_types` WRITE;
+/*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
+INSERT INTO `form_types` VALUES (1,'Text line','textline.tpl'),(2,'Textarea','textarea.tpl'),(3,'Checkbox','checkbox.tpl');
+/*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -133,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-05  8:45:27
+-- Dump completed on 2012-12-06  8:22:03

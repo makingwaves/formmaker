@@ -22,7 +22,7 @@ jQuery(document).ready( function() {
 
           jQuery( "#dialog-confirm" ).dialog({
               resizable: false,
-              height:140,
+              height:150,
               modal: true,
               buttons: {
                   Cancel: function() {
@@ -42,45 +42,32 @@ jQuery(document).ready( function() {
         
     });
 
-    jQuery('input[type="checkbox"]').live('click', function() {
+    jQuery('.formField input[type=checkbox]').live('click', function() {
         
-        if( $(this).next().next().val() == '0' ) {
-            $(this).next().next().val('on');
+        if ($(this).is(':checked')) {
+            $(this).parent('span').find('input[type=hidden]').val('on');
+        } else {
+            $(this).parent('span').find('input[type=hidden]').val(0);
         }
-        else {
-            $(this).next().next().val('0');
-        }
-        
-    });
-
-    jQuery('select[name="types[]"]').live('change', function() {
-        
-        var type = '#tpl_' + $(this).val();
-        
-        var attributeData = {};
-
-        attributeData.id = $(this).parent().find('input[name="ids[]"]').val();
-        attributeData.label = $(this).parent().find('input[name="labels[]"]').val();
-        attributeData.mandatory = $(this).parent().find('input[name="mandatories[]"]').val();
-        attributeData.defaultValue = $(this).parent().find('input[name="placeholders[]"]').val();
-        
-        var pattern = jQuery(type).clone();
-        pattern.removeAttr('id');
-        pattern.addClass('formField');
-        pattern.children().removeAttr('disabled');
-        pattern.removeClass('formFieldTemplate');
-        
-        pattern.find('input[name="ids[]"]').val( attributeData.id );
-        pattern.find('input[name="labels[]"]').val( attributeData.label );
-        pattern.find('input[name="mandatories[]"]').val( attributeData.mandatory );
-        pattern.find('input[name="placeholders[]"]').val( attributeData.defaultValue );
-
-        $(this).parent().replaceWith( pattern );
-        
     });
 
     jQuery( ".left form .sortable-attributes" ).sortable();
     
-    
+    // Adding new field
+    jQuery('input[name=add_field]').click(function(){
+        jQuery('div#page').css('cursor', 'progress');
+        var post_data = {'input_id' :  $('select[name=new_field_type]').val()};
+        $.ez( 'formmaker::addField', post_data, function( data ) {
+            
+            if (data.error_text) {
+                alert(data.error_text);
+            }
+            else {
+                $('.sortable-attributes').append(data.content);
+            }
+            
+            jQuery('div#page').css('cursor', 'default');
+        });           
+    })
     
 });
