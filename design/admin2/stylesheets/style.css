@@ -62,8 +62,19 @@
     border: 1px solid grey;
     margin-bottom: 10px;
     cursor: move;
-    background-color: white;
     position: relative;
+}
+
+.form-1 {
+    background-color: #DBFFCE;
+}
+
+.form-2 {
+    background-color: #cfceff;
+}
+
+.form-3 {
+    background-color: #fffcce;
 }
 
 .confirmationMsg {
