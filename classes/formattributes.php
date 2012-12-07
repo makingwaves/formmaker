@@ -321,6 +321,10 @@ class formAttributes extends eZPersistentObject
         return formAttributesOptions::getAttributeOptions( $this->attribute( 'id' ), $pairs );
     }
     
+    /**
+     * Method updated the attribute options basing on array with correct entried
+     * @param array $correct_options
+     */
     private function updateOptions( $correct_options )
     {      
         // generating helper array

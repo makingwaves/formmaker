@@ -50,13 +50,6 @@
     display: none;
 }
 
-
-#dialog-confirm {
-    height: 80px;
-    display: none;
-}
-
-
 .formField {
     padding: 10px;
     border: 1px solid grey;

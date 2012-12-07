@@ -11,9 +11,7 @@
 {ezscript_require(array( concat( 'list.js' ) ) )}
    
 
-<div id="dialog-confirm" title="Remove form">
-    <p><span class="ui-icon ui-icon-alert"></span>{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</p>
-</div>
+<div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
