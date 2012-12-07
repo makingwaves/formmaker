@@ -17,9 +17,7 @@
      $activeValidatorsIDs = array()
      $activeValidators = array() }
 
-<div id="dialog-confirm" title="Remove attribute">
-    <p><span class="ui-icon ui-icon-alert"></span>{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</p>
-</div>
+<div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
 
 {if $id}
     <h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name}`</h2>

@@ -57,7 +57,7 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `form_definitions` (
 
 LOCK TABLES `form_definitions` WRITE;
 /*!40000 ALTER TABLE `form_definitions` DISABLE KEYS */;
-INSERT INTO `form_definitions` VALUES (4,'Hello :)','2012-12-05 07:46:07',14,'email','piotr.szczygiel@gmail.com'),(5,'Test form','2012-12-05 10:00:03',14,'email','sss');
+INSERT INTO `form_definitions` VALUES (7,'Zajebisty form','2012-12-06 13:48:55',14,'email','piotr.szczygiel@gmail.com'),(8,'dupa','2012-12-06 13:55:41',14,'email','ss');
 /*!40000 ALTER TABLE `form_definitions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `form_attributes` (
 
 LOCK TABLES `form_attributes` WRITE;
 /*!40000 ALTER TABLE `form_attributes` DISABLE KEYS */;
-INSERT INTO `form_attributes` VALUES (3,1,5,3,'0','checkbox, pierwszy'),(4,2,5,1,'default','text line, drugi'),(5,1,5,1,'',''),(6,1,5,1,'','');
+INSERT INTO `form_attributes` VALUES (18,1,7,1,'',''),(19,2,7,1,'',''),(24,1,8,1,'',''),(25,2,8,3,'',''),(26,3,8,2,NULL,''),(27,4,8,3,'',''),(28,5,8,3,'',''),(29,6,8,1,'','');
 /*!40000 ALTER TABLE `form_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +125,6 @@ CREATE TABLE `form_attr_valid` (
 
 LOCK TABLES `form_attr_valid` WRITE;
 /*!40000 ALTER TABLE `form_attr_valid` DISABLE KEYS */;
-INSERT INTO `form_attr_valid` VALUES (6,2),(6,5);
 /*!40000 ALTER TABLE `form_attr_valid` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +141,7 @@ CREATE TABLE `form_types` (
   `template` varchar(100) NOT NULL,
   `validation` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +150,7 @@ CREATE TABLE `form_types` (
 
 LOCK TABLES `form_types` WRITE;
 /*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
-INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1),(2,'Textarea','textarea.tpl',0),(3,'Checkbox','checkbox.tpl',0);
+INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1),(2,'Textarea','textarea.tpl',0),(3,'Checkbox','checkbox.tpl',0),(4,'Radio Buttons','radio.tpl',0);
 /*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -164,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-06 10:22:49
+-- Dump completed on 2012-12-07  7:32:08

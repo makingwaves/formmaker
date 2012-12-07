@@ -65,4 +65,18 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         
         return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
     }
+    
+    public static function addAttributeOption()
+    {
+        $http = eZHTTPTool::instance();
+        if ( !$http->hasPostVariable( 'attribute_id' ) )
+        {
+            throw new Exception( 'Missing required parameter' );
+        }        
+        
+        $tpl = eZTemplate::factory();
+        $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
+        
+        return $tpl->fetch( 'design:forms/types/elements/option_line.tpl' );
+    }
 }
