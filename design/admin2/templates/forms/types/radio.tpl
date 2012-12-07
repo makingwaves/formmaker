@@ -12,7 +12,7 @@
         {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
     </p>
     <p>
-        {include uri="design:forms/types/elements/options.tpl" input_id=$input_id}
+        {include uri="design:forms/types/elements/options.tpl" input_id=$input_id options=$data.options}
     </p>
     <a class="removeField">{'Remove'|i18n( 'extension/formmaker/admin' )}</a>
 </div>

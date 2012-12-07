@@ -66,6 +66,11 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
     }
     
+    /**
+     * Method adds new option to list
+     * @return string
+     * @throws Exception
+     */
     public static function addAttributeOption()
     {
         $http = eZHTTPTool::instance();
@@ -76,6 +81,8 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         
         $tpl = eZTemplate::factory();
         $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
+        $tpl->setVariable( 'label', '' );
+        $tpl->setVariable( 'option_id', uniqid() );
         
         return $tpl->fetch( 'design:forms/types/elements/option_line.tpl' );
     }

@@ -89,7 +89,7 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `form_attributes` (
 
 LOCK TABLES `form_attributes` WRITE;
 /*!40000 ALTER TABLE `form_attributes` DISABLE KEYS */;
-INSERT INTO `form_attributes` VALUES (18,1,7,1,'',''),(19,2,7,1,'',''),(24,1,8,1,'',''),(25,2,8,3,'',''),(26,3,8,2,NULL,''),(27,4,8,3,'',''),(28,5,8,3,'',''),(29,6,8,1,'','');
+INSERT INTO `form_attributes` VALUES (24,1,8,1,'',''),(25,2,8,3,'',''),(26,3,8,2,NULL,''),(27,4,8,3,'',''),(28,5,8,3,'',''),(29,6,8,1,'',''),(43,1,7,1,'',''),(44,2,7,4,NULL,'');
 /*!40000 ALTER TABLE `form_attributes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-07  7:32:08
+-- Dump completed on 2012-12-07 10:59:59

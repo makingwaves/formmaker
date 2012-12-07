@@ -1,11 +1,14 @@
 {* Template for rendering options attribute. Params:
-- $input_id *}
+- $input_id 
+- $options - array of attribute options *}
 
 <input type="hidden" class="attribute-unique-id" value="{$input_id}" />
 <fieldset class="form-attribute-options">
     <legend>{'Options'|i18n( 'extension/formmaker/admin' )}</legend>
     <ul>
-        {include uri="design:forms/types/elements/option_line.tpl" input_id=$input_id}
+        {foreach $options as $option}
+            {include uri="design:forms/types/elements/option_line.tpl" option_id=$option.id input_id=$input_id label=$option.label}
+        {/foreach}
     </ul>
     <a class="add-option">{'Add option'|i18n( 'extension/formmaker/admin' )}</a>
 </fieldset>

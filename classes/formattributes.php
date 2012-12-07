@@ -43,7 +43,8 @@ class formAttributes extends eZPersistentObject
                           'validators'      => 'getAttributeValidators',
                           'validator_ids'   => 'getValidatorAllIds',
                           'type_data'       => 'getTypeData',
-                          'is_mandatory'    => 'isMandatoryHtml'
+                          'is_mandatory'    => 'isMandatoryHtml',
+                          'options'         => 'getOptions'
                       ),
                       "increment_key" => "id",
                       "class_name" => "formAttributes",
@@ -192,7 +193,7 @@ class formAttributes extends eZPersistentObject
             $order ++;
             
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
-            if ( ctype_digit( $id ) )
+            if ( ctype_digit( (string)$id ) )
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
@@ -200,7 +201,7 @@ class formAttributes extends eZPersistentObject
                 $attribute->store();
                 
                 $correct_validators = array();
-                if ( isset( $item['validation'] ) && ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
+                if ( isset( $item['validation'] ) && (string)ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
                 {
                     $correct_validators[] = $item['validation'];
                 }
@@ -211,6 +212,10 @@ class formAttributes extends eZPersistentObject
                 }      
                 
                 $attribute->updateValidators( $correct_validators );
+                if ( isset( $item['options'] ) && is_array( $item['options'] ) )
+                {
+                    $attribute->updateOptions( $item['options'] );
+                }
             }
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
@@ -223,9 +228,19 @@ class formAttributes extends eZPersistentObject
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), formAttrvalid::REQUIRED_ID );
                 }
                 // adding other validator
-                if ( isset( $item['validation'] ) && ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
+                if ( isset( $item['validation'] ) && (string)ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
                 {
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'] );
+                }
+                // adding attribute options
+                if ( isset( $item['options'] ) && is_array( $item['options'] ) )
+                {
+                    $option_order = 0;
+                    foreach ( $item['options'] as $key => $label )
+                    {
+                        $option_order++;
+                        $attribute->addOption( $label, $option_order );
+                    }
                 }
             }
         }
@@ -284,5 +299,62 @@ class formAttributes extends eZPersistentObject
         eZPersistentObject::removeObject( self::definition(), array(
             'id'    => $this->attribute( 'id' )
         ) );        
+    }
+    
+    /**
+     * Method adds new attribute option
+     * @param string $label
+     * @param int $order
+     * @return formAttributesOptions
+     */
+    private function addOption( $label, $order )
+    {
+        return formAttributesOptions::addOption( $label, $order, $this->attribute( 'id' ) );
+    }
+    
+    /**
+     * Method return current attribute options
+     * @return array
+     */
+    public function getOptions( $pairs = false )
+    {
+        return formAttributesOptions::getAttributeOptions( $this->attribute( 'id' ), $pairs );
+    }
+    
+    private function updateOptions( $correct_options )
+    {      
+        // generating helper array
+        $correct_ids = array();
+        foreach ( $correct_options as $id => $label )
+        {
+            $correct_ids[] = $id;
+        }
+        
+        // removing outdated options
+        foreach ( $this->getOptions() as $option )
+        {
+            if ( !in_array( $option->attribute( 'id' ), $correct_ids ) ) 
+            {
+                $option->removeOption();
+            }
+        }
+        
+        $order = 0;
+        foreach ( $correct_options as $opt_id => $label )
+        {
+            $order++;
+            // adding new option
+            if ( !ctype_digit( (string)$opt_id ) )
+            {
+                $this->addOption($label, $order);
+            }
+            // editing existing one
+            else
+            {
+                $option_object = formAttributesOptions::fetchOption( $opt_id );
+                $option_object->setData( $this->attribute( 'id' ), $label, $order);
+                $option_object->store();
+            }
+        }
     }
 }
