@@ -111,7 +111,7 @@ class FormMakerFunctionCollection
      */
     private function generatePostID($attrib)
     {
-        return 'field_' . $attrib->attribute('type') . '_' . $attrib->attribute('id');
+        return 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
     }
     
     /**
@@ -132,7 +132,7 @@ class FormMakerFunctionCollection
                 continue;
             } 
             
-            switch ($attribute->attribute('type'))
+            switch ($attribute->attribute('type_id'))
             {
                 case 'checkbox':
                     $answer = ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No';

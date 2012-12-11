@@ -7,4 +7,4 @@
     {$attribute.label}
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label> 
-<textarea class="form_element" id="form_{$attribute.type_id}_{$attribute.id}" name="field_textarea_{$attribute.id}">{$attribute.default_value}</textarea>
+<textarea class="form_element" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">{$attribute.default_value}</textarea>
