@@ -5,7 +5,7 @@
      $form_definition   = $form_data.definition
      $form_attributes   = $form_data.attributes 
      $counted_validators= $form_data.counted_validators
-     $attr_required     = NULL
+     $attr_required     = false()
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
@@ -33,9 +33,8 @@
             {foreach $form_attributes as $attribute}
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
                 <div class="form_element_container" id="form_element_{$attribute.id}">
-                    
                     <div class="{if and( is_set( $counted_validators[$attribute.id] ), $counted_validators[$attribute.id] )}validate-it{/if} form_attribute_content">
-                        {include uri=concat('design:form_attributes/', $attribute.type, '.tpl') attribute=$attribute is_required=$attr_required}
+                        {include uri=concat('design:form_attributes/', $attribute.type_data.template ) attribute=$attribute is_required=$attr_required}
                     </div>
                     <div class="form_error_content">
                         <span class="form_notification">{include uri="design:form_error.tpl" errors=$errors attribute_id=$attribute.id}</span>
