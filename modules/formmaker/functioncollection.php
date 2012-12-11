@@ -17,7 +17,7 @@ class FormMakerFunctionCollection
     private $http = null;
     
     /**
-     * Method fetches form definition and all attributes for given MWForm id.
+     * Method fetches form definition and all attributes for given Form id.
      * It also returns validation error or success template content if there are no errors.
      * @param int $form_id
      * @return array
@@ -78,7 +78,7 @@ class FormMakerFunctionCollection
                 // rendering success template
                 $tpl = eZTemplate::factory();
                 $tpl->setVariable('result', $operation_result);
-                $result['success'] = $tpl->fetch( 'design:mwform_processed.tpl' );  
+                $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );  
                 ezSession::set('formmaker', time() );
             }
             // there are validation errors, so we need to pass them to the template

@@ -42,11 +42,11 @@
             <hr/>
 
             <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
-                <div class="mwform_error">{$error_message}</div>
+                <div class="form_error">{$error_message}</div>
                 {foreach $form_elements as $identifier => $element}
                     <div class="formmaker-attribute">
                         <label>
-                            <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="mwform_attribute_required"> *</span>{/if}<br/>
+                            <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                             <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
                         </label>
                     </div>

@@ -114,7 +114,7 @@ class formDefinitions extends eZPersistentObject
         $objects = eZContentObjectAttribute::fetchObjectList(
                 eZContentObjectAttribute::definition(), 
                 array('contentobject_id'), 
-                array('data_type_string' => 'mwform', 'data_text' => $form_id),
+                array('data_type_string' => 'form', 'data_text' => $form_id),
                 null,
                 null,
                 true,

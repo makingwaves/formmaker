@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
             var parts           = work_object.attr('name').split('_');
             var id              = parts[parts.length-1];
             var post_data       = 'id=' + id + '&value=' + work_object.val();   
-            var content_element = $('#mwform_element_' + id + ' .mwform_notification');
+            var content_element = $('#form_element_' + id + ' .form_notification');
 
             $.ez( 'formmaker::validate', post_data, function( data ) {
                 if (data.content && data.content.length){
@@ -63,6 +63,6 @@ jQuery(document).ready(function(){
     };    
     
     // jQuery plugin init
-    jQuery('.validate-it .mwform_element').validator('blur');
+    jQuery('.validate-it .form_element').validator('blur');
     jQuery('#mwezform .validate-it input[type=checkbox]').validator('click');
 })

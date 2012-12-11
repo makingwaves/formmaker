@@ -3,8 +3,8 @@
 - $is_required - boolean
 *}
 
-<label for="mwform_{$attribute.type}_{$attribute.id}">
+<label for="form_{$attribute.type}_{$attribute.id}">
     {$attribute.label}
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label> 
-<textarea class="mwform_element" id="mwform_{$attribute.type}_{$attribute.id}" name="field_textarea_{$attribute.id}">{$attribute.default_value}</textarea>
+<textarea class="form_element" id="form_{$attribute.type}_{$attribute.id}" name="field_textarea_{$attribute.id}">{$attribute.default_value}</textarea>

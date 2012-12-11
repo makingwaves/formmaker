@@ -1,21 +1,21 @@
 <?php
 
 /**
- * MWForm datatype class
+ * Form datatype class
  * @author Piotr Szczygieł <piotr.szczygiel@makingwaves.pl>
  */
-class mwformType extends eZDataType
+class formType extends eZDataType
 {
-    const DATA_TYPE_STRING = 'mwform';
+    const DATA_TYPE_STRING = 'form';
 
     /**
      * Initializes with a string id and a description.
      */
-    function mwformType()
+    function formType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, 'MWForm',
+        $this->eZDataType( self::DATA_TYPE_STRING, 'Form',
                            array( 'serialize_supported' => true,
-                                  'object_serialize_map' => array( 'data_text' => 'mwform' ) ) );
+                                  'object_serialize_map' => array( 'data_text' => 'form' ) ) );
     }
 
     /**
@@ -27,18 +27,18 @@ class mwformType extends eZDataType
      */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
-        if ($http->hasPostVariable($base . '_mwform_' . $contentObjectAttribute->attribute('id')))
+        if ($http->hasPostVariable($base . '_form_' . $contentObjectAttribute->attribute('id')))
         {
-            $mwform_id = $http->postVariable($base . '_mwform_' . $contentObjectAttribute->attribute('id'));
+            $form_id = $http->postVariable($base . '_form_' . $contentObjectAttribute->attribute('id'));
             // ID needs to be numeric
-            if (empty($mwform_id) && $contentObjectAttribute->validateIsRequired())
+            if (empty($form_id) && $contentObjectAttribute->validateIsRequired())
             {
-                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'MWForm required.' ) );
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Form required.' ) );
                 return eZInputValidator::STATE_INVALID;                
             }
-            elseif (is_numeric($mwform_id) && !count(formDefinitions::getForm($mwform_id)))
+            elseif (is_numeric($form_id) && !count(formDefinitions::getForm($form_id)))
             {
-                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', "Given MWForm ID doesn't exist" ) );
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', "Given Form ID doesn't exist" ) );
                 return eZInputValidator::STATE_INVALID;                 
             }
         }
@@ -55,10 +55,10 @@ class mwformType extends eZDataType
      */
     function fetchObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
-        if ($http->hasPostVariable($base . '_mwform_' . $contentObjectAttribute->attribute('id')))
+        if ($http->hasPostVariable($base . '_form_' . $contentObjectAttribute->attribute('id')))
         {
-            $mwform_id = $http->postVariable($base . '_mwform_' . $contentObjectAttribute->attribute('id'));
-            $contentObjectAttribute->setAttribute( 'data_text', $mwform_id );
+            $form_id = $http->postVariable($base . '_form_' . $contentObjectAttribute->attribute('id'));
+            $contentObjectAttribute->setAttribute( 'data_text', $form_id );
             return true;
         }
         
@@ -82,8 +82,8 @@ class mwformType extends eZDataType
         }
         
         return array( 'forms_list'  => formDefinitions::getAllForms(),
-                      'mwform_id'   => $form_id,
-                      'mwform_name' => $form_name);
+                      'form_id'   => $form_id,
+                      'form_name' => $form_name);
     }
 
     /**
@@ -178,4 +178,4 @@ class mwformType extends eZDataType
     }
 }
 
-eZDataType::register( mwformType::DATA_TYPE_STRING, 'mwformtype' );
+eZDataType::register( formType::DATA_TYPE_STRING, 'formtype' );

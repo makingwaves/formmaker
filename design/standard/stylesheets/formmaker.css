@@ -10,12 +10,12 @@
     margin-bottom: 10px;
 }
 
-.mwform_error {
+.form_error {
     color:red;
     font-weight: bold;
 }
 
-.mwform_container {
+.form_container {
     margin: 2%;
     padding: 2%;
     width: 94%;
@@ -24,27 +24,27 @@
     border-radius: 3px;   
 }
 
-.mwform_label_checkbox {
+.form_label_checkbox {
     display: inline;
 }
 
-.mwform_attribute_required {
+.form_attribute_required {
     color: red;
     font-weight: bold;
 }
 
-.mwform_element_container {
+.form_element_container {
     overflow: hidden;
     border-bottom: 1px solid #dfcbd1;
     padding: 2px;
 }
 
-.mwform_attribute_content {
+.form_attribute_content {
     width: 40%;
     float: left;
 }
 
-.mwform_error_content {
+.form_error_content {
     float: left;
     width: 55%;
 }

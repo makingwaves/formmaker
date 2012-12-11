@@ -2,6 +2,6 @@
 
 [DataTypeSettings]
 ExtensionDirectories[]=formmaker
-AvailableDataTypes[]=mwform
+AvailableDataTypes[]=form
 
  */

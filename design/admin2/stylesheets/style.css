@@ -98,12 +98,12 @@
     width: 250px;
 }
 
-.mwform_attribute_required {
+.form_attribute_required {
     color: red;
     font-weight: bold;
 }
 
-.mwform_error {
+.form_error {
     color: red;
     font-weight: bold;
     width: 100%;
