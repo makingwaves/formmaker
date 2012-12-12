@@ -13,7 +13,7 @@ Now browse for package which is included in formmaker/package and import it.
 After successfull import process, you will be asked to install package, so please perform.
 In case of any errors please check if proper file rights write are set on your `var` folder.
 
-3. To check if everything went OK, go to Setup -> Classes. You should see "MWForm" class as a first item of "Recently modified classes" list.
+3. To check if everything went OK, go to Setup -> Classes. You should see "Form" class as a first item of "Recently modified classes" list.
 
 4. Now you need to include PHP class, so go to the root directory of your eZ installation and run:
 php bin/php/ezpgenerateautoloads.php
@@ -31,8 +31,8 @@ As a module please select "formmaker" and choose "create" function. Then accept 
 8. Additionaly, if you want to have AJAX (ezjscore) form validation, you need to add following privilages to Anonymous user group:
 module: ezjscore, function: call, function limitation: formmaker
 
-9. Now you can use "formmaker" tab, which is displayed in your admin panel. After you will create your form, you can assign it to MWForm class object. 
-It is also possible to add MWForm attribute (datatype) into your own class.
+9. Now you can use "formmaker" tab, which is displayed in your admin panel. After you will create your form, you can assign it to Form class object. 
+It is also possible to add Form attribute (datatype) into your own class.
 
 Troubles...
 If "formmaker" tab loads blank page, please be sure that you have cleared the cache. Perform clearing from the admin panel once more.

@@ -37,12 +37,8 @@ class formDefinitions extends eZPersistentObject
                                                                       "required" => true ),
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
-                                                                      "required" => false ),
-                                         "css_class"        => array( "name" => "css_class",
-                                                                      "datatype" => "string",
                                                                       "required" => false ) ),
                       "keys" => array('id'),
-                      "function_attributes" => array( 'object' => 'getContentObject' ),
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
@@ -60,18 +56,13 @@ class formDefinitions extends eZPersistentObject
     }
     
     /**
-     * Returns form with given ID or empty array in case of incorrect ID
+     * Returns form with given ID
      * @param int $id
-     * @return array
+     * @return formDefinitions
      */
     public static function getForm($id)
     {
-        $form = eZPersistentObject::fetchObjectList(self::definition(), null, array('id' => $id));
-        if (isset($form[0]))
-        {
-            return $form[0];
-        }
-        return array();
+        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
 
     /**
@@ -88,19 +79,6 @@ class formDefinitions extends eZPersistentObject
         }
         
         return $form->store();
-    }
-    
-    /**
-     * Method returns content object
-     * @return type
-     */    
-    public function getContentObject() 
-    { 
-        return eZPersistentObject::fetchObject( eZContentObject::definition(),
-                                null, // all fields
-                                array( 'id' => $this->attribute( 'id' ) ), // conditions
-                                true // return as object
-                                );
     }
     
     public static function removeContentObject($id) 
@@ -121,8 +99,7 @@ class formDefinitions extends eZPersistentObject
                                            'create_date' => null,
                                            'owner_user_id' => 14,
                                            'post_action' => 'email',
-                                           'recipients' => $data['recipients'],
-                                           'css_class' => $data['css_class'] ) );
+                                           'recipients' => $data['recipients']) );
         $object->store();
         return $object;
     }    
@@ -137,7 +114,7 @@ class formDefinitions extends eZPersistentObject
         $objects = eZContentObjectAttribute::fetchObjectList(
                 eZContentObjectAttribute::definition(), 
                 array('contentobject_id'), 
-                array('data_type_string' => 'mwform', 'data_text' => $form_id),
+                array('data_type_string' => 'form', 'data_text' => $form_id),
                 null,
                 null,
                 true,
@@ -153,4 +130,28 @@ class formDefinitions extends eZPersistentObject
         
         return true;
     }    
+    
+    /**
+     * Method return all attributes of current form
+     * @return array
+     */
+    public function getAllAttributes()
+    {
+        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, array( 'definition_id' => $this->attribute( 'id' ) ) );
+    }
+    
+    /**
+     * Method removed unused attributes based on arraf of correct ones
+     * @param array $correct_attributes
+     */
+    public function removeUnusedAttributes( $correct_attributes )
+    {
+        foreach ( $this->getAllAttributes() as $attribute )
+        {
+            if ( !in_array($attribute->attribute( 'id' ), $correct_attributes ) )
+            {
+                $attribute->removeRecord();
+            }
+        }
+    }
 }

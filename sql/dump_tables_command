@@ -1,4 +1,1 @@
-Piotr:
-mysqldump -uroot -ppass ezpublish47 form_validators form_definitions form_attributes form_attr_valid > sql/update.sql
-
-Bogdan:
+mysqldump -uroot -p ezpublish47 form_validators form_definitions form_attributes form_attr_valid form_types > sql/update.sql

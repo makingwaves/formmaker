@@ -11,9 +11,7 @@
 {ezscript_require(array( concat( 'list.js' ) ) )}
    
 
-<div id="dialog-confirm" title="Remove form">
-    <p><span class="ui-icon ui-icon-alert"></span>{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</p>
-</div>
+<div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
@@ -28,15 +26,6 @@
                     <table>
                         <thead>
                             <tr class="yui-dt-first yui-dt-last">
-                                <th id="yui-dt0-th-name" class="yui-dt0-col-name yui-dt-col-name yui-dt-resizeable" style="width: 20px">
-                                    <div class="yui-dt-resizerliner">
-                                        <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
-                                            <span class="yui-dt-label">{'ID'|i18n( 'extension/formmaker/admin' )}</span>
-                                        </div>
-                                        <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
-                                    </div>
-                                </th>
-
                                 <th id="yui-dt0-th-name" class="mwezform-list-name yui-dt0-col-name yui-dt-col-name yui-dt-resizeable">
                                     <div class="yui-dt-resizerliner">
                                         <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
@@ -69,9 +58,6 @@
                         <tbody class="yui-dt-message">
                             {foreach $forms as $form}
                                 <tr class="yui-dt-first yui-dt-last">
-                                    <td class="yui-dt-empty">
-                                        <div class="yui-dt-liner">{$form.id}</div>
-                                    </td>
                                     <td class="yui-dt-empty">
                                         <div class="yui-dt-liner">{$form.name}</div>
                                     </td>
