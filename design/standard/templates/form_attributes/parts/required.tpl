@@ -3,5 +3,5 @@
 *}
 
 {if $is_required}
-    <span class="mwform_attribute_required">*</span>
+    <span class="form_attribute_required">*</span>
 {/if}

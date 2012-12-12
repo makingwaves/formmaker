@@ -3,7 +3,7 @@
 /**
  * Class definec custom template fetches
  */
-class mwEzFormsFunctionCollection
+class FormMakerFunctionCollection
 {  
     /**
      * Security constant - stores minimum execution time (in seconds) between displaying the form and processing them.
@@ -17,15 +17,15 @@ class mwEzFormsFunctionCollection
     private $http = null;
     
     /**
-     * Method fetches form definition and all attributes for given MWForm id.
+     * Method fetches form definition and all attributes for given Form id.
      * It also returns validation error or success template content if there are no errors.
      * @param int $form_id
      * @return array
      */  
     public function fetchFormData($form_id)
     {
-        $form_attributes    = formAttributes::getFormAttributes($form_id);
         $form_definition    = formDefinitions::getForm($form_id);
+        $form_attributes    = $form_definition->getAllAttributes();
         $this->http         = eZHTTPTool::instance();
         $result = $errors = $posted_values = array();
 
@@ -78,7 +78,7 @@ class mwEzFormsFunctionCollection
                 // rendering success template
                 $tpl = eZTemplate::factory();
                 $tpl->setVariable('result', $operation_result);
-                $result['success'] = $tpl->fetch( 'design:mwform_processed.tpl' );  
+                $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );  
                 ezSession::set('formmaker', time() );
             }
             // there are validation errors, so we need to pass them to the template
@@ -111,7 +111,7 @@ class mwEzFormsFunctionCollection
      */
     private function generatePostID($attrib)
     {
-        return 'field_' . $attrib->attribute('type') . '_' . $attrib->attribute('id');
+        return 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
     }
     
     /**
@@ -132,11 +132,15 @@ class mwEzFormsFunctionCollection
                 continue;
             } 
             
-            switch ($attribute->attribute('type'))
+            switch ($attribute->attribute('type_id'))
             {
-                case 'checkbox':
-                    $answer = ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No';
-                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', $answer);
+                case '3': // checkbox
+                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No');
+                    break;
+                
+                case '4': // radio button
+                    $option_object = formAttributesOptions::fetchOption( $this->http->postVariable( $post_id ) );
+                    $email_data[$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
                     break;
                 
                 default:

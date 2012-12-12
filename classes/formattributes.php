@@ -29,20 +29,23 @@ class formAttributes extends eZPersistentObject
                                          "definition_id"    => array( "name" => "definition_id",
                                                                       "datatype" => "integer",
                                                                       "required" => true ),
-                                         "type"             => array( "name" => "type",
-                                                                      "datatype" => "string",
+                                         "type_id"          => array( "name" => "type_id",
+                                                                      "datatype" => "int",
                                                                       "required" => true ),
                                          "default_value"    => array( "name" => "default_value",
                                                                       "datatype" => "string",
                                                                       "required" => false ),
                                          "label"            => array( "name" => "label",
                                                                       "datatype" => "string",
-                                                                      "required" => true ),
-                                         "css_class"        => array( "name" => "css_class",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ) ),
+                                                                      "required" => true ) ),
                       "keys" => array('id'),
-                      "function_attributes" => array( 'object' => 'getContentObject' ),
+                      "function_attributes" => array(
+                          'validators'      => 'getAttributeValidators',
+                          'validator_ids'   => 'getValidatorAllIds',
+                          'type_data'       => 'getTypeData',
+                          'is_mandatory'    => 'isMandatoryHtml',
+                          'options'         => 'getOptions'
+                      ),
                       "increment_key" => "id",
                       "class_name" => "formAttributes",
                       "sort" => array('attr_order' => 'asc'),
@@ -51,45 +54,62 @@ class formAttributes extends eZPersistentObject
     }    
     
     /**
-     * Method returns content object
-     * @return type
+     * Mehtod returns empty inctance on attribute
+     * @return \self
      */
-    public function getContentObject() 
-    { 
-        return eZPersistentObject::fetchObject( eZContentObject::definition(),
-                                null, // all fields
-                                array( 'id' => $this->attribute( 'id' ) ), // conditions
-                                true // return as object
-                                );        
-    }
-    
-    /**
-     * Method returns array containing all attributes of given MWForm ID
-     * @param int $form_id
-     * @return array
-     */
-    public static function getFormAttributes($form_id)
-    {   
-        if (!is_numeric($form_id)) {
-            return array();
-        }
-        
-        return eZPersistentObject::fetchObjectList(self::definition(), null, array('definition_id' => $form_id));
-    }
-    
-    /**
-     * Returns attribute with given ID or null in case of incorrect ID
-     * @param int $id
-     * @return null|formAttributes
-     */
-    public static function getAttribute($id)
+    public static function createEmpty()
     {
-        $attribute = eZPersistentObject::fetchObjectList(self::definition(), null, array('id' => $id));
-        if (isset($attribute[0]))
-        {
-            return $attribute[0];
-        }
-        return null;
+        return new self();
+    }
+    
+    /**
+     * Method creates, stores in db and returns new object of attribute
+     * @param int $order
+     * @param int $definition_id
+     * @param int $type_id
+     * @param string $def_value
+     * @param string $label
+     * @return \self
+     */
+    public static function addNewAttribute( $order, $definition_id, $type_id, $def_value, $label )
+    {
+        $object = new self( array(
+            'attr_order'    => $order,
+            'definition_id' => $definition_id,
+            'type_id'       => $type_id,
+            'default_value' => $def_value,
+            'label'         => $label
+        ) );
+        $object->store();
+        return $object;        
+    }
+    
+    /**
+     * Method returns type data for current attribute
+     * @return formTypes
+     */
+    public function getTypeData()
+    {
+        return formTypes::fetchById( $this->attribute( 'type_id' ) );
+    }
+    
+    /**
+     * Method checks whether attribue is mandatory
+     * @return boolean
+     */
+    public function isMandatoryHtml()
+    {
+        return (formAttrvalid::isAttributeRequired( $this->attribute('id') )) ? 'on' : 0;
+    }
+    
+    /**
+     * Returns attribute with given ID or false in case of incorrect ID
+     * @param int $id
+     * @return false|formAttributes
+     */
+    public static function getAttribute( $id )
+    {
+        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
         
     
@@ -103,6 +123,20 @@ class formAttributes extends eZPersistentObject
     }
     
     /**
+     * Method returns an array of attribue validator's ids.
+     * @return array
+     */
+    public function getValidatorAllIds()
+    {
+        $result = array();
+        foreach ( $this->getAttributeValidators() as $validator )
+        {
+            $result[] = $validator->attribute( 'validator_id' );
+        }
+        return $result;
+    }
+    
+    /**
      * Method validates current row and returns an array of error messages. In case when everything id OK, array is empty.
      * @param string $value - here comes value from the form
      * @return array
@@ -111,7 +145,7 @@ class formAttributes extends eZPersistentObject
     {
         $attribute_validators = $this->getAttributeValidators();
         $result = array();
-        
+
         foreach ($attribute_validators as $attr_valid)
         {
             // we don't want to validate empty values except "Required"  validator
@@ -136,142 +170,225 @@ class formAttributes extends eZPersistentObject
         return $result;
     }
     
-    
     /*
      * adds new attributes or updates existing ones
      * @param array $data
      * @return null
      */
-    static function updateFormAttributes( $data ) 
+    static function updateFormAttributes( $data, $definition_id ) 
     {
+        $order = 0;
+        $processed_ids = array(); // an array of processed ids, will be completed inside to loop
         
-        $ids = $objects = array();
-        
-        // get IDs of all existing attributes
-        $attributes = self::getFormAttributes( $data['definition_id'] );
-
-        foreach($attributes as $id) {
-            $ids[] = $id->id;
-        }
-        
-        // determine removed attributes
-        $removed = array_diff($ids, $data['ids']);
-        
-        
-        // delete removed attirbutes
-        foreach( $removed as $id ) {
-            
-            $cond = array( 'id' => $id );
-            eZPersistentObject::removeObject( formAttributes::definition(), $cond );
-            
-            // remove also validators info
-            $cond = array( 'attribute_id' => $id );
-            eZPersistentObject::removeObject( formAttrvalid::definition(), $cond );
-            
-        }
-        
-        // build array with attributes to add
-        foreach( $data['ids'] as $key => $item ) {
-            
-            $validators = array();
-            $validators[] = $data['validators'][$key];
-            
-            if( $data['mandatoriesValue'][$key] )
+        foreach ( $data as $key => $item )
+        {
+            // we need only form elements on this level
+            if ( !preg_match( '/^formelement_/', $key ) )
             {
-                $validators[] = 5; // mandatory value
+                continue;
             }
             
-            if( $data['types'][$key] == 'checkbox' )
+            $id = explode( '_', $key );
+            $id = $id[1];
+            $order ++;
+            
+            // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
+            if ( ctype_digit( (string)$id ) )
             {
-                $data['placeholders'][$key] = $data['placeholdersValue'][$key];
-            }
-            
-            $objects[] = array(
-                'id' => $data['ids'][$key],
-                'attr_order' => $key,
-                'definition_id' => $data['definition_id'],
-                'type' => $data['types'][$key],
-                'default_value' => $data['placeholders'][$key],
-                'label' => $data['labels'][$key],
-                'css_class' => $data['css_classes'][$key],
-                'validators' => $validators
-            );
-            
-        }
-        
-        // add  new attributes or update existing
-        foreach( $objects as $key => $item ) {
-            
-            // check if alredy in DB
-            $cond = array( 'id' => $item['id'] );
-            $simpleObj = eZPersistentObject::fetchObject( formAttributes::definition(), null, $cond );
-            
-            $cond = array( 'attribute_id' => $item['id'] );
-            $activeValidatorsList = eZPersistentObject::fetchObjectList( formAttrvalid::definition(), null, $cond );
-            
-            foreach( $activeValidatorsList as $activeValidator ) {
-                eZPersistentObject::removeObject( formAttrvalid::definition(), $cond );
-            }
-            
-            // update existing
-            if( $simpleObj )
-            {
+                $processed_ids[] = $id;
+                $attribute = self::getAttribute( $id );
+                $attribute->setData( $order, $item['default'], $item['label'] );
+                $attribute->store();
                 
-               // $cond = array( 'id' => $id );
-                //eZPersistentObject::removeObject( formAttributes::definition(), $cond );
-                
-                // update validators
-                foreach( $item['validators'] as $validatorId ) {
-                    
-                    if(!is_numeric($validatorId)){
-                        continue;
-                    }
-
-                    $validator = new formAttrvalid( array( 'attribute_id' => $item['id'],
-                                                            'validator_id' => $validatorId,
-                                                            ));
-                    $validator->store();
+                $correct_validators = array();
+                if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
+                {
+                    $correct_validators[] = $item['validation'];
                 }
-
-                $simpleObj->setAttribute( 'attr_order', $key );
-                $simpleObj->setAttribute( 'definition_id', $item['definition_id'] );
-                $simpleObj->setAttribute( 'type', $item['type'] );
-                $simpleObj->setAttribute( 'default_value', $item['default_value'] );
-                $simpleObj->setAttribute( 'label', $item['label'] );
-                $simpleObj->setAttribute( 'css_class', $item['css_class'] );
-                $simpleObj->store();
                 
+                if ( isset( $item['mandatory'] ) && $item['mandatory'] == 'on' )
+                {
+                    $correct_validators[] = formAttrvalid::REQUIRED_ID;
+                }      
+                
+                $attribute->updateValidators( $correct_validators );
+                $default_value_to_set = false;
+                if ( isset( $item['options'] ) && is_array( $item['options'] ) )
+                {
+                    $default_value = (string)$attribute->attribute( 'default_value' );
+                    $default_input = false;
+                    if ( $attribute->attribute( 'type_id' ) == 4 && !empty( $default_value ) && !ctype_alpha( $default_value ) )
+                    {
+                        $default_input = $default_value;
+                    }
+                    $default_value_to_set = $attribute->updateOptions( $item['options'], $default_value );
+                }
             }
-            // add new
+            // ID is an unique hash, which means that it's NEW one and we need to add it to database
+            else 
+            {
+                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['default'], $item['label'] );
+                $processed_ids[] = $attribute->attribute( 'id' );
+                // adding 'required' validator
+                if ( $item['mandatory'] == 'on' )
+                {
+                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), formAttrvalid::REQUIRED_ID );
+                }
+                // adding other validator
+                if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
+                {
+                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'] );
+                }
+                
+                // adding attribute options
+                $default_value_to_set = false;
+                if ( isset( $item['options'] ) && is_array( $item['options'] ) )
+                {
+                    $option_order = 0;
+                    foreach ( $item['options'] as $key => $label )
+                    {
+                        $option_order++;
+                        $option_object = $attribute->addOption( $label, $option_order );
+                        
+                        $default_value = (string)$attribute->attribute( 'default_value' );
+                        if ( $key == $default_value && $attribute->attribute( 'type_id' ) == 4 ) 
+                        {
+                            $default_value_to_set = $option_object->attribute( 'id' );
+                        }
+                    }
+                }
+            }
+            
+            // setting default value for radio button
+            if ( $default_value_to_set )
+            {
+                $attribute->setAttribute( 'default_value', $default_value_to_set );
+                $attribute->store();
+            }            
+        }
+        
+        $form = formDefinitions::getForm( $data['definition_id'] );
+        $form->removeUnusedAttributes( $processed_ids );
+    }
+    
+    /**
+     * Method sets the changable data in current attribute object
+     * @param int $order
+     * @param string $default
+     * @param string $label
+     */
+    private function setData( $order, $default, $label )
+    {
+        $this->setAttribute( 'attr_order', $order );
+        $this->setAttribute( 'default_value', $default );
+        $this->setAttribute( 'label', $label);
+    }
+    
+    /**
+     * Method removed old validators and add new ones (for current attribute)
+     * @param array $correct_validators
+     */
+    private function updateValidators( $correct_validators )
+    {
+        $existing_correct = array();
+        foreach ( $this->getAttributeValidators() as $validator )
+        {
+            // removing an old attribute
+            if ( !in_array( $validator->attribute( 'id' ), $correct_validators ) )
+            {
+                formAttrvalid::removeRecord( $this->attribute( 'id' ), $validator->attribute( 'validator_id' ) );
+            }
             else
             {
-                
-                $simpleObj = new formAttributes( array( 'id' => '', 
-                                                   'attr_order' => $key,
-                                                   'definition_id' => $item['definition_id'],
-                                                   'type' => $item['type'],
-                                                   'default_value' => $item['default_value'],
-                                                   'label' => $item['label'],
-                                                   'css_class' => $item['css_class']
-                                                   ));
-                
-                // first store the object, we need id for validators' table
-                $simpleObj->store();
-                
-                // add validators
-                foreach( $item['validators'] as $validatorId ) {
-                    
-                    if(!is_numeric($validatorId)){
-                        continue;
-                    }                    
-                    
-                    $validator = new formAttrvalid( array( 'attribute_id' => $simpleObj->attribute('id'),
-                                                            'validator_id' => $validatorId,
-                                                            ));
-                    $validator->store();
+                // making an array of correct validators that already exists in database
+                $existing_correct[] = $validator->attribute( 'id' );
+            }
+        }
+        
+        // adding new entries to database
+        foreach ( array_diff( $correct_validators, $existing_correct ) as $validator_id )
+        {
+            formAttrvalid::addRecord( $this->attribute('id'), $validator_id );
+        }
+    }
+    
+    /**
+     * Meethod removed an attribute with given id
+     * @param int $id
+     */
+    public function removeRecord()
+    {
+        eZPersistentObject::removeObject( self::definition(), array(
+            'id'    => $this->attribute( 'id' )
+        ) );        
+    }
+    
+    /**
+     * Method adds new attribute option
+     * @param string $label
+     * @param int $order
+     * @return formAttributesOptions
+     */
+    private function addOption( $label, $order )
+    {
+        return formAttributesOptions::addOption( $label, $order, $this->attribute( 'id' ) );
+    }
+    
+    /**
+     * Method return current attribute options
+     * @return array
+     */
+    public function getOptions( $pairs = false )
+    {
+        return formAttributesOptions::getAttributeOptions( $this->attribute( 'id' ), $pairs );
+    }
+    
+    /**
+     * Method updated the attribute options basing on array with correct entried
+     * @param array $correct_options
+     */
+    private function updateOptions( $correct_options, $default_hash = false )
+    {      
+        // generating helper array
+        $correct_ids = array();
+        foreach ( $correct_options as $id => $label )
+        {
+            $correct_ids[] = $id;
+        }
+        
+        // removing outdated options
+        foreach ( $this->getOptions() as $option )
+        {
+            if ( !in_array( $option->attribute( 'id' ), $correct_ids ) ) 
+            {
+                $option->removeOption();
+            }
+        }
+        
+        $order = 0;
+        $default_value = false;
+        foreach ( $correct_options as $opt_id => $label )
+        {
+            $opt_id = (string)$opt_id;
+            $order++;
+            // adding new option
+            if ( !ctype_digit( $opt_id ) )
+            {
+                $option_object = $this->addOption($label, $order);
+                if ( $default_hash && $default_hash == $opt_id )
+                {
+                    $default_value = $option_object->attribute( 'id' );
                 }
             }
-
+            // editing existing one
+            else
+            {
+                $option_object = formAttributesOptions::fetchOption( $opt_id );
+                $option_object->setData( $this->attribute( 'id' ), $label, $order);
+                $option_object->store();
+            }
         }
+        
+        return $default_value;
     }
 }

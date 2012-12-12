@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
             var parts           = work_object.attr('name').split('_');
             var id              = parts[parts.length-1];
             var post_data       = 'id=' + id + '&value=' + work_object.val();   
-            var content_element = $('#mwform_element_' + id + ' .mwform_notification');
+            var content_element = $('#form_element_' + id + ' .form_notification');
 
             $.ez( 'formmaker::validate', post_data, function( data ) {
                 if (data.content && data.content.length){
@@ -50,6 +50,10 @@ jQuery(document).ready(function(){
             if (obj.attr('type') == 'checkbox') {
                 obj = $('#' + $(object).attr('connected'));
             }
+            else if (obj.attr('type') == 'radio') {
+                var input_id = $(object).attr('name').replace('connected_', '');
+                obj = $(object).parents('.form_attribute_content').find('input[name=' + input_id + ']');
+            }
             return obj;
         }
     };
@@ -63,6 +67,6 @@ jQuery(document).ready(function(){
     };    
     
     // jQuery plugin init
-    jQuery('.validate-it .mwform_element').validator('blur');
-    jQuery('#mwezform .validate-it input[type=checkbox]').validator('click');
+    jQuery('.validate-it .form_element').validator('blur');
+    jQuery('.validate-it input[type=checkbox], .validate-it input[type=radio]').validator('click');
 })

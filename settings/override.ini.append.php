@@ -1,9 +1,9 @@
 <?php /* #?ini charset="utf-8"?
 
-[mwform]
+[form]
 Source=node/view/full.tpl
-MatchFile=full/mwform.tpl
+MatchFile=full/form.tpl
 Subdir=templates
-Match[class_identifier]=mwform
+Match[class_identifier]=form
 
- */ ?>
+ */

@@ -4,7 +4,7 @@
 *}
 
 {if is_set($errors[$attribute_id])}
-    <span class="mwform_error">
+    <span class="form_error">
         {foreach $errors.$attribute_id as $messages}
             {foreach $messages as $message}{$message}<br/>{/foreach}
         {/foreach}
