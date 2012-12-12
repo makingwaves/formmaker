@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: ezpublish47
 -- ------------------------------------------------------
--- Server version	5.5.28-0ubuntu0.12.04.2
+-- Server version	5.5.28-0ubuntu0.12.04.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,16 +31,6 @@ CREATE TABLE `form_validators` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `form_validators`
---
-
-LOCK TABLES `form_validators` WRITE;
-/*!40000 ALTER TABLE `form_validators` DISABLE KEYS */;
-INSERT INTO `form_validators` VALUES (1,'Digits','Only digits'),(2,'EmailAddress','Email address'),(3,'Float','Float point value'),(5,'NotEmpty','Not empty'),(6,'Hostname','Hostname'),(7,'Ip','IP address');
-/*!40000 ALTER TABLE `form_validators` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `form_definitions`
 --
 
@@ -57,18 +47,8 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `form_definitions`
---
-
-LOCK TABLES `form_definitions` WRITE;
-/*!40000 ALTER TABLE `form_definitions` DISABLE KEYS */;
-INSERT INTO `form_definitions` VALUES (7,'Zajebisty form','2012-12-06 13:48:55',14,'email','piotr.szczygiel@gmail.com'),(8,'dupa','2012-12-06 13:55:41',14,'email','ss');
-/*!40000 ALTER TABLE `form_definitions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `form_attributes`
@@ -89,18 +69,8 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `form_attributes`
---
-
-LOCK TABLES `form_attributes` WRITE;
-/*!40000 ALTER TABLE `form_attributes` DISABLE KEYS */;
-INSERT INTO `form_attributes` VALUES (24,1,8,1,'',''),(25,2,8,3,'',''),(26,3,8,2,NULL,''),(27,4,8,3,'',''),(28,5,8,3,'',''),(29,6,8,1,'',''),(43,1,7,1,'',''),(44,2,7,4,NULL,'');
-/*!40000 ALTER TABLE `form_attributes` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `form_attr_valid`
@@ -120,15 +90,6 @@ CREATE TABLE `form_attr_valid` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `form_attr_valid`
---
-
-LOCK TABLES `form_attr_valid` WRITE;
-/*!40000 ALTER TABLE `form_attr_valid` DISABLE KEYS */;
-/*!40000 ALTER TABLE `form_attr_valid` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `form_types`
 --
 
@@ -143,16 +104,6 @@ CREATE TABLE `form_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `form_types`
---
-
-LOCK TABLES `form_types` WRITE;
-/*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
-INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1),(2,'Textarea','textarea.tpl',0),(3,'Checkbox','checkbox.tpl',0),(4,'Radio Buttons','radio.tpl',0);
-/*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -163,4 +114,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-07 10:59:59
+-- Dump completed on 2012-12-12 13:59:34
