@@ -134,9 +134,13 @@ class FormMakerFunctionCollection
             
             switch ($attribute->attribute('type_id'))
             {
-                case 'checkbox':
-                    $answer = ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No';
-                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', $answer);
+                case '3': // checkbox
+                    $email_data[$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ($this->http->postVariable($post_id) == 'on') ? 'Yes': 'No');
+                    break;
+                
+                case '4': // radio button
+                    $option_object = formAttributesOptions::fetchOption( $this->http->postVariable( $post_id ) );
+                    $email_data[$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
                     break;
                 
                 default:
