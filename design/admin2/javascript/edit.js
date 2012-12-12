@@ -61,6 +61,12 @@ jQuery(document).ready( function() {
     jQuery('.form-attribute-options .option-remove').live('click', function(){
         if ($(this).parents('.form-attribute-options ul').find('li').length > 1) {
             if (confirm($('#dialog-confirm').html())){
+            
+                // remove default value from hidden field if current option is checked
+                if ($(this).parent().find('.default-radio input[type=checkbox]').is(':checked')){
+                    $(this).parents('.formField').find('input[name="' + $(this).parent().find('.default-radio input[type=checkbox]').attr('connected') + '"]').val('');
+                }
+                
                 var obj = $(this).parent();
                 obj.hide(500, function(){
                     obj.remove();
@@ -85,5 +91,28 @@ jQuery(document).ready( function() {
             var current_element = $(this).parents('ul').find('li').get(current_index);
             $(current_element).next().after(current_element);
         }
-    });    
+    });  
+    
+    // setting default value for radio options
+    jQuery('.default-radio input[type=checkbox]').live('click', function(){
+        
+        var hidden_value = '';
+        
+        if ($(this).is(':checked')) {
+            var option_id = $(this).attr('option_id');
+            hidden_value = option_id;
+            
+            // setting the value to hidden field
+            $(this).parents('.formField').find('input[name="' + $(this).attr('connected') + '"]').val(option_id);
+            
+            // unchecking other checkboxes from this group
+            $(this).parents('.form-attribute-options').find('input[type=checkbox][option_id!=' + option_id + ']:checked').attr('checked', false);
+        } else {
+            // for security reasons, unchecking all checkboxes
+            $(this).parents('.form-attribute-options').find('input[type=checkbox]').attr('checked', false);
+        }
+        
+        // setting hidden field value
+        $(this).parents('.formField').find('input[name="' + $(this).attr('connected') + '"]').val(hidden_value);        
+    });
 });

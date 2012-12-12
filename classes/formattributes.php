@@ -201,7 +201,7 @@ class formAttributes extends eZPersistentObject
                 $attribute->store();
                 
                 $correct_validators = array();
-                if ( isset( $item['validation'] ) && (string)ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
+                if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
                     $correct_validators[] = $item['validation'];
                 }
@@ -212,9 +212,16 @@ class formAttributes extends eZPersistentObject
                 }      
                 
                 $attribute->updateValidators( $correct_validators );
+                $default_value_to_set = false;
                 if ( isset( $item['options'] ) && is_array( $item['options'] ) )
                 {
-                    $attribute->updateOptions( $item['options'] );
+                    $default_value = (string)$attribute->attribute( 'default_value' );
+                    $default_input = false;
+                    if ( $attribute->attribute( 'type_id' ) == 4 && !empty( $default_value ) && !ctype_alpha( $default_value ) )
+                    {
+                        $default_input = $default_value;
+                    }
+                    $default_value_to_set = $attribute->updateOptions( $item['options'], $default_value );
                 }
             }
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
@@ -228,21 +235,36 @@ class formAttributes extends eZPersistentObject
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), formAttrvalid::REQUIRED_ID );
                 }
                 // adding other validator
-                if ( isset( $item['validation'] ) && (string)ctype_digit( $item['validation'] ) &&  $item['validation'] > 0 )
+                if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
                     formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'] );
                 }
+                
                 // adding attribute options
+                $default_value_to_set = false;
                 if ( isset( $item['options'] ) && is_array( $item['options'] ) )
                 {
                     $option_order = 0;
                     foreach ( $item['options'] as $key => $label )
                     {
                         $option_order++;
-                        $attribute->addOption( $label, $option_order );
+                        $option_object = $attribute->addOption( $label, $option_order );
+                        
+                        $default_value = (string)$attribute->attribute( 'default_value' );
+                        if ( $key == $default_value && $attribute->attribute( 'type_id' ) == 4 ) 
+                        {
+                            $default_value_to_set = $option_object->attribute( 'id' );
+                        }
                     }
                 }
             }
+            
+            // setting default value for radio button
+            if ( $default_value_to_set )
+            {
+                $attribute->setAttribute( 'default_value', $default_value_to_set );
+                $attribute->store();
+            }            
         }
         
         $form = formDefinitions::getForm( $data['definition_id'] );
@@ -325,7 +347,7 @@ class formAttributes extends eZPersistentObject
      * Method updated the attribute options basing on array with correct entried
      * @param array $correct_options
      */
-    private function updateOptions( $correct_options )
+    private function updateOptions( $correct_options, $default_hash = false )
     {      
         // generating helper array
         $correct_ids = array();
@@ -344,13 +366,19 @@ class formAttributes extends eZPersistentObject
         }
         
         $order = 0;
+        $default_value = false;
         foreach ( $correct_options as $opt_id => $label )
         {
+            $opt_id = (string)$opt_id;
             $order++;
             // adding new option
-            if ( !ctype_digit( (string)$opt_id ) )
+            if ( !ctype_digit( $opt_id ) )
             {
-                $this->addOption($label, $order);
+                $option_object = $this->addOption($label, $order);
+                if ( $default_hash && $default_hash == $opt_id )
+                {
+                    $default_value = $option_object->attribute( 'id' );
+                }
             }
             // editing existing one
             else
@@ -360,5 +388,7 @@ class formAttributes extends eZPersistentObject
                 $option_object->store();
             }
         }
+        
+        return $default_value;
     }
 }

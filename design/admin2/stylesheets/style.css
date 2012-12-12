@@ -12,9 +12,19 @@
     border: 1px solid grey;
     margin-bottom: 10px;
 }
+
 .formField {
     cursor: move;
 }
+
+    .formField .form-attribute-options input[type=text] {
+        width: 450px;
+    }
+    
+    .formField .form-attribute-options .default-radio {
+        margin-right: 10px;
+    }
+
 .addField {
     background-image: url('../../../design/admin2/images/add.png');
     background-repeat: no-repeat;
@@ -172,10 +182,6 @@
     background: url('../../../design/admin2/images/add2.png') no-repeat;
     height: 16px;
     padding-left: 20px;    
-}
-
-.form-attribute-options input[type=text] {
-    width: 540px;
 }
 
 .option-remove {
