@@ -1,1 +1,1 @@
-mysqldump -uroot -p --no-data ezpublish47 form_validators form_definitions form_attributes form_attr_valid form_types > sql/update.sql
+mysqldump -uroot -p ezpublish47 form_validators form_definitions form_attributes form_attr_valid form_types > sql/update.sql
