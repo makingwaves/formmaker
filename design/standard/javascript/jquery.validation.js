@@ -50,6 +50,10 @@ jQuery(document).ready(function(){
             if (obj.attr('type') == 'checkbox') {
                 obj = $('#' + $(object).attr('connected'));
             }
+            else if (obj.attr('type') == 'radio') {
+                var input_id = $(object).attr('name').replace('connected_', '');
+                obj = $(object).parents('.form_attribute_content').find('input[name=' + input_id + ']');
+            }
             return obj;
         }
     };
@@ -64,5 +68,5 @@ jQuery(document).ready(function(){
     
     // jQuery plugin init
     jQuery('.validate-it .form_element').validator('blur');
-    jQuery('#mwezform .validate-it input[type=checkbox]').validator('click');
+    jQuery('.validate-it input[type=checkbox], .validate-it input[type=radio]').validator('click');
 })

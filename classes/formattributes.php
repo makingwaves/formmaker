@@ -145,7 +145,7 @@ class formAttributes extends eZPersistentObject
     {
         $attribute_validators = $this->getAttributeValidators();
         $result = array();
-        
+
         foreach ($attribute_validators as $attr_valid)
         {
             // we don't want to validate empty values except "Required"  validator
