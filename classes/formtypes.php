@@ -5,14 +5,12 @@
  */
 class formTypes extends eZPersistentObject 
 {
-    /**
-     * Constructor
-     * @param type $row
-     */
-    public function __construct( $row )
-    {
-        $this->eZPersistentObject( $row );
-    }
+    // ids of form types
+    const TEXTLINE_ID = 1;
+    const TEXTAREA_ID = 2;
+    const CHECKBOX_ID = 3;
+    const RADIO_ID = 4;
+    const SEPARATOR_ID = 5;
 
     /**
      *  Table definition

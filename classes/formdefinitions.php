@@ -39,6 +39,9 @@ class formDefinitions extends eZPersistentObject
                                                                       "datatype" => "string",
                                                                       "required" => false ) ),
                       "keys" => array('id'),
+                      "function_attributes" => array(
+                          'is_page_last' => 'isCurrentPageLast'
+                      ),            
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
@@ -149,6 +152,52 @@ class formDefinitions extends eZPersistentObject
     }
     
     /**
+     * Method returns page attributes sorted by pages or for given page
+     * @param boolean $page
+     * @return array
+     */
+    public function getPageAttributes( $page = false )
+    {
+        $attributes_by_pages    = array();
+        $current_page           = 0;
+        $page_enabled           = true;
+
+        foreach ( $this->getAllAttributes( true ) as $attribute )
+        {
+            if ( $attribute->attribute( 'type_id' ) == formTypes::SEPARATOR_ID )
+            {
+                $current_page ++;
+                $page_enabled = (bool)$attribute->attribute( 'enabled' );
+            }
+            
+            if ( $page_enabled )
+            {
+                if ( !isset( $attributes_by_pages[$current_page] ) )
+                {
+                    $attributes_by_pages[$current_page] = array(
+                        'page_info'     => array(), 
+                        'attributes'    => array()
+                    );
+                }  
+                
+                if ( $attribute->attribute( 'type_id' ) == formTypes::SEPARATOR_ID )
+                {
+                    $attributes_by_pages[$current_page]['page_info'] = $attribute;
+                }
+                else 
+                {
+                    $attributes_by_pages[$current_page]['attributes'][] = $attribute;
+                }                
+            }
+        }
+        if ( $page )
+        {
+            return $attributes_by_pages[$page];
+        }
+        return $attributes_by_pages;
+    }
+    
+    /**
      * Method removed unused attributes based on arraf of correct ones
      * @param array $correct_attributes
      */
@@ -161,5 +210,24 @@ class formDefinitions extends eZPersistentObject
                 $attribute->removeRecord();
             }
         }
+    }
+    
+    /**
+     * Method returns currently processes page number
+     * @return int
+     */
+    public function getCurrentPage()
+    {
+        $http = eZHTTPTool::instance();
+        return $http->hasPostVariable( 'from_page' ) ? $http->postVariable( 'form_page' ) : 0;
+    }
+    
+    /**
+     * Method checks if current page is the last one
+     * @return boolean
+     */
+    public function isCurrentPageLast()
+    {
+        return count( $this->getPageAttributes() ) == ($this->getCurrentPage() + 1) ? true : false;
     }
 }

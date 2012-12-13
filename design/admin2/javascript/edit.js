@@ -120,9 +120,29 @@ jQuery(document).ready( function() {
     // "enable" checkbox
     jQuery('.enable-attribute input[type=checkbox]').live('click', function(){
         var value = 0;
+        var separator_id = $('#separator-id').val();
         if ($(this).is(':checked')) {
             value = 1;
         }
+        
+        // disabling/enabling whole form page
+        if ($(this).parents('.formField').find('input[type=hidden][name$="[type]"]').val() == separator_id) {
+            var all_formfields = $('.sortable-attributes .formField');
+            var form_field = false;
+            var checkbox = false;
+            var start_index = all_formfields.index($(this).parents('.formField')) + 1;
+
+            for (var i = start_index; i < all_formfields.length; i++){
+                form_field = $(all_formfields[i]);
+                if (form_field.find('input[type=hidden][name$="[type]"]').val() == separator_id) {
+                    break;
+                }
+                checkbox = form_field.find('.enable-attribute input[type=checkbox]');
+                checkbox.attr('checked', Boolean(value));
+                checkbox.parent().find('input[type=hidden]').val(value);
+            }
+        }
+        
         $(this).parent().find('input[type=hidden]').val(value);
     });
 });

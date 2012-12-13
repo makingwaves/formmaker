@@ -6,6 +6,7 @@
      $form_attributes   = $form_data.attributes 
      $counted_validators= $form_data.counted_validators
      $attr_required     = false()
+     $current_page      = $form_data.current_page
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
@@ -30,6 +31,8 @@
 
             <input type="hidden" name="form_id" value="{$form_definition.id}"/>
             <input type="hidden" name="node_id" value="{$node.node_id}"/>
+            <input type="hidden" name="current_page" value="{$current_page}" />
+            
             {foreach $form_attributes as $attribute}
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
                 <div class="form_element_container" id="form_element_{$attribute.id}">
@@ -41,7 +44,7 @@
                     </div>
                 </div>
             {/foreach}
-            <input id="mwezform-submit" type="submit" value="{'Send'|i18n( 'extension/formmaker/front' )}"/>
+            <input id="form-submit" type="submit" value="{'Send'|i18n( 'extension/formmaker/front' )}"/>
             <input type="hidden" name="validation" value="false"/>
         </form>
     {/if}

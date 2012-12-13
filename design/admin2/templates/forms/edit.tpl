@@ -4,6 +4,7 @@
 - $form_attributes - array of attribute objects
 - $id - edited form id
 - $form_name
+- $separator_id - integer, in defined in class formTypes::SEPARATOR_ID
 - $input_types - array of all available input types *}
 
 {* jquery UI *}
@@ -62,6 +63,7 @@
                 <h3>Attributes</h3>
                 <hr/>
                 <input type="hidden" name="definition_id" value="{$id}" />
+                <input type="hidden" id="separator-id" value="{$separator_id}"/>
 
                 <div class="sortable-attributes">
                     {foreach $form_attributes as $attribute}

@@ -6,11 +6,6 @@
 class FormMakerFunctionCollection
 {  
     /**
-     * Security constant - stores minimum execution time (in seconds) between displaying the form and processing them.
-     */
-    const MIN_PROCESS_TIME = 2;
-    
-    /**
      * eZHTTPTool object instance
      * @var eZHTTPTool 
      */
@@ -22,14 +17,17 @@ class FormMakerFunctionCollection
      * @param int $form_id
      * @return array
      */  
-    public function fetchFormData($form_id)
+    public function fetchFormData( $form_id )
     {
-        $form_definition    = formDefinitions::getForm($form_id);
-        $form_attributes    = $form_definition->getAllAttributes( true );
+        $form_definition    = formDefinitions::getForm( $form_id );
+        $current_page       = $form_definition->getCurrentPage();
+        $all_pages          = $form_definition->getPageAttributes();
+        $form_page          = $all_pages[$current_page];
         $this->http         = eZHTTPTool::instance();
+        $is_page_last       = $form_definition->isCurrentPageLast();
         $result = $errors = $posted_values = array();
 
-        foreach($form_attributes as $i => $attrib)
+        foreach( $form_page['attributes'] as $i => $attrib )
         {
             $post_id = $this->generatePostID($attrib);
             if (!$this->http->hasPostVariable($post_id)) {
@@ -56,13 +54,9 @@ class FormMakerFunctionCollection
             if ($this->http->postVariable('validation') !== 'False') {
                 throw new Exception('Security exception');
             }
-            // checking time security and displaying innocent text if failed
-            elseif(!eZSession::issetkey('formmaker') || time() - eZSession::get('formmaker') < self::MIN_PROCESS_TIME) {
-                $errors[0] = array('Please make sure that all fields are OK.');
-            }
             
-            // in case when no errors - email is sent or data is stored
-            if (empty($errors))
+            // in case when no errors and current page is last one
+            if ( empty( $errors ) && $is_page_last )
             {
                 // Sending email message
                 if ($form_definition->attribute('post_action') == 'email')
@@ -79,27 +73,29 @@ class FormMakerFunctionCollection
                 $tpl = eZTemplate::factory();
                 $tpl->setVariable('result', $operation_result);
                 $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );  
-                ezSession::set('formmaker', time() );
             }
-            // there are validation errors, so we need to pass them to the template
             else
             {
                 // updating attributes with current values
-                foreach ($form_attributes as $i => $attrib)
+                foreach ($form_page['attributes'] as $i => $attrib)
                 {
-                    $form_attributes[$i]->setAttribute('default_value', $posted_values[$i]);
+                    $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
                 }
-            }   
-        }
-        // If there is no post varaibles, we need to store current timestamp in session
-        else
-        {
-            ezSession::set('formmaker', time() );
+                
+                // there are no errors, so we need to store data in session and redirect to next page
+                if ( empty( $errors ) )
+                {
+                    eZSession::set( 'form_data_page_' . $current_page, $form_page['attributes'] );
+                    $current_page++;
+                    $form_page['attributes'] = $all_pages[$current_page + 1]['attributes']; // TODO: check if wanted index exist
+                }
+            }  
         }
         
         $result = array_merge($result, array( 'definition'          => $form_definition,
-                                              'attributes'          => $form_attributes,
+                                              'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
+                                              'current_page'        => $current_page,
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }

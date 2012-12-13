@@ -69,6 +69,7 @@ $tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
 $tpl->setVariable( 'input_types', formTypes::getAllTypes() );
+$tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
 
 $Result = array();
 
