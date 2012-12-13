@@ -1,8 +1,9 @@
 jQuery(document).ready( function() {
 
-    jQuery('.removeField:visible').live('click', function() {
+    // remove form attribute
+    jQuery('.formField .remove-field').live('click', function() {
         if (confirm($('#dialog-confirm').html())){
-            var obj = $(this).parent();
+            var obj = $(this).parents('.formField');
             obj.hide(500, function(){
                 obj.remove();
             })
@@ -114,5 +115,14 @@ jQuery(document).ready( function() {
         
         // setting hidden field value
         $(this).parents('.formField').find('input[name="' + $(this).attr('connected') + '"]').val(hidden_value);        
+    });
+    
+    // "enable" checkbox
+    jQuery('.enable-attribute input[type=checkbox]').live('click', function(){
+        var value = 0;
+        if ($(this).is(':checked')) {
+            value = 1;
+        }
+        $(this).parent().find('input[type=hidden]').val(value);
     });
 });

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class interface for formmaker_attributes SQL table
+ * Class interface for form_attributes SQL table
  */
 class formAttributes extends eZPersistentObject 
 {
@@ -32,6 +32,9 @@ class formAttributes extends eZPersistentObject
                                          "type_id"          => array( "name" => "type_id",
                                                                       "datatype" => "int",
                                                                       "required" => true ),
+                                         "enabled"          => array( "name" => "enabled",
+                                                                      "datatype" => "int",
+                                                                      "required" => true ),            
                                          "default_value"    => array( "name" => "default_value",
                                                                       "datatype" => "string",
                                                                       "required" => false ),
@@ -59,7 +62,9 @@ class formAttributes extends eZPersistentObject
      */
     public static function createEmpty()
     {
-        return new self();
+        return new self( array(
+            'enabled' => 1
+        ) );
     }
     
     /**
@@ -69,16 +74,18 @@ class formAttributes extends eZPersistentObject
      * @param int $type_id
      * @param string $def_value
      * @param string $label
+     * @param int $enabled
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $def_value, $label )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $def_value, $label, $enabled )
     {
         $object = new self( array(
             'attr_order'    => $order,
             'definition_id' => $definition_id,
             'type_id'       => $type_id,
             'default_value' => $def_value,
-            'label'         => $label
+            'label'         => $label,
+            'enabled'       => $enabled
         ) );
         $object->store();
         return $object;        
@@ -197,7 +204,7 @@ class formAttributes extends eZPersistentObject
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
-                $attribute->setData( $order, $item['default'], $item['label'] );
+                $attribute->setData( $order, $item['default'], $item['label'], $item['enabled'] );
                 $attribute->store();
                 
                 $correct_validators = array();
@@ -227,7 +234,7 @@ class formAttributes extends eZPersistentObject
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
             {
-                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['default'], $item['label'] );
+                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['default'], $item['label'], $item['enabled'] );
                 $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
@@ -276,12 +283,14 @@ class formAttributes extends eZPersistentObject
      * @param int $order
      * @param string $default
      * @param string $label
+     * @param int $enabled
      */
-    private function setData( $order, $default, $label )
+    private function setData( $order, $default, $label, $enabled )
     {
         $this->setAttribute( 'attr_order', $order );
         $this->setAttribute( 'default_value', $default );
-        $this->setAttribute( 'label', $label);
+        $this->setAttribute( 'label', $label );
+        $this->setAttribute( 'enabled', $enabled );
     }
     
     /**

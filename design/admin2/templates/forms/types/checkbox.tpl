@@ -5,7 +5,7 @@
 
 <div class="formField form-{$input.id}">
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>
-    <p><strong>{$input.name}</strong></p>
+    {include uri="design:forms/types/elements/field_header.tpl" input_name=$input.name input_id=$input_id enabled=$data.enabled}
     <p>
         {include uri="design:forms/types/elements/label.tpl" label=$data.label input_id=$input_id}
         <span class="spc">|</span>
@@ -13,5 +13,4 @@
         <span class="spc">|</span>
         {include uri="design:forms/types/elements/default_checkbox.tpl" default_value=$data.default_value input_id=$input_id}
     </p>
-    <a class="removeField">{'Remove'|i18n( 'extension/formmaker/admin' )}</a>
 </div>

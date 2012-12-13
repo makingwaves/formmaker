@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class interface for formmaker_types SQL table
+ * Class interface for form_types SQL table
  */
 class formTypes extends eZPersistentObject 
 {
@@ -28,6 +28,9 @@ class formTypes extends eZPersistentObject
                                                                   "required" => true ), 
                                          "validation"   => array( "name" => "validation",
                                                                   "datatype" => "integer",
+                                                                  "required" => true ),     
+                                         "sep_order"    => array( "name" => "sep_order",
+                                                                  "datatype" => "integer",
                                                                   "required" => true ),             
                                          "template"     => array( "name" => "template",
                                                                   "datatype" => "string",
@@ -38,7 +41,7 @@ class formTypes extends eZPersistentObject
                       ),            
                       "increment_key" => "id",
                       "class_name" => "formTypes",
-                      "sort" => array(),
+                      "sort" => array('sep_order' => 'asc'),
                       "name" => "form_types" );
         return $def;
     }    

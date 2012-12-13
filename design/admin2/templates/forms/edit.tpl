@@ -31,12 +31,6 @@
 <div class="block">
     <div class="left">
 
-        {if and( not($form_attributes), $id )} {* if form has any attributes... *}
-        <p class="info" id="noneAttributesWarning">
-            {'This form does not have any fields. Add some!'|i18n( 'extension/formmaker/admin' )}
-        </p>
-        {/if}
-
         <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="tagadd" name="tagadd">
             <h3>Definition</h3>
             <hr/>
@@ -74,8 +68,8 @@
                         {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute
                                  input_id=$attribute.id input=$attribute.type_data}
                     {/foreach}
-                </div>
-                
+                </div>                    
+                    
                 <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
                 <select name="new_field_type">
                     {foreach $input_types as $field}

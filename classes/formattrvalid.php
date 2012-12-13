@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class interface for formmaker_validators SQL table
+ * Class interface for form_validators SQL table
  */
 class formAttrvalid extends eZPersistentObject 
 {

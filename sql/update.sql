@@ -57,7 +57,7 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,13 +82,14 @@ CREATE TABLE `form_attributes` (
   `definition_id` int(11) DEFAULT NULL,
   `type_id` int(10) unsigned NOT NULL,
   `default_value` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(4) NOT NULL DEFAULT '1',
   `label` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `definition_id` (`definition_id`),
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,8 +139,9 @@ CREATE TABLE `form_types` (
   `name` varchar(100) NOT NULL,
   `template` varchar(100) NOT NULL,
   `validation` tinyint(4) NOT NULL DEFAULT '0',
+  `sep_order` smallint(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +150,7 @@ CREATE TABLE `form_types` (
 
 LOCK TABLES `form_types` WRITE;
 /*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
-INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1),(2,'Textarea','textarea.tpl',0),(3,'Checkbox','checkbox.tpl',0),(4,'Radio Buttons','radio.tpl',0);
+INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1,1),(2,'Textarea','textarea.tpl',0,2),(3,'Checkbox','checkbox.tpl',0,3),(4,'Radio Buttons','radio.tpl',0,4),(5,'Page separator','separator.tpl',0,0);
 /*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-12 14:10:03
+-- Dump completed on 2012-12-13 10:43:52
