@@ -101,10 +101,6 @@ class formDefinitions extends eZPersistentObject
                                            'post_action' => 'email',
                                            'recipients' => $data['recipients']) );
         $object->store();
-        
-        // adding new form page - that's default action when adding new form
-        formPages::addEmptyPage( $object->attribute( 'id' ) );
-        
         return $object;
     }    
     
