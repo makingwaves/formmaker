@@ -133,11 +133,19 @@ class formDefinitions extends eZPersistentObject
     
     /**
      * Method return all attributes of current form
+     * @param boolean $only_enabled
      * @return array
      */
-    public function getAllAttributes()
+    public function getAllAttributes( $only_enabled = false )
     {
-        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, array( 'definition_id' => $this->attribute( 'id' ) ) );
+        $settings = array(
+            'definition_id' => $this->attribute( 'id' )
+        );
+        if ( $only_enabled )
+        {
+            $settings['enabled'] = 1;
+        }
+        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, $settings );
     }
     
     /**
