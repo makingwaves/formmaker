@@ -7,6 +7,7 @@
      $counted_validators= $form_data.counted_validators
      $attr_required     = false()
      $current_page      = $form_data.current_page
+     $send_button       = cond( $form_data.is_page_last, 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
@@ -44,7 +45,7 @@
                     </div>
                 </div>
             {/foreach}
-            <input id="form-submit" type="submit" value="{'Send'|i18n( 'extension/formmaker/front' )}"/>
+            <input id="form-submit" type="submit" value="{$send_button}"/>
             <input type="hidden" name="validation" value="false"/>
         </form>
     {/if}

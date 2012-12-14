@@ -5,14 +5,8 @@
  */
 class formDefinitions extends eZPersistentObject 
 {
-    /**
-     * Constructor
-     * @param type $row
-     */
-    public function __construct( $row )
-    {
-        $this->eZPersistentObject( $row );
-    }
+    // prefix for keys used in session
+    const PAGE_SESSION_PREFIX = 'form_data_page_';
 
     /**
      *  Table definition
@@ -38,10 +32,7 @@ class formDefinitions extends eZPersistentObject
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
                                                                       "required" => false ) ),
-                      "keys" => array('id'),
-                      "function_attributes" => array(
-                          'is_page_last' => 'isCurrentPageLast'
-                      ),            
+                      "keys" => array('id'),         
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
@@ -210,24 +201,5 @@ class formDefinitions extends eZPersistentObject
                 $attribute->removeRecord();
             }
         }
-    }
-    
-    /**
-     * Method returns currently processes page number
-     * @return int
-     */
-    public function getCurrentPage()
-    {
-        $http = eZHTTPTool::instance();
-        return $http->hasPostVariable( 'from_page' ) ? $http->postVariable( 'form_page' ) : 0;
-    }
-    
-    /**
-     * Method checks if current page is the last one
-     * @return boolean
-     */
-    public function isCurrentPageLast()
-    {
-        return count( $this->getPageAttributes() ) == ($this->getCurrentPage() + 1) ? true : false;
     }
 }
