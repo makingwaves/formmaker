@@ -132,8 +132,10 @@ class FormMakerFunctionCollection
     private function generateEmailContent($definition, $form_pages)
     {
         // creating email content
-        $tpl        = eZTemplate::factory();
-        $email_data = array();
+        $tpl                    = eZTemplate::factory();
+        $email_data             = array();
+        $additional_receivers   = array();
+        
         foreach ($form_pages as $i => $page)
         {
             $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $definition->attribute( 'name' );
@@ -151,6 +153,12 @@ class FormMakerFunctionCollection
                         $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
                         break;
 
+                    case formTypes::TEXTLINE_ID:
+                        if ( $attribute->attribute( 'email_receiver' ) == 1 )
+                        {
+                            $additional_receivers[] = $attribute->attribute( 'default_value' );
+                        }
+                    
                     default:
                         $email_data[$i]['attributes'][$attribute->attribute('label')] = $attribute->attribute( 'default_value' );
                         break;
@@ -159,10 +167,10 @@ class FormMakerFunctionCollection
         }
         
         $tpl->setVariable('data', $email_data);
-
+        $sender = 'MWeZForm'; // TODO: set default email sender
         // creating email message
         $mail = new eZMail();
-        $mail->setSender( 'MWeZForm' ); // TODO: set default email sender
+        $mail->setSender( $sender ); 
         $mail->setSubject( $definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ) );
         $mail->setBody( $tpl->fetch( 'design:email/recipient.tpl' ) );
         $mail->setContentType('text/html');
@@ -171,10 +179,26 @@ class FormMakerFunctionCollection
         foreach( $recipients as $recipient ) 
         {
             $mail->addReceiver( $recipient );
+        }      
+        // sendnig message to default recipient (for form)
+        $status = eZMailTransport::send($mail);        
+        
+        // sending email to additional receivers
+        if ( $status && !empty( $additional_receivers ) )
+        {
+            foreach ( $additional_receivers as $email_address )
+            {
+                $mail = new eZMail();
+                $mail->setSender( $sender ); 
+                $mail->setSubject( $definition->attribute( 'name' ) );
+                $mail->setContentType('text/html');
+                $mail->setBody( $tpl->fetch( 'design:email/user.tpl' ) );
+                $mail->addReceiver( $email_address );
+                $status = eZMailTransport::send( $mail );  
+            }
         }
         
-        // sendnig message
-        return eZMailTransport::send($mail);        
+        return $status;
     }
     
     /**
