@@ -108,7 +108,7 @@ class FormMakerFunctionCollection
                                               'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
                                               'current_page'        => $current_page,
-                                              'is_page_last'        => $is_page_last,
+                                              'pages_count'         => count( $all_pages ),
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }

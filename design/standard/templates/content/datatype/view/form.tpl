@@ -7,7 +7,7 @@
      $counted_validators= $form_data.counted_validators
      $attr_required     = false()
      $current_page      = $form_data.current_page
-     $send_button       = cond( $form_data.is_page_last, 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
+     $send_button       = cond( $form_data.pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
