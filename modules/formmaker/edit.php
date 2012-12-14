@@ -70,6 +70,7 @@ $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
 $tpl->setVariable( 'input_types', formTypes::getAllTypes() );
 $tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
+$tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 
 $Result = array();
 

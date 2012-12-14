@@ -62,6 +62,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl->setVariable( 'input', $type );
         $tpl->setVariable( 'input_id', uniqid() );
         $tpl->setVariable( 'data', formAttributes::createEmpty());
+        $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID );
         
         return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
     }
@@ -85,5 +86,25 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl->setVariable( 'option_id', uniqid() );
         
         return $tpl->fetch( 'design:forms/types/elements/option_line.tpl' );
+    }
+    
+    /**
+     * Method adds email receiver part 
+     * @return string
+     * @throws Exception
+     */
+    public static function addEmailReceiver()
+    {
+        $http = eZHTTPTool::instance();
+        if ( !$http->hasPostVariable( 'attribute_id' ) )
+        {
+            throw new Exception( 'Missing required parameter' );
+        }
+        
+        $tpl = eZTemplate::factory();
+        $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
+        $tpl->setVariable( 'enabled', 0 );
+        
+        return $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
     }
 }

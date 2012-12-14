@@ -10,15 +10,23 @@ jQuery(document).ready( function() {
         }
     });
 
-    // setting the default checkbox value, works for all checkbox arrouded by <span> which contains also a hidden field
-    jQuery('.formField input[type=checkbox]').live('click', function() {
-        
+    // setting the default checkbox value for mandatory checkbox
+    jQuery('.attribute-mandatory-holder input[type=checkbox]').live('click', function() {
+        var value = 0;
         if ($(this).is(':checked')) {
-            $(this).parent('span').find('input[type=hidden]').val('on');
-        } else {
-            $(this).parent('span').find('input[type=hidden]').val(0);
-        }
+            value = 'on';
+        } 
+        $(this).parent('span').find('input[type=hidden]').val(value);
     });
+    
+    // setting the default checkbox value for email receiver checkbox
+    jQuery('.email-receiver-inputs input[type=checkbox]').live('click', function() {
+        var value = 0;
+        if ($(this).is(':checked')) {
+            value = 1;
+        } 
+        $(this).parent('span').find('input[type=hidden]').val(value);
+    });    
 
     jQuery( ".left form .sortable-attributes" ).sortable();
     
@@ -145,4 +153,26 @@ jQuery(document).ready( function() {
         
         $(this).parent().find('input[type=hidden]').val(value);
     });
+    
+    // displaying and hiding email receiver for email validation
+    jQuery('.attribute-validation').live('change', function(){
+        if ($(this).val() == $('#validator-email-id').val()) {
+            jQuery('div#page').css('cursor', 'progress');
+            var post_data = {'attribute_id' :  $(this).parents('.formField').find('.attribute-unique-id').val()};
+            var object = $(this);
+            $.ez( 'formmaker::addEmailReceiver', post_data, function( data ) {
+                if (data.error_text) {
+                    alert(data.error_text);
+                }
+                else {
+                    object.parents('.validation-paragraph').append(data.content);
+                }
+                jQuery('div#page').css('cursor', 'default');
+            });  
+        } else {
+            $(this).parents('.validation-paragraph').find('.email-receiver-holder').remove();
+        }
+    });
+    
+    //jQuery('.email-receiver-inputs input[type=checkbox]')
 });

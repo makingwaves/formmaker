@@ -5,15 +5,14 @@
  */
 class formValidators extends eZPersistentObject 
 {
-    /**
-     * Constructor
-     * @param type $row
-     */
-    public function __construct( $row )
-    {
-        $this->eZPersistentObject( $row );
-    }
-
+    // ids from databse
+    const DIGITS_ID     = 1;
+    const EMAIL_ID      = 2;
+    const FLOAT_ID      = 3;
+    const NOT_EMPTY_ID  = 5;
+    const HOSTNAME_ID   = 6;
+    const IP_ID         = 7;
+    
     /**
      *  Table definition
      * @return array

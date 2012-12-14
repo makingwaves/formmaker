@@ -4,12 +4,7 @@
  * Class interface for form_validators SQL table
  */
 class formAttrvalid extends eZPersistentObject 
-{
-    /**
-     * ID of the "required" validator
-     */
-    const REQUIRED_ID = 5;
-    
+{  
     /**
      * Constructor
      * @param type $row
@@ -89,7 +84,7 @@ class formAttrvalid extends eZPersistentObject
         
         foreach ($validators as $validator)
         {
-            if ($validator->attribute('validator_id') == self::REQUIRED_ID)
+            if ($validator->attribute('validator_id') == formValidators::NOT_EMPTY_ID)
             {
                 $is_required = true;
                 break;
