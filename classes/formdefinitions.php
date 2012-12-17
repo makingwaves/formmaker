@@ -7,6 +7,8 @@ class formDefinitions extends eZPersistentObject
 {
     // prefix for keys used in session
     const PAGE_SESSION_PREFIX = 'form_data_page_';
+    // main node id
+    const MAIN_NODE_ID = 2;
 
     /**
      *  Table definition
@@ -78,9 +80,12 @@ class formDefinitions extends eZPersistentObject
         return $form->store();
     }
     
-    public static function removeContentObject($id) 
+    /**
+     * Method removes a from
+     */
+    public function removeContentObject() 
     {         
-        return eZPersistentObject::removeObject( formDefinitions::definition(), array( 'id' => $id ) );
+        eZPersistentObject::removeObject( formDefinitions::definition(), array( 'id' => $this->attribute( 'id' ) ) );
     }
 
     /**
@@ -91,12 +96,15 @@ class formDefinitions extends eZPersistentObject
     public static function addForm( $data )
     {
         
-        $object = new formDefinitions( array( 'id' => null, 
-                                           'name' => $data['name'],
-                                           'create_date' => null,
-                                           'owner_user_id' => 14,
-                                           'post_action' => 'email',
-                                           'recipients' => $data['recipients']) );
+        $object = new self( array( 
+            'id'            => null, 
+            'name'          => $data['name'],
+            'create_date'   => null,
+            'owner_user_id' => 14,
+            'post_action'   => 'email',
+            'email_sender'  => $data['email_sender'],
+            'recipients'    =>  $data['recipients']            
+        ) );
         $object->store();
         return $object;
     }    
@@ -204,5 +212,28 @@ class formDefinitions extends eZPersistentObject
                 $attribute->removeRecord();
             }
         }
+    }
+    
+    /**
+     * Method returns a list of objects connected with the current form
+     * @return array
+     */
+    public function getConnectedObjects() 
+    {
+        $params = array(
+            'ExtendedAttributeFilter'   => array(
+                'id'        => 'FormRelatedObjectsFilter',
+                'params'    => array( 'form_id' => $this->attribute( 'id' ) )
+            )
+        );
+        
+        $fetch_result = eZContentObjectTreeNode::subTreeByNodeID( $params, self::MAIN_NODE_ID );
+        $data = array();
+        foreach ( $fetch_result as $node )
+        {
+            $data[$node->attribute( 'node_id' )] = $node->attribute( 'name' );
+        }
+        
+        return $data;
     }
 }

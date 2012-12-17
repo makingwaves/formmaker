@@ -33,7 +33,7 @@
 <div class="block">
     <div class="left">
 
-        <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="tagadd" name="tagadd">
+        <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
             <h3>Definition</h3>
             <hr/>
 

@@ -107,4 +107,32 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         
         return $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
     }
+    
+    /**
+     * Method for checking form connected objects
+     * @return boolean
+     * @throws Exception
+     */
+    public static function getFormConnectedObjects()
+    {
+        $http = eZHTTPTool::instance();
+        if ( !$http->hasPostVariable( 'form_id' ) )
+        {
+            throw new Exception( 'Missing required parameter' );
+        }
+        
+        $form_object = formDefinitions::getForm( $http->postVariable( 'form_id' ) );
+        $connected_objects = $form_object->getConnectedObjects();
+        if ( count( $connected_objects ) )
+        {
+            $error = ezpI18n::tr( 'extension/formmaker/admin', 'Cannot remove this form. There are some objects which uses it:' ) . "\n\n";
+            foreach ($connected_objects as $node_id => $node_name)
+            {
+                $error .= $node_name . ' (' . ezpI18n::tr( 'extension/formmaker/admin', 'node ID: ' ) . $node_id . ")\n";
+            }
+            throw new Exception(  $error );
+        }
+        
+        return true;
+    }
 }
