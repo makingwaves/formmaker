@@ -217,3 +217,7 @@
 .option-remove {
     padding-left: 7px;
 }
+
+#dialog-confirm {
+    display: none;
+}

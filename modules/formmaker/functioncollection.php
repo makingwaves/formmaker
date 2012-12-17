@@ -167,7 +167,8 @@ class FormMakerFunctionCollection
         }
         
         $tpl->setVariable('data', $email_data);
-        $sender = 'MWeZForm'; // TODO: set default email sender
+        $sender = $definition->attribute( 'email_sender' );
+
         // creating email message
         $mail = new eZMail();
         $mail->setSender( $sender ); 
@@ -188,6 +189,11 @@ class FormMakerFunctionCollection
         {
             foreach ( $additional_receivers as $email_address )
             {
+                if ( empty( $email_address ) )
+                {
+                    continue;
+                }
+                
                 $mail = new eZMail();
                 $mail->setSender( $sender ); 
                 $mail->setSubject( $definition->attribute( 'name' ) );

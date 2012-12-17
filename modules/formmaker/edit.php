@@ -7,8 +7,9 @@ $original_name  = '';
 $attributes     = array();
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
-$form_elements = array( 'name' => array('required' => true, 'label' => 'Form name', 'value' => ''), 
-                        'recipients' => array('required' => true, 'label' => 'E-mail recipients (separated by semicolon)', 'value' => ''),
+$form_elements = array( 'name'          => array( 'required' => true, 'label' => ezpI18n::tr('extension/formmaker/admin', 'Form name' ), 'value' => '' ), 
+                        'recipients'    => array( 'required' => true, 'label' => ezpI18n::tr('extension/formmaker/admin', 'E-mail recipients (separated by semicolon)' ), 'value' => '' ),
+                        'email_sender'  => array( 'required' => true, 'label' => ezpI18n::tr('extension/formmaker/admin', 'Email sender' ), 'value' => '' ) 
                       );
 
 // When form is being edited, we need to fill up its definition data from database
