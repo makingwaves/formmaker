@@ -27,6 +27,12 @@ class FormMakerFunctionCollection
         $is_page_last       = count( $all_pages ) == ( $current_page + 1) ? true : false;
         $result = $errors = $posted_values = array();
 
+        // removing data from session when there is no POST request
+        if ( !$this->http->hasPostVariable( 'validation' ) )
+        {
+            $this->removeSessionData();
+        }
+        
         foreach( $form_page['attributes'] as $i => $attrib )
         {
             $post_id = $this->generatePostID($attrib);
@@ -34,11 +40,15 @@ class FormMakerFunctionCollection
                 continue;
             }
 
-            // validating inputs
-            $validation = $attrib->validate($this->http->postVariable($post_id));
-            if (!empty($validation))
+            // validation only when button "Send" or "Next" clicked
+            if ( !$this->http->hasPostVariable( 'form-back' ) )
             {
-                $errors[$attrib->attribute('id')] = $validation;
+                // validating inputs
+                $validation = $attrib->validate($this->http->postVariable($post_id));
+                if (!empty($validation))
+                {
+                    $errors[$attrib->attribute('id')] = $validation;
+                }
             }
 
             // generating array of posted values
@@ -48,10 +58,10 @@ class FormMakerFunctionCollection
         /**
          * Checking post variables
          */
-        if (count($posted_values))
+        if ( count( $posted_values ) )
         {
             // Checking required security POST variable
-            if ($this->http->postVariable('validation') !== 'False') {
+            if ( $this->http->postVariable('validation') !== 'False' ) {
                 throw new Exception('Security exception');
             }
 
@@ -61,7 +71,7 @@ class FormMakerFunctionCollection
                 $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
             }
 
-            // there are no errors, so we need to store data in session and redirect to next page
+            // there are no errors, so we need to store data in session
             if ( empty( $errors ) )
             {
                 eZSession::set( formDefinitions::PAGE_SESSION_PREFIX . $current_page, $form_page );
@@ -73,22 +83,12 @@ class FormMakerFunctionCollection
             }            
             
             // in case when no errors and current page is last one
-            if ( empty( $errors ) && $is_page_last )
+            if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
                 // Sending email message
                 if ($form_definition->attribute('post_action') == 'email')
                 {
-                    $data_to_send = array();
-                    foreach ( $_SESSION as $key => $value )
-                    {
-                        if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
-                            continue;
-                        }
-                        
-                        $data_to_send[] = $value;
-                        // clean up the session
-                        unset( $_SESSION[$key] );
-                    } 
+                    $data_to_send = $this->removeSessionData();
                     $operation_result = $this->generateEmailContent($form_definition, $data_to_send);
                 }
                 // TODO: Storing data in database
@@ -102,6 +102,18 @@ class FormMakerFunctionCollection
                 $tpl->setVariable('result', $operation_result);
                 $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );  
             } 
+        }
+        
+        if ( $this->http->hasPostVariable( 'form-back' ) )
+        {
+            $current_page -= 2;
+            $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
+            $form_page['attributes'] = $form_page['attributes']['attributes'];
+        }
+        elseif ( $this->http->hasPostVariable( 'form-next' ) && eZSession::issetkey( formDefinitions::PAGE_SESSION_PREFIX . $current_page ) )
+        {
+            $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
+            $form_page['attributes'] = $form_page['attributes']['attributes'];            
         }
         
         $result = array_merge($result, array( 'definition'          => $form_definition,
@@ -217,4 +229,23 @@ class FormMakerFunctionCollection
         return array('result' => formAttrvalid::isAttributeRequired($attribute_id));
     }
     
+    /**
+     * Method removes session data and returns array containing correct form values
+     * @return array
+     */
+    private function removeSessionData()
+    {
+        $data_to_send = array();
+        foreach ( $_SESSION as $key => $value )
+        {
+            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
+                continue;
+            }
+
+            $data_to_send[] = $value;
+            // clean up the session
+            unset( $_SESSION[$key] );
+        }         
+        return $data_to_send;
+    }
 }

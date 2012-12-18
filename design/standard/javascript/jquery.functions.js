@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
     });       
     
     // Security variable
-    jQuery('#form-submit').click(function(){
+    jQuery('input[name=form-send], input[name=form-back], input[name=form-next]').click(function(){
         $('#mwezform input[name=validation]').val('False');
     });
     

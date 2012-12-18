@@ -8,6 +8,7 @@
      $attr_required     = false()
      $current_page      = $form_data.current_page
      $send_button       = cond( $form_data.pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
+     $send_name         = cond( $form_data.pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' )
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
@@ -20,7 +21,7 @@
     {ezscript_require( array( 'jquery.validation.js' ) )}
 {/if}
 
-<div class="form_container">
+<div class="form-container">
     <h1>{$form_definition.name|wash()}</h1>
 
     {if is_set( $form_data.success )}
@@ -36,7 +37,7 @@
             
             {foreach $form_attributes as $attribute}
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
-                <div class="form_element_container" id="form_element_{$attribute.id}">
+                <div class="form-element-container" id="form_element_{$attribute.id}">
                     <div class="{if and( is_set( $counted_validators[$attribute.id] ), $counted_validators[$attribute.id] )}validate-it{/if} form_attribute_content">
                         {include uri=concat('design:form_attributes/', $attribute.type_data.template ) attribute=$attribute is_required=$attr_required}
                     </div>
@@ -45,8 +46,17 @@
                     </div>
                 </div>
             {/foreach}
-            <input id="form-submit" type="submit" value="{$send_button}"/>
-            <input type="hidden" name="validation" value="false"/>
+            <div class="form-footer">
+                <div class="form-footer-back">
+                    {if $form_data.current_page|gt( 0 )}
+                        <input type="submit" value="{'Back'|i18n( 'extension/formmaker/front' )}" name="form-back"/>
+                    {/if}
+                </div>
+                <div class="form-footer-next">
+                    <input type="submit" name="{$send_name}" value="{$send_button}"/>
+                    <input type="hidden" name="validation" value="false"/>                
+                </div>
+            </div>
         </form>
     {/if}
 </div>
