@@ -17,7 +17,7 @@
 
 <div class="form-footer">
     <div class="form-footer-back">
-        <input type="submit" value="{'Back'|i18n( 'extension/formmaker/front' )}" name="form-back"/>
+        <input type="submit" value="{'Edit'|i18n( 'extension/formmaker/front' )}" name="form-back"/>
     </div>
     <div class="form-footer-next">
         <input type="submit" name="form-send" value="{'Send'|i18n( 'extension/formmaker/front' )}"/>

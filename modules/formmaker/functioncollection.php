@@ -33,7 +33,7 @@ class FormMakerFunctionCollection
         {
             $this->removeSessionData();
         }
-        
+
         foreach( $form_page['attributes'] as $i => $attrib )
         {
             $post_id = $this->generatePostID($attrib);
@@ -64,23 +64,26 @@ class FormMakerFunctionCollection
                 throw new Exception('Security exception');
             }
 
-            // updating attributes with current values
-            foreach ($form_page['attributes'] as $i => $attrib)
+            if ( count( $posted_values ) )
             {
-                $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
+                // updating attributes with current values
+                foreach ($form_page['attributes'] as $i => $attrib)
+                {
+                    $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
+                }
             }
 
             // there are no errors, so we need to store data in session
-            if ( empty( $errors ) )
+            if ( empty( $errors ) && !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 eZSession::set( formDefinitions::PAGE_SESSION_PREFIX . $current_page, $form_page );
-                $current_page++;
-                if ( isset( $all_pages[$current_page] ) )
+                if ( isset( $all_pages[$current_page+1] ) && !$this->http->hasPostVariable( 'form-back' ) )
                 {
+                    $current_page++;
                     $form_page['attributes'] = $all_pages[$current_page]['attributes'];
                 }
-            }            
-            
+            }
+
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
@@ -90,7 +93,6 @@ class FormMakerFunctionCollection
                     // rendering summary page
                     $data_to_send = $this->getDataToSend();
                     $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
-                    $current_page--; // this is not a form page, so we need to decrease page counter
                     $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
                 }
                 else
@@ -116,7 +118,10 @@ class FormMakerFunctionCollection
         
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
-            $current_page -= 2;
+            if ( !$this->http->hasPostVariable( 'summary_page' ) )
+            {
+                $current_page -= 1;
+            }
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
         }
@@ -152,26 +157,18 @@ class FormMakerFunctionCollection
     private function processEmail()
     {
         // creating email content
-        $tpl            = eZTemplate::factory();
         $data_to_send   = $this->getDataToSend();
-
-        $tpl->setVariable('data', $data_to_send['email_data']);
-        $sender = $this->definition->attribute( 'email_sender' );
-
-        // creating email message
-        $mail = new eZMail();
-        $mail->setSender( $sender ); 
-        $mail->setSubject( $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ) );
-        $mail->setBody( $tpl->fetch( 'design:email/recipient.tpl' ) );
-        $mail->setContentType('text/html');
-
-        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
-        foreach( $recipients as $recipient ) 
-        {
-            $mail->addReceiver( $recipient );
-        }      
-        // sendnig message to default recipient (for form)
-        $status = eZMailTransport::send($mail);        
+        $sender         = $this->definition->attribute( 'email_sender' );
+        $recipients     = explode( ';', $this->definition->attribute( 'recipients' ) );
+        
+        // sendnig message to default recipient(s) (for form definition)
+        $status = $this->sendEmail(
+                $sender,
+                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ),
+                'email/recipient.tpl',
+                $data_to_send['email_data'],
+                $recipients
+        );     
         
         // sending email to additional receivers
         if ( $status && !empty( $data_to_send['receivers'] ) )
@@ -182,18 +179,46 @@ class FormMakerFunctionCollection
                 {
                     continue;
                 }
-                
-                $mail = new eZMail();
-                $mail->setSender( $sender ); 
-                $mail->setSubject( $this->definition->attribute( 'name' ) );
-                $mail->setContentType('text/html');
-                $mail->setBody( $tpl->fetch( 'design:email/user.tpl' ) );
-                $mail->addReceiver( $email_address );
-                $status = eZMailTransport::send( $mail );  
+
+                $status = $this->sendEmail(
+                        $sender,
+                        $this->definition->attribute( 'name' ),
+                        'email/user.tpl',
+                        $data_to_send['email_data'],
+                        array( $email_address )
+                );
             }
         }
         
         return $status;
+    }
+    
+    /**
+     * Method sends an email message basing on fiven attributes
+     * @param string $sender
+     * @param string $sender
+     * @param string $template
+     * @param array $email_data
+     * @param string $email_address
+     * @param array $recipients
+     * @return boolean
+     */
+    private function sendEmail( $sender, $subject, $template, $email_data, $recipients )
+    {
+        $tpl    = eZTemplate::factory();
+        $mail   = new eZMail();
+        
+        $tpl->setVariable( 'data', $email_data );
+        $mail->setSender( $sender ); 
+        $mail->setSubject( $subject );
+        $mail->setContentType('text/html');
+        $mail->setBody( $tpl->fetch( 'design:' . $template ) );
+        foreach( $recipients as $recipient ) 
+        {
+            $mail->addReceiver( $recipient );
+        } 
+        
+        return eZMailTransport::send( $mail );          
     }
     
     /**
