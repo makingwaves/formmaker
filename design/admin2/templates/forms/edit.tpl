@@ -41,12 +41,22 @@
                 <div class="form_error">{$error_message}</div>
                 {foreach $form_elements as $identifier => $element}
                     <div class="formmaker-attribute">
-                        <label>
-                            <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
-                            <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
-                        </label>
+                        {switch match=$element.type}
+                            {case match='text'}
+                                <label>
+                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                    <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
+                                </label>
+                            {/case}
+                            {case match='checkbox'}
+                                <label>
+                                    <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
+                                    <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                </label>
+                            {/case}
+                        {/switch}
                     </div>
-                {/foreach}
+               {/foreach}
             </div>
 
             {if $id|not()} {* if this is a new form *}

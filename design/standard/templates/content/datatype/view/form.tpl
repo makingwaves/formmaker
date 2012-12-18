@@ -24,17 +24,21 @@
 <div class="form-container">
     <h1>{$form_definition.name|wash()}</h1>
 
-    {if is_set( $form_data.success )}
-        {* $form_data.success contains rendered template form_processed.tpl *}
-        {$form_data.success}
-    {else}
-        {include uri="design:form_error.tpl" errors=$errors attribute_id=0}
-        <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
+    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
 
-            <input type="hidden" name="form_id" value="{$form_definition.id}"/>
-            <input type="hidden" name="node_id" value="{$node.node_id}"/>
-            <input type="hidden" name="current_page" value="{$current_page}" />
+        <input type="hidden" name="form_id" value="{$form_definition.id}"/>
+        <input type="hidden" name="node_id" value="{$node.node_id}"/>
+        <input type="hidden" name="current_page" value="{$current_page}" />
             
+        {if is_set( $form_data.summary_page )}
+            {* $form_data.summary_page contains rendered template summary_page.tpl *}
+            {$form_data.summary_page}
+        {elseif is_set( $form_data.success )}
+            {* $form_data.success contains rendered template form_processed.tpl *}
+            {$form_data.success}
+        {else}
+            {include uri="design:form_error.tpl" errors=$errors attribute_id=0}
+
             {foreach $form_attributes as $attribute}
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
                 <div class="form-element-container" id="form_element_{$attribute.id}">
@@ -57,6 +61,6 @@
                     <input type="hidden" name="validation" value="false"/>                
                 </div>
             </div>
-        </form>
-    {/if}
+        {/if}
+    </form>
 </div>

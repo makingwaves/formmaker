@@ -5,11 +5,10 @@
  */
 class FormMakerFunctionCollection
 {  
-    /**
-     * eZHTTPTool object instance
-     * @var eZHTTPTool 
-     */
-    private $http = null;
+    // eZHTTPTool object instance
+    private $http;
+    // form definition object
+    private $definition;
     
     /**
      * Method fetches form definition and all attributes for given Form id.
@@ -20,12 +19,14 @@ class FormMakerFunctionCollection
     public function fetchFormData( $form_id )
     {
         $this->http         = eZHTTPTool::instance();
-        $form_definition    = formDefinitions::getForm( $form_id );
+        $this->definition   = formDefinitions::getForm( $form_id );
         $current_page       = $this->http->hasPostVariable( 'current_page' ) ? $this->http->postVariable( 'current_page' ) : 0;
-        $all_pages          = $form_definition->getPageAttributes();
+        $all_pages          = $this->definition->getPageAttributes();
         $form_page          = $all_pages[$current_page];
         $is_page_last       = count( $all_pages ) == ( $current_page + 1) ? true : false;
-        $result = $errors = $posted_values = array();
+        $result             = array();
+        $errors             = array();
+        $posted_values      = array();
 
         // removing data from session when there is no POST request
         if ( !$this->http->hasPostVariable( 'validation' ) )
@@ -55,10 +56,8 @@ class FormMakerFunctionCollection
             $posted_values[$i] = $this->http->postVariable($post_id);
         }    
         
-        /**
-         * Checking post variables
-         */
-        if ( count( $posted_values ) )
+        // Checking post variables
+        if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) )
         {
             // Checking required security POST variable
             if ( $this->http->postVariable('validation') !== 'False' ) {
@@ -85,22 +84,33 @@ class FormMakerFunctionCollection
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
-                // Sending email message
-                if ($form_definition->attribute('post_action') == 'email')
-                {
-                    $data_to_send = $this->removeSessionData();
-                    $operation_result = $this->generateEmailContent($form_definition, $data_to_send);
-                }
-                // TODO: Storing data in database
-                else 
-                {
-                    $operation_result = false;
-                }
-
-                // rendering success template
                 $tpl = eZTemplate::factory();
-                $tpl->setVariable('result', $operation_result);
-                $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );  
+                if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
+                {
+                    // rendering summary page
+                    $data_to_send = $this->getDataToSend();
+                    $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
+                    $current_page--; // this is not a form page, so we need to decrease page counter
+                    $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
+                }
+                else
+                {
+                    // Sending email message
+                    if ($this->definition->attribute('post_action') == 'email')
+                    {
+                        $operation_result = $this->processEmail();
+                        $this->removeSessionData();
+                    }
+                    // TODO: Storing data in database
+                    else 
+                    {
+                        $operation_result = false;
+                    }
+
+                    // rendering success template
+                    $tpl->setVariable('result', $operation_result);
+                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );                      
+                }
             } 
         }
         
@@ -116,7 +126,7 @@ class FormMakerFunctionCollection
             $form_page['attributes'] = $form_page['attributes']['attributes'];            
         }
         
-        $result = array_merge($result, array( 'definition'          => $form_definition,
+        $result = array_merge($result, array( 'definition'          => $this->definition,
                                               'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
                                               'current_page'        => $current_page,
@@ -136,59 +146,26 @@ class FormMakerFunctionCollection
     }
     
     /**
-     *  Method generates email message to recipients and sends it
-     * @param formDefinitions $definition
-     * @param array $form_pages
+     * Method generates email message to recipients and sends it
      * @return type
      */
-    private function generateEmailContent($definition, $form_pages)
+    private function processEmail()
     {
         // creating email content
-        $tpl                    = eZTemplate::factory();
-        $email_data             = array();
-        $additional_receivers   = array();
-        
-        foreach ($form_pages as $i => $page)
-        {
-            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $definition->attribute( 'name' );
-            
-            foreach ( $page['attributes'] as $attribute )
-            {
-                switch ($attribute->attribute('type_id'))
-                {
-                    case formTypes::CHECKBOX_ID: // checkbox
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
-                        break;
+        $tpl            = eZTemplate::factory();
+        $data_to_send   = $this->getDataToSend();
 
-                    case formTypes::RADIO_ID: // radio button
-                        $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
-                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
-                        break;
-
-                    case formTypes::TEXTLINE_ID:
-                        if ( $attribute->attribute( 'email_receiver' ) == 1 )
-                        {
-                            $additional_receivers[] = $attribute->attribute( 'default_value' );
-                        }
-                    
-                    default:
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = $attribute->attribute( 'default_value' );
-                        break;
-                }                
-            }
-        }
-        
-        $tpl->setVariable('data', $email_data);
-        $sender = $definition->attribute( 'email_sender' );
+        $tpl->setVariable('data', $data_to_send['email_data']);
+        $sender = $this->definition->attribute( 'email_sender' );
 
         // creating email message
         $mail = new eZMail();
         $mail->setSender( $sender ); 
-        $mail->setSubject( $definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ) );
+        $mail->setSubject( $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ) );
         $mail->setBody( $tpl->fetch( 'design:email/recipient.tpl' ) );
         $mail->setContentType('text/html');
 
-        $recipients = explode( ';', $definition->attribute( 'recipients' ) );
+        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
         foreach( $recipients as $recipient ) 
         {
             $mail->addReceiver( $recipient );
@@ -197,9 +174,9 @@ class FormMakerFunctionCollection
         $status = eZMailTransport::send($mail);        
         
         // sending email to additional receivers
-        if ( $status && !empty( $additional_receivers ) )
+        if ( $status && !empty( $data_to_send['receivers'] ) )
         {
-            foreach ( $additional_receivers as $email_address )
+            foreach ( $data_to_send['receivers'] as $email_address )
             {
                 if ( empty( $email_address ) )
                 {
@@ -208,7 +185,7 @@ class FormMakerFunctionCollection
                 
                 $mail = new eZMail();
                 $mail->setSender( $sender ); 
-                $mail->setSubject( $definition->attribute( 'name' ) );
+                $mail->setSubject( $this->definition->attribute( 'name' ) );
                 $mail->setContentType('text/html');
                 $mail->setBody( $tpl->fetch( 'design:email/user.tpl' ) );
                 $mail->addReceiver( $email_address );
@@ -230,22 +207,68 @@ class FormMakerFunctionCollection
     }
     
     /**
-     * Method removes session data and returns array containing correct form values
-     * @return array
+     * Method removes form session data
      */
     private function removeSessionData()
     {
-        $data_to_send = array();
         foreach ( $_SESSION as $key => $value )
         {
             if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
                 continue;
             }
-
-            $data_to_send[] = $value;
             // clean up the session
             unset( $_SESSION[$key] );
         }         
-        return $data_to_send;
+    }
+    
+    /**
+     * Method returns data ready for sending
+     * @return type
+     */
+    private function getDataToSend()
+    {
+        $email_data = array();
+        $receivers  = array();
+        $i          = 0;
+        
+        foreach ( $_SESSION as $key => $page )
+        {
+            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
+                continue;
+            }
+
+            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'name' );
+            
+            foreach ( $page['attributes'] as $attribute )
+            {
+                switch ($attribute->attribute('type_id'))
+                {
+                    case formTypes::CHECKBOX_ID: // checkbox
+                        $email_data[$i]['attributes'][$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
+                        break;
+
+                    case formTypes::RADIO_ID: // radio button
+                        $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
+                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
+                        break;
+
+                    case formTypes::TEXTLINE_ID:
+                        if ( $attribute->attribute( 'email_receiver' ) == 1 )
+                        {
+                            $receivers[] = $attribute->attribute( 'default_value' );
+                        }
+                    
+                    default:
+                        $email_data[$i]['attributes'][$attribute->attribute('label')] = $attribute->attribute( 'default_value' );
+                        break;
+                }                
+            }
+            $i++;
+        }  
+        
+        return array(
+            'email_data'    => $email_data,
+            'receivers'     => $receivers
+        );        
     }
 }

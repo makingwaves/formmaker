@@ -31,6 +31,9 @@ class formDefinitions extends eZPersistentObject
                                          "owner_user_id"    => array( "name" => "owner_user_id",
                                                                       "datatype" => "integer",
                                                                       "required" => true ),
+                                         "summary_page"     => array( "name" => "summary_page",
+                                                                      "datatype" => "integer",
+                                                                      "required" => true ),            
                                          "post_action"      => array( "name" => "post_action",
                                                                       "datatype" => "string",
                                                                       "required" => true ),
@@ -90,21 +93,24 @@ class formDefinitions extends eZPersistentObject
 
     /**
      * Use to create a new object, set the values and store in a db record
-     * @param array $data
+     * @param array $form_elements - defined in edit.php
      * @return null|\oneTimeLogin
      */
-    public static function addForm( $data )
+    public static function addForm( $form_elements )
     {
         
-        $object = new self( array( 
+        $data = array( 
             'id'            => null, 
-            'name'          => $data['name'],
             'create_date'   => null,
             'owner_user_id' => 14,
-            'post_action'   => 'email',
-            'email_sender'  => $data['email_sender'],
-            'recipients'    =>  $data['recipients']            
-        ) );
+            'post_action'   => 'email'
+        );
+        
+        foreach ($form_elements as $id => $element) {
+            $data[$id] = $element['value'];
+        }   
+        
+        $object = new self( $data );
         $object->store();
         return $object;
     }    

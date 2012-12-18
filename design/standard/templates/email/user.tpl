@@ -3,7 +3,7 @@
 
 <strong>{'Thank you for sending us the information.'|i18n( 'extension/formmaker/email' )}</strong>
 <br/><br/>
-{foreach $data as => $page}
+{foreach $data as $page}
     <strong>{$page.page_label|i18n( 'extension/formmaker/email' )}</strong>
     <br/>
     {foreach $page.attributes as $label => $value}
