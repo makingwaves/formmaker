@@ -139,7 +139,7 @@
     height: 40px;
 }
 
-.formmaker-attribute input {
+.formmaker-attribute input[type=text] {
     width: 250px;
 }
 

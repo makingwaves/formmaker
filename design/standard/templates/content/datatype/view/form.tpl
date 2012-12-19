@@ -15,11 +15,7 @@
 {ezcss_load( array( 'formmaker.css', 'http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' ) )}
 
 {* Including JS files *}
-{ezscript_load( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'ezjsc::jqueryui' ) )}
-{ezscript_require( array( 'jquery.functions.js' ) )}
-{if $has_ajax_access}
-    {ezscript_require( array( 'jquery.validation.js' ) )}
-{/if}
+{ezscript_require( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'ezjsc::jqueryUI', 'jquery.validation.js', 'jquery.functions.js' ) )}
 
 <div class="form-container">
     <h1>{$form_definition.name|wash()}</h1>

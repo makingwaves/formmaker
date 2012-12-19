@@ -60,7 +60,7 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +103,33 @@ CREATE TABLE `form_attributes` (
 LOCK TABLES `form_attributes` WRITE;
 /*!40000 ALTER TABLE `form_attributes` DISABLE KEYS */;
 /*!40000 ALTER TABLE `form_attributes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `form_attributes_options`
+--
+
+DROP TABLE IF EXISTS `form_attributes_options`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_attributes_options` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `attr_id` int(11) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `opt_order` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `attr_id` (`attr_id`),
+  CONSTRAINT `form_attributes_options_ibfk_1` FOREIGN KEY (`attr_id`) REFERENCES `form_attributes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `form_attributes_options`
+--
+
+LOCK TABLES `form_attributes_options` WRITE;
+/*!40000 ALTER TABLE `form_attributes_options` DISABLE KEYS */;
+/*!40000 ALTER TABLE `form_attributes_options` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -167,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-12-19 10:21:23
+-- Dump completed on 2012-12-19 11:14:03
