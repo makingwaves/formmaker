@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class interface for forms_attributes_options SQL table
+ * Class interface for form_attributes_options SQL table
  */
 class formAttributesOptions extends eZPersistentObject 
 {

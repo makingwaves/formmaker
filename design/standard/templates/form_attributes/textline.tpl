@@ -8,3 +8,4 @@
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label> 
 <input class="form_element" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="text" value="{$attribute.default_value}"/>
+<input type="hidden" class="validation-type" value="{$attribute.validator_ids|implode(',')}"/>

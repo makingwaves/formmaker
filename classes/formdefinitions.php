@@ -1,18 +1,14 @@
 <?php
 
 /**
- * Class interface for formmaker_definitions SQL table
+ * Class interface for form_definitions SQL table
  */
 class formDefinitions extends eZPersistentObject 
 {
-    /**
-     * Constructor
-     * @param type $row
-     */
-    public function __construct( $row )
-    {
-        $this->eZPersistentObject( $row );
-    }
+    // prefix for keys used in session
+    const PAGE_SESSION_PREFIX = 'form_data_page_';
+    // main node id
+    const MAIN_NODE_ID = 2;
 
     /**
      *  Table definition
@@ -26,19 +22,25 @@ class formDefinitions extends eZPersistentObject
                                          "name"             => array( "name" => "name",
                                                                       "datatype" => "string",
                                                                       "required" => true ),
+                                         "email_sender"     => array( "name" => "email_sender",
+                                                                      "datatype" => "string",
+                                                                      "required" => true ),            
                                          "create_date"      => array( "name" => "create_date",
                                                                       "datatype" => "datetime",
                                                                       "required" => true ),
                                          "owner_user_id"    => array( "name" => "owner_user_id",
                                                                       "datatype" => "integer",
                                                                       "required" => true ),
+                                         "summary_page"     => array( "name" => "summary_page",
+                                                                      "datatype" => "integer",
+                                                                      "required" => true ),            
                                          "post_action"      => array( "name" => "post_action",
                                                                       "datatype" => "string",
                                                                       "required" => true ),
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
                                                                       "required" => false ) ),
-                      "keys" => array('id'),
+                      "keys" => array('id'),         
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
@@ -81,25 +83,34 @@ class formDefinitions extends eZPersistentObject
         return $form->store();
     }
     
-    public static function removeContentObject($id) 
+    /**
+     * Method removes a from
+     */
+    public function removeContentObject() 
     {         
-        return eZPersistentObject::removeObject( formDefinitions::definition(), array( 'id' => $id ) );
+        eZPersistentObject::removeObject( formDefinitions::definition(), array( 'id' => $this->attribute( 'id' ) ) );
     }
 
     /**
      * Use to create a new object, set the values and store in a db record
-     * @param array $data
+     * @param array $form_elements - defined in edit.php
      * @return null|\oneTimeLogin
      */
-    public static function addForm( $data )
+    public static function addForm( $form_elements )
     {
         
-        $object = new formDefinitions( array( 'id' => null, 
-                                           'name' => $data['name'],
-                                           'create_date' => null,
-                                           'owner_user_id' => 14,
-                                           'post_action' => 'email',
-                                           'recipients' => $data['recipients']) );
+        $data = array( 
+            'id'            => null, 
+            'create_date'   => null,
+            'owner_user_id' => 14,
+            'post_action'   => 'email'
+        );
+        
+        foreach ($form_elements as $id => $element) {
+            $data[$id] = $element['value'];
+        }   
+        
+        $object = new self( $data );
         $object->store();
         return $object;
     }    
@@ -133,11 +144,65 @@ class formDefinitions extends eZPersistentObject
     
     /**
      * Method return all attributes of current form
+     * @param boolean $only_enabled
      * @return array
      */
-    public function getAllAttributes()
+    public function getAllAttributes( $only_enabled = false )
     {
-        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, array( 'definition_id' => $this->attribute( 'id' ) ) );
+        $settings = array(
+            'definition_id' => $this->attribute( 'id' )
+        );
+        if ( $only_enabled )
+        {
+            $settings['enabled'] = 1;
+        }
+        return eZPersistentObject::fetchObjectList( formAttributes::definition(), null, $settings );
+    }
+    
+    /**
+     * Method returns page attributes sorted by pages or for given page
+     * @param boolean $page
+     * @return array
+     */
+    public function getPageAttributes( $page = false )
+    {
+        $attributes_by_pages    = array();
+        $current_page           = 0;
+        $page_enabled           = true;
+
+        foreach ( $this->getAllAttributes( true ) as $attribute )
+        {
+            if ( $attribute->attribute( 'type_id' ) == formTypes::SEPARATOR_ID )
+            {
+                $current_page ++;
+                $page_enabled = (bool)$attribute->attribute( 'enabled' );
+            }
+            
+            if ( $page_enabled )
+            {
+                if ( !isset( $attributes_by_pages[$current_page] ) )
+                {
+                    $attributes_by_pages[$current_page] = array(
+                        'page_info'     => array(), 
+                        'attributes'    => array()
+                    );
+                }  
+                
+                if ( $attribute->attribute( 'type_id' ) == formTypes::SEPARATOR_ID )
+                {
+                    $attributes_by_pages[$current_page]['page_info'] = $attribute;
+                }
+                else 
+                {
+                    $attributes_by_pages[$current_page]['attributes'][] = $attribute;
+                }                
+            }
+        }
+        if ( $page )
+        {
+            return $attributes_by_pages[$page];
+        }
+        return $attributes_by_pages;
     }
     
     /**
@@ -153,5 +218,28 @@ class formDefinitions extends eZPersistentObject
                 $attribute->removeRecord();
             }
         }
+    }
+    
+    /**
+     * Method returns a list of objects connected with the current form
+     * @return array
+     */
+    public function getConnectedObjects() 
+    {
+        $params = array(
+            'ExtendedAttributeFilter'   => array(
+                'id'        => 'FormRelatedObjectsFilter',
+                'params'    => array( 'form_id' => $this->attribute( 'id' ) )
+            )
+        );
+        
+        $fetch_result = eZContentObjectTreeNode::subTreeByNodeID( $params, self::MAIN_NODE_ID );
+        $data = array();
+        foreach ( $fetch_result as $node )
+        {
+            $data[$node->attribute( 'node_id' )] = $node->attribute( 'name' );
+        }
+        
+        return $data;
     }
 }

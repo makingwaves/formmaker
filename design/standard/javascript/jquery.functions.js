@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
     });       
     
     // Security variable
-    jQuery('#mwezform-submit').click(function(){
+    jQuery('input[name=form-send], input[name=form-back], input[name=form-next]').click(function(){
         $('#mwezform input[name=validation]').val('False');
     });
     
@@ -19,6 +19,20 @@ jQuery(document).ready(function(){
     jQuery('.form_label_radio input[type=radio]').click(function(){
         var input_id = $(this).attr('name').replace('connected_', '');
         $(this).parents('.form_attribute_content').find('input[name=' + input_id + ']').val($(this).val());
-    });    
+    });  
+    
+    jQuery('input[type=hidden][class=validation-type]').each(function(){
+        if ($.inArray($('#date-validator').val(), $(this).val().split(',')) != -1) {
+            $(this).parent().find('input[type=text]').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: 'dd/mm/yy',
+                onClose: function(){
+                    $(this).blur();
+                },
+                yearRange: '-150:nnnn'
+            });            
+        }
+    });
 })
 

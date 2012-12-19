@@ -66,10 +66,10 @@
                                     </td>                                    
                                     <td class="yui-dt-empty" style="text-align: center;">
                                         <div class="yui-dt-liner">
+                                            <input type="hidden" name="form-id" value="{$form.id}" />
                                             <a class="formmaker_edit_form" href={concat('formmaker/edit/', $form.id)|ezurl()}>Edit</a>
-                                                {if $remove_access}
-                                                |
-                                                <a class="formmaker_remove_form" href={concat('formmaker/remove/', $form.id)|ezurl()}>Remove</a>
+                                            {if $remove_access}
+                                                | <a class="formmaker_remove_form" href={concat('formmaker/remove/', $form.id)|ezurl()}>Remove</a>
                                             {/if}
                                         </div>
                                     </td>

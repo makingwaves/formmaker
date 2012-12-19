@@ -1,18 +1,16 @@
 <?php
 
 /**
- * Class interface for formmaker_types SQL table
+ * Class interface for form_types SQL table
  */
 class formTypes extends eZPersistentObject 
 {
-    /**
-     * Constructor
-     * @param type $row
-     */
-    public function __construct( $row )
-    {
-        $this->eZPersistentObject( $row );
-    }
+    // ids of form types
+    const TEXTLINE_ID = 1;
+    const TEXTAREA_ID = 2;
+    const CHECKBOX_ID = 3;
+    const RADIO_ID = 4;
+    const SEPARATOR_ID = 5;
 
     /**
      *  Table definition
@@ -28,6 +26,9 @@ class formTypes extends eZPersistentObject
                                                                   "required" => true ), 
                                          "validation"   => array( "name" => "validation",
                                                                   "datatype" => "integer",
+                                                                  "required" => true ),     
+                                         "sep_order"    => array( "name" => "sep_order",
+                                                                  "datatype" => "integer",
                                                                   "required" => true ),             
                                          "template"     => array( "name" => "template",
                                                                   "datatype" => "string",
@@ -38,7 +39,7 @@ class formTypes extends eZPersistentObject
                       ),            
                       "increment_key" => "id",
                       "class_name" => "formTypes",
-                      "sort" => array(),
+                      "sort" => array('sep_order' => 'asc'),
                       "name" => "form_types" );
         return $def;
     }    

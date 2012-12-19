@@ -1,0 +1,17 @@
+Version 1.2
+- Added possibility to split the from into parts (attribute "page separator")
+- Added possibility to disable attribute, so it won't be visible or front nor sent in email
+- Added possibility of sending emails to additional recipients (set on "Email" validated text)
+- Added "Email sender" field, for the form
+- When form is being removed, it's checked whether it's assigned to any nodes
+- Added possibility to display confirmation page on front
+- Added "Date" validator. On front it's connected to jQuery datepicker
+
+Version 1.1
+- Removed possibility to add CSS styles directly from admin panel
+- Removed textarea validation
+- Changed method of adding new attributes to the form
+- Added some CSS styling to attribute boxes in admin panel
+- Added radio button attribute
+- jQuery confirm window replaced by default browser confirm window
+- Fixed checkbox and radio buttons values in email message

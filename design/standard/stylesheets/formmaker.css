@@ -6,16 +6,12 @@
         Stylesheet for Form Maker extension
 */
 
-#mwezform div {
-    margin-bottom: 10px;
-}
-
 .form_error {
     color:red;
     font-weight: bold;
 }
 
-.form_container {
+.form-container {
     margin: 2%;
     padding: 2%;
     width: 94%;
@@ -23,6 +19,21 @@
     background-color: #eef6f9;
     border-radius: 3px;   
 }
+    .form-element-container {
+        margin-bottom: 10px;
+        padding: 2px 2px 10px 2px;
+        overflow: hidden;
+        border-bottom: 1px solid #dfcbd1;        
+    }
+    .form-footer {
+        overflow: hidden;
+    }
+        .form-footer-back {
+            float: left;
+        }
+        .form-footer-next {
+            float: right;
+        }
 
 .form_label_checkbox {
     display: inline;
@@ -31,12 +42,6 @@
 .form_attribute_required {
     color: red;
     font-weight: bold;
-}
-
-.form_element_container {
-    overflow: hidden;
-    border-bottom: 1px solid #dfcbd1;
-    padding: 2px;
 }
 
 .form_attribute_content {

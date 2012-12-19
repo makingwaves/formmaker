@@ -7,9 +7,23 @@ $original_name  = '';
 $attributes     = array();
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
-$form_elements = array( 'name' => array('required' => true, 'label' => 'Form name', 'value' => ''), 
-                        'recipients' => array('required' => true, 'label' => 'E-mail recipients (separated by semicolon)', 'value' => ''),
-                      );
+$form_elements = array( 'name'          => array(   'required'  => true, 
+                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Form name' ), 
+                                                    'type'      => 'text',
+                                                    'value'     => '' ), 
+                        'recipients'    => array(   'required'  => true, 
+                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'E-mail recipients (separated by semicolon)' ), 
+                                                    'type'      => 'text',
+                                                    'value'     => '' ),
+                        'email_sender'  => array(   'required'  => true, 
+                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Email sender' ), 
+                                                    'type'      => 'text',
+                                                    'value'     => '' ),
+                        'summary_page'  => array(   'required'  => false, 
+                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Summary page' ), 
+                                                    'type'      => 'checkbox',
+                                                    'value'     => '' )
+);
 
 // When form is being edited, we need to fill up its definition data from database
 if (is_numeric($form_id))
@@ -28,7 +42,14 @@ if( $http->hasPostVariable('name') )
     // validating required fields
     foreach ($form_elements as $key => $data)
     {
-        $form_elements[$key]['value'] = $http->postVariable($key);
+        if ($form_elements[$key]['type'] == 'checkbox') 
+        {
+            $form_elements[$key]['value'] = (int)$http->hasPostVariable($key);
+        } 
+        else 
+        {
+            $form_elements[$key]['value'] = $http->postVariable($key);
+        }
         if ($data['required'] && empty($form_elements[$key]['value']))
         {
             $error_message = ezpI18n::tr('extension/formmaker/admin', 'Please fill all required fields');
@@ -55,7 +76,7 @@ if( $http->hasPostVariable('name') )
         if (empty($error_message)) 
         {
             // redirecting to edit page (adding attributes)
-            $saved_object = formDefinitions::addForm($_POST);
+            $saved_object = formDefinitions::addForm( $form_elements );
             $href = 'formmaker/edit/' . $saved_object->attribute('id');
             eZURI::transformURI($href);
             eZHTTPTool::redirect($href);
@@ -69,6 +90,8 @@ $tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
 $tpl->setVariable( 'input_types', formTypes::getAllTypes() );
+$tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
+$tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 
 $Result = array();
 
