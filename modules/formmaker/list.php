@@ -27,5 +27,3 @@ if ( $tpl->variable( 'persistent_variable' ) !== false )
     $contentInfoArray['persistent_variable'] = $tpl->variable( 'persistent_variable' );
 
 $Result['content_info'] = $contentInfoArray;
-
-?>

@@ -1,7 +1,7 @@
-{* Template renders an email message for target recipient(s), params:
+{* Template renders an email message for target users, params:
 - $data - form data grouped into pages *}
 
-<strong>{'We kindly inform about the new answer.'|i18n( 'extension/formmaker/email' )}</strong>
+<strong>{'Thank you for sending us the information.'|i18n( 'extension/formmaker/email' )}</strong>
 <br/><br/>
 {foreach $data as $page}
     <strong>{$page.page_label|i18n( 'extension/formmaker/email' )}</strong>

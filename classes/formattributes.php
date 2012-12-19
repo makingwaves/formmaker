@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class interface for formmaker_attributes SQL table
+ * Class interface for form_attributes SQL table
  */
 class formAttributes extends eZPersistentObject 
 {
@@ -32,6 +32,12 @@ class formAttributes extends eZPersistentObject
                                          "type_id"          => array( "name" => "type_id",
                                                                       "datatype" => "int",
                                                                       "required" => true ),
+                                         "enabled"          => array( "name" => "enabled",
+                                                                      "datatype" => "int",
+                                                                      "required" => true ),       
+                                         "email_receiver"   => array( "name" => "email_receiver",
+                                                                      "datatype" => "int",
+                                                                      "required" => true ),             
                                          "default_value"    => array( "name" => "default_value",
                                                                       "datatype" => "string",
                                                                       "required" => false ),
@@ -59,7 +65,9 @@ class formAttributes extends eZPersistentObject
      */
     public static function createEmpty()
     {
-        return new self();
+        return new self( array(
+            'enabled' => 1
+        ) );
     }
     
     /**
@@ -67,18 +75,22 @@ class formAttributes extends eZPersistentObject
      * @param int $order
      * @param int $definition_id
      * @param int $type_id
-     * @param string $def_value
      * @param string $label
+     * @param int $enabled
+     * @param string $def_value    
+     * @param int $email_receiver 
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $def_value, $label )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $def_value = '', $email_receiver = 0 )
     {
         $object = new self( array(
-            'attr_order'    => $order,
-            'definition_id' => $definition_id,
-            'type_id'       => $type_id,
-            'default_value' => $def_value,
-            'label'         => $label
+            'attr_order'        => $order,
+            'definition_id'     => $definition_id,
+            'type_id'           => $type_id,
+            'default_value'     => $def_value,
+            'label'             => $label,
+            'enabled'           => $enabled,
+            'email_receiver'    => $email_receiver
         ) );
         $object->store();
         return $object;        
@@ -119,7 +131,7 @@ class formAttributes extends eZPersistentObject
      */
     public function getAttributeValidators()
     {
-        return formAttrvalid::getValidatorsByAttribute($this->attribute('id'));
+        return formAttrvalid::getValidatorsByAttribute( $this->attribute( 'id' ) );
     }
     
     /**
@@ -155,7 +167,14 @@ class formAttributes extends eZPersistentObject
             
             $validator_row = formValidators::getValidator($attr_valid->attribute('validator_id'));
             $class_name = 'Validate_' . $validator_row->attribute('type');
-            $validator_object = new $class_name;
+            if ($validator_row->attribute( 'type' ) == 'Regex')
+            {
+                $validator_object = new $class_name( $validator_row->attribute( 'regex' ) );
+            }
+            else 
+            {
+                $validator_object = new $class_name;
+            }
 
             // if value is not valid
             if(!$validator_object->isValid($value))
@@ -191,13 +210,15 @@ class formAttributes extends eZPersistentObject
             $id = explode( '_', $key );
             $id = $id[1];
             $order ++;
+            $item['default'] = isset( $item['default'] ) ? $item['default'] : '';
+            $item['email_receiver'] = isset( $item['email_receiver'] ) ? $item['email_receiver'] : 0;
             
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
             if ( ctype_digit( (string)$id ) )
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
-                $attribute->setData( $order, $item['default'], $item['label'] );
+                $attribute->setData( $order, $item['label'], $item['enabled'], $item['default'], $item['email_receiver'] );
                 $attribute->store();
                 
                 $correct_validators = array();
@@ -208,7 +229,7 @@ class formAttributes extends eZPersistentObject
                 
                 if ( isset( $item['mandatory'] ) && $item['mandatory'] == 'on' )
                 {
-                    $correct_validators[] = formAttrvalid::REQUIRED_ID;
+                    $correct_validators[] = formValidators::NOT_EMPTY_ID;
                 }      
                 
                 $attribute->updateValidators( $correct_validators );
@@ -217,7 +238,7 @@ class formAttributes extends eZPersistentObject
                 {
                     $default_value = (string)$attribute->attribute( 'default_value' );
                     $default_input = false;
-                    if ( $attribute->attribute( 'type_id' ) == 4 && !empty( $default_value ) && !ctype_alpha( $default_value ) )
+                    if ( $attribute->attribute( 'type_id' ) == formTypes::RADIO_ID && !empty( $default_value ) && !ctype_alpha( $default_value ) )
                     {
                         $default_input = $default_value;
                     }
@@ -227,12 +248,12 @@ class formAttributes extends eZPersistentObject
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
             {
-                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['default'], $item['label'] );
+                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['default'], $item['email_receiver'] );
                 $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
                 {
-                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), formAttrvalid::REQUIRED_ID );
+                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), formValidators::NOT_EMPTY_ID );
                 }
                 // adding other validator
                 if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
@@ -251,7 +272,7 @@ class formAttributes extends eZPersistentObject
                         $option_object = $attribute->addOption( $label, $option_order );
                         
                         $default_value = (string)$attribute->attribute( 'default_value' );
-                        if ( $key == $default_value && $attribute->attribute( 'type_id' ) == 4 ) 
+                        if ( $key == $default_value && $attribute->attribute( 'type_id' ) == formTypes::RADIO_ID ) 
                         {
                             $default_value_to_set = $option_object->attribute( 'id' );
                         }
@@ -274,14 +295,18 @@ class formAttributes extends eZPersistentObject
     /**
      * Method sets the changable data in current attribute object
      * @param int $order
-     * @param string $default
      * @param string $label
+     * @param int $enabled
+     * @param string $default
+     * @param int $email_receiver
      */
-    private function setData( $order, $default, $label )
+    private function setData( $order, $label, $enabled, $default = '', $email_receiver = 0 )
     {
         $this->setAttribute( 'attr_order', $order );
         $this->setAttribute( 'default_value', $default );
-        $this->setAttribute( 'label', $label);
+        $this->setAttribute( 'label', $label );
+        $this->setAttribute( 'enabled', $enabled );
+        $this->setAttribute( 'email_receiver', $email_receiver );
     }
     
     /**
@@ -294,14 +319,14 @@ class formAttributes extends eZPersistentObject
         foreach ( $this->getAttributeValidators() as $validator )
         {
             // removing an old attribute
-            if ( !in_array( $validator->attribute( 'id' ), $correct_validators ) )
+            if ( !in_array( $validator->attribute( 'validator_id' ), $correct_validators ) )
             {
                 formAttrvalid::removeRecord( $this->attribute( 'id' ), $validator->attribute( 'validator_id' ) );
             }
             else
             {
                 // making an array of correct validators that already exists in database
-                $existing_correct[] = $validator->attribute( 'id' );
+                $existing_correct[] = $validator->attribute( 'validator_id' );
             }
         }
         

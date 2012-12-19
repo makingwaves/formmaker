@@ -1,22 +1,26 @@
 <?php
-$http = eZHTTPTool::instance();
 
-$viewParameters = array();
-if ( isset( $Params['id'] ) )
+$Module = $Params['Module'];
+
+if ( !isset( $Params['id'] ) )
 {
-    $id = $Params['id'];
+    return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 
+$http = eZHTTPTool::instance();
+$id = $Params['id'];
+$form_object = formDefinitions::getForm( $id );
 
-// remove row
-formDefinitions::removeContentObject($id);
+// checking whether there are objects in which current form is assigned as an attribute
+if ( count( $form_object->getConnectedObjects() ) )
+{
+    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+}
 
+// removing the object from database
+$form_object->removeContentObject();
 
-$server = $_SERVER['SERVER_NAME'];
-$uriString = $_SERVER['PHP_SELF'];
-$uriString = explode('/', $uriString);
-unset($uriString[sizeof($uriString)-1]);
-unset($uriString[sizeof($uriString)-1]);
-$uri = implode('/', $uriString);
-$uri = 'http://' . $server . $uri . '/list';
-header('location: ' . $uri);
+// redirect back to the list
+$url = '/formmaker/list/';
+eZURI::transformURI($url, false, 'full');
+eZHTTPTool::redirect( $url );

@@ -1,4 +1,4 @@
-Form maker 1.0 installation guide
+Form maker 1.2 installation guide
 
 0. Get the extension 
 Go to your `extension` folder within your eZ installation, then run:
@@ -26,9 +26,9 @@ mysql -u {mysql-username} -p {your-ezpublish-database} < update.sql
 
 7. If you have editor users in your project and you want them to have a possibility to add/remove forms, you need to grant them proper privilages.
 Go to User accounts => Roles and policies and click on your editor's group. Now click "Edit" button and add "New policy".
-As a module please select "formmaker" and choose "create" function. Then accept it by clicking "Grant full access". You can perform same action for "remove" function.
+As a module please select "formmaker" and choose "edit" function. Then accept it by clicking "Grant full access". You can perform same action for "remove" function.
 
-8. Additionaly, if you want to have AJAX (ezjscore) form validation, you need to add following privilages to Anonymous user group:
+8. Next, you need to add following privilages to Anonymous and Editors user groups (for ezjscore purposes):
 module: ezjscore, function: call, function limitation: formmaker
 
 9. Now you can use "formmaker" tab, which is displayed in your admin panel. After you will create your form, you can assign it to Form class object. 
