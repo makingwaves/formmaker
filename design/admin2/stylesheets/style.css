@@ -15,6 +15,7 @@
 
 .formField {
     cursor: move;
+    width: 675px;
 }
 
     .formField .form-attribute-options input[type=text] {
@@ -158,6 +159,8 @@
 
 #content-sub-items-list {
     overflow: hidden;
+    width: 675px;
+    background-color: white;
 }
 
 .formmaker-language-information {
