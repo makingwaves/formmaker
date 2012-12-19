@@ -98,7 +98,8 @@
     position: relative;
     border-radius: 3px; 
     -moz-border-radius: 3px; 
-    -webkit-border-radius: 3px;    
+    -webkit-border-radius: 3px;   
+    box-shadow: 5px 5px 10px #888;
 }
 
 .form-1 {
@@ -106,7 +107,7 @@
 }
 
 .form-2 {
-    background-color: #cfceff;
+    background-color: #b2b6ff;
 }
 
 .form-3 {
@@ -114,7 +115,11 @@
 }
 
 .form-4 {
-    background-color: #dcfcff;
+    background-color: #99fffd;
+}
+
+.form-5 {
+    background-color: white;
 }
 
 .confirmationMsg {
@@ -220,4 +225,8 @@
 
 #dialog-confirm {
     display: none;
+}
+
+select[name=new-field-type] {
+    font-size: 12px;
 }

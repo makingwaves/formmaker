@@ -85,9 +85,9 @@
                 </div>                    
                     
                 <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
-                <select name="new_field_type">
+                <select name="new-field-type">
                     {foreach $input_types as $field}
-                        <option class="form-{$field.id}" value="{$field.id}">{$field.name}</option>
+                        <option value="{$field.id}">{$field.name}</option>
                     {/foreach}
                 </select>    
 

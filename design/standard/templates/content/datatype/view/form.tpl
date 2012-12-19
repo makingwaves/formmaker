@@ -12,10 +12,10 @@
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
-{ezcss_load( array( 'formmaker.css' ) )}
+{ezcss_load( array( 'formmaker.css', 'http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' ) )}
 
 {* Including JS files *}
-{ezscript_load( array( 'ezjsc::jquery', 'ezjsc::jqueryio' ) )}
+{ezscript_load( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'ezjsc::jqueryui' ) )}
 {ezscript_require( array( 'jquery.functions.js' ) )}
 {if $has_ajax_access}
     {ezscript_require( array( 'jquery.validation.js' ) )}
@@ -29,6 +29,7 @@
         <input type="hidden" name="form_id" value="{$form_definition.id}"/>
         <input type="hidden" name="node_id" value="{$node.node_id}"/>
         <input type="hidden" name="current_page" value="{$current_page}" />
+        <input type="hidden" id="date-validator" value="{$form_data.date_validator}" />
             
         {if is_set( $form_data.summary_page )}
             {* $form_data.summary_page contains rendered template summary_page.tpl *}

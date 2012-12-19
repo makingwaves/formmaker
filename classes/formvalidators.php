@@ -12,6 +12,7 @@ class formValidators extends eZPersistentObject
     const NOT_EMPTY_ID  = 5;
     const HOSTNAME_ID   = 6;
     const IP_ID         = 7;
+    const DATE_ID       = 8;
     
     /**
      *  Table definition
@@ -24,7 +25,10 @@ class formValidators extends eZPersistentObject
                                                                   "required" => true ),
                                          "type"         => array( "name" => "type",
                                                                   "datatype" => "string",
-                                                                  "required" => true ),           
+                                                                  "required" => true ),     
+                                         "regex"        => array( "name" => "regex",
+                                                                  "datatype" => "string",
+                                                                  "required" => true ),              
                                          "description"  => array( "name" => "description",
                                                                   "datatype" => "string",
                                                                   "required" => true ) ),

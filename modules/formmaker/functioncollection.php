@@ -136,6 +136,7 @@ class FormMakerFunctionCollection
                                               'validation'          => $errors,
                                               'current_page'        => $current_page,
                                               'pages_count'         => count( $all_pages ),
+                                              'date_validator'      => formValidators::DATE_ID,
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }

@@ -167,7 +167,14 @@ class formAttributes extends eZPersistentObject
             
             $validator_row = formValidators::getValidator($attr_valid->attribute('validator_id'));
             $class_name = 'Validate_' . $validator_row->attribute('type');
-            $validator_object = new $class_name;
+            if ($validator_row->attribute( 'type' ) == 'Regex')
+            {
+                $validator_object = new $class_name( $validator_row->attribute( 'regex' ) );
+            }
+            else 
+            {
+                $validator_object = new $class_name;
+            }
 
             // if value is not valid
             if(!$validator_object->isValid($value))
