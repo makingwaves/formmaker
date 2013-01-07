@@ -28,7 +28,7 @@ jQuery(document).ready( function() {
         $(this).parent('span').find('input[type=hidden]').val(value);
     });    
 
-    jQuery( ".left form .sortable-attributes" ).sortable();
+    jQuery( ".sortable-attributes" ).sortable();
     
     // Adding new field
     jQuery('input[name=add_field]').click(function(){

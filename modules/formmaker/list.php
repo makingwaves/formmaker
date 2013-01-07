@@ -16,7 +16,7 @@ $Result = array();
 $Result['content'] = $tpl->fetch( 'design:forms/list.tpl' );
 
 $Result['path']    = array( array( 'tag_id' => 0,
-                                   'text'   => ezpI18n::tr( 'extension/formmaker/admin', 'Making Waves eZForms Dashboard' ),
+                                   'text'   => ezpI18n::tr( 'extension/formmaker/admin', 'Form Maker Dashboard' ),
                                    'url'    => false ) );
 
 $Result['left_menu'] = "design:forms/left_menu.tpl";

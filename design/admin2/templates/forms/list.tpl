@@ -21,12 +21,12 @@
 
     <div class="box-content">
         <div class="block">
-            <div class="left">
+            <div class="form-box-container">
                 <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
                     <table>
                         <thead>
                             <tr class="yui-dt-first yui-dt-last">
-                                <th id="yui-dt0-th-name" class="mwezform-list-name yui-dt0-col-name yui-dt-col-name yui-dt-resizeable">
+                                <th class="mwezform-list-name yui-dt0-col-name yui-dt-col-name">
                                     <div class="yui-dt-resizerliner">
                                         <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
                                             <span class="yui-dt-label">{'Name'|i18n( 'extension/formmaker/admin' )}</span>
@@ -35,16 +35,25 @@
                                     </div>
                                 </th>
                                 
-                                <th id="yui-dt0-th-name" class="yui-dt0-col-name yui-dt-col-name yui-dt-resizeable">
+                                <th class="yui-dt0-col-name yui-dt-col-name">
                                     <div class="yui-dt-resizerliner">
                                         <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
                                             <span class="yui-dt-label">{'Created'|i18n( 'extension/formmaker/admin' )}</span>
                                         </div>
                                         <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
                                     </div>
-                                </th>                                
+                                </th>    
+                                
+                                <th class="yui-dt0-col-name yui-dt-col-name">
+                                    <div class="yui-dt-resizerliner">
+                                        <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
+                                            <span class="yui-dt-label">{'Author'|i18n( 'extension/formmaker/admin' )}</span>
+                                        </div>
+                                        <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
+                                    </div>
+                                </th>                                 
 
-                                <th id="yui-dt0-th-name" class="yui-dt0-col-name yui-dt-col-name yui-dt-resizeable" style="width: 160px; text-align: center;">
+                                <th class="yui-dt0-col-name yui-dt-col-name" style="width: 160px; text-align: center;">
                                     <div class="yui-dt-resizerliner">
                                         <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
                                             <span class="yui-dt-label">{'Actions'|i18n( 'extension/formmaker/admin' )}</span>
@@ -59,11 +68,14 @@
                             {foreach $forms as $form}
                                 <tr class="yui-dt-first yui-dt-last">
                                     <td class="yui-dt-empty">
-                                        <div class="yui-dt-liner">{$form.name}</div>
+                                        <div class="yui-dt-liner">{$form.name|wash()}</div>
                                     </td>
                                     <td class="yui-dt-empty">
                                         <div class="yui-dt-liner">{$form.create_date}</div>
-                                    </td>                                    
+                                    </td>            
+                                    <td class="yui-dt-empty">
+                                        <div class="yui-dt-liner">{$form.user.contentobject.name}</div>
+                                    </td>                                       
                                     <td class="yui-dt-empty" style="text-align: center;">
                                         <div class="yui-dt-liner">
                                             <input type="hidden" name="form-id" value="{$form.id}" />

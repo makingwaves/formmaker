@@ -44,6 +44,7 @@ class formDefinitions extends eZPersistentObject
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
+                      'function_attributes' => array( 'user' => 'getUserData' ),
                       "name" => "form_definitions" );
         return $def;
     }    
@@ -241,5 +242,14 @@ class formDefinitions extends eZPersistentObject
         }
         
         return $data;
+    }
+    
+    /**
+     * Method returns the data of form author user
+     * @return eZUser
+     */
+    public function getUserData()
+    {
+        return eZUser::fetch( $this->attribute( 'owner_user_id' ) );
     }
 }

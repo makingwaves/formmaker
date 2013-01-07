@@ -23,15 +23,14 @@
 
 {if $id}
     <h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name}`</h2>
-    <div class="formmaker-language-information">
+    <p class="formmaker-language-information">
         {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'extension/formmaker/admin' )}
-    </div>
+    </p>
 {else}
     <h2>New form</h2>
 {/if}
 
-<div class="block">
-    <div class="left">
+    <div class="form-box-container">
 
         <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
             <h3>Definition</h3>
@@ -107,4 +106,3 @@
             {/if}
         </form>
     </div>
-</div>

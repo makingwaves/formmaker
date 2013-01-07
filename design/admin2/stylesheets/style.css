@@ -24,7 +24,7 @@
     -webkit-border-radius: 3px;   
     box-shadow: 5px 5px 10px #888;    
     cursor: move;
-    width: 675px;
+    width: 778px;
 }
 
     .formField .form-attribute-options input[type=text] {
@@ -131,12 +131,12 @@
 .formmaker-attribute {
     margin: 5px 0 5px 10px;
     float: left;
-    width: 300px;
+    width: 380px;
     height: 40px;
 }
 
 .formmaker-attribute input[type=text] {
-    width: 250px;
+    width: 330px;
 }
 
 .form_attribute_required {
@@ -154,14 +154,12 @@
 
 #content-sub-items-list {
     overflow: hidden;
-    width: 695px;
     background-color: white;
 }
 
 .formmaker-language-information {
     font-style: italic;
     margin: 15px 0;
-    width: 48%;
 }
 
 #noneAttributesWarning {
@@ -227,4 +225,8 @@
 
 select[name=new-field-type] {
     font-size: 12px;
+}
+
+.form-box-container {
+    width: 800px;
 }
