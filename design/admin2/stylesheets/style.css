@@ -87,12 +87,14 @@
     background-repeat: no-repeat;
     padding-left: 20px;
     padding-right: 5px;
+    padding-bottom: 3px;
 }
 .formmaker_edit_form {
     background-image: url('../../../design/admin2/images/application_edit.png');    
     background-repeat: no-repeat;
     padding-left: 20px;
     padding-right: 5px;
+    padding-bottom: 3px;
 }
 
 .formFieldTemplate {

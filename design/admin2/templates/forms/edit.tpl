@@ -30,79 +30,78 @@
     <h2>New form</h2>
 {/if}
 
-    <div class="form-box-container">
+<div class="form-box-container">
+    <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
+        <h3>Definition</h3>
+        <hr/>
 
-        <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
-            <h3>Definition</h3>
-            <hr/>
+        <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
+            <div class="form_error">{$error_message}</div>
+            {foreach $form_elements as $identifier => $element}
+                <div class="formmaker-attribute">
+                    {switch match=$element.type}
+                        {case match='text'}
+                            <label>
+                                <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
+                            </label>
+                        {/case}
+                        {case match='checkbox'}
+                            <label>
+                                <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
+                                <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                            </label>
+                        {/case}
+                    {/switch}
+                </div>
+           {/foreach}
+        </div>
 
-            <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
-                <div class="form_error">{$error_message}</div>
-                {foreach $form_elements as $identifier => $element}
-                    <div class="formmaker-attribute">
-                        {switch match=$element.type}
-                            {case match='text'}
-                                <label>
-                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
-                                    <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
-                                </label>
-                            {/case}
-                            {case match='checkbox'}
-                                <label>
-                                    <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
-                                    <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
-                                </label>
-                            {/case}
-                        {/switch}
+        {if $id|not()} {* if this is a new form *}
+            <div class="controlbar" id="controlbar-top">
+                <div class="box-bc">
+                    <div class="box-ml">
+                        <div class="button-right">
+                            <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
+                        </div>
+                        <div class="float-break"></div>
                     </div>
-               {/foreach}
+                </div>
+            </div>
+        {else}
+            <h3>Attributes</h3>
+            <hr/>
+            <input type="hidden" name="definition_id" value="{$id}" />
+            <input type="hidden" id="separator-id" value="{$separator_id}"/>
+            <input type="hidden" id="validator-email-id" value="{$validator_email_id}" />
+
+            <div class="sortable-attributes">
+                {foreach $form_attributes as $attribute}
+                    {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute validator_email_id=$validator_email_id
+                             input_id=$attribute.id input=$attribute.type_data}
+                {/foreach}
+            </div>                    
+
+            <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
+            <select name="new-field-type">
+                {foreach $input_types as $field}
+                    <option value="{$field.id}">{$field.name}</option>
+                {/foreach}
+            </select>    
+
+            <div class="clear"></div>
+
+            <div class="controlbar" id="controlbar-top">
+                <div class="box-bc">
+                    <div class="box-ml">
+                        <div class="button-right">
+                            <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
+                        </div>
+                        <div class="float-break"></div>
+                    </div>
+                </div>
             </div>
 
-            {if $id|not()} {* if this is a new form *}
-                <div class="controlbar" id="controlbar-top">
-                    <div class="box-bc">
-                        <div class="box-ml">
-                            <div class="button-right">
-                                <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
-                            </div>
-                            <div class="float-break"></div>
-                        </div>
-                    </div>
-                </div>
-            {else}
-                <h3>Attributes</h3>
-                <hr/>
-                <input type="hidden" name="definition_id" value="{$id}" />
-                <input type="hidden" id="separator-id" value="{$separator_id}"/>
-                <input type="hidden" id="validator-email-id" value="{$validator_email_id}" />
-
-                <div class="sortable-attributes">
-                    {foreach $form_attributes as $attribute}
-                        {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute validator_email_id=$validator_email_id
-                                 input_id=$attribute.id input=$attribute.type_data}
-                    {/foreach}
-                </div>                    
-                    
-                <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
-                <select name="new-field-type">
-                    {foreach $input_types as $field}
-                        <option value="{$field.id}">{$field.name}</option>
-                    {/foreach}
-                </select>    
-
-                <div class="clear"></div>
-
-                <div class="controlbar" id="controlbar-top">
-                    <div class="box-bc">
-                        <div class="box-ml">
-                            <div class="button-right">
-                                <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
-                            </div>
-                            <div class="float-break"></div>
-                        </div>
-                    </div>
-                </div>
-                    
-            {/if}
-        </form>
-    </div>
+        {/if}
+    </form>
+</div>
