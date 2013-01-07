@@ -98,11 +98,11 @@ class formDefinitions extends eZPersistentObject
      */
     public static function addForm( $form_elements )
     {
-        
+        $user = eZUser::currentUser();
         $data = array( 
             'id'            => null, 
             'create_date'   => null,
-            'owner_user_id' => 14,
+            'owner_user_id' => $user->id(),
             'post_action'   => 'email'
         );
         

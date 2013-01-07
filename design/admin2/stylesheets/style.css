@@ -1,19 +1,28 @@
 /* 
     Document   : style
     Created on : Aug 22, 2012, 7:48:32 AM
-    Author     : developer
+    Author     : Piotr Szczygieł
     Description:
         Purpose of the stylesheet follows.
 */
 
 
-.formField, .formDefinition {
+.formDefinition {
     padding: 10px;
     border: 1px solid grey;
     margin-bottom: 10px;
 }
 
 .formField {
+    padding: 10px;
+    border: 1px solid grey;
+    margin-bottom: 10px;
+    cursor: move;
+    position: relative;
+    border-radius: 3px; 
+    -moz-border-radius: 3px; 
+    -webkit-border-radius: 3px;   
+    box-shadow: 5px 5px 10px #888;    
     cursor: move;
     width: 675px;
 }
@@ -86,21 +95,8 @@
     padding-right: 5px;
 }
 
-/*.formFieldTemplate_text, #formFieldTemplate_textarea, #formFieldTemplate_checkbox {*/
 .formFieldTemplate {
     display: none;
-}
-
-.formField {
-    padding: 10px;
-    border: 1px solid grey;
-    margin-bottom: 10px;
-    cursor: move;
-    position: relative;
-    border-radius: 3px; 
-    -moz-border-radius: 3px; 
-    -webkit-border-radius: 3px;   
-    box-shadow: 5px 5px 10px #888;
 }
 
 .form-1 {
@@ -131,7 +127,6 @@
     width: 47%;
     text-align: center;
 }
-/* ---- /form editing ---- */
 
 .formmaker-attribute {
     margin: 5px 0 5px 10px;
@@ -159,7 +154,7 @@
 
 #content-sub-items-list {
     overflow: hidden;
-    width: 675px;
+    width: 695px;
     background-color: white;
 }
 

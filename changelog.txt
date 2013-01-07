@@ -1,3 +1,11 @@
+Below you can find what changed in each version. Version number convention is based basically on changes made to database structure. In case when we made some changes in 
+database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2)
+
+
+
+Version 1.2.1
+- Fixed box width in admin panel
+
 Version 1.2
 - Added possibility to split the from into parts (attribute "page separator")
 - Added possibility to disable attribute, so it won't be visible or front nor sent in email
