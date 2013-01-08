@@ -15,14 +15,14 @@
 
 .formField {
     padding: 10px;
-    border: 1px solid grey;
+    border: 1px solid #CCCCCC;
     margin-bottom: 10px;
     cursor: move;
     position: relative;
     border-radius: 3px; 
     -moz-border-radius: 3px; 
     -webkit-border-radius: 3px;   
-    box-shadow: 5px 5px 10px #888;    
+    box-shadow: 0 4px 4px #AAAAAA;    
     cursor: move;
     width: 778px;
 }
@@ -141,9 +141,17 @@
     height: 40px;
 }
 
-.formmaker-attribute input[type=text] {
-    width: 330px;
+    .formmaker-attribute input[type=text] {
+        width: 330px;
+    }
+
+.attribute-full-width {
+    width: 750px;
 }
+
+    .attribute-full-width input[type=text] {
+        width: 720px;
+    }
 
 .form_attribute_required {
     color: red;

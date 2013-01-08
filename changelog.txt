@@ -9,6 +9,8 @@ Version 1.3
 - Added gradient backgrounds of the input types boxes in admin panel
 - Fixed bug with not mandatory radio buttons
 - Each field has a description now, which is displayed on a front, on a top of the field box
+- Added possibility to set header for confirmation page
+- Added possibility to set header for receipt page
 
 Version 1.2
 - Added possibility to split the from into parts (attribute "page separator")

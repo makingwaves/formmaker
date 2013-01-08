@@ -38,11 +38,13 @@
         <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
             <div class="form_error">{$error_message}</div>
             {foreach $form_elements as $identifier => $element}
-                <div class="formmaker-attribute">
+                <div class="{if is_set( $element.css )}{$element.css}{/if} formmaker-attribute">
                     {switch match=$element.type}
                         {case match='text'}
                             <label>
-                                <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                {if is_set($element.label)}
+                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                {/if}
                                 <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
                             </label>
                         {/case}
