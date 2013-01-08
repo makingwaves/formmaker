@@ -3,6 +3,7 @@
 - $is_required - boolean
 *}
 
+<p class="form-element-description">{$attribute.description}</p>
 {def $default_value = $attribute.default_value}
 {if eq( $default_value, '0' )}
     {set $default_value = ''}

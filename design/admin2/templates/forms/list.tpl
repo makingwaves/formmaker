@@ -46,7 +46,7 @@
                             {/foreach}
 
                             {if not( $forms|count() )}
-                                <tr><td class="formmaker_no_forms" colspan="3">{'There are no forms for now. Add some!'|i18n( 'extension/formmaker/admin' )}</td></tr>
+                                <tr><td class="formmaker_no_forms" colspan="4">{'There are no forms for now. Add some!'|i18n( 'extension/formmaker/admin' )}</td></tr>
                             {/if}
                         </tbody>
                     </table>      

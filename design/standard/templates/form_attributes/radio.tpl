@@ -3,6 +3,7 @@
 - $is_required - boolean
 *}
 
+<p class="form-element-description">{$attribute.description}</p>
 <label>
     {$attribute.label}
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}

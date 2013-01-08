@@ -70,7 +70,11 @@
                 .formField .attribute-header .attribute-actions .enable-attribute input[type=checkbox] {
                     padding:0;
                     margin: 0 3px 0 0;
-                }            
+                }  
+                
+    .input-description-field {
+        width: 300px;
+    }
 
 .addField {
     background-image: url('../../../design/admin2/images/add.png');

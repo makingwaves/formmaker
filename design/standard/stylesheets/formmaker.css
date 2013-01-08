@@ -45,11 +45,14 @@
 }
 
 .form_attribute_content {
-    width: 40%;
     float: left;
 }
 
 .form_error_content {
     float: left;
     width: 55%;
+}
+
+.form-element-description {
+    font-style: italic;
 }

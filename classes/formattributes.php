@@ -43,7 +43,10 @@ class formAttributes extends eZPersistentObject
                                                                       "required" => false ),
                                          "label"            => array( "name" => "label",
                                                                       "datatype" => "string",
-                                                                      "required" => true ) ),
+                                                                      "required" => true ),
+                                         "description"      => array( "name" => "description",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ) ),
                       "keys" => array('id'),
                       "function_attributes" => array(
                           'validators'      => 'getAttributeValidators',
@@ -77,21 +80,18 @@ class formAttributes extends eZPersistentObject
      * @param int $type_id
      * @param string $label
      * @param int $enabled
+     * @param string $description
      * @param string $def_value    
      * @param int $email_receiver 
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $def_value = '', $email_receiver = 0 )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver )
     {
         $object = new self( array(
-            'attr_order'        => $order,
             'definition_id'     => $definition_id,
-            'type_id'           => $type_id,
-            'default_value'     => $def_value,
-            'label'             => $label,
-            'enabled'           => $enabled,
-            'email_receiver'    => $email_receiver
+            'type_id'           => $type_id
         ) );
+        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver );
         $object->store();
         return $object;        
     }
@@ -212,13 +212,14 @@ class formAttributes extends eZPersistentObject
             $order ++;
             $item['default'] = isset( $item['default'] ) ? $item['default'] : '';
             $item['email_receiver'] = isset( $item['email_receiver'] ) ? $item['email_receiver'] : 0;
+            $item['description'] = isset( $item['description'] ) ? $item['description'] : '';
             
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
             if ( ctype_digit( (string)$id ) )
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
-                $attribute->setData( $order, $item['label'], $item['enabled'], $item['default'], $item['email_receiver'] );
+                $attribute->setData( $order, $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'] );
                 $attribute->store();
                 
                 $correct_validators = array();
@@ -248,7 +249,7 @@ class formAttributes extends eZPersistentObject
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
             {
-                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['default'], $item['email_receiver'] );
+                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'] );
                 $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
@@ -297,15 +298,17 @@ class formAttributes extends eZPersistentObject
      * @param int $order
      * @param string $label
      * @param int $enabled
+     * @param string description
      * @param string $default
      * @param int $email_receiver
      */
-    private function setData( $order, $label, $enabled, $default = '', $email_receiver = 0 )
+    private function setData( $order, $label, $enabled, $description, $default, $email_receiver )
     {
         $this->setAttribute( 'attr_order', $order );
-        $this->setAttribute( 'default_value', $default );
         $this->setAttribute( 'label', $label );
         $this->setAttribute( 'enabled', $enabled );
+        $this->setAttribute( 'description', $description );
+        $this->setAttribute( 'default_value', $default );
         $this->setAttribute( 'email_receiver', $email_receiver );
     }
     
