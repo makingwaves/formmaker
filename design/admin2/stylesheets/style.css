@@ -102,19 +102,19 @@
 }
 
 .form-1 {
-    background-color: #DBFFCE;
+    background: -moz-linear-gradient(center top , #FDFDFD, #DBFFCE) repeat scroll 0 0 padding-box #DBFFCE;
 }
 
 .form-2 {
-    background-color: #b2b6ff;
+    background: -moz-linear-gradient(center top , #FDFDFD, #b2b6ff) repeat scroll 0 0 padding-box #b2b6ff;
 }
 
 .form-3 {
-    background-color: #fffcce;
+    background: -moz-linear-gradient(center top , #FDFDFD, #fffcce) repeat scroll 0 0 padding-box #fffcce;
 }
 
 .form-4 {
-    background-color: #99fffd;
+    background: -moz-linear-gradient(center top , #FDFDFD, #99fffd) repeat scroll 0 0 padding-box #99fffd;
 }
 
 .form-5 {
