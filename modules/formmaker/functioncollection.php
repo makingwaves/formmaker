@@ -275,7 +275,7 @@ class FormMakerFunctionCollection
 
                     case formTypes::RADIO_ID: // radio button
                         $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
-                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
+                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
                         break;
 
                     case formTypes::TEXTLINE_ID:
