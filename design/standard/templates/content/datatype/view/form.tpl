@@ -8,8 +8,9 @@
      $attr_required     = false()
      $current_page      = $form_data.current_page
      $header_text       = $form_definition.name
-     $send_button       = cond( $form_data.pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
-     $send_name         = cond( $form_data.pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' )
+     $pages_count       = $form_data.all_pages|count()
+     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
+     $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' )
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
 {* including CSS file *}
@@ -18,6 +19,8 @@
 {* Including JS files *}
 {ezscript_require( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'ezjsc::jqueryUI', 'jquery.validation.js', 'jquery.functions.js' ) )}
 
+{include uri="design:form_steps.tpl" form_data=$form_data all_pages=$form_data.all_pages form_definition=$form_definition current_page=$current_page}
+
 <div class="form-container">
     
     {if is_set( $form_data.summary_page )}
@@ -25,7 +28,7 @@
     {elseif is_set( $form_data.success )}
         {set $header_text = $form_definition.receipt_label}
     {/if}
-    <h1>{$header_text|wash()}</h1>
+    <h1>{$header_text|wash()|i18n( 'extension/formmaker/front' )}</h1>
 
     <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
 

@@ -56,3 +56,11 @@
 .form-element-description {
     font-style: italic;
 }
+
+.form-steps {
+    margin: 2%;
+}
+    .form-current-step {
+        font-weight: bold;
+        color: #005493;
+    }
