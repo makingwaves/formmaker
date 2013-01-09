@@ -16,6 +16,7 @@ Version 1.3
 - Added label for the first page
 - Added show and hide for the form definition in admin GUI
 - Added possibility to set intro and body text which are displayed on receipt page
+- Fixed bug with the duplicated labels
 
 Version 1.2
 - Added possibility to split the from into parts (attribute "page separator")

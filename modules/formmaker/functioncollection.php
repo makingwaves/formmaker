@@ -266,17 +266,18 @@ class FormMakerFunctionCollection
 
             $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'first_page' );
             
-            foreach ( $page['attributes'] as $attribute )
+            foreach ( $page['attributes'] as $j => $attribute )
             {
+                $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                 switch ($attribute->attribute('type_id'))
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
                         break;
 
                     case formTypes::RADIO_ID: // radio button
                         $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
-                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
+                        $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
                         break;
 
                     case formTypes::TEXTLINE_ID:
@@ -286,7 +287,7 @@ class FormMakerFunctionCollection
                         }
                     
                     default:
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = $attribute->attribute( 'default_value' );
+                        $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
                         break;
                 }                
             }
