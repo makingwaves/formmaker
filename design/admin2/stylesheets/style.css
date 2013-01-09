@@ -16,7 +16,7 @@
 .formField {
     padding: 10px;
     border: 1px solid #CCCCCC;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     cursor: move;
     position: relative;
     border-radius: 3px; 
@@ -165,21 +165,25 @@
 }
 
 .formmaker-attribute {
-    margin: 5px 0 5px 10px;
+    margin: 10px 0 10px 10px;
     float: left;
     width: 380px;
-    height: 40px;
 }
 
     .formmaker-attribute input[type=text] {
         width: 330px;
     }
+    
+    .formmaker-attribute textarea {
+        width: 330px;
+        height: 45px;
+    }    
 
 .attribute-full-width {
     width: 750px;
 }
 
-    .attribute-full-width input[type=text] {
+    .attribute-full-width input[type=text], .attribute-full-width textarea {
         width: 720px;
     }
 
@@ -274,3 +278,21 @@ select[name=new-field-type] {
 .form-box-container {
     width: 800px;
 }
+
+    .show-hide-definition {
+        float: right;
+        font-size: 13px;
+    }
+    
+        .show-hide-definition a {
+            text-decoration: none;
+            background-repeat: no-repeat;
+            background-position: center left;
+            padding-left: 18px;            
+        }    
+        .show-definition {
+            background-image: url("../images/asc.gif");
+        }
+        .hide-definition {
+            background-image: url("../images/desc.gif");
+        }        

@@ -174,5 +174,18 @@ jQuery(document).ready( function() {
         }
     });
     
-    //jQuery('.email-receiver-inputs input[type=checkbox]')
+    // showin and hiding form definition
+    jQuery('.show-hide-definition a').click(function(){
+        if ($(this).hasClass('show-definition')) {
+            $(this).html($('#hide-definition').val()).attr('class', 'hide-definition');
+        } else {
+            $(this).html($('#show-definition').val()).attr('class', 'show-definition');
+        }
+        
+        if($('#content-sub-items-list').is(':visible')) {
+            $('#content-sub-items-list').hide(500);
+        } else {
+            $('#content-sub-items-list').show(500);
+        }
+    });
 });

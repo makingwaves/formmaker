@@ -110,7 +110,8 @@ class FormMakerFunctionCollection
                     }
 
                     // rendering success template
-                    $tpl->setVariable('result', $operation_result);
+                    $tpl->setVariable( 'result', $operation_result );
+                    $tpl->setVariable( 'form_definition', $this->definition );
                     $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );                      
                 }
             } 

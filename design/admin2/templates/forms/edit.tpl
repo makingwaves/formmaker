@@ -32,10 +32,19 @@
 
 <div class="form-box-container">
     <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
-        <h3>Definition</h3>
+        <h3>
+            Definition
+            {if $id}
+                <span class="show-hide-definition">
+                    <a class="show-definition" href="#">{'show'|i18n( 'extension/formmaker/admin' )}</a>
+                    <input type="hidden" id="show-definition" value="{'show'|i18n( 'extension/formmaker/admin' )}"/>
+                    <input type="hidden" id="hide-definition" value="{'hide'|i18n( 'extension/formmaker/admin' )}"/>
+                </span>
+            {/if}        
+        </h3>
         <hr/>
 
-        <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
+        <div id="content-sub-items-list" class="content-navigation-childlist yui-dt {if $id}hide{/if}">
             <div class="form_error">{$error_message}</div>
             {foreach $form_elements as $identifier => $element}
                 <div class="{if is_set( $element.css )}{$element.css}{/if} formmaker-attribute">
@@ -54,6 +63,14 @@
                                 <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                             </label>
                         {/case}
+                        {case match='textarea'}
+                            <label>
+                                {if is_set($element.label)}
+                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                {/if}
+                                <textarea name="{$identifier}" {if $element.required}required{/if}/>{$element.value}</textarea>
+                            </label>
+                        {/case}                       
                     {/switch}
                 </div>
            {/foreach}
