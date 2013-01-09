@@ -14,7 +14,7 @@
 <div class="form-steps">
     {foreach $all_pages as $i => $page}
         <span class="form-step {if $current_step|eq( $i )}form-current-step{/if}">
-            {cond( is_set( $page.page_info.label ), $page.page_info.label, $form_definition.name )|wash()|i18n( 'extension/formmaker/front' )}
+            {cond( is_set( $page.page_info.label ), $page.page_info.label, $form_definition.first_page )|wash()|i18n( 'extension/formmaker/front' )}
         </span> > 
     {/foreach}
     {if $form_definition.summary_page}

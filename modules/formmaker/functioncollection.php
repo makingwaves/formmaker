@@ -263,7 +263,7 @@ class FormMakerFunctionCollection
                 continue;
             }
 
-            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'name' );
+            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'first_page' );
             
             foreach ( $page['attributes'] as $attribute )
             {
