@@ -22,7 +22,7 @@
 <div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
 
 {if $id}
-    <h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name}`</h2>
+    <h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name|wash()}`</h2>
     <p class="formmaker-language-information">
         {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'extension/formmaker/admin' )}
     </p>
@@ -45,30 +45,33 @@
         <hr/>
 
         <div id="content-sub-items-list" class="content-navigation-childlist yui-dt {if $id}hide{/if}">
-            <div class="form_error">{$error_message}</div>
+            <div class="form_error">{$error_message|wash()}</div>
             {foreach $form_elements as $identifier => $element}
-                <div class="{if is_set( $element.css )}{$element.css}{/if} formmaker-attribute">
+                <div class="{if is_set( $element.css )}{$element.css|wash()}{/if} formmaker-attribute">
                     {switch match=$element.type}
                         {case match='text'}
                             <label>
                                 {if is_set($element.label)}
-                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                    <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                    {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                                 {/if}
-                                <input type="text" name="{$identifier}" value="{$element.value}" {if $element.required}required{/if}/>
+                                <input type="text" name="{$identifier}" value="{$element.value|wash()}" {if $element.required}required{/if}/>
                             </label>
                         {/case}
                         {case match='checkbox'}
                             <label>
                                 <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
-                                <span class="attribute-label">{$element.label|i18n( 'extension/formmaker/admin' )}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                             </label>
                         {/case}
                         {case match='textarea'}
                             <label>
                                 {if is_set($element.label)}
-                                    <span class="attribute-label">{$element.label}</span>{if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
+                                    <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                    {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                                 {/if}
-                                <textarea name="{$identifier}" {if $element.required}required{/if}/>{$element.value}</textarea>
+                                <textarea name="{$identifier}" {if $element.required}required{/if}/>{$element.value|wash()}</textarea>
                             </label>
                         {/case}                       
                     {/switch}
@@ -104,7 +107,7 @@
             <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
             <select name="new-field-type">
                 {foreach $input_types as $field}
-                    <option value="{$field.id}">{$field.name}</option>
+                    <option value="{$field.id}">{$field.name|wash()}</option>
                 {/foreach}
             </select>    
 
