@@ -3,9 +3,18 @@
 - $is_required - boolean
 *}
 
-<p class="form-element-description">{$attribute.description}</p>
+{def $css_class = 'form_element'}
+     
+{if ezini( 'AdditionalElements', 'css', 'formmaker.ini' )|eq( 'enabled' )}
+    {set $css_class = concat( $css_class, ' ', $attribute.css|wash() ) }
+{/if}
+
+{if ezini( 'AdditionalElements', 'description', 'formmaker.ini' )|eq( 'enabled' )}
+    <p class="form-element-description">{$attribute.description}</p>
+{/if}
+
 <label for="form_{$attribute.type_id}_{$attribute.id}">
     {$attribute.label}
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label> 
-<textarea class="form_element" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">{$attribute.default_value}</textarea>
+<textarea class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">{$attribute.default_value}</textarea>

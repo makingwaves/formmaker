@@ -40,9 +40,13 @@
             margin: 0px 15px 15px 0px;
             float: left;
         }
+        .form-field-radio-container {
+            float: left; 
+            width:100%;
+        }
         
     .formField .form-attribute-options input[type=text] {
-        width: 450px;
+        width: 560px;
     }
     .formField .form-attribute-options .default-radio {
         margin-right: 10px;

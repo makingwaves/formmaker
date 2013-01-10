@@ -10,6 +10,7 @@
         {include uri="design:forms/types/elements/label.tpl" label=$data.label input_id=$input_id}
         {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
         {include uri="design:forms/types/elements/description.tpl" description=$data.description input_id=$input_id}
+        {include uri="design:forms/types/elements/css.tpl" css=$data.css input_id=$input_id}
         {include uri="design:forms/types/elements/default_checkbox.tpl" default_value=$data.default_value input_id=$input_id}
     </div>
 </div>

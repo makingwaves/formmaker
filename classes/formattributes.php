@@ -41,6 +41,9 @@ class formAttributes extends eZPersistentObject
                                          "default_value"    => array( "name" => "default_value",
                                                                       "datatype" => "string",
                                                                       "required" => false ),
+                                         "css"              => array( "name" => "css",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),            
                                          "label"            => array( "name" => "label",
                                                                       "datatype" => "string",
                                                                       "required" => true ),
@@ -83,15 +86,16 @@ class formAttributes extends eZPersistentObject
      * @param string $description
      * @param string $def_value    
      * @param int $email_receiver 
+     * @param string $css
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver, $css )
     {
         $object = new self( array(
             'definition_id'     => $definition_id,
             'type_id'           => $type_id
         ) );
-        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver );
+        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver, $css );
         $object->store();
         return $object;        
     }
@@ -219,7 +223,7 @@ class formAttributes extends eZPersistentObject
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
-                $attribute->setData( $order, $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'] );
+                $attribute->setData( $order, $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'], $item['css'] );
                 $attribute->store();
                 
                 $correct_validators = array();
@@ -249,7 +253,7 @@ class formAttributes extends eZPersistentObject
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
             {
-                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'] );
+                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'], $item['css'] );
                 $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
@@ -301,8 +305,9 @@ class formAttributes extends eZPersistentObject
      * @param string description
      * @param string $default
      * @param int $email_receiver
+     * @param string $css
      */
-    private function setData( $order, $label, $enabled, $description, $default, $email_receiver )
+    private function setData( $order, $label, $enabled, $description, $default, $email_receiver, $css )
     {
         $this->setAttribute( 'attr_order', $order );
         $this->setAttribute( 'label', $label );
@@ -310,6 +315,7 @@ class formAttributes extends eZPersistentObject
         $this->setAttribute( 'description', $description );
         $this->setAttribute( 'default_value', $default );
         $this->setAttribute( 'email_receiver', $email_receiver );
+        $this->setAttribute( 'css', $css );
     }
     
     /**

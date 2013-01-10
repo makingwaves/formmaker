@@ -12,6 +12,7 @@
         {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
         {include uri="design:forms/types/elements/description.tpl" description=$data.description input_id=$input_id}
         {include uri="design:forms/types/elements/default_text.tpl" default_value=$data.default_value input_id=$input_id}
+        {include uri="design:forms/types/elements/css.tpl" css=$data.css input_id=$input_id}
         {include uri="design:forms/types/elements/validation.tpl" email_receiver=$data.email_receiver validators=$input.validators validator_ids=$data.validator_ids 
                  input_id=$input_id validator_email_id=$validator_email_id}
     </div>
