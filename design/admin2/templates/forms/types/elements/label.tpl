@@ -2,7 +2,7 @@
 - $input_id
 - $label *}
 
-<span>
+<div class="form-field-attribute">
     {'Label: '|i18n( 'extension/formmaker/admin' )}<span class="form_attribute_required"> *</span>
     <input type="text" value="{$label}" name="formelement_{$input_id}[label]" required />
-</span>
+</div>

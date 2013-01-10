@@ -16,7 +16,7 @@ jQuery(document).ready( function() {
         if ($(this).is(':checked')) {
             value = 'on';
         } 
-        $(this).parent('span').find('input[type=hidden]').val(value);
+        $(this).parent('.attribute-mandatory-holder').find('input[type=hidden]').val(value);
     });
     
     // setting the default checkbox value for email receiver checkbox
@@ -165,12 +165,12 @@ jQuery(document).ready( function() {
                     alert(data.error_text);
                 }
                 else {
-                    object.parents('.validation-paragraph').append(data.content);
+                    object.parents('.form-field-attributes-container').append(data.content);
                 }
                 jQuery('div#page').css('cursor', 'default');
             });  
         } else {
-            $(this).parents('.validation-paragraph').find('.email-receiver-holder').remove();
+            $(this).parents('.form-field-attributes-container').find('.email-receiver-holder').remove();
         }
     });
     

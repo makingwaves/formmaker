@@ -7,14 +7,10 @@
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>
     <input type="hidden" name="formelement_{$input_id}[default]" value="{$data.default_value}" />
     {include uri="design:forms/types/elements/field_header.tpl" input_name=$input.name input_id=$input_id enabled=$data.enabled}
-    <p>
+    <div class="form-field-attributes-container">
         {include uri="design:forms/types/elements/label.tpl" label=$data.label input_id=$input_id}
-        <span class="spc">|</span>
         {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
-        <span class="spc">|</span>
         {include uri="design:forms/types/elements/description.tpl" description=$data.description input_id=$input_id}
-    </p>
-    <p>
         {include uri="design:forms/types/elements/options.tpl" input_id=$input_id options=$data.options default_value=$data.default_value}
-    </p>
+    </div>
 </div>

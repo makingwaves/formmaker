@@ -27,14 +27,26 @@
     width: 778px;
 }
 
+    .form-field-attributes-container {
+        overflow:hidden;
+    }
+    
+        .form-field-attribute:last-child {
+            border-right: 0px;
+        }
+        .form-field-attribute {
+            border-right: 1px solid #CCCCCC;
+            padding-right: 15px;
+            margin: 0px 15px 15px 0px;
+            float: left;
+        }
+        
     .formField .form-attribute-options input[type=text] {
         width: 450px;
     }
-    
     .formField .form-attribute-options .default-radio {
         margin-right: 10px;
     }
-    
     .formField .attribute-header {
         width: 100%;
         overflow: hidden;
@@ -49,7 +61,6 @@
             float: left;
             font-size: 14px;
         }
-        
         .formField .attribute-header .attribute-actions {
             width: 50%;
             float: right;
@@ -61,7 +72,6 @@
                 padding-left: 20px;
                 float: right;
             }
-            
             .formField .attribute-header .attribute-actions .enable-attribute {
                 float: right;
                 margin-right: 7px;
@@ -212,19 +222,6 @@
 
 #noneAttributesWarning {
     margin-bottom: 15px;
-}
-
-.spc {
-    color: grey;
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: center;
-}
-
-.spc.clear {
-    clear: both;
-    display: block;
-    margin-bottom: 6px;
 }
 
 .clear {
