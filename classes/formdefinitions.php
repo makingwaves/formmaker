@@ -33,7 +33,22 @@ class formDefinitions extends eZPersistentObject
                                                                       "required" => true ),
                                          "summary_page"     => array( "name" => "summary_page",
                                                                       "datatype" => "integer",
-                                                                      "required" => true ),            
+                                                                      "required" => false ),
+                                         "first_page"       => array( "name" => "first_page",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),
+                                         "summary_label"    => array( "name" => "summary_label",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),            
+                                         "receipt_label"    => array( "name" => "receipt_label",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),      
+                                         "receipt_intro"    => array( "name" => "receipt_intro",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),            
+                                         "receipt_body"     => array( "name" => "receipt_body",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),              
                                          "post_action"      => array( "name" => "post_action",
                                                                       "datatype" => "string",
                                                                       "required" => true ),
@@ -44,6 +59,7 @@ class formDefinitions extends eZPersistentObject
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
+                      'function_attributes' => array( 'user' => 'getUserData' ),
                       "name" => "form_definitions" );
         return $def;
     }    
@@ -98,11 +114,11 @@ class formDefinitions extends eZPersistentObject
      */
     public static function addForm( $form_elements )
     {
-        
+        $user = eZUser::currentUser();
         $data = array( 
             'id'            => null, 
             'create_date'   => null,
-            'owner_user_id' => 14,
+            'owner_user_id' => $user->id(),
             'post_action'   => 'email'
         );
         
@@ -241,5 +257,14 @@ class formDefinitions extends eZPersistentObject
         }
         
         return $data;
+    }
+    
+    /**
+     * Method returns the data of form author user
+     * @return eZUser
+     */
+    public function getUserData()
+    {
+        return eZUser::fetch( $this->attribute( 'owner_user_id' ) );
     }
 }

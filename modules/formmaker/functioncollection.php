@@ -110,7 +110,8 @@ class FormMakerFunctionCollection
                     }
 
                     // rendering success template
-                    $tpl->setVariable('result', $operation_result);
+                    $tpl->setVariable( 'result', $operation_result );
+                    $tpl->setVariable( 'form_definition', $this->definition );
                     $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );                      
                 }
             } 
@@ -135,7 +136,7 @@ class FormMakerFunctionCollection
                                               'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
                                               'current_page'        => $current_page,
-                                              'pages_count'         => count( $all_pages ),
+                                              'all_pages'           => $all_pages,
                                               'date_validator'      => formValidators::DATE_ID,
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
@@ -263,19 +264,20 @@ class FormMakerFunctionCollection
                 continue;
             }
 
-            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'name' );
+            $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'first_page' );
             
-            foreach ( $page['attributes'] as $attribute )
+            foreach ( $page['attributes'] as $j => $attribute )
             {
+                $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                 switch ($attribute->attribute('type_id'))
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
                         break;
 
                     case formTypes::RADIO_ID: // radio button
                         $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
-                        $email_data[$i]['attributes'][$attribute->attribute( 'label' )] = $option_object->attribute( 'label' );
+                        $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
                         break;
 
                     case formTypes::TEXTLINE_ID:
@@ -285,7 +287,7 @@ class FormMakerFunctionCollection
                         }
                     
                     default:
-                        $email_data[$i]['attributes'][$attribute->attribute('label')] = $attribute->attribute( 'default_value' );
+                        $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
                         break;
                 }                
             }
