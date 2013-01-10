@@ -254,10 +254,12 @@ class FormMakerFunctionCollection
      */
     private function getDataToSend()
     {
-        $email_data = array();
-        $receivers  = array();
-        $i          = 0;
-        
+        $email_data     = array();
+        $receivers      = array();
+        $i              = 0;
+        $ini            = eZINI::instance( 'formmaker.ini' );
+        $filled_only    = $ini->variable( 'FormmakerSettings', 'SendOnlyFilledData' );
+
         foreach ( $_SESSION as $key => $page )
         {
             if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
@@ -268,28 +270,38 @@ class FormMakerFunctionCollection
             
             foreach ( $page['attributes'] as $j => $attribute )
             {
-                $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                $default_value = $attribute->attribute( 'default_value' );
                 switch ($attribute->attribute('type_id'))
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
-                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $attribute->attribute( 'default_value' ) == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
                         break;
 
                     case formTypes::RADIO_ID: // radio button
-                        $option_object = formAttributesOptions::fetchOption( $attribute->attribute( 'default_value' ) );
-                        $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
+                        if ( $filled_only != 'true' || !empty( $default_value ) )
+                        {
+                            $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $option_object = formAttributesOptions::fetchOption( $default_value );
+                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
+                        }
                         break;
 
                     case formTypes::TEXTLINE_ID:
                         if ( $attribute->attribute( 'email_receiver' ) == 1 )
                         {
-                            $receivers[] = $attribute->attribute( 'default_value' );
+                            $receivers[] = $default_value;
                         }
-                    
+
                     default:
-                        $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                        if ( $filled_only != 'true' || !empty( $default_value ) )
+                        {
+                            $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                        }
                         break;
-                }                
+                }    
+                
             }
             $i++;
         }  
