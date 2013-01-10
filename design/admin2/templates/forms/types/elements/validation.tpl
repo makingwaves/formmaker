@@ -8,7 +8,7 @@
 {def $selected_validator = 0}
 
 <input type="hidden" class="attribute-unique-id" value="{$input_id}" />
-<span>
+<div class="form-field-attribute">
     {'Validation: '|i18n( 'extension/formmaker/admin' )}
     <select class="attribute-validation" name="formelement_{$input_id}[validation]">
         <option value="0">{'- no validation -'|i18n( 'extension/formmaker/admin' )}</option>
@@ -18,7 +18,7 @@
             </option>
         {/foreach}            
     </select>
-    {if $selected_validator|eq( $validator_email_id )}
-        {include uri="design:forms/types/elements/email_receiver.tpl" enabled=$email_receiver input_id=$input_id}
-    {/if}
-</span>
+</div>
+{if $selected_validator|eq( $validator_email_id )}
+    {include uri="design:forms/types/elements/email_receiver.tpl" enabled=$email_receiver input_id=$input_id}
+{/if}        

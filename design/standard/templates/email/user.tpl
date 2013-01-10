@@ -6,8 +6,8 @@
 {foreach $data as $page}
     <strong>{$page.page_label|i18n( 'extension/formmaker/email' )}</strong>
     <br/>
-    {foreach $page.attributes as $label => $value}
-        <span>{$label}: {$value}</span><br/>
+    {foreach $page.attributes as $attribute}
+        <span>{$attribute.label}: {$attribute.value}</span><br/>
     {/foreach}
     <br/>
 {/foreach}

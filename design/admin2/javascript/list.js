@@ -16,4 +16,17 @@ jQuery(document).ready(function(){
         });
         return false;
     });
+    
+    $('.tablesorter').tablesorter({
+        sortList: [[1,1]],
+        headers: {
+            3: {
+                sorter: false
+            }
+        },
+        widgets: ['zebra'],
+        widgetZebra: {
+            css: ["odd", "even"]
+        }
+    });
 })

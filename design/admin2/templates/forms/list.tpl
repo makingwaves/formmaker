@@ -4,12 +4,8 @@
 {ezscript_require( array('ezjsc::jqueryUI')) }
 {ezcss_require( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' )}
 
-{ezscript_require(array( 'edit.js' ) )}
-{ezcss_require(array( 'style.css' ) )}
-
-{* site specific JS *}
-{ezscript_require(array( concat( 'list.js' ) ) )}
-   
+{ezcss_require(array( 'tablesorter.css', 'style.css' ) )}
+{ezscript_require(array( 'jquery.tablesorter.js', 'list.js' ) )}
 
 <div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
 
@@ -21,63 +17,36 @@
 
     <div class="box-content">
         <div class="block">
-            <div class="left">
-                <div id="content-sub-items-list" class="content-navigation-childlist yui-dt">
-                    <table>
+            <div class="form-box-container">
+                <div id="content-sub-items-list" class="content-navigation-childlist">
+                    <table border="0" cellspacing="1" cellpadding="0" class="tablesorter">
                         <thead>
-                            <tr class="yui-dt-first yui-dt-last">
-                                <th id="yui-dt0-th-name" class="mwezform-list-name yui-dt0-col-name yui-dt-col-name yui-dt-resizeable">
-                                    <div class="yui-dt-resizerliner">
-                                        <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
-                                            <span class="yui-dt-label">{'Name'|i18n( 'extension/formmaker/admin' )}</span>
-                                        </div>
-                                        <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
-                                    </div>
-                                </th>
-                                
-                                <th id="yui-dt0-th-name" class="yui-dt0-col-name yui-dt-col-name yui-dt-resizeable">
-                                    <div class="yui-dt-resizerliner">
-                                        <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
-                                            <span class="yui-dt-label">{'Created'|i18n( 'extension/formmaker/admin' )}</span>
-                                        </div>
-                                        <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
-                                    </div>
-                                </th>                                
-
-                                <th id="yui-dt0-th-name" class="yui-dt0-col-name yui-dt-col-name yui-dt-resizeable" style="width: 160px; text-align: center;">
-                                    <div class="yui-dt-resizerliner">
-                                        <div id="yui-dt0-th-name-liner" class="yui-dt-liner">
-                                            <span class="yui-dt-label">{'Actions'|i18n( 'extension/formmaker/admin' )}</span>
-                                        </div>
-                                        <div id="yui-dt0-th-name-resizer" class="yui-dt-resizer" style="left: auto; right: 0px; top: auto; bottom: 0px; height: 23px;"></div>
-                                    </div>
-                                </th>
+                            <tr>
+                                <th class="mwezform-list-name">{'Name'|i18n( 'extension/formmaker/admin' )}</th>
+                                <th>{'Created'|i18n( 'extension/formmaker/admin' )}</th>    
+                                <th>{'Author'|i18n( 'extension/formmaker/admin' )}</th>                                 
+                                <th style="width: 160px; text-align: center;">{'Actions'|i18n( 'extension/formmaker/admin' )}</th>
                             </tr>
                         </thead>
 
-                        <tbody class="yui-dt-message">
-                            {foreach $forms as $form}
-                                <tr class="yui-dt-first yui-dt-last">
-                                    <td class="yui-dt-empty">
-                                        <div class="yui-dt-liner">{$form.name}</div>
-                                    </td>
-                                    <td class="yui-dt-empty">
-                                        <div class="yui-dt-liner">{$form.create_date}</div>
-                                    </td>                                    
-                                    <td class="yui-dt-empty" style="text-align: center;">
-                                        <div class="yui-dt-liner">
-                                            <input type="hidden" name="form-id" value="{$form.id}" />
-                                            <a class="formmaker_edit_form" href={concat('formmaker/edit/', $form.id)|ezurl()}>Edit</a>
-                                            {if $remove_access}
-                                                | <a class="formmaker_remove_form" href={concat('formmaker/remove/', $form.id)|ezurl()}>Remove</a>
-                                            {/if}
-                                        </div>
+                        <tbody>
+                            {foreach $forms as $form sequence array('odd', 'even') as $row_class}
+                                <tr>
+                                    <td>{$form.name|wash()}</td>
+                                    <td>{$form.create_date}</td>            
+                                    <td>{$form.user.contentobject.name}</td>                                       
+                                    <td style="text-align: center;">
+                                        <input type="hidden" name="form-id" value="{$form.id}" />
+                                        <a class="formmaker_edit_form" href={concat('formmaker/edit/', $form.id)|ezurl()}>Edit</a>
+                                        {if $remove_access}
+                                            | <a class="formmaker_remove_form" href={concat('formmaker/remove/', $form.id)|ezurl()}>Remove</a>
+                                        {/if}
                                     </td>
                                 </tr>
                             {/foreach}
 
                             {if not( $forms|count() )}
-                                <tr><td class="formmaker_no_forms" colspan="3">{'There are no forms for now. Add some!'|i18n( 'extension/formmaker/admin' )}</td></tr>
+                                <tr><td class="formmaker_no_forms" colspan="4">{'There are no forms for now. Add some!'|i18n( 'extension/formmaker/admin' )}</td></tr>
                             {/if}
                         </tbody>
                     </table>      

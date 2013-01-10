@@ -16,7 +16,7 @@ jQuery(document).ready( function() {
         if ($(this).is(':checked')) {
             value = 'on';
         } 
-        $(this).parent('span').find('input[type=hidden]').val(value);
+        $(this).parent('.attribute-mandatory-holder').find('input[type=hidden]').val(value);
     });
     
     // setting the default checkbox value for email receiver checkbox
@@ -28,7 +28,7 @@ jQuery(document).ready( function() {
         $(this).parent('span').find('input[type=hidden]').val(value);
     });    
 
-    jQuery( ".left form .sortable-attributes" ).sortable();
+    jQuery( ".sortable-attributes" ).sortable();
     
     // Adding new field
     jQuery('input[name=add_field]').click(function(){
@@ -165,14 +165,27 @@ jQuery(document).ready( function() {
                     alert(data.error_text);
                 }
                 else {
-                    object.parents('.validation-paragraph').append(data.content);
+                    object.parents('.form-field-attributes-container').append(data.content);
                 }
                 jQuery('div#page').css('cursor', 'default');
             });  
         } else {
-            $(this).parents('.validation-paragraph').find('.email-receiver-holder').remove();
+            $(this).parents('.form-field-attributes-container').find('.email-receiver-holder').remove();
         }
     });
     
-    //jQuery('.email-receiver-inputs input[type=checkbox]')
+    // showin and hiding form definition
+    jQuery('.show-hide-definition a').click(function(){
+        if ($(this).hasClass('show-definition')) {
+            $(this).html($('#hide-definition').val()).attr('class', 'hide-definition');
+        } else {
+            $(this).html($('#show-definition').val()).attr('class', 'show-definition');
+        }
+        
+        if($('#content-sub-items-list').is(':visible')) {
+            $('#content-sub-items-list').hide(500);
+        } else {
+            $('#content-sub-items-list').show(500);
+        }
+    });
 });

@@ -9,8 +9,8 @@
         <strong>{$page.page_label|i18n( 'extension/formmaker/front' )}</strong>
     {/if}
     <br/>
-    {foreach $page.attributes as $label => $value}
-        <span>{$label|i18n( 'extension/formmaker/front' )}: <i>{$value}</i></span><br/>
+    {foreach $page.attributes as $attribute}
+        <span>{$attribute.label|i18n( 'extension/formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
     {/foreach}
     <br/>    
 {/foreach}
