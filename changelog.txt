@@ -1,6 +1,8 @@
 Below you can find what changed in each version. Version number convention is based basically on changes made to database structure. In case when we made some changes in 
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2)
 
+Version 1.3.2
+- Fixed sending of empty email by hitting F5 on receipt page
 
 Version 1.3.1
 - Fixed bug with mandatory radio buttons and checkboxes

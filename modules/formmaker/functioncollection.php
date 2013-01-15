@@ -88,19 +88,21 @@ class FormMakerFunctionCollection
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
                 $tpl = eZTemplate::factory();
+                $data_to_send = $this->getDataToSend();
+                
                 if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
                 {
                     // rendering summary page
-                    $data_to_send = $this->getDataToSend();
                     $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
                     $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
                 }
-                else
+                // processing the data only if array contains the data
+                elseif ( !empty( $data_to_send['email_data'] ) )
                 {
                     // Sending email message
                     if ($this->definition->attribute('post_action') == 'email')
                     {
-                        $operation_result = $this->processEmail();
+                        $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
                     }
                     // TODO: Storing data in database
@@ -112,7 +114,7 @@ class FormMakerFunctionCollection
                     // rendering success template
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
-                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );                      
+                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );     
                 }
             } 
         }
@@ -154,14 +156,14 @@ class FormMakerFunctionCollection
     
     /**
      * Method generates email message to recipients and sends it
+     * @param array $data_to_send
      * @return type
      */
-    private function processEmail()
+    private function processEmail( $data_to_send )
     {
         // creating email content
-        $data_to_send   = $this->getDataToSend();
-        $sender         = $this->definition->attribute( 'email_sender' );
-        $recipients     = explode( ';', $this->definition->attribute( 'recipients' ) );
+        $sender     = $this->definition->attribute( 'email_sender' );
+        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
         
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
