@@ -6,10 +6,10 @@
 <div class="attribute-header">
     <div class="attribute-name">{$input_name|wash()}</div>
     <div class="attribute-actions">
-        <a class="remove-field">{'Remove'|i18n( 'extension/formmaker/admin' )}</a>
+        <a class="remove-field">{'Remove'|i18n( 'formmaker/admin' )}</a>
         <span class="enable-attribute">
             <input type="hidden" value="{$enabled}" name="formelement_{$input_id}[enabled]"/>
-            <input type="checkbox" {if $enabled}checked="checked"{/if} />{'Enabled'|i18n( 'extension/formmaker/admin' )}
+            <input type="checkbox" {if $enabled}checked="checked"{/if} />{'Enabled'|i18n( 'formmaker/admin' )}
         </span>
     </div>
 </div>

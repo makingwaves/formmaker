@@ -168,7 +168,7 @@ class FormMakerFunctionCollection
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
                 $sender,
-                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ),
+                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'formmaker/email', 'New answer' ),
                 'email/recipient.tpl',
                 $data_to_send['email_data'],
                 $recipients
@@ -277,7 +277,7 @@ class FormMakerFunctionCollection
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
-                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
                         break;
 
                     case formTypes::RADIO_ID: // radio button
@@ -285,7 +285,7 @@ class FormMakerFunctionCollection
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
-                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
+                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not checked' );
                         }
                         break;
 

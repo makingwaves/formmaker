@@ -216,7 +216,7 @@ abstract class Validate_Abstract implements Validate_Interface
             $variables["%$ident%"] = $this->$property;
         }      
 
-        $message = ezpI18n::tr('extension/formmaker/front/validation', $message, null, $variables);
+        $message = ezpI18n::tr('formmaker/front/validation', $message, null, $variables);
        
         return $message;
     }

@@ -9,7 +9,7 @@
      $current_page      = $form_data.current_page
      $header_text       = $form_definition.name
      $pages_count       = $form_data.all_pages|count()
-     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'extension/formmaker/front' ), 'Next'|i18n( 'extension/formmaker/front' ) )
+     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'formmaker/front' ), 'Next'|i18n( 'formmaker/front' ) )
      $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' )
      $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
 
@@ -28,7 +28,7 @@
     {elseif is_set( $form_data.success )}
         {set $header_text = $form_definition.receipt_label}
     {/if}
-    <h1>{$header_text|wash()|i18n( 'extension/formmaker/front' )}</h1>
+    <h1>{$header_text|wash()|i18n( 'formmaker/front' )}</h1>
 
     <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
 
@@ -60,7 +60,7 @@
             <div class="form-footer">
                 <div class="form-footer-back">
                     {if $form_data.current_page|gt( 0 )}
-                        <input type="submit" value="{'Back'|i18n( 'extension/formmaker/front' )}" name="form-back"/>
+                        <input type="submit" value="{'Back'|i18n( 'formmaker/front' )}" name="form-back"/>
                     {/if}
                 </div>
                 <div class="form-footer-next">
