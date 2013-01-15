@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
-    <name>extension/formmaker/front</name>
+    <name>formmaker/front</name>
     <message>
         <source>Send</source>
         <translation type="unfinished" />
@@ -14,10 +14,26 @@
     <message>
         <source>Sorry, there were some problems with sending the email message. Please try again later.</source>
         <translation type="unfinished" />
-    </message>        
+    </message>  
+    <message>
+        <source>Next</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>Back</source>
+        <translation type="unfinished" />
+    </message>  
+    <message>
+        <source>You're about to send following informations. Are they OK?</source>
+        <translation type="unfinished" />
+    </message>              
 </context>
 <context>
-    <name>extension/formmaker/email</name>
+    <name>formmaker/email</name>
     <message>
         <source>Yes</source>
         <translation type="unfinished" />
@@ -26,9 +42,21 @@
         <source>No</source>
         <translation type="unfinished" />
     </message>       
+    <message>
+        <source>Not checked</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>New answer</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>We kindly inform about the new answer.</source>
+        <translation type="unfinished" />
+    </message>         
 </context>
 <context>
-    <name>extension/formmaker/front/validation</name>
+    <name>formmaker/front/validation</name>
     <message>
         <source>'%value%' must contain only digits</source>
         <translation type="unfinished" />
@@ -127,7 +155,7 @@
     </message>                                    
 </context>
 <context>
-    <name>extension/formmaker/admin</name>
+    <name>formmaker/admin</name>
     <message>
         <source>List</source>
         <translation type="unfinished" />
@@ -147,9 +175,9 @@
     <message>
         <source>Submit</source>
         <translation type="unfinished" />
-    </message>  
+    </message>
     <message>
-        <source>Making Waves eZForms Dashboard</source>
+        <source>Form Maker Dashboard</source>
         <translation type="unfinished" />
     </message>  
     <message>
@@ -171,11 +199,7 @@
     <message>
         <source>Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).</source>
         <translation type="unfinished" />
-    </message>         
-    <message>
-        <source>This form does not have any fields. Add some!</source>
-        <translation type="unfinished" />
-    </message>      
+    </message>     
     <message>
         <source>There are no forms for now. Add some!</source>
         <translation type="unfinished" />
@@ -201,23 +225,31 @@
         <translation type="unfinished" />
     </message>    
     <message>
-        <source>label</source>
+        <source>Label:</source>
         <translation type="unfinished" />
     </message> 
     <message>
-        <source>mandatory</source>
-        <translation type="unfinished" />
-    </message>         
-    <message>
-        <source>validation</source>
-        <translation type="unfinished" />
-    </message>    
-    <message>
-        <source>default value</source>
+        <source>Mandatory:</source>
         <translation type="unfinished" />
     </message>      
     <message>
-        <source>css class</source>
+        <source>Description:</source>
+        <translation type="unfinished" />
+    </message>        
+    <message>
+        <source>Validation:</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>- no validation -</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>Default value:</source>
+        <translation type="unfinished" />
+    </message>      
+    <message>
+        <source>CSS class:</source>
         <translation type="unfinished" />
     </message>    
     <message>
@@ -231,7 +263,63 @@
     <message>
         <source>Created</source>
         <translation type="unfinished" />
-    </message>        
+    </message>    
+    <message>
+        <source>Author</source>
+        <translation type="unfinished" />
+    </message>     
+    <message>
+        <source>Email sender</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>First page label</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>Receipt page label</source>
+        <translation type="unfinished" />
+    </message> 
+    <message>
+        <source>Receipt page intro text</source>
+        <translation type="unfinished" />
+    </message> 
+    <message>
+        <source>Receipt page body text</source>
+        <translation type="unfinished" />
+    </message> 
+    <message>
+        <source>I want a confirmation page with the following label</source>
+        <translation type="unfinished" />
+    </message> 
+    <message>
+        <source>show</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>hide</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished" />
+    </message>     
+    <message>
+        <source>Options</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>Default</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>Add option</source>
+        <translation type="unfinished" />
+    </message>                                  
 </context>
 <context>
     <name>kernel/navigationpart</name>

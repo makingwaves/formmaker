@@ -2,7 +2,7 @@
 
 /**
  * Class to implement ezjscore methods
- * @author Piotr Szczygieł <piotr.szczygieł@makingwaves.pl>
+ * @author Piotr Szczygieł <piotr.szczygiel@makingwaves.pl>
  */
 class formAjaxServerCallFunctions extends ezjscServerFunctions
 {
@@ -125,10 +125,10 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $connected_objects = $form_object->getConnectedObjects();
         if ( count( $connected_objects ) )
         {
-            $error = ezpI18n::tr( 'extension/formmaker/admin', 'Cannot remove this form. There are some objects which uses it:' ) . "\n\n";
+            $error = ezpI18n::tr( 'formmaker/admin', 'Cannot remove this form. There are some objects which uses it:' ) . "\n\n";
             foreach ($connected_objects as $node_id => $node_name)
             {
-                $error .= $node_name . ' (' . ezpI18n::tr( 'extension/formmaker/admin', 'node ID: ' ) . $node_id . ")\n";
+                $error .= $node_name . ' (' . ezpI18n::tr( 'formmaker/admin', 'node ID: ' ) . $node_id . ")\n";
             }
             throw new Exception(  $error );
         }

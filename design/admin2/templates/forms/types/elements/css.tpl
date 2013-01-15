@@ -4,7 +4,7 @@
 
 {if ezini( 'AdditionalElements', 'css', 'formmaker.ini' )|eq( 'enabled' )}
     <div class="form-field-attribute">
-        {'CSS class: '|i18n( 'extension/formmaker/admin' )}
+        {'CSS class:'|i18n( 'formmaker/admin' )}
         <input type="text" value="{$css}" name="formelement_{$input_id}[css]" />
     </div>
 {/if}
