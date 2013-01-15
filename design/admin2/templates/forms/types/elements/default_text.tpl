@@ -4,7 +4,7 @@
 
 {if ezini( 'AdditionalElements', 'default_value', 'formmaker.ini' )|eq( 'enabled' )}
     <div class="form-field-attribute">
-        {'Default value: '|i18n( 'extension/formmaker/admin' )} 
+        {'Default value:'|i18n( 'formmaker/admin' )} 
         <input type="text" value="{$default_value}" name="formelement_{$input_id}[default]" />
     </div>
 {/if}

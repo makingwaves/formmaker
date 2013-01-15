@@ -8,42 +8,42 @@ $attributes     = array();
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
 $form_elements = array( 'name'          => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Form name' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Form name' ), 
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'email_sender'  => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Email sender' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Email sender' ), 
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'recipients'    => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'E-mail recipients (separated by semicolon)' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'E-mail recipients (separated by semicolon)' ), 
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'first_page'    => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'First page label' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'First page label' ), 
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'receipt_label' => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Receipt page label' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Receipt page label' ), 
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'receipt_intro' => array(   'required'  => false, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Receipt page intro text' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Receipt page intro text' ), 
                                                     'type'      => 'textarea',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
                         'receipt_body'  => array(   'required'  => false, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'Receipt page body text' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Receipt page body text' ), 
                                                     'type'      => 'textarea',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),    
                         'summary_page'  => array(   'required'  => false, 
-                                                    'label'     => ezpI18n::tr('extension/formmaker/admin', 'I want a confirmation page with the following label' ), 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'I want a confirmation page with the following label' ), 
                                                     'type'      => 'checkbox',
                                                     'value'     => '' ),
                         'summary_label' => array(   'required'  => false, 
@@ -78,7 +78,7 @@ if( $http->hasPostVariable('name') )
         }
         if ($data['required'] && empty($form_elements[$key]['value']))
         {
-            $error_message = ezpI18n::tr('extension/formmaker/admin', 'Please fill all required fields');
+            $error_message = ezpI18n::tr('formmaker/admin', 'Please fill all required fields');
         }
     }
         
@@ -133,7 +133,7 @@ else
 }
 
 $Result['path']    = array( array( 'tag_id' => 0,
-                                   'text'   => ezpI18n::tr( 'extension/formmaker/admin', 'Form Maker Dashboard' ),
+                                   'text'   => ezpI18n::tr( 'formmaker/admin', 'Form Maker Dashboard' ),
                                    'url'    => false ) );
 
 $Result['left_menu'] = "design:forms/left_menu.tpl";

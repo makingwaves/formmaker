@@ -9,9 +9,9 @@
 
 <input type="hidden" class="attribute-unique-id" value="{$input_id}" />
 <div class="form-field-attribute">
-    {'Validation: '|i18n( 'extension/formmaker/admin' )}
+    {'Validation:'|i18n( 'formmaker/admin' )}
     <select class="attribute-validation" name="formelement_{$input_id}[validation]">
-        <option value="0">{'- no validation -'|i18n( 'extension/formmaker/admin' )}</option>
+        <option value="0">{'- no validation -'|i18n( 'formmaker/admin' )}</option>
         {foreach $validators as $validator}
             <option {if $validator_ids|contains( $validator.id )}{set $selected_validator = $validator.id} selected="selected"{/if} value="{$validator.id}">
                 {$validator.description}

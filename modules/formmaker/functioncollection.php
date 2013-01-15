@@ -88,19 +88,21 @@ class FormMakerFunctionCollection
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
                 $tpl = eZTemplate::factory();
+                $data_to_send = $this->getDataToSend();
+                
                 if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
                 {
                     // rendering summary page
-                    $data_to_send = $this->getDataToSend();
                     $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
                     $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
                 }
-                else
+                // processing the data only if array contains the data
+                elseif ( !empty( $data_to_send['email_data'] ) )
                 {
                     // Sending email message
                     if ($this->definition->attribute('post_action') == 'email')
                     {
-                        $operation_result = $this->processEmail();
+                        $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
                     }
                     // TODO: Storing data in database
@@ -112,7 +114,7 @@ class FormMakerFunctionCollection
                     // rendering success template
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
-                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );                      
+                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );     
                 }
             } 
         }
@@ -154,19 +156,19 @@ class FormMakerFunctionCollection
     
     /**
      * Method generates email message to recipients and sends it
+     * @param array $data_to_send
      * @return type
      */
-    private function processEmail()
+    private function processEmail( $data_to_send )
     {
         // creating email content
-        $data_to_send   = $this->getDataToSend();
-        $sender         = $this->definition->attribute( 'email_sender' );
-        $recipients     = explode( ';', $this->definition->attribute( 'recipients' ) );
+        $sender     = $this->definition->attribute( 'email_sender' );
+        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
         
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
                 $sender,
-                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'extension/formmaker/email', 'New answer' ),
+                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'formmaker/email', 'New answer' ),
                 'email/recipient.tpl',
                 $data_to_send['email_data'],
                 $recipients
@@ -275,7 +277,7 @@ class FormMakerFunctionCollection
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
-                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'extension/formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
                         break;
 
                     case formTypes::RADIO_ID: // radio button
@@ -283,7 +285,7 @@ class FormMakerFunctionCollection
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
-                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'extension/formmaker/email', 'Not checked' );
+                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not checked' );
                         }
                         break;
 

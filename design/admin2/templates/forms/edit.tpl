@@ -19,12 +19,12 @@
      $activeValidatorsIDs = array()
      $activeValidators = array() }
 
-<div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
+<div id="dialog-confirm">{'Are you sure?'|i18n( 'formmaker/admin' )}</div>
 
 {if $id}
-    <h2>{'Editing form'|i18n( 'extension/formmaker/admin' )} `{$form_name|wash()}`</h2>
+    <h2>{'Editing form'|i18n( 'formmaker/admin' )} `{$form_name|wash()}`</h2>
     <p class="formmaker-language-information">
-        {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'extension/formmaker/admin' )}
+        {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'formmaker/admin' )}
     </p>
 {else}
     <h2>New form</h2>
@@ -36,9 +36,9 @@
             Definition
             {if $id}
                 <span class="show-hide-definition">
-                    <a class="show-definition" href="#">{'show'|i18n( 'extension/formmaker/admin' )}</a>
-                    <input type="hidden" id="show-definition" value="{'show'|i18n( 'extension/formmaker/admin' )}"/>
-                    <input type="hidden" id="hide-definition" value="{'hide'|i18n( 'extension/formmaker/admin' )}"/>
+                    <a class="show-definition" href="#">{'show'|i18n( 'formmaker/admin' )}</a>
+                    <input type="hidden" id="show-definition" value="{'show'|i18n( 'formmaker/admin' )}"/>
+                    <input type="hidden" id="hide-definition" value="{'hide'|i18n( 'formmaker/admin' )}"/>
                 </span>
             {/if}        
         </h3>
@@ -52,7 +52,7 @@
                         {case match='text'}
                             <label>
                                 {if is_set($element.label)}
-                                    <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                    <span class="attribute-label">{$element.label|wash()|i18n( 'formmaker/admin' )}</span>
                                     {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                                 {/if}
                                 <input type="text" name="{$identifier}" value="{$element.value|wash()}" {if $element.required}required{/if}/>
@@ -61,14 +61,14 @@
                         {case match='checkbox'}
                             <label>
                                 <input type="checkbox" name="{$identifier}" {if $element.value}checked="checked"{/if}/>
-                                <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                <span class="attribute-label">{$element.label|wash()|i18n( 'formmaker/admin' )}</span>
                                 {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                             </label>
                         {/case}
                         {case match='textarea'}
                             <label>
                                 {if is_set($element.label)}
-                                    <span class="attribute-label">{$element.label|wash()|i18n( 'extension/formmaker/admin' )}</span>
+                                    <span class="attribute-label">{$element.label|wash()|i18n( 'formmaker/admin' )}</span>
                                     {if $element.required}<span class="form_attribute_required"> *</span>{/if}<br/>
                                 {/if}
                                 <textarea name="{$identifier}" {if $element.required}required{/if}/>{$element.value|wash()}</textarea>
@@ -104,7 +104,7 @@
                 {/foreach}
             </div>                    
 
-            <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'extension/formmaker/admin' )}"/>
+            <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'formmaker/admin' )}"/>
             <select name="new-field-type">
                 {foreach $input_types as $field}
                     <option value="{$field.id}">{$field.name|wash()}</option>

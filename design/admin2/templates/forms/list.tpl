@@ -7,11 +7,11 @@
 {ezcss_require(array( 'tablesorter.css', 'style.css' ) )}
 {ezscript_require(array( 'jquery.tablesorter.js', 'list.js' ) )}
 
-<div id="dialog-confirm">{'Are you sure?'|i18n( 'extension/formmaker/admin' )}</div>
+<div id="dialog-confirm">{'Are you sure?'|i18n( 'formmaker/admin' )}</div>
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
-        <h1 class="context-title">{'List forms'|i18n( 'extension/formmaker/admin' )}</h1>
+        <h1 class="context-title">{'List forms'|i18n( 'formmaker/admin' )}</h1>
         <div class="header-mainline"></div>
     </div>
 
@@ -22,10 +22,10 @@
                     <table border="0" cellspacing="1" cellpadding="0" class="tablesorter">
                         <thead>
                             <tr>
-                                <th class="mwezform-list-name">{'Name'|i18n( 'extension/formmaker/admin' )}</th>
-                                <th>{'Created'|i18n( 'extension/formmaker/admin' )}</th>    
-                                <th>{'Author'|i18n( 'extension/formmaker/admin' )}</th>                                 
-                                <th style="width: 160px; text-align: center;">{'Actions'|i18n( 'extension/formmaker/admin' )}</th>
+                                <th class="mwezform-list-name">{'Name'|i18n( 'formmaker/admin' )}</th>
+                                <th>{'Created'|i18n( 'formmaker/admin' )}</th>    
+                                <th>{'Author'|i18n( 'formmaker/admin' )}</th>                                 
+                                <th style="width: 160px; text-align: center;">{'Actions'|i18n( 'formmaker/admin' )}</th>
                             </tr>
                         </thead>
 
@@ -46,7 +46,7 @@
                             {/foreach}
 
                             {if not( $forms|count() )}
-                                <tr><td class="formmaker_no_forms" colspan="4">{'There are no forms for now. Add some!'|i18n( 'extension/formmaker/admin' )}</td></tr>
+                                <tr><td class="formmaker_no_forms" colspan="4">{'There are no forms for now. Add some!'|i18n( 'formmaker/admin' )}</td></tr>
                             {/if}
                         </tbody>
                     </table>      
@@ -57,7 +57,7 @@
                         <div class="box-ml">
                             <div class="button-right">
                                 <form name="tagadd" id="tagadd" style="float:left;" enctype="multipart/form-data" method="post" action={'formmaker/edit'|ezurl}>
-                                    <input class="defaultbutton" type="submit" name="SubmitButton" value="{"Create new form"|i18n( "extension/formmaker/admin" )}" />
+                                    <input class="defaultbutton" type="submit" name="SubmitButton" value="{"Create new form"|i18n( "formmaker/admin" )}" />
                                 </form>
                             </div>
                             <div class="float-break"></div>
