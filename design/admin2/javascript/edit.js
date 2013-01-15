@@ -188,4 +188,24 @@ jQuery(document).ready( function() {
             $('#content-sub-items-list').show(500);
         }
     });
+    
+    // checking logical conditions which form needs to meet
+    jQuery('#form-editor').submit(function(){
+        var last_child = $(this).find('.formField:last-child');
+        var first_child = $(this).find('.formField:first-child');
+        
+        // "Page separator" can not be the first element of the form
+        if(first_child.hasClass('form-5') && first_child.find('.enable-attribute input[type=hidden]').val() == 1){
+            alert('"Page separator" can not be the first element of the form. If you want to set the title of first page you can do it in the form definition, field "First page label".');
+            return false;
+        }        
+        
+        // "Page separator" can not be the last element of the form
+        if(last_child.hasClass('form-5') && last_child.find('.enable-attribute input[type=hidden]').val() == 1){
+            alert('"Page separator" can not be the last element of the form. Please remove or disable it.');
+            return false;
+        }
+        
+        return true;
+    });
 });

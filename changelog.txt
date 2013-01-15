@@ -5,6 +5,7 @@ Version 1.3.2
 - Fixed sending of empty email by hitting F5 on receipt page
 - Updated English translation file and also translations in whole extension
 - Fixed height of form-field-attribute elements (in admin GUI)
+- Added edit form JS validation (page separator cannot be the first nor the last element of the form)
 
 Version 1.3.1
 - Fixed bug with mandatory radio buttons and checkboxes
