@@ -117,7 +117,8 @@
                 <div class="box-bc">
                     <div class="box-ml">
                         <div class="button-right">
-                            <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
+                            <input type="submit" value="{'Save'|i18n( 'formmaker/admin' )}" name="SubmitButton" class="defaultbutton">
+                            <input type="submit" class="button" name="CancelButton" value="{'Cancel'|i18n( 'formmaker/admin' )}"/>
                         </div>
                         <div class="float-break"></div>
                     </div>

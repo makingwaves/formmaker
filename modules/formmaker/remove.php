@@ -24,3 +24,4 @@ $form_object->removeContentObject();
 $url = '/formmaker/list/';
 eZURI::transformURI($url, false, 'full');
 eZHTTPTool::redirect( $url );
+eZExecution::cleanExit();

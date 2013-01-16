@@ -68,7 +68,7 @@ if (is_numeric($form_id))
 }
 
 $error_message = '';
-if( $http->hasPostVariable('name') ) 
+if( $http->hasPostVariable( 'SubmitButton' ) ) 
 {
     // validating required fields
     foreach ($form_elements as $key => $data)
@@ -109,10 +109,18 @@ if( $http->hasPostVariable('name') )
             // redirecting to edit page (adding attributes)
             $saved_object = formDefinitions::addForm( $form_elements );
             $href = 'formmaker/edit/' . $saved_object->attribute('id');
-            eZURI::transformURI($href);
-            eZHTTPTool::redirect($href);
+            eZURI::transformURI( $href );
+            eZHTTPTool::redirect( $href );
+            eZExecution::cleanExit();
         }
     }
+}
+else if ( $http->hasPostVariable( 'CancelButton' ) )
+{
+    $href = 'formmaker/list/';
+    eZURI::transformURI( $href );
+    eZHTTPTool::redirect( $href );
+    eZExecution::cleanExit();
 }
 
 $tpl->setVariable( 'error_message', $error_message );
