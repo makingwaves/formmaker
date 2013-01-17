@@ -33,7 +33,7 @@ jQuery(document).ready( function() {
     // Adding new field
     jQuery('input[name=add_field]').click(function(){
         jQuery('div#page').css('cursor', 'progress');
-        var post_data = {'input_id' :  $('select[name=new-field-type]').val()};
+        var post_data = {'input_id' :  $(this).parent().find('select[name=new-field-type]').val()};
         $.ez( 'formmaker::addField', post_data, function( data ) {
             
             if (data.error_text) {
@@ -190,7 +190,7 @@ jQuery(document).ready( function() {
     });
     
     // checking logical conditions which form needs to meet
-    jQuery('#form-editor').submit(function(){
+    jQuery('#editform').submit(function(){
         var last_child = $(this).find('.formField:last-child');
         var first_child = $(this).find('.formField:first-child');
         
@@ -207,5 +207,10 @@ jQuery(document).ready( function() {
         }
         
         return true;
+    });
+    
+    // Edit page cancel button
+    jQuery('input[name=CancelButton]').click(function(){
+        window.location = $('#list-url').val();
     });
 });

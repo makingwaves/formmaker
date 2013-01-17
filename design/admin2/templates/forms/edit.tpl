@@ -12,7 +12,7 @@
 {ezscript_require(array('ezjsc::jqueryUI'))}
 {ezcss_require( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' )}
 
-{ezscript_require(array( 'edit.js' ) )}
+{ezscript_require(array( 'edit.js', 'fixed_toolbar.js' ) )}
 {ezcss_require(array( 'style.css') )}
 
 {def $selected = ''
@@ -21,17 +21,21 @@
 
 <div id="dialog-confirm">{'Are you sure?'|i18n( 'formmaker/admin' )}</div>
 
-{if $id}
-    <h2>{'Editing form'|i18n( 'formmaker/admin' )} `{$form_name|wash()}`</h2>
-    <p class="formmaker-language-information">
-        {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'formmaker/admin' )}
-    </p>
-{else}
-    <h2>New form</h2>
-{/if}
-
 <div class="form-box-container">
-    <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="form-editor">
+    <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="editform">
+        
+        {include uri="design:forms/buttons_top.tpl" show_attributes=cond( $id, true(), false() )} 
+                        
+        {if $id}
+            <h2 id="formmaker-edit-header">{'Editing form'|i18n( 'formmaker/admin' )} `{$form_name|wash()}`</h2>
+            <p class="formmaker-language-information">
+                {'Please note that label values, which you need to add to each attribute, are processed by eZPublish translation system (so to add new translation, just add translations into the language file).'|i18n( 'formmaker/admin' )}
+            </p>
+        {else}
+            <h2 id="formmaker-edit-header">New form</h2>
+        {/if}                        
+        
+        <input type="hidden" id="list-url" value={'formmaker/list'|ezurl( 'double', 'full' )}/>
         <h3>
             Definition
             {if $id}
@@ -80,16 +84,7 @@
         </div>
 
         {if $id|not()} {* if this is a new form *}
-            <div class="controlbar" id="controlbar-top">
-                <div class="box-bc">
-                    <div class="box-ml">
-                        <div class="button-right">
-                            <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
-                        </div>
-                        <div class="float-break"></div>
-                    </div>
-                </div>
-            </div>
+            {include uri="design:forms/buttons_bottom.tpl" show_attributes=false()} 
         {else}
             <h3>Attributes</h3>
             <hr/>
@@ -103,27 +98,7 @@
                              input_id=$attribute.id input=$attribute.type_data}
                 {/foreach}
             </div>                    
-
-            <input type="button" class="button" name="add_field" value="{'Add field'|i18n( 'formmaker/admin' )}"/>
-            <select name="new-field-type">
-                {foreach $input_types as $field}
-                    <option value="{$field.id}">{$field.name|wash()}</option>
-                {/foreach}
-            </select>    
-
-            <div class="clear"></div>
-
-            <div class="controlbar" id="controlbar-top">
-                <div class="box-bc">
-                    <div class="box-ml">
-                        <div class="button-right">
-                            <input type="submit" value="Save" name="SubmitButton" class="defaultbutton">
-                        </div>
-                        <div class="float-break"></div>
-                    </div>
-                </div>
-            </div>
-
+            {include uri="design:forms/buttons_bottom.tpl" show_attributes=true()}     
         {/if}
     </form>
 </div>

@@ -7,6 +7,8 @@ class formDefinitions extends eZPersistentObject
 {
     // prefix for keys used in session
     const PAGE_SESSION_PREFIX = 'form_data_page_';
+    // session key set when form was just sent
+    const SESSION_FORM_SENT_KEY = 'form_just_sent';
     // main node id
     const MAIN_NODE_ID = 2;
 
@@ -39,7 +41,10 @@ class formDefinitions extends eZPersistentObject
                                                                       "required" => false ),
                                          "summary_label"    => array( "name" => "summary_label",
                                                                       "datatype" => "string",
-                                                                      "required" => false ),            
+                                                                      "required" => false ),       
+                                         "summary_body"     => array( "name" => "summary_body",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),             
                                          "receipt_label"    => array( "name" => "receipt_label",
                                                                       "datatype" => "string",
                                                                       "required" => false ),      

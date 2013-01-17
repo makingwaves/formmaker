@@ -56,9 +56,8 @@
                     <div class="box-bc">
                         <div class="box-ml">
                             <div class="button-right">
-                                <form name="tagadd" id="tagadd" style="float:left;" enctype="multipart/form-data" method="post" action={'formmaker/edit'|ezurl}>
-                                    <input class="defaultbutton" type="submit" name="SubmitButton" value="{"Create new form"|i18n( "formmaker/admin" )}" />
-                                </form>
+                                <input class="defaultbutton" type="button" name="CreateButton" value="{"Create new form"|i18n( "formmaker/admin" )}" />
+                                <input type="hidden" id="edit-url" value={'formmaker/edit'|ezurl( 'double', 'full' )}/>
                             </div>
                             <div class="float-break"></div>
                         </div>
