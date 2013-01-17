@@ -27,6 +27,18 @@ $form_elements = array( 'name'          => array(   'required'  => true,
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
+                        'summary_page'  => array(   'required'  => false, 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'I want a confirmation page with the following label' ), 
+                                                    'type'      => 'checkbox',
+                                                    'value'     => '' ),
+                        'summary_label' => array(   'required'  => false, 
+                                                    'type'      => 'text',
+                                                    'value'     => '' ),
+                        'summary_body'  => array(   'required'  => false, 
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Confirmation page body text' ), 
+                                                    'type'      => 'textarea',
+                                                    'css'       => 'attribute-full-width',
+                                                    'value'     => "You're about to send following informations. Are they OK?" ),    
                         'receipt_label' => array(   'required'  => true, 
                                                     'label'     => ezpI18n::tr('formmaker/admin', 'Receipt page label' ), 
                                                     'type'      => 'text',
@@ -41,14 +53,7 @@ $form_elements = array( 'name'          => array(   'required'  => true,
                                                     'label'     => ezpI18n::tr('formmaker/admin', 'Receipt page body text' ), 
                                                     'type'      => 'textarea',
                                                     'css'       => 'attribute-full-width',
-                                                    'value'     => '' ),    
-                        'summary_page'  => array(   'required'  => false, 
-                                                    'label'     => ezpI18n::tr('formmaker/admin', 'I want a confirmation page with the following label' ), 
-                                                    'type'      => 'checkbox',
-                                                    'value'     => '' ),
-                        'summary_label' => array(   'required'  => false, 
-                                                    'type'      => 'text',
-                                                    'value'     => '' ),
+                                                    'value'     => 'Thank you for sending us the informations!' ),
 );
 
 // When form is being edited, we need to fill up its definition data from database
@@ -63,7 +68,7 @@ if (is_numeric($form_id))
 }
 
 $error_message = '';
-if( $http->hasPostVariable('name') ) 
+if( $http->hasPostVariable( 'name' ) ) 
 {
     // validating required fields
     foreach ($form_elements as $key => $data)
@@ -82,31 +87,28 @@ if( $http->hasPostVariable('name') )
         }
     }
         
-    // it's and update
-    if (is_numeric($form_id))
+    if (empty($error_message)) 
     {
-        if (empty($error_message)) 
+        // it's and update
+        if (is_numeric($form_id))
         {
             // and there were no errors!
             formDefinitions::updateForm($form_id, $form_elements);
             formAttributes::updateFormAttributes( $_POST, $http->postVariable( 'definition_id' ) );
 
             // clearing the cache for nodes which uses this form
-            formDefinitions::clearFormCache($form_id);
-        }       
-    }
-    // it's a brand new form
-    else 
-    {      
-        // and there were some errors!
-        if (empty($error_message)) 
-        {
+            formDefinitions::clearFormCache($form_id);   
+        }
+        // it's a brand new form
+        else 
+        {      
             // redirecting to edit page (adding attributes)
             $saved_object = formDefinitions::addForm( $form_elements );
             $href = 'formmaker/edit/' . $saved_object->attribute('id');
-            eZURI::transformURI($href);
-            eZHTTPTool::redirect($href);
-        }
+            eZURI::transformURI( $href );
+            eZHTTPTool::redirect( $href );
+            eZExecution::cleanExit();
+        }        
     }
 }
 
@@ -122,14 +124,21 @@ $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 $Result = array();
 
 // if form is saved
+$Result['content'] = $tpl->fetch( 'design:forms/edit.tpl' );
 if( $http->hasPostVariable('definition_id') && empty($error_message) )
 {
-    $tpl->setVariable( 'form_definition', $http->postVariable('definition_id') );
-    $Result['content'] = $tpl->fetch( 'design:forms/saved.tpl' );
-}
-else
-{
-    $Result['content'] = $tpl->fetch( 'design:forms/edit.tpl' );
+    if ( $http->hasPostVariable( 'SaveExitButton' ) )
+    {
+        $href = 'formmaker/list/';
+    }
+    elseif ( $http->hasPostVariable( 'SaveButton' ) )
+    {
+        $href = 'formmaker/edit/' . $form_id;      
+    }
+    
+    eZURI::transformURI( $href );
+    eZHTTPTool::redirect( $href );
+    eZExecution::cleanExit();      
 }
 
 $Result['path']    = array( array( 'tag_id' => 0,

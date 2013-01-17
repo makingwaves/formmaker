@@ -1,8 +1,9 @@
 {* Template renders summary page (if form has it enabled), params:
-- $all_pages *}
+- $all_pages, array
+- $body_text, string *}
 
 <input type="hidden" name="summary_page" value="1" />
-<p>{"You're about to send following informations. Are they OK?"|i18n( 'formmaker/front' )}</p>
+<p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
 <br/>
 {foreach $all_pages as $page}
     {if is_set( $page.page_label )}

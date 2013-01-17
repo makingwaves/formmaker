@@ -24,9 +24,35 @@ class FormMakerFunctionCollection
         $all_pages          = $this->definition->getPageAttributes();
         $form_page          = $all_pages[$current_page];
         $is_page_last       = count( $all_pages ) == ( $current_page + 1) ? true : false;
+        $form_processed     = false;
         $result             = array();
         $errors             = array();
         $posted_values      = array();
+
+        // removing sent flag from session
+        if ( eZSession::issetkey( formDefinitions::SESSION_FORM_SENT_KEY ) && empty( $_POST ) )
+        {
+            eZSession::unsetkey( formDefinitions::SESSION_FORM_SENT_KEY );
+        }        
+        
+        // rendering receipt template. This part handles F5 hitting problem on receipt page
+        if ( eZSession::issetkey( formDefinitions::SESSION_FORM_SENT_KEY ) )
+        {
+            $tpl = eZTemplate::factory();
+            $tpl->setVariable( 'result', false );
+            $tpl->setVariable( 'form_definition', $this->definition );
+            $result = array(
+                'success'               => $tpl->fetch( 'design:form_processed.tpl' ),
+                'validation'            => $errors,
+                'definition'            => $this->definition,
+                'attributes'            => $form_page['attributes'],
+                'counted_validators'    => formAttrvalid::countValidatorsForAttributes(),
+                'current_page'          => $current_page,
+                'all_pages'             => $all_pages,
+                'date_validator'        => formValidators::DATE_ID,
+            ); 
+            return array('result' => $result);
+        }
 
         // removing data from session when there is no POST request
         if ( !$this->http->hasPostVariable( 'validation' ) )
@@ -94,6 +120,7 @@ class FormMakerFunctionCollection
                 {
                     // rendering summary page
                     $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
+                    $tpl->setVariable( 'body_text', $this->definition->attribute( 'summary_body' ) );
                     $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
                 }
                 // processing the data only if array contains the data
@@ -115,6 +142,7 @@ class FormMakerFunctionCollection
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
                     $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );     
+                    eZSession::set( formDefinitions::SESSION_FORM_SENT_KEY, true );
                 }
             } 
         }

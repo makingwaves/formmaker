@@ -253,7 +253,7 @@
         <translation type="unfinished" />
     </message>    
     <message>
-        <source>Add field</source>
+        <source>Add attribute</source>
         <translation type="unfinished" />
     </message>      
     <message>
@@ -319,7 +319,23 @@
     <message>
         <source>Add option</source>
         <translation type="unfinished" />
-    </message>                                  
+    </message>   
+    <message>
+        <source>Confirmation page body text</source>
+        <translation type="unfinished" />
+    </message>    
+    <message>
+        <source>Save</source>
+        <translation type="unfinished" />
+    </message>   
+    <message>
+        <source>Save and exit</source>
+        <translation type="unfinished" />
+    </message>        
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished" />
+    </message>                                   
 </context>
 <context>
     <name>kernel/navigationpart</name>

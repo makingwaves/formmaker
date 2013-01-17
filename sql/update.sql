@@ -58,6 +58,7 @@ CREATE TABLE `form_definitions` (
   `email_sender` varchar(255) NOT NULL,
   `summary_page` smallint(6) NOT NULL DEFAULT '0',
   `summary_label` varchar(255) NOT NULL,
+  `summary_body` text NOT NULL,
   `first_page` varchar(255) NOT NULL,
   `receipt_label` varchar(255) NOT NULL,
   `receipt_intro` text NOT NULL,

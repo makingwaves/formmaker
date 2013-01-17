@@ -10,8 +10,7 @@
      $header_text       = $form_definition.name
      $pages_count       = $form_data.all_pages|count()
      $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'formmaker/front' ), 'Next'|i18n( 'formmaker/front' ) )
-     $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' )
-     $has_ajax_access   = has_access_to_limitation( 'ezjscore', 'call', hash( 'FunctionList', 'formmaker' ) )}
+     $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' ) }
 
 {* including CSS file *}
 {ezcss_load( array( 'formmaker.css', 'http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css' ) )}
