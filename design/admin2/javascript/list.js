@@ -17,6 +17,7 @@ jQuery(document).ready(function(){
         return false;
     });
     
+    // Enabling tablesorter
     $('.tablesorter').tablesorter({
         sortList: [[1,1]],
         headers: {
@@ -29,4 +30,9 @@ jQuery(document).ready(function(){
             css: ["odd", "even"]
         }
     });
+    
+    // List page "create" button
+    jQuery('input[name=CreateButton]').click(function(){
+        window.location = $('#edit-url').val();
+    });    
 })

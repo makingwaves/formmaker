@@ -297,4 +297,25 @@ select[name=new-field-type] {
         }
         .hide-definition {
             background-image: url("../images/desc.gif");
-        }        
+        }  
+        
+.controlbar {
+    top:0px;
+}  
+        
+.formmaker-bottom-buttons {
+    width: 100%;
+    overflow: hidden;
+    margin: 20px 0;
+}        
+
+    .buttons-left {
+        float: left;
+    }
+    .buttons-right {
+        float: right;
+    }
+    
+.yui3-js-enabled .controlbar-fixed {
+    z-index: 1;
+}

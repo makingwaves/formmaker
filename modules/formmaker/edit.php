@@ -115,13 +115,6 @@ if( $http->hasPostVariable( 'SubmitButton' ) )
         }
     }
 }
-else if ( $http->hasPostVariable( 'CancelButton' ) )
-{
-    $href = 'formmaker/list/';
-    eZURI::transformURI( $href );
-    eZHTTPTool::redirect( $href );
-    eZExecution::cleanExit();
-}
 
 $tpl->setVariable( 'error_message', $error_message );
 $tpl->setVariable( 'form_elements', $form_elements );

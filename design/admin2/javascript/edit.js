@@ -190,7 +190,7 @@ jQuery(document).ready( function() {
     });
     
     // checking logical conditions which form needs to meet
-    jQuery('#form-editor').submit(function(){
+    jQuery('#editform').submit(function(){
         var last_child = $(this).find('.formField:last-child');
         var first_child = $(this).find('.formField:first-child');
         
@@ -207,5 +207,10 @@ jQuery(document).ready( function() {
         }
         
         return true;
+    });
+    
+    // Edit page cancel button
+    jQuery('input[name=CancelButton]').click(function(){
+        window.location = $('#list-url').val();
     });
 });

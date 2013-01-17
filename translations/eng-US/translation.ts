@@ -253,7 +253,7 @@
         <translation type="unfinished" />
     </message>    
     <message>
-        <source>Add field</source>
+        <source>Add attribute</source>
         <translation type="unfinished" />
     </message>      
     <message>
