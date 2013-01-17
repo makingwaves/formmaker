@@ -18,18 +18,20 @@ jQuery(document).ready(function(){
     });
     
     // Enabling tablesorter
-    $('.tablesorter').tablesorter({
-        sortList: [[1,1]],
-        headers: {
-            3: {
-                sorter: false
+    if (jQuery('.tablesorter tbody td').length > 1) {
+        jQuery('.tablesorter').tablesorter({
+            sortList: [[1,1]],
+            headers: {
+                3: {
+                    sorter: false
+                }
+            },
+            widgets: ['zebra'],
+            widgetZebra: {
+                css: ["odd", "even"]
             }
-        },
-        widgets: ['zebra'],
-        widgetZebra: {
-            css: ["odd", "even"]
-        }
-    });
+        });
+    }
     
     // List page "create" button
     jQuery('input[name=CreateButton]').click(function(){
