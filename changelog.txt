@@ -7,6 +7,7 @@ Version 1.4
 - Top and bottom controlbars set as default in eZ
 - Added "Save and exit" button on edit page
 - Fixed JS bug on List page when no forms were added
+- Fixed redirection when F5 hit on receipt page
 
 Version 1.3.2
 - Fixed sending of empty email by hitting F5 on receipt page
