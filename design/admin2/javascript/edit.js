@@ -33,7 +33,7 @@ jQuery(document).ready( function() {
     // Adding new field
     jQuery('input[name=add_field]').click(function(){
         jQuery('div#page').css('cursor', 'progress');
-        var post_data = {'input_id' :  $('select[name=new-field-type]').val()};
+        var post_data = {'input_id' :  $(this).parent().find('select[name=new-field-type]').val()};
         $.ez( 'formmaker::addField', post_data, function( data ) {
             
             if (data.error_text) {

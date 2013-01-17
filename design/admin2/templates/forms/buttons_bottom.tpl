@@ -3,7 +3,12 @@
 
 <div class="formmaker-bottom-buttons">
     <div class="buttons-left">
-        <input type="submit" value="{'Save'|i18n( 'formmaker/admin' )}" name="SubmitButton" class="defaultbutton">
+        {if $show_attributes}
+            <input type="submit" value="{'Save and exit'|i18n( 'formmaker/admin' )}" name="SaveExitButton" class="defaultbutton">
+            <input type="submit" class="button" name="SaveButton" value="{'Save'|i18n( 'formmaker/admin' )}"/>
+        {else}
+            <input type="submit" value="{'Save'|i18n( 'formmaker/admin' )}" name="SaveButton" class="defaultbutton">
+        {/if}
         <input type="button" class="button" name="CancelButton" value="{'Cancel'|i18n( 'formmaker/admin' )}"/>      
     </div>
     {if $show_attributes}

@@ -24,29 +24,7 @@
 <div class="form-box-container">
     <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="editform">
         
-        <div id="controlbar-top" class="controlbar controlbar-fixed">
-            <div class="box-bc">
-                <div class="box-ml">
-                    <div class="block">
-                        <div class="element">
-                            <input type="submit" value="{'Save'|i18n( 'formmaker/admin' )}" name="SubmitButton" class="defaultbutton">
-                            <input type="button" class="button" name="CancelButton" value="{'Cancel'|i18n( 'formmaker/admin' )}"/>      
-                        </div>
-                        {if $id}
-                            <div class="element">
-                                <select name="new-field-type">
-                                    {foreach $input_types as $field}
-                                        <option value="{$field.id}">{$field.name|wash()}</option>
-                                    {/foreach}
-                                </select>       
-                                <input type="button" class="button" name="add_field" value="{'Add attribute'|i18n( 'formmaker/admin' )}"/>
-                            </div>
-                        {/if}
-                        <div class="float-break"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {include uri="design:forms/buttons_top.tpl" show_attributes=cond( $id, true(), false() )} 
                         
         {if $id}
             <h2 id="formmaker-edit-header">{'Editing form'|i18n( 'formmaker/admin' )} `{$form_name|wash()}`</h2>
