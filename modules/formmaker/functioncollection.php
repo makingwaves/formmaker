@@ -9,7 +9,7 @@ class FormMakerFunctionCollection
     private $http;
     // form definition object
     private $definition;
-    // formmaker.ini inctance
+    // formmaker.ini instance
     private $ini;
     
     /**
@@ -32,6 +32,9 @@ class FormMakerFunctionCollection
         $errors             = array();
         $posted_values      = array();
 
+        // checking whether user has access to form
+        $this->executeExternalScript();
+        
         // removing sent flag from session
         if ( eZSession::issetkey( formDefinitions::SESSION_FORM_SENT_KEY ) && empty( $_POST ) )
         {
@@ -133,10 +136,7 @@ class FormMakerFunctionCollection
                     if ($this->definition->attribute('post_action') == 'email')
                     {
                         // injecting external script before email is sent
-                        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalScript' ) )
-                        {
-                            require $this->ini->variable( 'FormmakerSettings', 'ExternalScript' );
-                        }
+                        $this->executeExternalScript();
                         $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
                     }
@@ -347,5 +347,16 @@ class FormMakerFunctionCollection
             'email_data'    => $email_data,
             'receivers'     => $receivers
         );        
+    }
+    
+    /**
+     * Method executes the internal script
+     */
+    private function executeExternalScript()
+    {
+        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalScript' ) )
+        {
+            require $this->ini->variable( 'FormmakerSettings', 'ExternalScript' );
+        }        
     }
 }

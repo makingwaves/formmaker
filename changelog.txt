@@ -3,7 +3,8 @@ database structure we're incrementing number after first decimal (i.e 1.1, 1.2).
 Database update scripts can be found under sql/update directory.
 
 Version 1.4.1
-- Added possibility to inject external script before email is sent. Script path can be set by adding 'ExternalScript' variable into 'FormmakerSettings' settings group.
+- Added possibility to inject external script to check whether user has access to form. 
+  Script path can be set by adding 'ExternalScript' variable into 'FormmakerSettings' settings group.
 
 Version 1.4
 - Added possibility to set Confirmation page summary text
