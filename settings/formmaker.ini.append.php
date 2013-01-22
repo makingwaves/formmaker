@@ -2,6 +2,8 @@
 
 [FormmakerSettings]
 SendOnlyFilledData=false
+# external script is called just before email messages are sent
+#ExternalScript=bin/php/script.php
 
 [AdditionalElements]
 description=enabled
