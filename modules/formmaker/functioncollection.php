@@ -9,6 +9,8 @@ class FormMakerFunctionCollection
     private $http;
     // form definition object
     private $definition;
+    // formmaker.ini inctance
+    private $ini;
     
     /**
      * Method fetches form definition and all attributes for given Form id.
@@ -20,6 +22,7 @@ class FormMakerFunctionCollection
     {
         $this->http         = eZHTTPTool::instance();
         $this->definition   = formDefinitions::getForm( $form_id );
+        $this->ini          = eZINI::instance( 'formmaker.ini' );
         $current_page       = $this->http->hasPostVariable( 'current_page' ) ? $this->http->postVariable( 'current_page' ) : 0;
         $all_pages          = $this->definition->getPageAttributes();
         $form_page          = $all_pages[$current_page];
@@ -129,6 +132,11 @@ class FormMakerFunctionCollection
                     // Sending email message
                     if ($this->definition->attribute('post_action') == 'email')
                     {
+                        // injecting external script before email is sent
+                        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalScript' ) )
+                        {
+                            require $this->ini->variable( 'FormmakerSettings', 'ExternalScript' );
+                        }
                         $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
                     }
@@ -287,8 +295,7 @@ class FormMakerFunctionCollection
         $email_data     = array();
         $receivers      = array();
         $i              = 0;
-        $ini            = eZINI::instance( 'formmaker.ini' );
-        $filled_only    = $ini->variable( 'FormmakerSettings', 'SendOnlyFilledData' );
+        $filled_only    = $this->ini->variable( 'FormmakerSettings', 'SendOnlyFilledData' );
 
         foreach ( $_SESSION as $key => $page )
         {
