@@ -1,7 +1,7 @@
 {def $remove_access = fetch( 'user', 'has_access_to', hash( 'module', 'formmaker', 'function', 'remove' ) )}
 
 {* jquery UI *}
-{ezscript_require( array('ezjsc::jqueryUI')) }
+{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 {ezcss_require( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' )}
 
 {ezcss_require(array( 'tablesorter.css', 'style.css' ) )}

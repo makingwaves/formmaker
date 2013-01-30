@@ -10,7 +10,8 @@
 - $input_types - array of all available input types *}
 
 {* jquery UI *}
-{ezscript_require(array('ezjsc::jqueryUI'))}
+{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
+
 {ezcss_require( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' )}
 
 {ezscript_require(array( 'edit.js', 'fixed_toolbar.js' ) )}
