@@ -96,6 +96,7 @@ CREATE TABLE `form_attributes` (
   `email_receiver` smallint(6) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `css` varchar(255) NOT NULL,
+  `allowed_file_types` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `definition_id` (`definition_id`),
   KEY `type_id` (`type_id`),

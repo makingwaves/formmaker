@@ -10,9 +10,22 @@
         <strong>{$page.page_label|i18n( 'formmaker/front' )}</strong>
     {/if}
     <br/>
-    {foreach $page.attributes as $attribute}
-        <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
+
+    {foreach $page.attributes as $attribute}    
+        {if $attribute.value|contains('formmaker')} {* if it's a file type *}
+
+            {def $thumb = $attribute.value|explode('.jpg') }
+            {set $thumb = concat($thumb.0, '_thumb.jpg')}            
+
+            <span>{$attribute.label|i18n( 'formmaker/front' )}:<br/>
+            {*$attribute|attribute(show)*}
+            <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
+            <br/>
+        {else}
+            <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
+        {/if}
     {/foreach}
+
     <br/>    
 {/foreach}
 

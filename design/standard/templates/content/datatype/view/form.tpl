@@ -16,7 +16,8 @@
 {ezcss_load( array( 'formmaker.css', 'http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css', 'select2.css' ) )}
 
 {* Including JS files *}
-{ezscript_require( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'ezjsc::jqueryUI', 'jquery.functions.js', 'jquery.validation.js', 'select2.min.js' ) )}
+{ezscript_require( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'jquery.functions.js', 'jquery.validation.js', 'select2.min.js' ) )}
+{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 
 {include uri="design:form_steps.tpl" form_data=$form_data all_pages=$form_data.all_pages form_definition=$form_definition current_page=$current_page}
 
@@ -29,7 +30,7 @@
     {/if}
     <h1>{$header_text|wash()|i18n( 'formmaker/front' )}</h1>
 
-    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()}>
+    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()} enctype="multipart/form-data">
 
         <input type="hidden" name="form_id" value="{$form_definition.id}"/>
         <input type="hidden" name="node_id" value="{$node.node_id}"/>

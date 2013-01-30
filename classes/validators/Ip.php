@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Validate_Ip extends Validate_Abstract
+class FormMaker_Validate_Ip extends FormMaker_Validate_Abstract
 {
     const INVALID        = 'ipInvalid';
     const NOT_IP_ADDRESS = 'notIpAddress';

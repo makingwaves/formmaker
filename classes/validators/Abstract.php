@@ -30,7 +30,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Validate_Abstract implements Validate_Interface
+abstract class FormMaker_Validate_Abstract implements FormMaker_Validate_Interface
 {
     /**
      * The value to be validated
@@ -131,7 +131,7 @@ abstract class Validate_Abstract implements Validate_Interface
         }
 
         if (!isset($this->_messageTemplates[$messageKey])) {
-            throw new Validate_Exception("No message template exists for key '$messageKey'");
+            throw new FormMaker_Validate_Exception("No message template exists for key '$messageKey'");
         }
 
         $this->_messageTemplates[$messageKey] = $messageString;

@@ -25,7 +25,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Validate_Regex extends Validate_Abstract
+class FormMaker_Validate_Regex extends FormMaker_Validate_Abstract
 {
     const INVALID   = 'invalid';
     const NOT_MATCH = 'regex';
@@ -67,7 +67,7 @@ class Validate_Regex extends Validate_Abstract
             if (array_key_exists('pattern', $pattern)) {
                 $pattern = $pattern['pattern'];
             } else {
-                throw new Validate_Exception("Missing option 'pattern'");
+                throw new FormMaker_Validate_Exception("Missing option 'pattern'");
             }
         }
 
@@ -97,7 +97,7 @@ class Validate_Regex extends Validate_Abstract
         $status         = @preg_match($this->_pattern, "Test");
 
         if (false === $status) {
-            throw new Validate_Exception("Internal error while using the pattern '$this->_pattern'");
+            throw new FormMaker_Validate_Exception("Internal error while using the pattern '$this->_pattern'");
         }
 
         return $this;

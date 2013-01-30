@@ -49,7 +49,11 @@ class formAttributes extends eZPersistentObject
                                                                       "required" => true ),
                                          "description"      => array( "name" => "description",
                                                                       "datatype" => "string",
-                                                                      "required" => false ) ),
+                                                                      "required" => false ),
+                                         "allowed_file_types"      => array( "name" => "allowed_file_types",
+                                                                      "datatype" => "string",
+                                                                      "required" => false )
+                                         ),
                       "keys" => array('id'),
                       "function_attributes" => array(
                           'validators'      => 'getAttributeValidators',
@@ -88,9 +92,10 @@ class formAttributes extends eZPersistentObject
      * @param string $def_value    
      * @param int $email_receiver 
      * @param string $css
+     * @param string $allowed_file_types
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver, $css )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types )
     {
         $object = new self( array(
             'definition_id'     => $definition_id,
@@ -171,7 +176,7 @@ class formAttributes extends eZPersistentObject
             }
             
             $validator_row = formValidators::getValidator($attr_valid->attribute('validator_id'));
-            $class_name = 'Validate_' . $validator_row->attribute('type');
+            $class_name = 'FormMaker_Validate_' . $validator_row->attribute('type');
             if ($validator_row->attribute( 'type' ) == 'Regex')
             {
                 switch ( $validator_row->attribute( 'id' ) ) 
@@ -245,13 +250,21 @@ class formAttributes extends eZPersistentObject
             $item['default'] = isset( $item['default'] ) ? $item['default'] : '';
             $item['email_receiver'] = isset( $item['email_receiver'] ) ? $item['email_receiver'] : 0;
             $item['description'] = isset( $item['description'] ) ? $item['description'] : '';
+            $item['allowed_file_types'] = isset( $item['allowed_file_types'] ) ? $item['allowed_file_types'] : '';
             
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
             if ( ctype_digit( (string)$id ) )
             {
                 $processed_ids[] = $id;
                 $attribute = self::getAttribute( $id );
-                $attribute->setData( $order, $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'], $item['css'] );
+                $attribute->setData( $order,
+                                     $item['label'],
+                                     $item['enabled'],
+                                     $item['description'],
+                                     $item['default'],
+                                     $item['email_receiver'],
+                                     $item['css'],
+                                     $item['allowed_file_types'] );
                 $attribute->store();
                 
                 $correct_validators = array();
@@ -286,7 +299,16 @@ class formAttributes extends eZPersistentObject
             // ID is an unique hash, which means that it's NEW one and we need to add it to database
             else 
             {
-                $attribute = self::addNewAttribute( $order, $definition_id, $item['type'], $item['label'], $item['enabled'], $item['description'], $item['default'], $item['email_receiver'], $item['css'] );
+                $attribute = self::addNewAttribute( $order,
+                                                    $definition_id,
+                                                    $item['type'],
+                                                    $item['label'],
+                                                    $item['enabled'],
+                                                    $item['description'],
+                                                    $item['default'],
+                                                    $item['email_receiver'],
+                                                    $item['css'],
+                                                    $item['allowed_file_types'] );
                 $processed_ids[] = $attribute->attribute( 'id' );
                 // adding 'required' validator
                 if ( $item['mandatory'] == 'on' )
@@ -340,7 +362,7 @@ class formAttributes extends eZPersistentObject
      * @param int $email_receiver
      * @param string $css
      */
-    private function setData( $order, $label, $enabled, $description, $default, $email_receiver, $css )
+    private function setData( $order, $label, $enabled, $description, $default, $email_receiver, $css, $allowed_file_types )
     {
         $this->setAttribute( 'attr_order', $order );
         $this->setAttribute( 'label', $label );
@@ -349,6 +371,7 @@ class formAttributes extends eZPersistentObject
         $this->setAttribute( 'default_value', $default );
         $this->setAttribute( 'email_receiver', $email_receiver );
         $this->setAttribute( 'css', $css );
+        $this->setAttribute( 'allowed_file_types', $allowed_file_types );
     }
     
     /**
