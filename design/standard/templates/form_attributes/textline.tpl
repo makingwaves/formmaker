@@ -29,7 +29,7 @@
     <select class="date-year-validation {$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">
         <option value=""></option>
         {for $lowest_year to $current_year as $year}
-            <option value="{$year}">{$year}</option>
+            <option {if $default_value|eq( $year )}selected="selected"{/if} value="{$year}">{$year}</option>
         {/for}
     </select>
 {else}
