@@ -2,6 +2,12 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.5
+- Added validator "only for year" (since now only full date validator was present)
+- Added Select2 JS library (which can be used later on when developing Select-list datatype)
+- update.sql script renamed into install.sql
+- disabled autocomplete for full-date-validated text input
+
 Version 1.4.1
 - Added possibility to inject external script to check whether user has access to form. 
   Script path can be set by adding 'ExternalScript' variable into 'FormmakerSettings' settings group.

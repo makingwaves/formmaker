@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.28, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ezpublish47
 -- ------------------------------------------------------
--- Server version	5.5.28-0ubuntu0.12.04.3
+-- Server version	5.5.29-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `form_validators` (
   `description` varchar(255) DEFAULT NULL,
   `regex` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,7 @@ CREATE TABLE `form_validators` (
 
 LOCK TABLES `form_validators` WRITE;
 /*!40000 ALTER TABLE `form_validators` DISABLE KEYS */;
-INSERT INTO `form_validators` VALUES (1,'Digits','Only digits',''),(2,'EmailAddress','Email address',''),(3,'Float','Float point value',''),(5,'NotEmpty','Not empty',''),(6,'Hostname','Hostname',''),(7,'Ip','IP address',''),(8,'Regex','Date','/^(([0-2][0-9])|(3[0-1]))\\/((0[1-9])|(1[0-2]))\\/([1-2][0-9]{3})$/');
+INSERT INTO `form_validators` VALUES (1,'Digits','Only digits',''),(2,'EmailAddress','Email address',''),(3,'Float','Float point value',''),(5,'NotEmpty','Not empty',''),(6,'Hostname','Hostname',''),(7,'Ip','IP address',''),(8,'Regex','Date (full)','/^(([0-2][0-9])|(3[0-1]))\\/((0[1-9])|(1[0-2]))\\/([1-2][0-9]{3})$/'),(9,'Regex','Date (year only)','/^([1-2][0-9]{3})$/');
 /*!40000 ALTER TABLE `form_validators` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `form_definitions` (
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `form_attributes` (
   KEY `type_id` (`type_id`),
   CONSTRAINT `form_attributes_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `form_attributes_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `form_types` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-01-10 11:07:38
+-- Dump completed on 2013-01-31 12:15:58

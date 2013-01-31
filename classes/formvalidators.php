@@ -13,6 +13,7 @@ class formValidators extends eZPersistentObject
     const HOSTNAME_ID   = 6;
     const IP_ID         = 7;
     const DATE_ID       = 8;
+    const DATE_YEAR_ID  = 9;
     
     /**
      *  Table definition
