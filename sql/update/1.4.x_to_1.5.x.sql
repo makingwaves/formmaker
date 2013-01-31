@@ -4,3 +4,4 @@
 
 
 INSERT INTO `form_validators` (`id`, `type`, `description`, `regex`) VALUES (NULL, 'Regex', 'Date (year only)', '/^([1-2][0-9]{3})$/');
+UPDATE `form_validators` SET `description` = 'Date (full)' WHERE `form_validators`.`id` =8;
