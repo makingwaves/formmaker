@@ -34,5 +34,7 @@ jQuery(document).ready(function(){
             });            
         }
     });
+    
+    jQuery('select.date-year-validation').select2();
 })
 
