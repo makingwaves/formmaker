@@ -3,11 +3,11 @@
 */
 
 
-INSERT INTO `form_validators` (
-`id` ,
-`type` ,
-`description` ,
-`regex`
+INSERT INTO 'form_validators' (
+'id' ,
+'type' ,
+'description' ,
+'regex'
 )
 VALUES (
 NULL , 'Regex', 'Date (year only)', '/^([1-2][0-9]{3})$/'
