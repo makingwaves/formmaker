@@ -56,6 +56,7 @@ class FormMakerFunctionCollection
                 'current_page'          => $current_page,
                 'all_pages'             => $all_pages,
                 'date_validator'        => formValidators::DATE_ID,
+                'date_year_validator'   => formValidators::DATE_YEAR_ID,
             ); 
             return array('result' => $result);
         }
@@ -176,6 +177,7 @@ class FormMakerFunctionCollection
                                               'current_page'        => $current_page,
                                               'all_pages'           => $all_pages,
                                               'date_validator'      => formValidators::DATE_ID,
+                                              'date_year_validator' => formValidators::DATE_YEAR_ID,
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }

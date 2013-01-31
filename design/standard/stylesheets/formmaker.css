@@ -68,3 +68,7 @@
 .form-receipt-intro {
     font-style: italic;
 }
+
+input[type=text].form_element, div.form_element {
+    width: 200px;
+}
