@@ -6,6 +6,7 @@ Version 1.5
 - Added validator "only for year" (since now only full date validator was present)
 - Added Select2 JS library (which can be used later on when developing Select-list datatype)
 - update.sql script renamed into install.sql
+- disabled autocomplete for full-date-validated text input
 
 Version 1.4.1
 - Added possibility to inject external script to check whether user has access to form. 

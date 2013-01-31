@@ -23,7 +23,9 @@ jQuery(document).ready(function(){
     
     jQuery('input[type=hidden][class=validation-type]').each(function(){
         if ($.inArray($('#date-validator').val(), $(this).val().split(',')) != -1) {
-            $(this).parent().find('input[type=text]').datepicker({
+            var input = $(this).parent().find('input[type=text]');
+            input.attr('autocomplete', 'off');
+            input.datepicker({
                 changeMonth: true,
                 changeYear: true,
                 dateFormat: 'dd/mm/yy',
