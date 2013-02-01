@@ -6,6 +6,7 @@
 - $form_name
 - $separator_id - integer, is defined in class constant formTypes::SEPARATOR_ID
 - $validator_email_id - integer, is defined in class constant formValidators::EMAIL_ID
+- $validator_custom_regex_id - integer, is defined in class constant formValidators::CUSTOM_REGEX
 - $input_types - array of all available input types *}
 
 {* jquery UI *}
@@ -90,12 +91,12 @@
             <hr/>
             <input type="hidden" name="definition_id" value="{$id}" />
             <input type="hidden" id="separator-id" value="{$separator_id}"/>
-            <input type="hidden" id="validator-email-id" value="{$validator_email_id}" />
+            <input type="hidden" id="form-dynamic-validators" value="{$validator_email_id},{$validator_custom_regex_id}" />
 
             <div class="sortable-attributes">
                 {foreach $form_attributes as $attribute}
                     {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute validator_email_id=$validator_email_id
-                             input_id=$attribute.id input=$attribute.type_data}
+                             input_id=$attribute.id input=$attribute.type_data validator_custom_regex_id=$validator_custom_regex_id}
                 {/foreach}
             </div>                    
             {include uri="design:forms/buttons_bottom.tpl" show_attributes=true()}     

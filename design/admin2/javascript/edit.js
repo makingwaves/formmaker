@@ -154,23 +154,30 @@ jQuery(document).ready( function() {
         $(this).parent().find('input[type=hidden]').val(value);
     });
     
-    // displaying and hiding email receiver for email validation
+    // displaying and hiding email receiver for email validation and custom regex
     jQuery('.attribute-validation').live('change', function(){
-        if ($(this).val() == $('#validator-email-id').val()) {
+
+        if ($.inArray($(this).val(), $('#form-dynamic-validators').val().split(',')) > -1) {
+
             jQuery('div#page').css('cursor', 'progress');
-            var post_data = {'attribute_id' :  $(this).parents('.formField').find('.attribute-unique-id').val()};
+            var post_data = {
+                'attribute_id' : $(this).parents('.formField').find('.attribute-unique-id').val(),
+                'validator_id' : $(this).val()
+            };
             var object = $(this);
-            $.ez( 'formmaker::addEmailReceiver', post_data, function( data ) {
+            
+            $.ez( 'formmaker::addDynamicAttribute', post_data, function( data ) {
                 if (data.error_text) {
                     alert(data.error_text);
                 }
                 else {
+                    object.parents('.form-field-attributes-container').find('.dynamic-validator-holder').remove();
                     object.parents('.form-field-attributes-container').append(data.content);
                 }
                 jQuery('div#page').css('cursor', 'default');
             });  
         } else {
-            $(this).parents('.form-field-attributes-container').find('.email-receiver-holder').remove();
+            $(this).parents('.form-field-attributes-container').find('.dynamic-validator-holder').remove();
         }
     });
     
