@@ -56,7 +56,8 @@ class formAttributes extends eZPersistentObject
                           'validator_ids'   => 'getValidatorAllIds',
                           'type_data'       => 'getTypeData',
                           'is_mandatory'    => 'isMandatoryHtml',
-                          'options'         => 'getOptions'
+                          'options'         => 'getOptions',
+                          'custom_regex'    => 'getCustomRegex'
                       ),
                       "increment_key" => "id",
                       "class_name" => "formAttributes",
@@ -173,7 +174,8 @@ class formAttributes extends eZPersistentObject
             $class_name = 'Validate_' . $validator_row->attribute('type');
             if ($validator_row->attribute( 'type' ) == 'Regex')
             {
-                $validator_object = new $class_name( $validator_row->attribute( 'regex' ) );
+                $regex = ( $validator_row->attribute( 'id' ) == formValidators::CUSTOM_REGEX ) ? $attr_valid->attribute( 'regex' ) : $validator_row->attribute( 'regex' );
+                $validator_object = new $class_name( $regex );
             }
             else 
             {
@@ -229,12 +231,17 @@ class formAttributes extends eZPersistentObject
                 $correct_validators = array();
                 if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
-                    $correct_validators[] = $item['validation'];
+                    $correct_validators[$item['validation']] = array(
+                        'id'    => $item['validation'],
+                        'regex' => ( !empty( $item['custom_regex'] ) &&  $item['validation'] == formValidators::CUSTOM_REGEX) ? $item['custom_regex'] : ''
+                    );
                 }
                 
                 if ( isset( $item['mandatory'] ) && $item['mandatory'] == 'on' )
                 {
-                    $correct_validators[] = formValidators::NOT_EMPTY_ID;
+                    $correct_validators[formValidators::NOT_EMPTY_ID] = array(
+                        'id'    => formValidators::NOT_EMPTY_ID
+                    );
                 }      
                 
                 $attribute->updateValidators( $correct_validators );
@@ -263,7 +270,7 @@ class formAttributes extends eZPersistentObject
                 // adding other validator
                 if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
-                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'] );
+                    formAttrvalid::addRecord( $attribute->attribute( 'id' ), $item['validation'], ( isset( $item['custom_regex'] ) ) ? $item['custom_regex'] : '' );
                 }
                 
                 // adding attribute options
@@ -323,26 +330,21 @@ class formAttributes extends eZPersistentObject
      * @param array $correct_validators
      */
     private function updateValidators( $correct_validators )
-    {
-        $existing_correct = array();
-        foreach ( $this->getAttributeValidators() as $validator )
+    {              
+        // removing all validators
+        foreach ( $this->getAttributeValidators() as $old_validator )
         {
-            // removing an old attribute
-            if ( !in_array( $validator->attribute( 'validator_id' ), $correct_validators ) )
-            {
-                formAttrvalid::removeRecord( $this->attribute( 'id' ), $validator->attribute( 'validator_id' ) );
-            }
-            else
-            {
-                // making an array of correct validators that already exists in database
-                $existing_correct[] = $validator->attribute( 'validator_id' );
-            }
+            formAttrvalid::removeRecord( $this->attribute( 'id' ), $old_validator->attribute( 'validator_id' ) );
         }
         
-        // adding new entries to database
-        foreach ( array_diff( $correct_validators, $existing_correct ) as $validator_id )
+        // adding new validators
+        foreach ( $correct_validators as $validator_id => $new_validator )
         {
-            formAttrvalid::addRecord( $this->attribute('id'), $validator_id );
+            formAttrvalid::addRecord(
+                $this->attribute('id'), 
+                $validator_id, 
+                ( isset( $correct_validators[$validator_id]['regex'] ) ) ? $correct_validators[$validator_id]['regex'] : ''                     
+            );
         }
     }
     
@@ -424,5 +426,21 @@ class formAttributes extends eZPersistentObject
         }
         
         return $default_value;
+    }
+    
+    /**
+     * Method returns custom regex in case when attribute uses it
+     * @return string
+     */
+    public function getCustomRegex()
+    {
+        foreach( $this->getAttributeValidators() as $validator )
+        {
+            if ($validator->attribute('validator_id') == formValidators::CUSTOM_REGEX) 
+            {
+                return $validator->attribute( 'regex' );
+            }
+        }
+        return '';
     }
 }

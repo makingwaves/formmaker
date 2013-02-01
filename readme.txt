@@ -1,4 +1,4 @@
-Form maker 1.5
+Form maker 1.6
 
 owner:      Making Waves (www.makingwaves.no)
 authors:    Piotr Szczygieł (piotr.szczygiel@makingwaves.pl)
