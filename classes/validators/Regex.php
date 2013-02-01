@@ -36,7 +36,7 @@ class Validate_Regex extends Validate_Abstract
      */
     protected $_messageTemplates = array(
         self::INVALID   => "Invalid type given. String, integer or float expected",
-        self::NOT_MATCH => "'%value%' is not correct value for this field",
+        self::NOT_MATCH => "Value does not match against pattern %pattern%",
         self::ERROROUS  => "There was an internal error while using the pattern '%pattern%'",
     );
 
