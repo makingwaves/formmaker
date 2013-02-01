@@ -27,7 +27,6 @@ class FormMakerFunctionCollection
         $all_pages          = $this->definition->getPageAttributes();
         $form_page          = $all_pages[$current_page];
         $is_page_last       = count( $all_pages ) == ( $current_page + 1) ? true : false;
-        $form_processed     = false;
         $result             = array();
         $errors             = array();
         $posted_values      = array();
@@ -87,7 +86,10 @@ class FormMakerFunctionCollection
 
             // generating array of posted values
             $posted_values[$i] = $this->http->postVariable($post_id);
-        }    
+        }
+        
+        // overriding $form_page (in case when external script is set up)
+        $this->injectExternalData( $form_page );
         
         // Checking post variables
         if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) )
@@ -136,8 +138,6 @@ class FormMakerFunctionCollection
                     // Sending email message
                     if ($this->definition->attribute('post_action') == 'email')
                     {
-                        // injecting external script before email is sent
-                        $this->executeExternalScript();
                         $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
                     }
@@ -360,5 +360,17 @@ class FormMakerFunctionCollection
         {
             require $this->ini->variable( 'FormmakerSettings', 'ExternalScript' );
         }        
+    }
+    
+    /**
+     * Method overrides $form_page variable. 
+     * @param array $form_page
+     */
+    private function injectExternalData( &$form_page )
+    {
+        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalData' ) )
+        {
+            require $this->ini->variable( 'FormmakerSettings', 'ExternalData' );
+        }
     }
 }
