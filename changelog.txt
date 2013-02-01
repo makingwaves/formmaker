@@ -10,7 +10,7 @@ Version 1.5
 - Added possibility to inject default data from external source
 - Validators are now sorted by "Description", ascending
 - Added "Custom Regex" validator
-- Changed validation message for Regex, so we could have an access to pattern
+- Changed validation message for Regex, so we could have an access to pattern and possibility to set precise error messages (i18n)
 
 Version 1.4.1
 - Added possibility to inject external script to check whether user has access to form. 
