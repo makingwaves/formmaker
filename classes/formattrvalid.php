@@ -23,6 +23,9 @@ class formAttrvalid extends eZPersistentObject
         $def = array( "fields" => array( "attribute_id" => array( "name" => "attribute_id",
                                                                   "datatype" => "integer",
                                                                   "required" => true ),
+                                         "regex"        => array( "name" => "regex",
+                                                                  "datatype" => "string",
+                                                                  "required" => true ),              
                                          "validator_id" => array( "name" => "validator_id",
                                                                   "datatype" => "integer",
                                                                   "required" => true ) ),
@@ -37,13 +40,15 @@ class formAttrvalid extends eZPersistentObject
      * Method creates, sotres in db and returns and new object of db record
      * @param int $attribute_id
      * @param int $validator_id
+     * @param string $regex
      * @return \self
      */
-    public static function addRecord( $attribute_id, $validator_id )
+    public static function addRecord( $attribute_id, $validator_id, $regex = '' )
     {
         $object = new self ( array(
             'attribute_id'  => $attribute_id,
-            'validator_id'  => $validator_id
+            'validator_id'  => $validator_id,
+            'regex'         => $regex
         ) );
         $object->store();
         return $object;

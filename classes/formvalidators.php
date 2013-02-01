@@ -14,6 +14,7 @@ class formValidators extends eZPersistentObject
     const IP_ID         = 7;
     const DATE_ID       = 8;
     const DATE_YEAR_ID  = 9;
+    const CUSTOM_REGEX  = 10;
     
     /**
      *  Table definition
@@ -37,6 +38,7 @@ class formValidators extends eZPersistentObject
                       "increment_key" => "id",
                       "class_name" => "formValidators",
                       "sort" => array(),
+                      "sort" => array('description' => 'asc'),
                       "name" => "form_validators" );
         return $def;
     }    

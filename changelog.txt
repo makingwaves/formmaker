@@ -8,6 +8,8 @@ Version 1.5
 - update.sql script renamed into install.sql
 - disabled autocomplete for full-date-validated text input
 - Added possibility to inject default data from external source
+- Validators are now sorted by "Description", ascending
+- Added "Custom Regex" validator
 
 Version 1.4.1
 - Added possibility to inject external script to check whether user has access to form. 

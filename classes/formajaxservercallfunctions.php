@@ -63,6 +63,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl->setVariable( 'input_id', uniqid() );
         $tpl->setVariable( 'data', formAttributes::createEmpty());
         $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID );
+        $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX );
         
         return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
     }
@@ -89,23 +90,37 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
     }
     
     /**
-     * Method adds email receiver part 
+     * Method adds dynamic validators parts (as email receiver or custom regex)
      * @return string
      * @throws Exception
      */
-    public static function addEmailReceiver()
+    public static function addDynamicAttribute()
     {
         $http = eZHTTPTool::instance();
-        if ( !$http->hasPostVariable( 'attribute_id' ) )
+        if ( !$http->hasPostVariable( 'validator_id' ) )
         {
             throw new Exception( 'Missing required parameter' );
         }
         
+        $validator_id = $http->postVariable( 'validator_id' );
         $tpl = eZTemplate::factory();
+        $rendered_template = '';
         $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
-        $tpl->setVariable( 'enabled', 0 );
         
-        return $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
+        switch ($validator_id)
+        {
+            case formValidators::EMAIL_ID:
+                $tpl->setVariable( 'enabled', 0 );
+                $rendered_template = $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
+                break;
+            
+            case formValidators::CUSTOM_REGEX:
+                $tpl->setVariable( 'regex', '' );
+                $rendered_template = $tpl->fetch( 'design:forms/types/elements/custom_regex.tpl' );
+                break;
+        }
+        
+        return $rendered_template;
     }
     
     /**
