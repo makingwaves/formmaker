@@ -212,12 +212,22 @@ abstract class Validate_Abstract implements Validate_Interface
         
         // translating message with eZ translation system
         $variables = array('%value%' => $value);
-        foreach ($this->_messageVariables as $ident => $property) {
-            $variables["%$ident%"] = $this->$property;
+        $pattern = '';
+        foreach ($this->_messageVariables as $ident => $property) 
+        {
+            if ($ident != 'pattern')
+            {
+                $variables["%$ident%"] = $this->$property;
+            }
+            else 
+            {
+                $pattern = $this->$property;
+            }
         }      
-
+        
+        $message = str_replace('%pattern%', $pattern, $message);
         $message = ezpI18n::tr('formmaker/front/validation', $message, null, $variables);
-       
+
         return $message;
     }
 

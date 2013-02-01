@@ -152,7 +152,11 @@
     <message>
         <source>Invalid type given. String, integer, float, boolean or array expected</source>
         <translation type="unfinished" />
-    </message>                                    
+    </message>    
+    <message>
+        <source>Value does not match against pattern /(^(([0-2][0-9])|(3[0-1]))\/((0[1-9])|(1[0-2]))\/([1-2][0-9]{3})$)|^([1-2][0-9]{3})$/</source>
+        <translation type="unfinished" />
+    </message>                                
 </context>
 <context>
     <name>formmaker/admin</name>
