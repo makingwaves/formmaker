@@ -174,7 +174,33 @@ class formAttributes extends eZPersistentObject
             $class_name = 'Validate_' . $validator_row->attribute('type');
             if ($validator_row->attribute( 'type' ) == 'Regex')
             {
-                $regex = ( $validator_row->attribute( 'id' ) == formValidators::CUSTOM_REGEX ) ? $attr_valid->attribute( 'regex' ) : $validator_row->attribute( 'regex' );
+                switch ( $validator_row->attribute( 'id' ) ) 
+                {
+                    case formValidators::DATE_ID:
+                        $formmaker_ini = eZINI::instance( 'formmaker.ini' );
+                        // integration with locale date format
+                        if ( $formmaker_ini->variable( 'FormmakerSettings', 'DynamicDateFormat' ) == 'enabled' )
+                        {
+                            $locale = eZLocale::instance();
+                            $regex = $formmaker_ini->hasGroup( 'ShortDateFormat_' . $locale->ShortDateFormat ) ? 
+                                     $formmaker_ini->variable( 'ShortDateFormat_' . $locale->ShortDateFormat, 'Regex' ) :
+                                     $validator_row->attribute( 'regex' );
+                        }
+                        else
+                        {
+                            $regex = $validator_row->attribute( 'regex' );
+                        }
+                        break;
+
+                    case formValidators::CUSTOM_REGEX:
+                        $regex = $attr_valid->attribute( 'regex' );
+                        break;
+                   
+                    default:
+                        $regex = '';
+                        break;
+                }
+
                 $validator_object = new $class_name( $regex );
             }
             else 

@@ -35,6 +35,7 @@
         <input type="hidden" name="node_id" value="{$node.node_id}"/>
         <input type="hidden" name="current_page" value="{$current_page}" />
         <input type="hidden" id="date-validator" value="{$form_data.date_validator}" />
+        <input type="hidden" id="form-datepicker-format" value="{$form_definition.datepicker_format}" />
             
         {if is_set( $form_data.summary_page )}
             {* $form_data.summary_page contains rendered template summary_page.tpl *}
