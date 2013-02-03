@@ -11,7 +11,7 @@
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
-        <h1 class="context-title">{'List forms'|i18n( 'formmaker/admin' )}</h1>
+        <h1 class="context-title">{'List of forms'|i18n( 'formmaker/admin' )}</h1>
         <div class="header-mainline"></div>
     </div>
 
