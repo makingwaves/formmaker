@@ -154,9 +154,17 @@
         <translation type="unfinished" />
     </message>    
     <message>
-        <source>Value does not match against pattern /(^(([0-2][0-9])|(3[0-1]))\/((0[1-9])|(1[0-2]))\/([1-2][0-9]{3})$)|^([1-2][0-9]{3})$/</source>
-        <translation type="unfinished" />
-    </message>                                
+        <source>Value does not match against pattern /^(([0-2][0-9])|(3[0-1]))\/((0[1-9])|(1[0-2]))\/([1-2][0-9]{3})$/</source>
+        <translation>This is not correct date format (dd/mm/yyyy)</translation>
+    </message>    
+    <message>
+        <source>Value does not match against pattern /^(([0-2][0-9])|(3[0-1]))\.((0[1-9])|(1[0-2]))\.([1-2][0-9]{3})$/</source>
+        <translation>This is not correct date format (dd.mm.yyyy)</translation>
+    </message>
+    <message>
+        <source>Value does not match against pattern /^((0[1-9])|(1[0-2]))\/(([0-2][0-9])|(3[0-1]))\/([1-2][0-9]{3})$/</source>
+        <translation>This is not correct date format (mm/dd/yyyy)</translation>
+    </message>                                    
 </context>
 <context>
     <name>formmaker/admin</name>
@@ -169,7 +177,7 @@
         <translation type="unfinished" />
     </message>    
     <message>
-        <source>List forms</source>
+        <source>List of forms</source>
         <translation type="unfinished" />
     </message>     
     <message>

@@ -28,7 +28,7 @@ jQuery(document).ready(function(){
             input.datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: 'dd/mm/yy',
+                dateFormat: $('#form-datepicker-format').val(),
                 onClose: function(){
                     $(this).blur();
                 },

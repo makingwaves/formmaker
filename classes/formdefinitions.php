@@ -64,7 +64,10 @@ class formDefinitions extends eZPersistentObject
                       "increment_key" => "id",
                       "class_name" => "formDefinitions",
                       "sort" => array(),
-                      'function_attributes' => array( 'user' => 'getUserData' ),
+                      'function_attributes' => array(
+                          'user'                => 'getUserData',
+                          'datepicker_format'   => 'getDatepickerFormat'
+                      ),
                       "name" => "form_definitions" );
         return $def;
     }    
@@ -271,5 +274,23 @@ class formDefinitions extends eZPersistentObject
     public function getUserData()
     {
         return eZUser::fetch( $this->attribute( 'owner_user_id' ) );
+    }
+    
+    /**
+     * Function returns Datepicker format which will be used on front
+     * @return string
+     */
+    public function getDatepickerFormat()
+    {
+        $formmaker_ini = eZINI::instance( 'formmaker.ini' );
+        if ( $formmaker_ini->variable( 'FormmakerSettings', 'DynamicDateFormat' ) == 'enabled' )
+        {
+            $locale = eZLocale::instance();
+            return $formmaker_ini->hasGroup( 'ShortDateFormat_' . $locale->ShortDateFormat ) ? 
+                   $formmaker_ini->variable( 'ShortDateFormat_' . $locale->ShortDateFormat, 'DatepickerFormat' ) :
+                   $formmaker_ini->variable( 'FormmakerSettings', 'DefaultDatepickerFormat' );            
+        }
+        
+        return $formmaker_ini->variable( 'FormmakerSettings', 'DefaultDatepickerFormat' );
     }
 }
