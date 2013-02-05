@@ -30,7 +30,7 @@ DatepickerFormat=mm/dd/yy
 # Currently there are two options implemented: eZMail and PHPMailer.
 # If you want to use file attachments go for PHPMailer.
 [Mail]
-MailClass=PHPMailer
+MailClass=eZMail
 AttachmentsDir=/var/ezflow_site/storage/formmaker/image/
 
  */
