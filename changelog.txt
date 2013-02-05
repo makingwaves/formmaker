@@ -2,6 +2,9 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.6.0
+- Added 'file' and 'select' attributes. Some minor fixes.
+
 Version 1.5.1
 - Added possibility to define (in formmaker.ini) a set of regular expressions responsible for displaying the date in correct format
 
