@@ -115,11 +115,12 @@ class FormMakerFunctionCollection
                     {
 
                         $file = eZHTTPFile::fetch( $this->generatePostID($attrib) );
-                        
-                        if($file)
+                        $ext = end(explode('.', $file->OriginalFilename));
+
+                        if( $file && in_array($ext, explode(',', $attrib->allowed_file_types)) )
                         {
 
-                            $file->store('formmaker', 'jpg');
+                            $file->store('formmaker', $ext);
 
                             $thumb = $this->_thumbName($file->attribute('filename'));
 
@@ -431,6 +432,15 @@ class FormMakerFunctionCollection
                         }
                         break;
 
+                    case formTypes::SELECT_ID: // radio button
+                        if ( $filled_only != 'true' || !empty( $default_value ) )
+                        {
+                            $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $option_object = formAttributesOptions::fetchOption( $default_value );
+                            $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not selected' );
+                        }
+                        break;
+
                     case formTypes::TEXTLINE_ID:
                         if ( $attribute->attribute( 'email_receiver' ) == 1 )
                         {
@@ -443,7 +453,7 @@ class FormMakerFunctionCollection
                         }
                         break;
 
-                    case formTypes::FILE:
+                    case formTypes::FILE_ID:
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
                         $attachments[] = $attribute->attribute( 'default_value' );

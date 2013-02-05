@@ -2,6 +2,8 @@
 - $all_pages, array
 - $body_text, string *}
 
+
+
 <input type="hidden" name="summary_page" value="1" />
 <p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
 <br/>

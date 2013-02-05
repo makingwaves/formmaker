@@ -101,7 +101,7 @@ class formAttributes extends eZPersistentObject
             'definition_id'     => $definition_id,
             'type_id'           => $type_id
         ) );
-        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver, $css );
+        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types );
         $object->store();
         return $object;        
     }
@@ -332,7 +332,7 @@ class formAttributes extends eZPersistentObject
                         $option_object = $attribute->addOption( $label, $option_order );
                         
                         $default_value = (string)$attribute->attribute( 'default_value' );
-                        if ( $key == $default_value && $attribute->attribute( 'type_id' ) == formTypes::RADIO_ID ) 
+                        if ( $key == $default_value && ($attribute->attribute( 'type_id' ) == formTypes::RADIO_ID) ) 
                         {
                             $default_value_to_set = $option_object->attribute( 'id' );
                         }

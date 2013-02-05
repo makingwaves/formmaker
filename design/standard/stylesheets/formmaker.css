@@ -72,3 +72,7 @@
 input[type=text].form_element, div.form_element {
     width: 200px;
 }
+
+span.hidden {
+    display: none;
+}

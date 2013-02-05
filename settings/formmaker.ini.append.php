@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 
 [FormmakerSettings]
-SendOnlyFilledData=false
+SendOnlyFilledData=true
 # if enabled, system will check for ShortDateFormat (defined in current locale) and try to execute adequate Regex (defined in this file)
 DynamicDateFormat=enabled
 DefaultDatepickerFormat=dd/mm/yy
