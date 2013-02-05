@@ -40,35 +40,5 @@ jQuery(document).ready(function(){
     
     jQuery('select.date-year-validation').select2();
 
-    /* lilleborg specific */
-    jQuery('.category_selection').change( function() {
-        var select = jQuery(this).find('select');
-        var selectedVal = select.val()
-        var chosenLabel = select.find('option[value='+selectedVal+']').text();
-        chosenLabel = chosenLabel.replace(/\(/g, '');
-        chosenLabel = chosenLabel.replace(/\)/g, '');
-        chosenLabel = chosenLabel.replace(/ø/g, 'o');
-        chosenLabel = chosenLabel.replace(/å/g, 'a');
-        chosenLabel = chosenLabel.replace(/ /g, '_');
-        var options = jQuery('.'+chosenLabel).children().children().clone();
-        // console.log(jQuery('.'+choosenLabel));
-        // console.log(select.children());
-        jQuery('.product_selection').children().children().remove();
-        if( options )
-        {
-            jQuery('.product_selection').children().append( options );
-        }
-        else
-        {
-            jQuery('.product_selection').children().html('');   
-        }
-        
-    } );
-
-    // jQuery('.hidden').find('select').attr('disabled', 'disabled');
-    // console.log(jQuery('.hidden').find('select'));
-    jQuery('.hidden').parent().parent().hide();
-    /* /lilleborg specific */
-
 })
 
