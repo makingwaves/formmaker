@@ -27,10 +27,10 @@
 	<img src={$thumb|ezroot()}/>
 	<input id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="hidden" value="{$attribute.default_value}"/>
 
-	<a class="upload-new-file">Upload new file</a>
+	<a class="upload-new-file">{'Upload new file'|i18n( 'formmaker/front' )}</a>
 	<input class="hidden {$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
 
-	{unset $thumb}
+	{undef $thumb}
 
 {else}
 	<input class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
