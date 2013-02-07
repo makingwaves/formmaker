@@ -30,7 +30,14 @@
     {/if}
     <h1>{$header_text|wash()|i18n( 'formmaker/front' )}</h1>
 
-    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()} enctype="multipart/form-data">
+    {def $isMultipart = false()}
+    {foreach $form_attributes as $attr}
+        {if eq($attr.type_id, 6)} {* if there is a file attribute *}
+            {set $isMultipart = true()}
+        {/if}
+    {/foreach}
+
+    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()} {if $isMultipart}enctype="multipart/form-data"{/if}>
 
         <input type="hidden" name="form_id" value="{$form_definition.id}"/>
         <input type="hidden" name="node_id" value="{$node.node_id}"/>

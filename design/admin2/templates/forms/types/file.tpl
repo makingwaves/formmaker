@@ -2,7 +2,6 @@
 - $input - textline object
 - $data - attribute object conatining data (or empty object when adding new attribute)
 - $input_id - id of attribute stored in database or unique id for new attribute
-- $validator_email_id - integer, is defined in class constant formValidators::EMAIL_ID *}
 
 <div class="formField form-{$input.id}">
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>

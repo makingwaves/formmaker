@@ -2,8 +2,6 @@
 - $all_pages, array
 - $body_text, string *}
 
-
-
 <input type="hidden" name="summary_page" value="1" />
 <p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
 <br/>
@@ -13,16 +11,17 @@
     {/if}
     <br/>
 
+    {def $thumb = ''}
     {foreach $page.attributes as $attribute}    
         {if $attribute.value|contains('formmaker')} {* if it's a file type *}
 
-            {def $thumb = $attribute.value|explode('.jpg') }
-            {set $thumb = concat($thumb.0, '_thumb.jpg')}            
+            {set $thumb = $attribute.value|explode('.') }
+            {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}            
 
             <span>{$attribute.label|i18n( 'formmaker/front' )}:<br/>
-            {*$attribute|attribute(show)*}
             <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
             <br/>
+
         {else}
             <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
         {/if}

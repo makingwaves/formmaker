@@ -15,34 +15,23 @@
 {/if}
 
 <label for="form_{$attribute.type_id}_{$attribute.id}">
-    {$attribute.label}
-{include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
-</label> <br/>
+    {$attribute.label|wash()|i18n( 'formmaker/front' )}
+	{include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+</label>
 
 {if $attribute.default_value} {* if there's image already*}
-	{def $thumb = $attribute.default_value|explode('.jpg') }
-	{set $thumb = concat($thumb.0, '_thumb.jpg')}
-	<img src="/{$thumb}" /> <br/>
+
+    {def $thumb = $attribute.default_value|explode('.') }
+    {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)} 
+
+	<img src={$thumb|ezroot()}/>
 	<input id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="hidden" value="{$attribute.default_value}"/>
 
-	<a class="upload-new-file" style="cursor: pointer;">Upload new file</a> <br/>
-	<input style="display: none;" class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
+	<a class="upload-new-file">Upload new file</a>
+	<input class="hidden {$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
+
+	{unset $thumb}
 
 {else}
 	<input class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
 {/if}
-
-{*
-<input class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}" type="file" value="{$attribute.default_value}"/>
-*}
-
-{literal}
-<script>
-$('a.upload-new-file').click(function() {
-	$(this).prev().remove();
-	$(this).prev().prev().remove();
-	$(this).next().next().show();
-
-});
-</script>
-{/literal}

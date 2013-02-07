@@ -9,6 +9,6 @@
 {/if}
 
 <div class="form-field-attribute">
-    {'Allowed file types: '|i18n( 'extension/formmaker/admin' )} 
+    {'Allowed file types'|i18n( 'extension/formmaker/admin' )} 
     <input class="input-description-field" type="text" value="{$allowed_file_types}" name="formelement_{$input_id}[allowed_file_types]" />
 </div>

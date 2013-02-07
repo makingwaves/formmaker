@@ -119,8 +119,7 @@ class FormMakerFunctionCollection
 
                         if( $file && in_array($ext, explode(',', $attrib->allowed_file_types)) )
                         {
-
-                            $file->store('formmaker', $ext);
+                            $file->store($this->ini->variable('Mail', 'AttachmentsDir'), $ext);
 
                             $thumb = $this->_thumbName($file->attribute('filename'));
 
@@ -135,11 +134,9 @@ class FormMakerFunctionCollection
                             $attachments[] = $file->attribute('filename');
 
                             $form_page['attributes'][$i]->setAttribute('default_value', $file->attribute('filename'));
-                            $form_page['attributes'][$i]->setAttribute('thumb', '111');
 
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
-
                         }
 
                     }
@@ -207,7 +204,7 @@ class FormMakerFunctionCollection
             }
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
-			$form_page['files'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
+            $form_page['files'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
         }
         elseif ( $this->http->hasPostVariable( 'form-next' ) && eZSession::issetkey( formDefinitions::PAGE_SESSION_PREFIX . $current_page ) )
         {
@@ -321,9 +318,6 @@ class FormMakerFunctionCollection
 
                 $mail = new PHPMailer();
 
-                // $mail->IsSMTP();  // telling the class to use SMTP
-                // $mail->Host     = "smtp.example.com"; // SMTP server
-
                 $mail->From     = $sender;
                 $mail->FromName = $sender;
                 foreach( $recipients as $recipient )
@@ -345,22 +339,19 @@ class FormMakerFunctionCollection
 
                 if(!$mail->Send())
                 {
-                    echo 'Message was not sent.';
-                    echo 'Mailer error: ' . $mail->ErrorInfo;
+                    // Message was not sent
+                    // debug accessible with $mail->ErrorInfo;
                     $result = false;
 
                 }
                 else
                 {
-                    // echo 'Message has been sent.';
+                    // Message has been sent
                     $result = true;
                 }
 
                 break;
 
-            default:
-                # code...
-                break;
         }
 
         return $result;		

@@ -1,7 +1,7 @@
 <?php /* #?ini charset="utf-8"?
 
 [FormmakerSettings]
-SendOnlyFilledData=true
+SendOnlyFilledData=false
 # if enabled, system will check for ShortDateFormat (defined in current locale) and try to execute adequate Regex (defined in this file)
 DynamicDateFormat=enabled
 DefaultDatepickerFormat=dd/mm/yy
@@ -29,8 +29,11 @@ DatepickerFormat=mm/dd/yy
 # Class responsible for email handling. For now you can use eZMail and PHPMailer.
 # Currently there are two options implemented: eZMail and PHPMailer.
 # If you want to use file attachments go for PHPMailer.
+#
+# AttachmentsDir - name of the folder in var/storage or var/ezflow_site/storage
+# where temporary images will be stored
 [Mail]
 MailClass=eZMail
-AttachmentsDir=/var/ezflow_site/storage/formmaker/image/
+AttachmentsDir=formmaker
 
  */

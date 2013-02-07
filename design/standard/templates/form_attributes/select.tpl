@@ -14,14 +14,16 @@
 {/if}
 
 <label>
-    {$attribute.label}
+    {$attribute.label|wash()|i18n( 'formmaker/front' )}
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 
 <span class="{$css_class}">
     <select name="field_{$attribute.type_id}_{$attribute.id}">
         {foreach $attribute.options as $option}
-        <option {if eq( $attribute.default_value, $option.id )}selected{/if} value="{$option.id}">{$option.label}</option>
+        <option {if eq( $attribute.default_value, $option.id )}selected{/if} value="{$option.id}">
+        	{$option.label|wash()|i18n( 'formmaker/front' )}
+        </option>
         {/foreach}
     </select>
 </span>

@@ -332,7 +332,8 @@ class formAttributes extends eZPersistentObject
                         $option_object = $attribute->addOption( $label, $option_order );
                         
                         $default_value = (string)$attribute->attribute( 'default_value' );
-                        if ( $key == $default_value && ($attribute->attribute( 'type_id' ) == formTypes::RADIO_ID) ) 
+                        if ( $key == $default_value &&
+                             $attribute->attribute( 'type_id') == formTypes::RADIO_ID ) 
                         {
                             $default_value_to_set = $option_object->attribute( 'id' );
                         }

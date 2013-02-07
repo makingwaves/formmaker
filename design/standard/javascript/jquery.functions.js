@@ -40,5 +40,11 @@ jQuery(document).ready(function(){
     
     jQuery('select.date-year-validation').select2();
 
-})
+    /* File attribute */
+    jQuery('a.upload-new-file').click(function() {
+        jQuery(this).prev().remove(); /* remove hidden input with previously uploaded image */
+        jQuery(this).prev().remove();  /* hide previously uploaded image */
+        jQuery(this).next().show(); /* show input for new upload */
+    });
 
+});
