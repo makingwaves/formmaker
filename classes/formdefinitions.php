@@ -61,6 +61,9 @@ class formDefinitions extends eZPersistentObject
                                                                       "required" => true ),
                                          "recipients"       => array( "name" => "recipients",
                                                                       "datatype" => "string",
+                                                                      "required" => false ),
+                                         "process_class"    => array( "name" => "process_class",
+                                                                      "datatype" => "string",
                                                                       "required" => false ) ),
                       "keys" => array('id'),         
                       "increment_key" => "id",
@@ -126,11 +129,20 @@ class formDefinitions extends eZPersistentObject
     public static function addForm( $form_elements )
     {
         $user = eZUser::currentUser();
+
+        //set by default
+        $post_action = 'email';
+        
+        if ( isset( $form_elements['process_class'] ) && ! empty( $form_elements['process_class'] ) )
+        {
+            $post_action = 'object';
+        }
+
         $data = array( 
             'id'            => null, 
             'create_date'   => null,
             'owner_user_id' => $user->id(),
-            'post_action'   => 'email'
+            'post_action'   => $post_action
         );
         
         foreach ($form_elements as $id => $element) {
@@ -219,12 +231,12 @@ class formDefinitions extends eZPersistentObject
                 {
                     $attributes_by_pages[$current_page]['page_info'] = $attribute;
                 }
-                elseif( $attribute->attribute( 'type_id' ) == formTypes::FILE_ID )
-                {
-                    $this->isMultipart = true;
-                }
                 else 
                 {
+                    if( $attribute->attribute( 'type_id' ) == formTypes::FILE_ID )
+                    {
+                        $this->isMultipart = true;
+                    }
                     $attributes_by_pages[$current_page]['attributes'][] = $attribute;
                 }                
             }

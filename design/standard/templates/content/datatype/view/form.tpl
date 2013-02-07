@@ -16,8 +16,8 @@
 {ezcss_load( array( 'formmaker.css', 'http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css', 'select2.css' ) )}
 
 {* Including JS files *}
-{ezscript_require( array( 'ezjsc::jquery', 'ezjsc::jqueryio', 'jquery.functions.js', 'jquery.validation.js', 'select2.min.js' ) )}
-{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
+{ezscript_require( array( 'ezjsc::jqueryio', 'select2.min.js', 'jquery.functions.js', 'jquery.validation.js' ) )}
+
 
 {include uri="design:form_steps.tpl" form_data=$form_data all_pages=$form_data.all_pages form_definition=$form_definition current_page=$current_page}
 

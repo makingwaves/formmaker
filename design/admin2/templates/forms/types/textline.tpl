@@ -11,6 +11,7 @@
     {include uri="design:forms/types/elements/field_header.tpl" input_name=$input.name input_id=$input_id enabled=$data.enabled}
     <div class="form-field-attributes-container">
         {include uri="design:forms/types/elements/label.tpl" label=$data.label input_id=$input_id}
+        {include uri="design:forms/types/elements/identifier.tpl" identifier=$data.identifier input_id=$input_id}
         {include uri="design:forms/types/elements/mandatory.tpl" is_mandatory=$data.is_mandatory input_id=$input_id}
         {include uri="design:forms/types/elements/description.tpl" description=$data.description input_id=$input_id}
         {include uri="design:forms/types/elements/default_text.tpl" default_value=$data.default_value input_id=$input_id}

@@ -54,6 +54,11 @@ $form_elements = array( 'name'          => array(   'required'  => true,
                                                     'type'      => 'textarea',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => 'Thank you for sending us the informations!' ),
+                        'process_class' => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Process class name' ),
+                                                    'type'      => 'text',
+                                                    'css'       => 'attribute-full-width',
+                                                    'value'     => '' ),
 );
 
 // When form is being edited, we need to fill up its definition data from database
