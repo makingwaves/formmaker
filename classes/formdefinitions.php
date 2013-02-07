@@ -238,7 +238,7 @@ class formDefinitions extends eZPersistentObject
                         $this->isMultipart = true;
                     }
                     $attributes_by_pages[$current_page]['attributes'][] = $attribute;
-                }                
+                }
             }
         }
         if ( $page )
