@@ -1,5 +1,5 @@
 /*
-    Script updates database from version 1.5.x to 1.6.x
+    Script updates database from version 1.6.x to 1.7.x
 */
 
 
