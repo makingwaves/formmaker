@@ -238,16 +238,6 @@ class FormMakerFunctionCollection
      */
     private function generatePostID( $attrib )
     {
-
-//        if ( ! empty( $attrib->attribute( 'identifier' ) ) )
-//        {
-//            $post_id = $attrib->attribute( 'identifier' );
-//        }
-//        else
-//        {
-//            $post_id = 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
-//        }
-
         return $post_id = 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
     }
     
