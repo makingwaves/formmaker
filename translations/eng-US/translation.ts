@@ -349,7 +349,7 @@
         <translation type="unfinished" />
     </message>  
     <message>
-        <source>Allowed file types:</source>
+        <source>Allowed file types</source>
         <translation type="unfinished" />
     </message>                                   
 </context>
