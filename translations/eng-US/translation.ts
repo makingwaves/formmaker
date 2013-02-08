@@ -347,6 +347,10 @@
     <message>
         <source>Cancel</source>
         <translation type="unfinished" />
+    </message>  
+    <message>
+        <source>Allowed file types</source>
+        <translation type="unfinished" />
     </message>                                   
 </context>
 <context>

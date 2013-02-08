@@ -14,6 +14,7 @@ DefaultDatepickerFormat=dd/mm/yy
 description=enabled
 css=enabled
 default_value=enabled
+allowed_file_types=jpg,jpeg,gif,png,pdf,doc,xls,ppt
 
 # Default date format is %d/%m/%Y, and it's regex is already defined in database, so there is no need to define it here. 
 # Eeach block needs to contain Regex and DatepickerFormat.
@@ -24,5 +25,15 @@ DatepickerFormat=dd.mm.yy
 [ShortDateFormat_%m/%d/%Y]
 Regex=/^((0[1-9])|(1[0-2]))\/(([0-2][0-9])|(3[0-1]))\/([1-2][0-9]{3})$/
 DatepickerFormat=mm/dd/yy
+
+# Class responsible for email handling. For now you can use eZMail and PHPMailer.
+# Currently there are two options implemented: eZMail and PHPMailer.
+# If you want to use file attachments go for PHPMailer.
+#
+# AttachmentsDir - name of the folder in var/storage or var/ezflow_site/storage
+# where temporary images will be stored
+[Mail]
+MailClass=eZMail
+AttachmentsDir=formmaker
 
  */

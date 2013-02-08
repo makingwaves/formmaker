@@ -96,6 +96,7 @@ CREATE TABLE `form_attributes` (
   `email_receiver` smallint(6) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `css` varchar(255) NOT NULL,
+  `allowed_file_types` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `definition_id` (`definition_id`),
   KEY `type_id` (`type_id`),
@@ -190,7 +191,14 @@ CREATE TABLE `form_types` (
 
 LOCK TABLES `form_types` WRITE;
 /*!40000 ALTER TABLE `form_types` DISABLE KEYS */;
-INSERT INTO `form_types` VALUES (1,'Text','textline.tpl',1,1),(2,'Textarea','textarea.tpl',0,2),(3,'Checkbox','checkbox.tpl',0,3),(4,'Radio Buttons','radio.tpl',0,4),(5,'Page separator','separator.tpl',0,1000);
+INSERT INTO `form_types` VALUES
+  (1,'Text','textline.tpl',1,1),
+  (2,'Textarea','textarea.tpl',0,2),
+  (3,'Checkbox','checkbox.tpl',0,3),
+  (4,'Radio Buttons','radio.tpl',0,4),
+  (5,'Page separator','separator.tpl',0,1000),
+  (6,'File','file.tpl',0,5),
+  (7,'Select','select.tpl',0,6);
 /*!40000 ALTER TABLE `form_types` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
