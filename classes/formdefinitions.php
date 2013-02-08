@@ -12,6 +12,8 @@ class formDefinitions extends eZPersistentObject
     // main node id
     const MAIN_NODE_ID = 2;
 
+    private $isMultipart = false;
+
     /**
      *  Table definition
      * @return array
@@ -66,7 +68,8 @@ class formDefinitions extends eZPersistentObject
                       "sort" => array(),
                       'function_attributes' => array(
                           'user'                => 'getUserData',
-                          'datepicker_format'   => 'getDatepickerFormat'
+                          'datepicker_format'   => 'getDatepickerFormat',
+                          'multipart'           => 'isMultipart'
                       ),
                       "name" => "form_definitions" );
         return $def;
@@ -216,6 +219,10 @@ class formDefinitions extends eZPersistentObject
                 {
                     $attributes_by_pages[$current_page]['page_info'] = $attribute;
                 }
+                elseif( $attribute->attribute( 'type_id' ) == formTypes::FILE_ID )
+                {
+                    $this->isMultipart = true;
+                }
                 else 
                 {
                     $attributes_by_pages[$current_page]['attributes'][] = $attribute;
@@ -293,4 +300,14 @@ class formDefinitions extends eZPersistentObject
         
         return $formmaker_ini->variable( 'FormmakerSettings', 'DefaultDatepickerFormat' );
     }
+
+    /**
+    * Method checks if there is a file attribute in use and returns proper action method
+    * @return bool
+    */
+    public function isMultipart()
+    {
+        return $this->isMultipart;
+    }
+
 }
