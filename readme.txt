@@ -1,4 +1,4 @@
-Form Maker 1.5.1
+Form Maker 1.6.0
 
 owner:      Making Waves (www.makingwaves.no)
 authors:    Piotr Szczygieł (piotr.szczygiel@makingwaves.pl)
