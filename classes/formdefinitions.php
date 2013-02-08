@@ -302,7 +302,8 @@ class formDefinitions extends eZPersistentObject
     }
 
     /**
-    * Method checks if there is a file attribute in use and returns proper action method
+    * Method returns true if there's file attribute in use
+    * actual check located in getPageAttributes
     * @return bool
     */
     public function isMultipart()
