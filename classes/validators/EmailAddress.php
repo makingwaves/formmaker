@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Validate_EmailAddress extends Validate_Abstract
+class FormMaker_Validate_EmailAddress extends FormMaker_Validate_Abstract
 {
     const INVALID            = 'invalid';
     const INVALID_FORMAT     = 'email';
@@ -102,7 +102,7 @@ class Validate_EmailAddress extends Validate_Abstract
         'mx'       => false,
         'deep'     => false,
         'domain'   => true,
-        'allow'    => Validate_Hostname::ALLOW_DNS,
+        'allow'    => FormMaker_Validate_Hostname::ALLOW_DNS,
         'hostname' => null
     );
 
@@ -225,10 +225,10 @@ class Validate_EmailAddress extends Validate_Abstract
      * @param int                    $allow             OPTIONAL
      * @return void
      */
-    public function setHostnameValidator(Validate_Hostname $hostnameValidator = null, $allow = Validate_Hostname::ALLOW_DNS)
+    public function setHostnameValidator(FormMaker_Validate_Hostname $hostnameValidator = null, $allow = FormMaker_Validate_Hostname::ALLOW_DNS)
     {
         if (!$hostnameValidator) {
-            $hostnameValidator = new Validate_Hostname($allow);
+            $hostnameValidator = new FormMaker_Validate_Hostname($allow);
         }
 
         $this->_options['hostname'] = $hostnameValidator;
@@ -269,7 +269,7 @@ class Validate_EmailAddress extends Validate_Abstract
     public function setValidateMx($mx)
     {
         if ((bool) $mx && !$this->validateMxSupported()) {
-            throw new Validate_Exception('MX checking not available on this system');
+            throw new FormMaker_Validate_Exception('MX checking not available on this system');
         }
 
         $this->_options['mx'] = (bool) $mx;

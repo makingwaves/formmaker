@@ -72,3 +72,10 @@
 input[type=text].form_element, div.form_element {
     width: 200px;
 }
+
+span.hidden, input.hidden {
+    display: none;
+}
+.upload-new-file {
+    cursor: pointer;
+}

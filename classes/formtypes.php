@@ -11,6 +11,8 @@ class formTypes extends eZPersistentObject
     const CHECKBOX_ID = 3;
     const RADIO_ID = 4;
     const SEPARATOR_ID = 5;
+    const FILE_ID = 6;
+    const SELECT_ID = 7;
 
     /**
      *  Table definition

@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Validate_NotEmpty extends Validate_Abstract
+class FormMaker_Validate_NotEmpty extends FormMaker_Validate_Abstract
 {
     const BOOLEAN       = 1;
     const INTEGER       = 2;
@@ -133,7 +133,7 @@ class Validate_NotEmpty extends Validate_Abstract
         }
 
         if (!is_int($type) || ($type < 0) || ($type > self::ALL)) {
-            throw new Validate_Exception('Unknown type');
+            throw new FormMaker_Validate_Exception('Unknown type');
         }
 
         $this->_type = $type;
