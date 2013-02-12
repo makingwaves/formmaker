@@ -215,18 +215,21 @@ class formDefinitions extends eZPersistentObject
                     );
                 }  
                 
+                if( $attribute->attribute( 'type_id' ) == formTypes::FILE_ID )
+                {
+                    $this->isMultipart = true;
+                }
+                
                 if ( $attribute->attribute( 'type_id' ) == formTypes::SEPARATOR_ID )
                 {
                     $attributes_by_pages[$current_page]['page_info'] = $attribute;
                 }
-                elseif( $attribute->attribute( 'type_id' ) == formTypes::FILE_ID )
-                {
-                    $this->isMultipart = true;
-                }
                 else 
                 {
                     $attributes_by_pages[$current_page]['attributes'][] = $attribute;
-                }                
+                }
+
+
             }
         }
         if ( $page )

@@ -1,7 +1,7 @@
 {* Template renders view the line for text line, parameters:
 - $input - textline object
 - $data - attribute object conatining data (or empty object when adding new attribute)
-- $input_id - id of attribute stored in database or unique id for new attribute
+- $input_id - id of attribute stored in database or unique id for new attribute *}
 
 <div class="formField form-{$input.id}">
     <input type="hidden" name="formelement_{$input_id}[type]" value="{$input.id}"/>
