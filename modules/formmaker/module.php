@@ -5,9 +5,9 @@ $Module = array( 'name' => 'formmaker' );
 $ViewList = array();
 $FunctionList = array();
 
-// we need to have only two policy functions 
 $FunctionList['edit'] = array(); // edit is for reading/listing/creating/editing
 $FunctionList['remove'] = array(); // remove is only for removing form
+$FunctionList['special'] = array(); // function to allow editing some special fields
 
 /*
  * list
@@ -38,4 +38,11 @@ $ViewList['edit'] = array(
     'script' => 'edit.php',
     'default_navigation_part' => 'formmakernavigationpart',
     'params' => array( 'id' )
+);
+
+/**
+ * editing forms special rules
+ */
+$ViewList['special'] = array(
+    'functions' => array('special')
 );

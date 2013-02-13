@@ -2,6 +2,12 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.7.0
+- Added possibility to run external processing class, new form field 'Process class'
+- Added 'Identifier' attribute to form field, readonly if no permission, this is passed to form array data
+- Added option 'object' to post_action (if set as an action, external Process Class will be executed to process form data)
+- Some typo issues fixed
+
 Version 1.6.0
 - Added 'file' and 'select' attributes
 - Added prefixes for validators classes
