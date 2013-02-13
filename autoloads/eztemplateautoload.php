@@ -5,4 +5,3 @@ $eZTemplateOperatorArray[] = array(
                 'class' => 'FormMaker_isImage',
                 'operator_names' => array('is_image')
 );
-?>

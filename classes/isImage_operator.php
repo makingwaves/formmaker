@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * This class holds a eZ template operator method is_image
+ * which determines if file with provided path is an actual image,
+ * based on PHP getimagesize() function.
+ */
 class FormMaker_isImage
 { 
  
@@ -41,6 +45,12 @@ class FormMaker_isImage
 	    }
 	}
 	
+	/**
+     * Returns true if a file provided with a path is an actual image
+     *
+     * @param  string $args
+     * @return boolean
+	 */
 	function is_image( $args )
 	{
 		$imgData = getimagesize($args);
