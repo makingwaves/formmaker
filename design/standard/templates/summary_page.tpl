@@ -14,27 +14,35 @@
     {def $thumb = ''}
     {foreach $page.attributes as $attribute}
 
-        {* if it's an image *}
-        {if and( $attribute.value|contains('formmaker'), is_image($attribute.value) )}
+        {* if it's a file *}
+        {if $attribute.value|contains('formmaker')}
 
-            {set $thumb = $attribute.value|explode('.') }
-            {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}            
+            {* it's an image so display a thumbnail *}
+            {if is_image($attribute.value)}
 
-            <span>{$attribute.label|i18n( 'formmaker/front' )}:<br/>
-            <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
-            <br/>
+                {set $thumb = $attribute.value|explode('.') }
+                {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}            
 
-        {* if it's not an image, display link to file *}
-        {elseif $attribute.value|contains('formmaker')} {* if*}         
+                <span>{$attribute.label|i18n( 'formmaker/front' )}:<br/>
+                <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
+                <br/>
 
-            {def $extension = $attribute.value|explode('.')}
-            <span>{$attribute.label|i18n( 'formmaker/front' )}:
-            <a target="_blank" href="/{$attribute.value}">{$extension.1}</a>
-            <br/>
+            {* ...otherwise, display link to file *}
+            {else}
+
+                {def $extension = $attribute.value|explode('.')}
+                <span>{$attribute.label|i18n( 'formmaker/front' )}:
+                <a target="_blank" href="/{$attribute.value}">{$extension.1}</a>
+                <br/>
+
+            {/if}
 
         {else}
+
             <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
+
         {/if}
+        
     {/foreach}
 
     <br/>    
