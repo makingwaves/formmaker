@@ -23,7 +23,7 @@
 
 {if $attribute.default_value)  } {* if there's image already*}
 
-    {if is_image($attribute.default_value)}
+    {if $attribute.is_image}
         {def $thumb = $attribute.default_value|explode('.') }
         {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}
         <img src={$thumb|ezroot()}/>

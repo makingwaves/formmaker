@@ -138,6 +138,7 @@ class FormMakerFunctionCollection
 
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
+
                         }
 
                     }
@@ -163,6 +164,7 @@ class FormMakerFunctionCollection
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
+
                 $tpl = eZTemplate::factory();
                 $data_to_send = $this->getDataToSend();
                 
@@ -206,12 +208,29 @@ class FormMakerFunctionCollection
         
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
+
+            foreach( $form_page['attributes'] as $i => $attr )
+            {
+                if($attr->attribute('type_id') == formTypes::FILE_ID)
+                {
+                    $attr->is_file = true;
+                    $attr->is_image = false;
+                    if($this->isImage($attr->attribute('default_value')))
+                    {
+                        $attr->is_image = true;
+                    }
+                    
+                    $form_page['attributes'][$i] = $attr;
+                }
+            }
+
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
             }
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
+
             $form_page['files'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
         }
         elseif ( $this->http->hasPostVariable( 'form-next' ) && eZSession::issetkey( formDefinitions::PAGE_SESSION_PREFIX . $current_page ) )
@@ -422,6 +441,8 @@ class FormMakerFunctionCollection
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['is_file'] = false;
+                        $email_data[$i]['attributes'][$j]['is_image'] = false;
                         break;
 
                     case formTypes::RADIO_ID: // radio button
@@ -431,6 +452,8 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not checked' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
@@ -441,6 +464,8 @@ class FormMakerFunctionCollection
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not selected' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
@@ -454,6 +479,8 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
@@ -461,6 +488,8 @@ class FormMakerFunctionCollection
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                        $email_data[$i]['attributes'][$j]['is_file'] = file_exists($attribute->attribute( 'default_value' ));
+                        $email_data[$i]['attributes'][$j]['is_image'] = $this->isImage($attribute->attribute( 'default_value' ));
                         $attachments[] = $attribute->attribute( 'default_value' );
                         break;
 
@@ -470,6 +499,8 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
                 }    
@@ -519,5 +550,23 @@ class FormMakerFunctionCollection
         $thumb = $start . '_thumb.' . $extension;
         return $thumb;
     }
+
+    /**
+     * checks if uploaded file is an actual image based on getimagesize()
+     * @param string $filePath
+     * @return bool
+     */
+    public function isImage($filePath)
+    {
+        $imgData = getimagesize($filePath);
+
+        if( is_numeric($imgData[0]) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
 }

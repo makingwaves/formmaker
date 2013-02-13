@@ -15,10 +15,10 @@
     {foreach $page.attributes as $attribute}
 
         {* if it's a file *}
-        {if $attribute.value|contains('formmaker')}
+        {if $attribute.is_file}
 
             {* it's an image so display a thumbnail *}
-            {if is_image($attribute.value)}
+            {if $attribute.is_image}
 
                 {set $thumb = $attribute.value|explode('.') }
                 {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}            
@@ -27,7 +27,7 @@
                 <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
                 <br/>
 
-            {* ...otherwise, display link to file *}
+            {* ...otherwise display link to file *}
             {else}
 
                 {def $extension = $attribute.value|explode('.')}
@@ -42,7 +42,7 @@
             <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
 
         {/if}
-        
+
     {/foreach}
 
     <br/>    

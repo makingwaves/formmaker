@@ -5,6 +5,10 @@
  */
 class formAttributes extends eZPersistentObject 
 {
+
+    public $is_file;
+    public $is_image;
+
     /**
      * Constructor
      * @param type $row
@@ -64,7 +68,9 @@ class formAttributes extends eZPersistentObject
                           'type_data'       => 'getTypeData',
                           'is_mandatory'    => 'isMandatoryHtml',
                           'options'         => 'getOptions',
-                          'custom_regex'    => 'getCustomRegex'
+                          'custom_regex'    => 'getCustomRegex',
+                          'is_file'         => 'is_file',
+                          'is_image'        => 'is_image',
                       ),
                       "increment_key" => "id",
                       "class_name" => "formAttributes",
@@ -135,7 +141,8 @@ class formAttributes extends eZPersistentObject
      */
     public static function getAttribute( $id )
     {
-        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
+        $attribute = eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
+        return $attribute;
     }
         
     
@@ -274,7 +281,7 @@ class formAttributes extends eZPersistentObject
                                      $item['css'],
                                      $item['allowed_file_types'] );
                 $attribute->store();
-                
+
                 $correct_validators = array();
                 if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
@@ -504,4 +511,23 @@ class formAttributes extends eZPersistentObject
         }
         return '';
     }
+
+    /**
+    * Method returns true if attribute holds a file
+    * @return bool
+    */
+    public function is_file()
+    {
+        return file_exists($this->attribute('default_value'));
+    }
+
+    /**
+    * Method returns true if file is an actual image
+    * @return bool
+    */
+    public function is_image()
+    {
+        return FormMakerFunctionCollection::isImage($this->attribute('default_value'));
+    }
+
 }

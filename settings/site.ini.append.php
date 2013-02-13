@@ -7,8 +7,5 @@
 [RegionalSettings]
 TranslationExtensions[]=formmaker
 
-[TemplateSettings]
-ExtensionAutoloadPath[]=formmaker
-
 */
 ?>
