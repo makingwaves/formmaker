@@ -6,9 +6,6 @@
 class formAttributes extends eZPersistentObject 
 {
 
-    public $is_file;
-    public $is_image;
-
     /**
      * Constructor
      * @param type $row

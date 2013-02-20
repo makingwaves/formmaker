@@ -209,21 +209,6 @@ class FormMakerFunctionCollection
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
 
-            foreach( $form_page['attributes'] as $i => $attr )
-            {
-                if($attr->attribute('type_id') == formTypes::FILE_ID)
-                {
-                    $attr->is_file = true;
-                    $attr->is_image = false;
-                    if($this->isImage($attr->attribute('default_value')))
-                    {
-                        $attr->is_image = true;
-                    }
-                    
-                    $form_page['attributes'][$i] = $attr;
-                }
-            }
-
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
