@@ -107,9 +107,10 @@ class FormMakerFunctionCollection
                 // updating attributes with current values
                 foreach ($form_page['attributes'] as $i => $attrib)
                 {
+                    $allowed_file_types = $attrib->attribute( 'allowed_file_types' );
 
-                    if( !empty($attrib->allowed_file_types) // if there are some files in form
-                        && !file_exists($attachmentsDir . $attrib->attribute('default_value') )
+                    if( ! empty( $allowed_file_types ) // if there are some files in form
+                        && ! file_exists( $attachmentsDir . $attrib->attribute( 'default_value' ) )
                         && empty( $posted_values[$i] )
                        )
                     {
@@ -117,7 +118,7 @@ class FormMakerFunctionCollection
                         $file = eZHTTPFile::fetch( $this->generatePostID($attrib) );
                         $ext = end(explode('.', $file->OriginalFilename));
 
-                        if( $file && in_array($ext, explode(',', $attrib->allowed_file_types)) )
+                        if( $file && in_array( $ext, explode( ',', $allowed_file_types) ) )
                         {
                             $file->store($this->ini->variable('Mail', 'AttachmentsDir'), $ext);
 
@@ -137,6 +138,7 @@ class FormMakerFunctionCollection
 
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
+
                         }
 
                     }
@@ -162,28 +164,36 @@ class FormMakerFunctionCollection
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
+
                 $tpl = eZTemplate::factory();
                 $data_to_send = $this->getDataToSend();
                 
                 if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
                 {
                     // rendering summary page
-                    $tpl->setVariable( 'all_pages', $data_to_send['email_data'] );
+                    $tpl->setVariable( 'all_pages', $data_to_send['data'] );
                     $tpl->setVariable( 'body_text', $this->definition->attribute( 'summary_body' ) );
                     $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
                 }
                 // processing the data only if array contains the data
-                elseif ( !empty( $data_to_send['email_data'] ) )
+                elseif ( !empty( $data_to_send['data'] ) )
                 {
                     // Sending email message
-                    if ($this->definition->attribute('post_action') == 'email')
+                    switch ($this->definition->attribute('post_action'))
                     {
+                        case 'email':
                         $operation_result = $this->processEmail( $data_to_send );
                         $this->removeSessionData();
-                    }
-                    // TODO: Storing data in database
-                    else 
-                    {
+                            break;
+
+                        case 'object':
+                            $process_class = $this->definition->attribute( 'process_class' );
+                            $processing_object = new $process_class();
+                            $operation_result = $processing_object->processSubmit( $data_to_send );
+                            $this->removeSessionData();
+                            break;
+
+                        default:
                         $operation_result = false;
                     }
 
@@ -198,12 +208,29 @@ class FormMakerFunctionCollection
         
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
+
+            foreach( $form_page['attributes'] as $i => $attr )
+            {
+                if($attr->attribute('type_id') == formTypes::FILE_ID)
+                {
+                    $attr->is_file = true;
+                    $attr->is_image = false;
+                    if($this->isImage($attr->attribute('default_value')))
+                    {
+                        $attr->is_image = true;
+                    }
+                    
+                    $form_page['attributes'][$i] = $attr;
+                }
+            }
+
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
             }
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
+
             $form_page['files'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
         }
         elseif ( $this->http->hasPostVariable( 'form-next' ) && eZSession::issetkey( formDefinitions::PAGE_SESSION_PREFIX . $current_page ) )
@@ -224,13 +251,13 @@ class FormMakerFunctionCollection
     }
     
     /**
-     * Metgod returns attribute post name/id
+     * Method returns attribute post name/id based on indentifier or generated
      * @param type $attrib
      * @return string
      */
-    private function generatePostID($attrib)
+    private function generatePostID( $attrib )
     {
-        return 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
+        return $post_id = 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
     }
     
     /**
@@ -250,7 +277,7 @@ class FormMakerFunctionCollection
                 $sender,
                 $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'formmaker/email', 'New answer' ),
                 'email/recipient.tpl',
-                $data_to_send['email_data'],
+                $data_to_send['data'],
                 $recipients,
                 $attachments
         );     
@@ -269,7 +296,7 @@ class FormMakerFunctionCollection
                         $sender,
                         $this->definition->attribute( 'name' ),
                         'email/user.tpl',
-                        $data_to_send['email_data'],
+                        $data_to_send['data'],
                         array( $email_address ),
                         $data_to_send['attachments']
                 );
@@ -391,6 +418,7 @@ class FormMakerFunctionCollection
     {
         $email_data     = array();
         $receivers      = array();
+        $attachments    = array();
         $i              = 0;
         $filled_only    = $this->ini->variable( 'FormmakerSettings', 'SendOnlyFilledData' );
 
@@ -411,15 +439,21 @@ class FormMakerFunctionCollection
                 {
                     case formTypes::CHECKBOX_ID: // checkbox
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                        $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
+                        $email_data[$i]['attributes'][$j]['is_file'] = false;
+                        $email_data[$i]['attributes'][$j]['is_image'] = false;
                         break;
 
                     case formTypes::RADIO_ID: // radio button
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not checked' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
@@ -429,6 +463,9 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not selected' );
+                            $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
@@ -440,13 +477,19 @@ class FormMakerFunctionCollection
                         else /* fixed: without else condition text attributes were skipped from summary... */
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
 
                     case formTypes::FILE_ID:
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                        $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                        $email_data[$i]['attributes'][$j]['is_file'] = file_exists($attribute->attribute( 'default_value' ));
+                        $email_data[$i]['attributes'][$j]['is_image'] = $this->isImage($attribute->attribute( 'default_value' ));
                         $attachments[] = $attribute->attribute( 'default_value' );
                         break;
 
@@ -454,7 +497,10 @@ class FormMakerFunctionCollection
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
                 }    
@@ -464,7 +510,7 @@ class FormMakerFunctionCollection
         }  
 
         return array(
-            'email_data'    => $email_data,
+            'data'          => $email_data,
             'receivers'     => $receivers,
             'attachments'   => $attachments,
         );        
@@ -504,5 +550,23 @@ class FormMakerFunctionCollection
         $thumb = $start . '_thumb.' . $extension;
         return $thumb;
     }
+
+    /**
+     * checks if uploaded file is an actual image based on getimagesize()
+     * @param string $filePath
+     * @return bool
+     */
+    public function isImage($filePath)
+    {
+        $imgData = getimagesize($filePath);
+
+        if( is_numeric($imgData[0]) ) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
 }

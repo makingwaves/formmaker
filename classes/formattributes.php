@@ -5,6 +5,10 @@
  */
 class formAttributes extends eZPersistentObject 
 {
+
+    public $is_file;
+    public $is_image;
+
     /**
      * Constructor
      * @param type $row
@@ -32,6 +36,9 @@ class formAttributes extends eZPersistentObject
                                          "type_id"          => array( "name" => "type_id",
                                                                       "datatype" => "int",
                                                                       "required" => true ),
+                                         "identifier"       => array( "name" => "identifier",
+                                                                      "datatype" => "string",
+                                                                      "required" => false ),
                                          "enabled"          => array( "name" => "enabled",
                                                                       "datatype" => "int",
                                                                       "required" => true ),       
@@ -61,7 +68,9 @@ class formAttributes extends eZPersistentObject
                           'type_data'       => 'getTypeData',
                           'is_mandatory'    => 'isMandatoryHtml',
                           'options'         => 'getOptions',
-                          'custom_regex'    => 'getCustomRegex'
+                          'custom_regex'    => 'getCustomRegex',
+                          'is_file'         => 'is_file',
+                          'is_image'        => 'is_image',
                       ),
                       "increment_key" => "id",
                       "class_name" => "formAttributes",
@@ -87,6 +96,7 @@ class formAttributes extends eZPersistentObject
      * @param int $definition_id
      * @param int $type_id
      * @param string $label
+     * @param string $identifier
      * @param int $enabled
      * @param string $description
      * @param string $def_value    
@@ -95,13 +105,13 @@ class formAttributes extends eZPersistentObject
      * @param string $allowed_file_types
      * @return \self
      */
-    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types )
+    public static function addNewAttribute( $order, $definition_id, $type_id, $label, $identifier, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types )
     {
         $object = new self( array(
             'definition_id'     => $definition_id,
             'type_id'           => $type_id
         ) );
-        $object->setData( $order, $label, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types );
+        $object->setData( $order, $label, $identifier, $enabled, $description, $def_value, $email_receiver, $css, $allowed_file_types );
         $object->store();
         return $object;        
     }
@@ -131,12 +141,13 @@ class formAttributes extends eZPersistentObject
      */
     public static function getAttribute( $id )
     {
-        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
+        $attribute = eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
+        return $attribute;
     }
         
     
     /**
-     * Meturns array of validators assigned to current attribute object
+     * Returns array of validators assigned to current attribute object
      * @return array
      */
     public function getAttributeValidators()
@@ -248,8 +259,11 @@ class formAttributes extends eZPersistentObject
             $id = $id[1];
             $order ++;
             $item['default'] = isset( $item['default'] ) ? $item['default'] : '';
+            $item['identifier'] = isset( $item['identifier'] ) ? $item['identifier'] : '';
             $item['email_receiver'] = isset( $item['email_receiver'] ) ? $item['email_receiver'] : 0;
             $item['description'] = isset( $item['description'] ) ? $item['description'] : '';
+            $item['css'] = isset( $item['css'] ) ? $item['css'] : '';
+            $item['mandatory'] = isset( $item['mandatory'] ) ? $item['mandatory'] : 0;
             $item['allowed_file_types'] = isset( $item['allowed_file_types'] ) ? $item['allowed_file_types'] : '';
             
             // if ID is an integer, we're UPDATING the attribute, because it does EXIST in database
@@ -259,6 +273,7 @@ class formAttributes extends eZPersistentObject
                 $attribute = self::getAttribute( $id );
                 $attribute->setData( $order,
                                      $item['label'],
+                                     $item['identifier'],
                                      $item['enabled'],
                                      $item['description'],
                                      $item['default'],
@@ -266,7 +281,7 @@ class formAttributes extends eZPersistentObject
                                      $item['css'],
                                      $item['allowed_file_types'] );
                 $attribute->store();
-                
+
                 $correct_validators = array();
                 if ( isset( $item['validation'] ) && ctype_digit( (string)$item['validation'] ) &&  $item['validation'] > 0 )
                 {
@@ -303,6 +318,7 @@ class formAttributes extends eZPersistentObject
                                                     $definition_id,
                                                     $item['type'],
                                                     $item['label'],
+                                                    $item['identifier'],
                                                     $item['enabled'],
                                                     $item['description'],
                                                     $item['default'],
@@ -357,16 +373,18 @@ class formAttributes extends eZPersistentObject
      * Method sets the changable data in current attribute object
      * @param int $order
      * @param string $label
+     * @param string $identifier
      * @param int $enabled
      * @param string description
      * @param string $default
      * @param int $email_receiver
      * @param string $css
      */
-    private function setData( $order, $label, $enabled, $description, $default, $email_receiver, $css, $allowed_file_types )
+    private function setData( $order, $label, $identifier, $enabled, $description, $default, $email_receiver, $css, $allowed_file_types )
     {
         $this->setAttribute( 'attr_order', $order );
         $this->setAttribute( 'label', $label );
+        $this->setAttribute( 'identifier', $identifier );
         $this->setAttribute( 'enabled', $enabled );
         $this->setAttribute( 'description', $description );
         $this->setAttribute( 'default_value', $default );
@@ -493,4 +511,23 @@ class formAttributes extends eZPersistentObject
         }
         return '';
     }
+
+    /**
+    * Method returns true if attribute holds a file
+    * @return bool
+    */
+    public function is_file()
+    {
+        return file_exists($this->attribute('default_value'));
+    }
+
+    /**
+    * Method returns true if file is an actual image
+    * @return bool
+    */
+    public function is_image()
+    {
+        return FormMakerFunctionCollection::isImage($this->attribute('default_value'));
+    }
+
 }
