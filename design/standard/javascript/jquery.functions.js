@@ -7,7 +7,7 @@ jQuery(document).ready(function(){
 
     // Required for checkbox processing
     jQuery('.form_label_checkbox input[type=checkbox]').click(function(){
-        var value = $(this).attr('checked') ? 'on' : '';
+        var value = $(this).is(':checked') ? 'on' : '';
         $('#' + $(this).attr('connected')).val(value);
     });       
     
