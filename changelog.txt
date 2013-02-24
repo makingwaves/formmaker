@@ -6,6 +6,7 @@ Version 1.7.1
 - fix for formdefinitions, when process_class not set post action should be 'email'
 - fixed loading the JS and CSS files in the admin interface
 - added CSS colors for 'File' and 'Select' types in admin interface
+- fixed select list default value
 
 Version 1.7.0
 - Added possibility to run external processing class, new form field 'Process class'
