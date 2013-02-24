@@ -8,6 +8,7 @@ Version 1.7.1
 - added CSS colors for 'File' and 'Select' types in admin interface
 - fixed select list default value
 - 'File' and 'Select' types needs to be temporarly disabled, since they're not working as they should
+- fixed checkbox mandatory validation on front
 
 Version 1.7.0
 - Added possibility to run external processing class, new form field 'Process class'
