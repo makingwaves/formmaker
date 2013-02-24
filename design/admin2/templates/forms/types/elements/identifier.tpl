@@ -2,7 +2,8 @@
 - $input_id
 - $identifier *}
 
-{def $access = fetch( 'user', 'has_access_to', hash('module',   'formmaker',
+{def $current_user = fetch( 'user', 'current_user' )
+     $access = fetch( 'user', 'has_access_to', hash('module',   'formmaker',
                                                      'function', 'special',
                                                      'user_id',  $current_user.contentobject_id) )}
 <div class="form-field-attribute">

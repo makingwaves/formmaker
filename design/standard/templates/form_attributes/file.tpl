@@ -19,9 +19,7 @@
     {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 
-
-
-{if $attribute.default_value)  } {* if there's image already*}
+{if $attribute.default_value} {* if there's image already*}
 
     {if $attribute.is_image}
         {def $thumb = $attribute.default_value|explode('.') }

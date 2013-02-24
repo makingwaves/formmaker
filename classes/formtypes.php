@@ -48,11 +48,20 @@ class formTypes extends eZPersistentObject
     
     /**
      * Method returns all available input types
+     * @param array $exclude - array containing database IDs of types which should be excluded it this fetch
      * @return type
      */
-    public static function getAllTypes()
+    public static function getAllTypes( $exclude = array() )
     {
-        return eZPersistentObject::fetchObjectList( self::definition() );
+        $types = eZPersistentObject::fetchObjectList( self::definition(), null, null );
+        foreach ($types as $key => $type)
+        {
+            if ( in_array( $type->attribute('id'), $exclude ) )
+            {
+                unset($types[$key]);
+            }
+        }      
+        return $types;
     }
     
     /**

@@ -9,13 +9,9 @@
 - $validator_custom_regex_id - integer, is defined in class constant formValidators::CUSTOM_REGEX
 - $input_types - array of all available input types *}
 
-{* jquery UI *}
-{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
-
-{ezcss_require( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css' )}
-
+{ezcss_require( array( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css', 'style.css' ) )}
+{ezscript_load( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 {ezscript_require(array( 'edit.js', 'fixed_toolbar.js' ) )}
-{ezcss_require(array( 'style.css') )}
 
 {def $selected = ''
      $activeValidatorsIDs = array()
