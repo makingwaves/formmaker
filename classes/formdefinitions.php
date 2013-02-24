@@ -133,7 +133,7 @@ class formDefinitions extends eZPersistentObject
         //set by default
         $post_action = 'email';
         
-        if ( isset( $form_elements['process_class'] ) && ! empty( $form_elements['process_class'] ) )
+        if ( ! empty( $form_elements['process_class']['value'] ) )
         {
             $post_action = 'object';
         }
