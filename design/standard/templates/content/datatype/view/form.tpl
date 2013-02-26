@@ -9,7 +9,7 @@
      $current_page      = $form_data.current_page
      $header_text       = $form_definition.name
      $pages_count       = $form_data.all_pages|count()
-     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'formmaker/front' ), 'Next'|i18n( 'formmaker/front' ) )
+     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send', 'Next' )
      $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' ) }
 
 {* including CSS file *}
@@ -59,17 +59,8 @@
                     </div>
                 </div>
             {/foreach}
-            <div class="form-footer">
-                <div class="form-footer-back">
-                    {if $form_data.current_page|gt( 0 )}
-                        <input type="submit" value="{'Back'|i18n( 'formmaker/front' )}" name="form-back"/>
-                    {/if}
-                </div>
-                <div class="form-footer-next">
-                    <input type="submit" name="{$send_name}" value="{$send_button}"/>
-                    <input type="hidden" name="validation" value="false"/>                
-                </div>
-            </div>
+            {include uri="design:formmaker/form_buttons.tpl" send_name=$send_name send_value=$send_button back_value='Back'
+                     back_display=cond( $form_data.current_page|gt( 0 ), true(), false() ) }
         {/if}
     </form>
 </div>

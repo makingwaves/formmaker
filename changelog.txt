@@ -9,6 +9,7 @@ Version 1.7.2
 - Created 'design/standard/templates/formmaker' directory, so since now all new templates should be placed in there. Also, all FormMaker templates moved into there.
   Please BE AWARE about that when update'ing your FormMaker installation.
 - 'design/admin2/forms' directory renamed to 'design/admin2/formmaker'
+- Separate template file for the buttons displayed on the front
 
 Version 1.7.1
 - fix for formdefinitions, when process_class not set post action should be 'email'

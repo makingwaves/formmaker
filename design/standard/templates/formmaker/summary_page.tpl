@@ -2,6 +2,8 @@
 - $all_pages, array
 - $body_text, string *}
 
+{def $thumb = ''}
+
 <input type="hidden" name="summary_page" value="1" />
 <p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
 <br/>
@@ -11,7 +13,7 @@
     {/if}
     <br/>
 
-    {def $thumb = ''}
+    {set $thumb = ''}
     {foreach $page.attributes as $attribute}
 
         {* if it's a file *}
@@ -29,31 +31,16 @@
 
             {* ...otherwise display link to file *}
             {else}
-
                 {def $extension = $attribute.value|explode('.')}
                 <span>{$attribute.label|i18n( 'formmaker/front' )}:
                 <a target="_blank" href="/{$attribute.value}">{$extension.1}</a>
                 <br/>
-
             {/if}
-
         {else}
-
             <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
-
         {/if}
-
     {/foreach}
-
     <br/>    
 {/foreach}
 
-<div class="form-footer">
-    <div class="form-footer-back">
-        <input type="submit" value="{'Edit'|i18n( 'formmaker/front' )}" name="form-back"/>
-    </div>
-    <div class="form-footer-next">
-        <input type="submit" name="form-send" value="{'Send'|i18n( 'formmaker/front' )}"/>
-        <input type="hidden" name="validation" value="false"/>                
-    </div>
-</div>
+{include uri="design:formmaker/form_buttons.tpl" send_name='form-send' send_value='Send' back_display=true() back_value='Edit'}
