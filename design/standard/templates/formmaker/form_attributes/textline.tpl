@@ -23,7 +23,7 @@
 
 <label for="form_{$attribute.type_id}_{$attribute.id}">
     {$attribute.label}
-{include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+{include uri="design:formmaker/form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 {if $attribute.validator_ids|contains( $year_validator )}
     <select class="date-year-validation {$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">

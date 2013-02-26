@@ -469,7 +469,7 @@ class FormMaker_Validate_Hostname extends FormMaker_Validate_Abstract
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
      *
      * @param  string $value
-     * @throws Validate_Exception if a fatal error occurs for validation process
+     * @throws FormMaker_Validate_Exception if a fatal error occurs for validation process
      * @return boolean
      */
     public function isValid($value)

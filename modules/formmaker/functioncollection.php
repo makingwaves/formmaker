@@ -47,7 +47,7 @@ class FormMakerFunctionCollection
             $tpl->setVariable( 'result', false );
             $tpl->setVariable( 'form_definition', $this->definition );
             $result = array(
-                'success'               => $tpl->fetch( 'design:form_processed.tpl' ),
+                'success'               => $tpl->fetch( 'design:formmaker/form_processed.tpl' ),
                 'validation'            => $errors,
                 'definition'            => $this->definition,
                 'attributes'            => $form_page['attributes'],
@@ -173,7 +173,7 @@ class FormMakerFunctionCollection
                     // rendering summary page
                     $tpl->setVariable( 'all_pages', $data_to_send['data'] );
                     $tpl->setVariable( 'body_text', $this->definition->attribute( 'summary_body' ) );
-                    $result['summary_page'] = $tpl->fetch( 'design:summary_page.tpl' );   
+                    $result['summary_page'] = $tpl->fetch( 'design:formmaker/summary_page.tpl' );
                 }
                 // processing the data only if array contains the data
                 elseif ( !empty( $data_to_send['data'] ) )
@@ -200,7 +200,7 @@ class FormMakerFunctionCollection
                     // rendering success template
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
-                    $result['success'] = $tpl->fetch( 'design:form_processed.tpl' );     
+                    $result['success'] = $tpl->fetch( 'design:formmaker/form_processed.tpl' );
                     eZSession::set( formDefinitions::SESSION_FORM_SENT_KEY, true );
                 }
             } 
@@ -261,7 +261,7 @@ class FormMakerFunctionCollection
         $status = $this->sendEmail(
                 $sender,
                 $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'formmaker/email', 'New answer' ),
-                'email/recipient.tpl',
+                'formmaker/email/recipient.tpl',
                 $data_to_send['data'],
                 $recipients,
                 $attachments
@@ -280,7 +280,7 @@ class FormMakerFunctionCollection
                 $status = $this->sendEmail(
                         $sender,
                         $this->definition->attribute( 'name' ),
-                        'email/user.tpl',
+                        'formmaker/email/user.tpl',
                         $data_to_send['data'],
                         array( $email_address ),
                         $data_to_send['attachments']

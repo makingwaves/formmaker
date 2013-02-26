@@ -9,7 +9,7 @@
         <legend>{'Options'|i18n( 'formmaker/admin' )}</legend>
         <ul>
             {foreach $options as $option}
-                {include uri="design:forms/types/elements/option_line.tpl" option_id=$option.id input_id=$input_id label=$option.label default_value=$default_value}
+                {include uri="design:formmaker/types/elements/option_line.tpl" option_id=$option.id input_id=$input_id label=$option.label default_value=$default_value}
             {/foreach}
         </ul>
         <a class="add-option">{'Add option'|i18n( 'formmaker/admin' )}</a>

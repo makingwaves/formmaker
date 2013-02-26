@@ -58,7 +58,7 @@ class FormMaker_Validate_Regex extends FormMaker_Validate_Abstract
      * Sets validator options
      *
      * @param  string|Config $pattern
-     * @throws Validate_Exception On missing 'pattern' parameter
+     * @throws FormMaker_Validate_Exception On missing 'pattern' parameter
      * @return void
      */
     public function __construct($pattern)
@@ -88,7 +88,7 @@ class FormMaker_Validate_Regex extends FormMaker_Validate_Abstract
      * Sets the pattern option
      *
      * @param  string $pattern
-     * @throws Validate_Exception if there is a fatal error in pattern matching
+     * @throws FormMaker_Validate_Exception if there is a fatal error in pattern matching
      * @return Validate_Regex Provides a fluent interface
      */
     public function setPattern($pattern)

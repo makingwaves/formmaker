@@ -16,7 +16,7 @@
 
 <label for="form_{$attribute.type_id}_{$attribute.id}">
     {$attribute.label|wash()|i18n( 'formmaker/front' )}
-    {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+    {include uri="design:formmaker/form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 
 {if $attribute.default_value} {* if there's image already*}

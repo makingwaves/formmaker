@@ -13,13 +13,13 @@ $tpl->setVariable( 'persistent_variable', false );
 $tpl->setVariable( 'forms', formDefinitions::getAllForms() );
 
 $Result = array();
-$Result['content'] = $tpl->fetch( 'design:forms/list.tpl' );
+$Result['content'] = $tpl->fetch( 'design:formmaker/list.tpl' );
 
 $Result['path']    = array( array( 'tag_id' => 0,
                                    'text'   => ezpI18n::tr( 'formmaker/admin', 'Form Maker Dashboard' ),
                                    'url'    => false ) );
 
-$Result['left_menu'] = "design:forms/left_menu.tpl";
+$Result['left_menu'] = "design:formmaker/left_menu.tpl";
 
 $contentInfoArray = array();
 $contentInfoArray['persistent_variable'] = false;

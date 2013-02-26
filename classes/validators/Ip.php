@@ -101,7 +101,7 @@ class FormMaker_Validate_Ip extends FormMaker_Validate_Abstract
 
         if (!$this->_options['allowipv4'] && !$this->_options['allowipv6']) {
             require_once 'Zend/Validate/Exception.php';
-            throw new Validate_Exception('Nothing to validate. Check your options');
+            throw new FormMaker_Validate_Exception('Nothing to validate. Check your options');
         }
 
         return $this;

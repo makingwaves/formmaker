@@ -31,6 +31,10 @@
         <source>You're about to send following informations. Are they OK?</source>
         <translation type="unfinished" />
     </message>
+    <message>
+        <source>- please select -</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>formmaker/email</name>

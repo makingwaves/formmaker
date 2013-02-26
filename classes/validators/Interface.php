@@ -36,7 +36,7 @@ interface FormMaker_Validate_Interface
      *
      * @param  mixed $value
      * @return boolean
-     * @throws Validate_Exception If validation of $value is impossible
+     * @throws FormMaker_Validate_Exception If validation of $value is impossible
      */
     public function isValid($value);
 

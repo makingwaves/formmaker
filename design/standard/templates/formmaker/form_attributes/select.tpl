@@ -15,11 +15,12 @@
 
 <label>
     {$attribute.label|wash()|i18n( 'formmaker/front' )}
-    {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+    {include uri="design:formmaker/form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 
 <span class="{$css_class}">
-    <select name="field_{$attribute.type_id}_{$attribute.id}">
+    <select class="form-select-attribute" name="field_{$attribute.type_id}_{$attribute.id}">
+        <option value="">{'- please select -'|i18n( 'formmaker/front' )}</option>
         {foreach $attribute.options as $option}
         <option {if eq( $attribute.default_value, $option.id )}selected{/if} value="{$option.id}">
         	{$option.label|wash()|i18n( 'formmaker/front' )}

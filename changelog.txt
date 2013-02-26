@@ -2,6 +2,15 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.7.2
+- 'Select' attribute fixed and enabled
+- Fixed problem with dissapearing custom regex value
+- Fixed Fatal Error caused by class FormMaker_Validate_Exception, which didn't exist, but was used in the code
+- Created 'design/standard/templates/formmaker' directory, so since now all new templates should be placed in there. Also, all FormMaker templates moved into there.
+  Please BE AWARE about that when update'ing your FormMaker installation.
+- 'design/admin2/forms' directory renamed to 'design/admin2/formmaker'
+- Separate template file for the buttons displayed on the front
+
 Version 1.7.1
 - fix for formdefinitions, when process_class not set post action should be 'email'
 - fixed loading the JS and CSS files in the admin interface and on front

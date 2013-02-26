@@ -112,7 +112,7 @@ class FormMaker_Validate_NotEmpty extends FormMaker_Validate_Abstract
      * Set the types
      *
      * @param  integer|array $type
-     * @throws Validate_Exception
+     * @throws FormMaker_Validate_Exception
      * @return Validate_NotEmpty
      */
     public function setType($type = null)
