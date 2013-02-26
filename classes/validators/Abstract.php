@@ -118,7 +118,7 @@ abstract class FormMaker_Validate_Abstract implements FormMaker_Validate_Interfa
      * @param  string $messageString
      * @param  string $messageKey     OPTIONAL
      * @return Validate_Abstract Provides a fluent interface
-     * @throws Validate_Exception
+     * @throws FormMaker_Validate_Exception
      */
     public function setMessage($messageString, $messageKey = null)
     {
@@ -159,7 +159,7 @@ abstract class FormMaker_Validate_Abstract implements FormMaker_Validate_Interfa
      *
      * @param  string $property
      * @return mixed
-     * @throws Validate_Exception
+     * @throws FormMaker_Validate_Exception
      */
     public function __get($property)
     {
@@ -170,9 +170,9 @@ abstract class FormMaker_Validate_Abstract implements FormMaker_Validate_Interfa
             return $this->{$this->_messageVariables[$property]};
         }
         /**
-         * @see Validate_Exception
+         * @see FormMaker_Validate_Exception
          */
-        throw new Validate_Exception("No property exists by the name '$property'");
+        throw new FormMaker_Validate_Exception("No property exists by the name '$property'");
     }
 
     /**

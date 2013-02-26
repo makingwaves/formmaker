@@ -192,7 +192,7 @@ class FormMaker_Validate_EmailAddress extends FormMaker_Validate_Abstract
      * @param  string $messageString
      * @param  string $messageKey     OPTIONAL
      * @return Validate_Abstract Provides a fluent interface
-     * @throws Validate_Exception
+     * @throws FormMaker_Validate_Exception
      */
     public function setMessage($messageString, $messageKey = null)
     {

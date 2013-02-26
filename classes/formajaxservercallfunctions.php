@@ -31,7 +31,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
                 $tpl->setVariable('errors', $errors);
                 
                 // there are errors - returning string with html code do display
-                return $tpl->fetch('design:form_error.tpl');                
+                return $tpl->fetch('design:formmaker/form_error.tpl');
             }
             
             // validated OK

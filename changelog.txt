@@ -5,6 +5,9 @@ Database update scripts can be found under sql/update directory.
 Version 1.7.2
 - 'Select' attribute fixed and enabled
 - Fixed problem with dissapearing custom regex value
+- Fixed Fatal Error caused by class FormMaker_Validate_Exception, which didn't exist, but was used in the code
+- Created 'design/standard/templates/formmaker' directory, so since now all new templates should be placed in there. Also, all FormMaker templates moved into there.
+  Please BE AWARE about that when update'ing your FormMaker installation.
 
 Version 1.7.1
 - fix for formdefinitions, when process_class not set post action should be 'email'
