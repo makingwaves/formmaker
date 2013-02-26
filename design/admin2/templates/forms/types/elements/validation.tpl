@@ -11,6 +11,8 @@
 
 <input type="hidden" class="attribute-unique-id" value="{$input_id}" />
 <div class="form-field-attribute">
+    <input type="hidden" class="dynamic-validator-value-{$validator_email_id}" value="{$email_receiver}"/>
+    <input type="hidden" class="dynamic-validator-value-{$validator_custom_regex_id}" value="{$regex}"/>
     {'Validation:'|i18n( 'formmaker/admin' )}
     <select class="attribute-validation" name="formelement_{$input_id}[validation]">
         <option value="0">{'- no validation -'|i18n( 'formmaker/admin' )}</option>

@@ -88,6 +88,8 @@
             <hr/>
             <input type="hidden" name="definition_id" value="{$id}" />
             <input type="hidden" id="separator-id" value="{$separator_id}"/>
+            <input type="hidden" id="custom-regex-validator-id" value="{$validator_custom_regex_id}" />
+            <input type="hidden" id="email-validator-id" value="{$validator_email_id}" />
             <input type="hidden" id="form-dynamic-validators" value="{$validator_email_id},{$validator_custom_regex_id}" />
 
             <div class="sortable-attributes">

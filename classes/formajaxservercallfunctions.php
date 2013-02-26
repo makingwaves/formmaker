@@ -106,16 +106,16 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl = eZTemplate::factory();
         $rendered_template = '';
         $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
-        
+
         switch ($validator_id)
         {
             case formValidators::EMAIL_ID:
-                $tpl->setVariable( 'enabled', 0 );
+                $tpl->setVariable( 'enabled', $http->postVariable( 'value' ) );
                 $rendered_template = $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
                 break;
             
             case formValidators::CUSTOM_REGEX:
-                $tpl->setVariable( 'regex', '' );
+                $tpl->setVariable( 'regex', $http->postVariable( 'value' ) );
                 $rendered_template = $tpl->fetch( 'design:forms/types/elements/custom_regex.tpl' );
                 break;
         }
