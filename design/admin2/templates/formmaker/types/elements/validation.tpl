@@ -24,7 +24,7 @@
     </select>
 </div>
 {if $selected_validator|eq( $validator_email_id )}
-    {include uri="design:forms/types/elements/email_receiver.tpl" enabled=$email_receiver input_id=$input_id}
+    {include uri="design:formmaker/types/elements/email_receiver.tpl" enabled=$email_receiver input_id=$input_id}
 {elseif $selected_validator|eq( $validator_custom_regex_id )}
-    {include uri="design:forms/types/elements/custom_regex.tpl" regex=$regex input_id=$input_id}
+    {include uri="design:formmaker/types/elements/custom_regex.tpl" regex=$regex input_id=$input_id}
 {/if}        

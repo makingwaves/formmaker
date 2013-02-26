@@ -22,7 +22,7 @@
 <div class="form-box-container">
     <form action={concat( '/formmaker/edit/', $id )|ezurl()} method="post" enctype="multipart/form-data" id="editform">
         
-        {include uri="design:forms/buttons_top.tpl" show_attributes=cond( $id, true(), false() )} 
+        {include uri="design:formmaker/buttons_top.tpl" show_attributes=cond( $id, true(), false() )} 
                         
         {if $id}
             <h2 id="formmaker-edit-header">{'Editing form'|i18n( 'formmaker/admin' )} `{$form_name|wash()}`</h2>
@@ -82,7 +82,7 @@
         </div>
 
         {if $id|not()} {* if this is a new form *}
-            {include uri="design:forms/buttons_bottom.tpl" show_attributes=false()} 
+            {include uri="design:formmaker/buttons_bottom.tpl" show_attributes=false()} 
         {else}
             <h3>Attributes</h3>
             <hr/>
@@ -94,11 +94,11 @@
 
             <div class="sortable-attributes">
                 {foreach $form_attributes as $attribute}
-                    {include uri=concat( 'design:forms/types/', $attribute.type_data.template ) data=$attribute validator_email_id=$validator_email_id
+                    {include uri=concat( 'design:formmaker/types/', $attribute.type_data.template ) data=$attribute validator_email_id=$validator_email_id
                              input_id=$attribute.id input=$attribute.type_data validator_custom_regex_id=$validator_custom_regex_id}
                 {/foreach}
             </div>                    
-            {include uri="design:forms/buttons_bottom.tpl" show_attributes=true()}     
+            {include uri="design:formmaker/buttons_bottom.tpl" show_attributes=true()}     
         {/if}
     </form>
 </div>

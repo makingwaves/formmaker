@@ -8,6 +8,7 @@ Version 1.7.2
 - Fixed Fatal Error caused by class FormMaker_Validate_Exception, which didn't exist, but was used in the code
 - Created 'design/standard/templates/formmaker' directory, so since now all new templates should be placed in there. Also, all FormMaker templates moved into there.
   Please BE AWARE about that when update'ing your FormMaker installation.
+- 'design/admin2/forms' directory renamed to 'design/admin2/formmaker'
 
 Version 1.7.1
 - fix for formdefinitions, when process_class not set post action should be 'email'

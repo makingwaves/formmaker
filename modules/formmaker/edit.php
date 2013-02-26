@@ -130,7 +130,7 @@ $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX);
 $Result = array();
 
 // if form is saved
-$Result['content'] = $tpl->fetch( 'design:forms/edit.tpl' );
+$Result['content'] = $tpl->fetch( 'design:formmaker/edit.tpl' );
 if( $http->hasPostVariable('definition_id') && empty($error_message) )
 {
     if ( $http->hasPostVariable( 'SaveExitButton' ) )
@@ -151,7 +151,7 @@ $Result['path']    = array( array( 'tag_id' => 0,
                                    'text'   => ezpI18n::tr( 'formmaker/admin', 'Form Maker Dashboard' ),
                                    'url'    => false ) );
 
-$Result['left_menu'] = "design:forms/left_menu.tpl";
+$Result['left_menu'] = "design:formmaker/left_menu.tpl";
 
 $contentInfoArray = array();
 $contentInfoArray['persistent_variable'] = false;
