@@ -9,7 +9,7 @@
      $current_page      = $form_data.current_page
      $header_text       = $form_definition.name
      $pages_count       = $form_data.all_pages|count()
-     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send'|i18n( 'formmaker/front' ), 'Next'|i18n( 'formmaker/front' ) )
+     $send_button       = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'Send', 'Next' )
      $send_name         = cond( $pages_count|eq( $form_data.current_page|inc( 1 ) ), 'form-send', 'form-next' ) }
 
 {* including CSS file *}
@@ -19,7 +19,7 @@
 {ezscript_require( array( 'ezjsc::jqueryio', 'select2.min.js', 'jquery.functions.js', 'jquery.validation.js' ) )}
 
 
-{include uri="design:form_steps.tpl" form_data=$form_data all_pages=$form_data.all_pages form_definition=$form_definition current_page=$current_page}
+{include uri="design:formmaker/form_steps.tpl" form_data=$form_data all_pages=$form_data.all_pages form_definition=$form_definition current_page=$current_page}
 
 {if is_set( $form_data.summary_page )}
     {set $header_text = $form_definition.summary_label}
@@ -46,30 +46,21 @@
             {* $form_data.success contains rendered template form_processed.tpl *}
             {$form_data.success}
         {else}
-            {include uri="design:form_error.tpl" errors=$errors attribute_id=0}
+            {include uri="design:formmaker/form_error.tpl" errors=$errors attribute_id=0}
 
             {foreach $form_attributes as $attribute}
                 {set $attr_required = fetch( 'formmaker', 'is_attrib_required', hash( 'attribute_id', $attribute.id ) )}
                 <div class="form-element-container" id="form_element_{$attribute.id}">
                     <div class="{if and( is_set( $counted_validators[$attribute.id] ), $counted_validators[$attribute.id] )}validate-it{/if} form_attribute_content">
-                        {include uri=concat('design:form_attributes/', $attribute.type_data.template ) attribute=$attribute is_required=$attr_required year_validator=$form_data.date_year_validator}
+                        {include uri=concat('design:formmaker/form_attributes/', $attribute.type_data.template ) attribute=$attribute is_required=$attr_required year_validator=$form_data.date_year_validator}
                     </div>
                     <div class="form_error_content">
-                        <span class="form_notification">{include uri="design:form_error.tpl" errors=$errors attribute_id=$attribute.id}</span>
+                        <span class="form_notification">{include uri="design:formmaker/form_error.tpl" errors=$errors attribute_id=$attribute.id}</span>
                     </div>
                 </div>
             {/foreach}
-            <div class="form-footer">
-                <div class="form-footer-back">
-                    {if $form_data.current_page|gt( 0 )}
-                        <input type="submit" value="{'Back'|i18n( 'formmaker/front' )}" name="form-back"/>
-                    {/if}
-                </div>
-                <div class="form-footer-next">
-                    <input type="submit" name="{$send_name}" value="{$send_button}"/>
-                    <input type="hidden" name="validation" value="false"/>                
-                </div>
-            </div>
+            {include uri="design:formmaker/form_buttons.tpl" send_name=$send_name send_value=$send_button back_value='Back'
+                     back_display=cond( $form_data.current_page|gt( 0 ), true(), false() ) }
         {/if}
     </form>
 </div>

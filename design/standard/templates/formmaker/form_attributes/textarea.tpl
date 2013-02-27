@@ -15,6 +15,6 @@
 
 <label for="form_{$attribute.type_id}_{$attribute.id}">
     {$attribute.label}
-    {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+    {include uri="design:formmaker/form_attributes/parts/required.tpl" is_required=$is_required}
 </label> 
 <textarea class="{$css_class}" id="form_{$attribute.type_id}_{$attribute.id}" name="field_{$attribute.type_id}_{$attribute.id}">{$attribute.default_value}</textarea>

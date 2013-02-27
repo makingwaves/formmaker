@@ -15,7 +15,7 @@
 
 <label>
     {$attribute.label}
-    {include uri="design:form_attributes/parts/required.tpl" is_required=$is_required}
+    {include uri="design:formmaker/form_attributes/parts/required.tpl" is_required=$is_required}
 </label>
 <span class="{$css_class}">
     {foreach $attribute.options as $option}

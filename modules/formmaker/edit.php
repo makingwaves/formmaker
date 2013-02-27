@@ -122,7 +122,7 @@ $tpl->setVariable( 'form_elements', $form_elements );
 $tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
-$tpl->setVariable( 'input_types', formTypes::getAllTypes( array( formTypes::FILE_ID, formTypes::SELECT_ID ) ) );
+$tpl->setVariable( 'input_types', formTypes::getAllTypes( array( formTypes::FILE_ID ) ) );
 $tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
 $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX);
@@ -130,7 +130,7 @@ $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX);
 $Result = array();
 
 // if form is saved
-$Result['content'] = $tpl->fetch( 'design:forms/edit.tpl' );
+$Result['content'] = $tpl->fetch( 'design:formmaker/edit.tpl' );
 if( $http->hasPostVariable('definition_id') && empty($error_message) )
 {
     if ( $http->hasPostVariable( 'SaveExitButton' ) )
@@ -151,7 +151,7 @@ $Result['path']    = array( array( 'tag_id' => 0,
                                    'text'   => ezpI18n::tr( 'formmaker/admin', 'Form Maker Dashboard' ),
                                    'url'    => false ) );
 
-$Result['left_menu'] = "design:forms/left_menu.tpl";
+$Result['left_menu'] = "design:formmaker/left_menu.tpl";
 
 $contentInfoArray = array();
 $contentInfoArray['persistent_variable'] = false;

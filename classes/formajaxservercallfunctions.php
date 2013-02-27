@@ -31,7 +31,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
                 $tpl->setVariable('errors', $errors);
                 
                 // there are errors - returning string with html code do display
-                return $tpl->fetch('design:form_error.tpl');                
+                return $tpl->fetch('design:formmaker/form_error.tpl');
             }
             
             // validated OK
@@ -65,7 +65,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID );
         $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX );
         
-        return $tpl->fetch( 'design:forms/types/' . $type->attribute( 'template' ) );
+        return $tpl->fetch( 'design:formmaker/types/' . $type->attribute( 'template' ) );
     }
     
     /**
@@ -86,7 +86,7 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl->setVariable( 'label', '' );
         $tpl->setVariable( 'option_id', uniqid() );
         
-        return $tpl->fetch( 'design:forms/types/elements/option_line.tpl' );
+        return $tpl->fetch( 'design:formmaker/types/elements/option_line.tpl' );
     }
     
     /**
@@ -106,17 +106,17 @@ class formAjaxServerCallFunctions extends ezjscServerFunctions
         $tpl = eZTemplate::factory();
         $rendered_template = '';
         $tpl->setVariable( 'input_id', $http->postVariable( 'attribute_id' ) );
-        
+
         switch ($validator_id)
         {
             case formValidators::EMAIL_ID:
-                $tpl->setVariable( 'enabled', 0 );
-                $rendered_template = $tpl->fetch( 'design:forms/types/elements/email_receiver.tpl' );
+                $tpl->setVariable( 'enabled', $http->postVariable( 'value' ) );
+                $rendered_template = $tpl->fetch( 'design:formmaker/types/elements/email_receiver.tpl' );
                 break;
             
             case formValidators::CUSTOM_REGEX:
-                $tpl->setVariable( 'regex', '' );
-                $rendered_template = $tpl->fetch( 'design:forms/types/elements/custom_regex.tpl' );
+                $tpl->setVariable( 'regex', $http->postVariable( 'value' ) );
+                $rendered_template = $tpl->fetch( 'design:formmaker/types/elements/custom_regex.tpl' );
                 break;
         }
         

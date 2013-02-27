@@ -69,4 +69,5 @@ jQuery(document).ready(function(){
     // jQuery plugin init
     jQuery('.validate-it .form_element').validator('blur');
     jQuery('.validate-it input[type=checkbox], .validate-it input[type=radio]').validator('click');
+    jQuery('.validate-it select.form-select-attribute').validator('change');
 })

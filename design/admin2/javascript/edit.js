@@ -26,6 +26,9 @@ jQuery(document).ready( function() {
             value = 1;
         } 
         $(this).parent('span').find('input[type=hidden]').val(value);
+        $(this).parents('.form-field-attributes-container')
+               .find('.dynamic-validator-value-' + $('#email-validator-id').val())
+               .val(value);
     });    
 
     jQuery( ".sortable-attributes" ).sortable();
@@ -153,16 +156,24 @@ jQuery(document).ready( function() {
         
         $(this).parent().find('input[type=hidden]').val(value);
     });
+
+    // Storing custom regex validator content
+    $('.custom-regex-inputs > input[type=text]').live('blur', function(){
+        $(this).parents('.form-field-attributes-container')
+               .find('.dynamic-validator-value-' + $('#custom-regex-validator-id').val())
+               .val($(this).val());
+    });
     
-    // displaying and hiding email receiver for email validation and custom regex
+    // displaying and hiding email receiver and custom regex fields (when validator select list changes)
     jQuery('.attribute-validation').live('change', function(){
 
         if ($.inArray($(this).val(), $('#form-dynamic-validators').val().split(',')) > -1) {
 
             jQuery('div#page').css('cursor', 'progress');
             var post_data = {
-                'attribute_id' : $(this).parents('.formField').find('.attribute-unique-id').val(),
-                'validator_id' : $(this).val()
+                'attribute_id'  : $(this).parents('.formField').find('.attribute-unique-id').val(),
+                'validator_id'  : $(this).val(),
+                'value'         : $(this).parents('.form-field-attribute').find('.dynamic-validator-value-' + $(this).val().toString()).val()
             };
             var object = $(this);
             
