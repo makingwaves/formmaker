@@ -66,27 +66,39 @@ class FormMakerFunctionCollection
             $this->removeSessionData();
         }
 
-        foreach( $form_page['attributes'] as $i => $attrib )
+        if ( !empty( $_POST ) )
         {
-            $post_id = $this->generatePostID( $attrib );
-            if ( !$this->http->hasPostVariable( $post_id ) )
+            foreach( $form_page['attributes'] as $i => $attrib )
             {
-                continue;
-            }
-
-            // validation only when button "Send" or "Next" clicked
-            if ( !$this->http->hasPostVariable( 'form-back' ) )
-            {
-                // validating inputs
-                $validation = $attrib->validate($this->http->postVariable($post_id));
-                if (!empty($validation))
+                $post_id = $this->generatePostID( $attrib );
+                if ( !$this->http->hasPostVariable( $post_id ) && $attrib->attribute( 'type_id' ) != formTypes::FILE_ID )
                 {
-                    $errors[$attrib->attribute('id')] = $validation;
+                    continue;
+                }
+
+                // in case of File, we need to get it's value from $_FILES, we cannot use eZHTTPFile class, because in this point File can have no name, which is not acceptable
+                if ( isset( $_FILES[$post_id] ) )
+                {
+                    $input = $_FILES[$post_id]['name'];
+                }
+                else
+                {
+                    $input = $this->http->postVariable( $post_id );
+                    // generating array of posted values
+                    $posted_values[$i] = $input;
+                }
+
+                // validation only when button "Send" or "Next" clicked
+                if ( !$this->http->hasPostVariable( 'form-back' ) )
+                {
+                    // validating inputs
+                    $validation = $attrib->validate( $input );
+                    if ( !empty( $validation ) )
+                    {
+                        $errors[$attrib->attribute('id')] = $validation;
+                    }
                 }
             }
-
-            // generating array of posted values
-            $posted_values[$i] = $this->http->postVariable($post_id);
         }
         
         // overriding $form_page (in case when external script is set up)
