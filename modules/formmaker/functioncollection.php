@@ -68,8 +68,9 @@ class FormMakerFunctionCollection
 
         foreach( $form_page['attributes'] as $i => $attrib )
         {
-            $post_id = $this->generatePostID($attrib);
-            if (!$this->http->hasPostVariable($post_id)) {
+            $post_id = $this->generatePostID( $attrib );
+            if ( !$this->http->hasPostVariable( $post_id ) )
+            {
                 continue;
             }
 
@@ -92,16 +93,16 @@ class FormMakerFunctionCollection
         $this->injectExternalData( $form_page );
 
         // Checking post variables
-        if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) )
+        if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) || !empty( $_FILES ) )
         {
             // Checking required security POST variable
-            if ( $this->http->postVariable('validation') !== 'False' ) {
+            if ( $this->http->postVariable('validation') !== 'False' )
+            {
                 throw new Exception('Security exception');
             }
 
-            if ( count( $posted_values ) )
+            if ( count( $posted_values ) || !empty( $_FILES ) )
             {
-
                 $attachmentsDir = $this->ini->variable('Mail', 'AttachmentsDir');
 
                 // updating attributes with current values
@@ -114,7 +115,6 @@ class FormMakerFunctionCollection
                         && empty( $posted_values[$i] )
                        )
                     {
-
                         $file = eZHTTPFile::fetch( $this->generatePostID($attrib) );
                         $ext = end(explode('.', $file->OriginalFilename));
 
@@ -138,15 +138,12 @@ class FormMakerFunctionCollection
 
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
-
                         }
-
                     }
                     else
                     {
                         $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
                     }
-
                 }
             }
 
@@ -164,7 +161,6 @@ class FormMakerFunctionCollection
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
-
                 $tpl = eZTemplate::factory();
                 $data_to_send = $this->getDataToSend();
                 
@@ -223,7 +219,7 @@ class FormMakerFunctionCollection
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];            
         }
-        
+
         $result = array_merge($result, array( 'definition'          => $this->definition,
                                               'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
