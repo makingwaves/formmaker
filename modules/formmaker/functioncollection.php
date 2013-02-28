@@ -66,39 +66,27 @@ class FormMakerFunctionCollection
             $this->removeSessionData();
         }
 
-        if ( !empty( $_POST ) )
+        foreach( $form_page['attributes'] as $i => $attrib )
         {
-            foreach( $form_page['attributes'] as $i => $attrib )
+            $post_id = $this->generatePostID( $attrib );
+            if ( !$this->http->hasPostVariable( $post_id ) )
             {
-                $post_id = $this->generatePostID( $attrib );
-                if ( !$this->http->hasPostVariable( $post_id ) && $attrib->attribute( 'type_id' ) != formTypes::FILE_ID )
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                // in case of File, we need to get it's value from $_FILES, we cannot use eZHTTPFile class, because in this point File can have no name, which is not acceptable
-                if ( isset( $_FILES[$post_id] ) )
+            // validation only when button "Send" or "Next" clicked
+            if ( !$this->http->hasPostVariable( 'form-back' ) )
+            {
+                // validating inputs
+                $validation = $attrib->validate($this->http->postVariable($post_id));
+                if (!empty($validation))
                 {
-                    $input = $_FILES[$post_id]['name'];
-                }
-                elseif ( $this->getTypeIdFromPostId( $post_id ) !== formTypes::FILE_ID )
-                {
-                    $input = $this->http->postVariable( $post_id );
-                    // generating array of posted values
-                    $posted_values[$i] = $input;
-                }
-
-                // validation only when button "Send" or "Next" clicked
-                if ( !$this->http->hasPostVariable( 'form-back' ) )
-                {
-                    // validating inputs
-                    $validation = $attrib->validate( $input );
-                    if ( !empty( $validation ) )
-                    {
-                        $errors[$attrib->attribute('id')] = $validation;
-                    }
+                    $errors[$attrib->attribute('id')] = $validation;
                 }
             }
+
+            // generating array of posted values
+            $posted_values[$i] = $this->http->postVariable($post_id);
         }
 
         // overriding $form_page (in case when external script is set up)
@@ -215,11 +203,11 @@ class FormMakerFunctionCollection
         
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
-
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
             }
+            
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
 
@@ -581,13 +569,13 @@ class FormMakerFunctionCollection
     }
 
     /**
-     * Returns the type id from array returned by explodePostId
+     * Returns the attribute id from array returned by explodePostId
      * @param string $post_id
      * @return int
      */
-    private function getTypeIdFromPostId( $post_id )
+    private function getAttributeIdFromPostId( $post_id )
     {
         $data = $this->explodePostId( $post_id );
-        return (int)$data['type_id'];
+        return (int)$data['attribute_id'];
     }
 }

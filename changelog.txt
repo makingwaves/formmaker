@@ -5,7 +5,6 @@ Database update scripts can be found under sql/update directory.
 Version 1.7.3
 - 'File' attribute enabled
 - Fixed not working form when there was only file attribute in it
-- Fixed mandatory validation for File attribute
 - Fixed errors displayed when 'File' attribute remained empty and form was processed
 - Fixed errors displayed when 'File' attribute remained not-empty and form was processed
 
