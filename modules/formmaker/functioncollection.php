@@ -133,26 +133,19 @@ class FormMakerFunctionCollection
                         }
 
                         $file = eZHTTPFile::fetch( $post_id );
-                        $ext = end( explode( '.', $file->OriginalFilename ) );
+                        $parts = explode( '.', $file->attribute( 'original_filename' ) );
+                        $ext = end( $parts );
 
                         if( $file && in_array( $ext, explode( ',', $allowed_file_types) ) )
                         {
-                            $file->store($this->ini->variable('Mail', 'AttachmentsDir'), $ext);
-
+                            $file->store( $attachmentsDir , $ext );
                             $thumb = $this->thumbName($file->attribute('filename'));
 
                             $img = eZImageManager::instance();
                             $img->readINISettings();
-
-                            $img->convert( $file->attribute('filename'), $this->ini->variable('Mail', 'AttachmentsDir') , 'thumb');
-
-                            $email_data[$i]['attributes'][$j]['label'] = $attrib->attribute( 'label' );
-                            $email_data[$i]['attributes'][$j]['value'] = $file->attribute('filename');
-
-                            $attachments[] = $file->attribute('filename');
+                            $img->convert( $file->attribute( 'filename' ), $attachmentsDir , 'thumb' );
 
                             $form_page['attributes'][$i]->setAttribute('default_value', $file->attribute('filename'));
-
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
                         }
