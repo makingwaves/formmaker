@@ -338,9 +338,7 @@ class FormMakerFunctionCollection
                 foreach( $attachments as $attachment )
                 {
                     $mail->AddAttachment($attachment);
-                    unlink($attachment);
-                    unlink($this->thumbName($attachment));
-               }
+                }
 
                 if(!$mail->Send())
                 {
@@ -353,7 +351,19 @@ class FormMakerFunctionCollection
                     // Message has been sent
                     $result = true;
                 }
+
+                // sent or not, need to delete attachments
+                foreach( $attachments as $attachment )
+                {
+                    if( file_exists( $attachment ) )
+                    {
+                        unlink($attachment);
+                        unlink($this->thumbName($attachment));
+                    }
+                }
+
                 break;
+
         }
         
         return $result;		
