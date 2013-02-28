@@ -81,7 +81,7 @@ class FormMakerFunctionCollection
                 {
                     $input = $_FILES[$post_id]['name'];
                 }
-                else
+                elseif ( $this->getTypeIdFromPostId( $post_id ) !== formTypes::FILE_ID )
                 {
                     $input = $this->http->postVariable( $post_id );
                     // generating array of posted values
@@ -100,7 +100,7 @@ class FormMakerFunctionCollection
                 }
             }
         }
-        
+
         // overriding $form_page (in case when external script is set up)
         $this->injectExternalData( $form_page );
 
@@ -122,19 +122,24 @@ class FormMakerFunctionCollection
                 {
                     $allowed_file_types = $attrib->attribute( 'allowed_file_types' );
 
-                    if( ! empty( $allowed_file_types ) // if there are some files in form
-                        && ! file_exists( $attachmentsDir . $attrib->attribute( 'default_value' ) )
-                        && empty( $posted_values[$i] )
-                       )
+                    // processing File attributes
+                    if( !empty( $allowed_file_types ) && !file_exists( $attachmentsDir . $attrib->attribute( 'default_value' ) ) && empty( $posted_values[$i] ) )
                     {
-                        $file = eZHTTPFile::fetch( $this->generatePostID($attrib) );
-                        $ext = end(explode('.', $file->OriginalFilename));
+                        $post_id = $this->generatePostID( $attrib );
+                        // we can't continue with file processing when it wasn't uploaded (name is empty)
+                        if ( !isset( $_FILES[$post_id] ) || empty( $_FILES[$post_id]['name'] ) )
+                        {
+                            continue;
+                        }
+
+                        $file = eZHTTPFile::fetch( $post_id );
+                        $ext = end( explode( '.', $file->OriginalFilename ) );
 
                         if( $file && in_array( $ext, explode( ',', $allowed_file_types) ) )
                         {
                             $file->store($this->ini->variable('Mail', 'AttachmentsDir'), $ext);
 
-                            $thumb = $this->_thumbName($file->attribute('filename'));
+                            $thumb = $this->thumbName($file->attribute('filename'));
 
                             $img = eZImageManager::instance();
                             $img->readINISettings();
@@ -152,6 +157,7 @@ class FormMakerFunctionCollection
                             $form_page['files'][$i]['thumb'] = $thumb;
                         }
                     }
+                    // processing all other attributes (except File)
                     else
                     {
                         $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
@@ -311,10 +317,8 @@ class FormMakerFunctionCollection
      */
     private function sendEmail( $sender, $subject, $template, $email_data, $recipients, $attachments )
     {
-
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
-
             case 'eZMail':
                 $tpl    = eZTemplate::factory();
                 $mail   = new eZMail();
@@ -354,7 +358,7 @@ class FormMakerFunctionCollection
                 {
                     $mail->AddAttachment($attachment);
                     unlink($attachment);
-                    unlink($this->_thumbName($attachment));
+                    unlink($this->thumbName($attachment));
                }
 
                 if(!$mail->Send())
@@ -362,20 +366,16 @@ class FormMakerFunctionCollection
                     // Message was not sent
                     // debug accessible with $mail->ErrorInfo;
                     $result = false;
-
                 }
                 else
                 {
                     // Message has been sent
                     $result = true;
                 }
-
                 break;
-
         }
-
+        
         return $result;		
-
     }
     
     /**
@@ -535,7 +535,7 @@ class FormMakerFunctionCollection
     /**
     * generates and returns file name for a thumbnail
     **/
-    private function _thumbName( $file )
+    private function thumbName( $file )
     {
         $data = explode('.', $file);
         $start = reset($data);
@@ -549,17 +549,52 @@ class FormMakerFunctionCollection
      * @param string $filePath
      * @return bool
      */
-    public function isImage($filePath)
+    public static function isImage( $filePath )
     {
-        $imgData = getimagesize($filePath);
-
-        if( is_numeric($imgData[0]) ) {
-            return true;
+        try
+        {
+            if ( !file_exists( $filePath ) )
+            {
+                throw new Exception( 'Given path is not correct file path' );
+            }
+            getimagesize( $filePath );
         }
-        else {
+        catch (Exception $e)
+        {
             return false;
         }
+
+        return true;
     }
 
+    /**
+     * Returns the IDs from post_id string
+     * @param string $post_id
+     * @return array
+     * @throws Exception
+     */
+    private function explodePostId( $post_id )
+    {
+        $parts = explode( '_', $post_id );
+        if ( !isset( $parts[2] ) )
+        {
+            throw new Exception( 'Incorrect post ID string given' );
+        }
 
+        return array(
+            'type_id'       => $parts[1],
+            'attribute_id'  => $parts[2]
+        );
+    }
+
+    /**
+     * Returns the type id from array returned by explodePostId
+     * @param string $post_id
+     * @return int
+     */
+    private function getTypeIdFromPostId( $post_id )
+    {
+        $data = $this->explodePostId( $post_id );
+        return (int)$data['type_id'];
+    }
 }
