@@ -1,4 +1,4 @@
-Form Maker 1.7.2
+Form Maker 1.7.3
 
 owner:      Making Waves (www.makingwaves.no)
 authors:    Piotr Szczygieł (piotr.szczygiel@makingwaves.pl)

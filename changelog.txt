@@ -2,6 +2,12 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.7.3
+- 'File' attribute enabled
+- Fixed not working form when there was only file attribute in it
+- Fixed errors displayed when 'File' attribute remained empty and form was processed
+- Fixed errors displayed when 'File' attribute remained not-empty and form was processed
+
 Version 1.7.2
 - 'Select' attribute fixed and enabled
 - Fixed problem with dissapearing custom regex value
