@@ -68,8 +68,9 @@ class FormMakerFunctionCollection
 
         foreach( $form_page['attributes'] as $i => $attrib )
         {
-            $post_id = $this->generatePostID($attrib);
-            if (!$this->http->hasPostVariable($post_id)) {
+            $post_id = $this->generatePostID( $attrib );
+            if ( !$this->http->hasPostVariable( $post_id ) )
+            {
                 continue;
             }
 
@@ -87,21 +88,21 @@ class FormMakerFunctionCollection
             // generating array of posted values
             $posted_values[$i] = $this->http->postVariable($post_id);
         }
-        
+
         // overriding $form_page (in case when external script is set up)
         $this->injectExternalData( $form_page );
 
         // Checking post variables
-        if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) )
+        if ( count( $posted_values ) || $this->http->hasPostVariable( 'summary_page' ) || !empty( $_FILES ) )
         {
             // Checking required security POST variable
-            if ( $this->http->postVariable('validation') !== 'False' ) {
+            if ( $this->http->postVariable('validation') !== 'False' )
+            {
                 throw new Exception('Security exception');
             }
 
-            if ( count( $posted_values ) )
+            if ( count( $posted_values ) || !empty( $_FILES ) )
             {
-
                 $attachmentsDir = $this->ini->variable('Mail', 'AttachmentsDir');
 
                 // updating attributes with current values
@@ -109,44 +110,39 @@ class FormMakerFunctionCollection
                 {
                     $allowed_file_types = $attrib->attribute( 'allowed_file_types' );
 
-                    if( ! empty( $allowed_file_types ) // if there are some files in form
-                        && ! file_exists( $attachmentsDir . $attrib->attribute( 'default_value' ) )
-                        && empty( $posted_values[$i] )
-                       )
+                    // processing File attributes
+                    if( !empty( $allowed_file_types ) && !file_exists( $attachmentsDir . $attrib->attribute( 'default_value' ) ) && empty( $posted_values[$i] ) )
                     {
+                        $post_id = $this->generatePostID( $attrib );
+                        // we can't continue with file processing when it wasn't uploaded (name is empty)
+                        if ( !isset( $_FILES[$post_id] ) || empty( $_FILES[$post_id]['name'] ) )
+                        {
+                            continue;
+                        }
 
-                        $file = eZHTTPFile::fetch( $this->generatePostID($attrib) );
-                        $ext = end(explode('.', $file->OriginalFilename));
+                        $file = eZHTTPFile::fetch( $post_id );
+                        $parts = explode( '.', $file->attribute( 'original_filename' ) );
+                        $ext = end( $parts );
 
                         if( $file && in_array( $ext, explode( ',', $allowed_file_types) ) )
                         {
-                            $file->store($this->ini->variable('Mail', 'AttachmentsDir'), $ext);
-
-                            $thumb = $this->_thumbName($file->attribute('filename'));
+                            $file->store( $attachmentsDir , $ext );
+                            $thumb = $this->thumbName($file->attribute('filename'));
 
                             $img = eZImageManager::instance();
                             $img->readINISettings();
-
-                            $img->convert( $file->attribute('filename'), $this->ini->variable('Mail', 'AttachmentsDir') , 'thumb');
-
-                            $email_data[$i]['attributes'][$j]['label'] = $attrib->attribute( 'label' );
-                            $email_data[$i]['attributes'][$j]['value'] = $file->attribute('filename');
-
-                            $attachments[] = $file->attribute('filename');
+                            $img->convert( $file->attribute( 'filename' ), $attachmentsDir , 'thumb' );
 
                             $form_page['attributes'][$i]->setAttribute('default_value', $file->attribute('filename'));
-
                             $form_page['files'][$i]['file'] = $file->attribute('filename');
                             $form_page['files'][$i]['thumb'] = $thumb;
-
                         }
-
                     }
+                    // processing all other attributes (except File)
                     else
                     {
                         $form_page['attributes'][$i]->setAttribute('default_value', $posted_values[$i]);
                     }
-
                 }
             }
 
@@ -164,7 +160,6 @@ class FormMakerFunctionCollection
             // in case when no errors and current page is last one
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
-
                 $tpl = eZTemplate::factory();
                 $data_to_send = $this->getDataToSend();
                 
@@ -208,11 +203,11 @@ class FormMakerFunctionCollection
         
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
-
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
             }
+            
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
 
@@ -223,7 +218,7 @@ class FormMakerFunctionCollection
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];            
         }
-        
+
         $result = array_merge($result, array( 'definition'          => $this->definition,
                                               'attributes'          => $form_page['attributes'],
                                               'validation'          => $errors,
@@ -303,10 +298,8 @@ class FormMakerFunctionCollection
      */
     private function sendEmail( $sender, $subject, $template, $email_data, $recipients, $attachments )
     {
-
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
-
             case 'eZMail':
                 $tpl    = eZTemplate::factory();
                 $mail   = new eZMail();
@@ -346,7 +339,7 @@ class FormMakerFunctionCollection
                 {
                     $mail->AddAttachment($attachment);
                     unlink($attachment);
-                    unlink($this->_thumbName($attachment));
+                    unlink($this->thumbName($attachment));
                }
 
                 if(!$mail->Send())
@@ -354,20 +347,16 @@ class FormMakerFunctionCollection
                     // Message was not sent
                     // debug accessible with $mail->ErrorInfo;
                     $result = false;
-
                 }
                 else
                 {
                     // Message has been sent
                     $result = true;
                 }
-
                 break;
-
         }
-
+        
         return $result;		
-
     }
     
     /**
@@ -527,7 +516,7 @@ class FormMakerFunctionCollection
     /**
     * generates and returns file name for a thumbnail
     **/
-    private function _thumbName( $file )
+    private function thumbName( $file )
     {
         $data = explode('.', $file);
         $start = reset($data);
@@ -541,17 +530,52 @@ class FormMakerFunctionCollection
      * @param string $filePath
      * @return bool
      */
-    public function isImage($filePath)
+    public static function isImage( $filePath )
     {
-        $imgData = getimagesize($filePath);
-
-        if( is_numeric($imgData[0]) ) {
-            return true;
+        try
+        {
+            if ( !file_exists( $filePath ) )
+            {
+                throw new Exception( 'Given path is not correct file path' );
+            }
+            getimagesize( $filePath );
         }
-        else {
+        catch (Exception $e)
+        {
             return false;
         }
+
+        return true;
     }
 
+    /**
+     * Returns the IDs from post_id string
+     * @param string $post_id
+     * @return array
+     * @throws Exception
+     */
+    private function explodePostId( $post_id )
+    {
+        $parts = explode( '_', $post_id );
+        if ( !isset( $parts[2] ) )
+        {
+            throw new Exception( 'Incorrect post ID string given' );
+        }
 
+        return array(
+            'type_id'       => $parts[1],
+            'attribute_id'  => $parts[2]
+        );
+    }
+
+    /**
+     * Returns the attribute id from array returned by explodePostId
+     * @param string $post_id
+     * @return int
+     */
+    private function getAttributeIdFromPostId( $post_id )
+    {
+        $data = $this->explodePostId( $post_id );
+        return (int)$data['attribute_id'];
+    }
 }

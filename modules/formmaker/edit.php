@@ -122,7 +122,7 @@ $tpl->setVariable( 'form_elements', $form_elements );
 $tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
-$tpl->setVariable( 'input_types', formTypes::getAllTypes( array( formTypes::FILE_ID ) ) );
+$tpl->setVariable( 'input_types', formTypes::getAllTypes());
 $tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
 $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX);
