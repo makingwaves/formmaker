@@ -2,6 +2,13 @@ Below you can find what changed in each version. Version number convention is ba
 database structure we're incrementing number after first decimal (i.e 1.1, 1.2). Otherwise we're incrementing the number after second decimal (i.e 1.2.1, 1.2.2).
 Database update scripts can be found under sql/update directory.
 
+Version 1.8
+- After processing file attribute delete attachments when form data have been sent
+- Setting file formmaker.ini.append.php renamed into formmaker.ini
+- Added possibility to restrict the forms for which external scripts (both - processing and injecting) will be run
+- Editors can set the email title for each form
+- Created bash script (bin/sh/sql_schema.sh) for generating install.sql file
+
 Version 1.7.3
 - 'File' attribute enabled
 - Fixed not working form when there was only file attribute in it
