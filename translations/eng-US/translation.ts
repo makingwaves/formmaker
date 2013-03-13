@@ -51,10 +51,6 @@
         <translation type="unfinished" />
     </message>
     <message>
-        <source>New answer</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>We kindly inform about the new answer.</source>
         <translation type="unfinished" />
     </message>

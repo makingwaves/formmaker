@@ -255,7 +255,7 @@ class FormMakerFunctionCollection
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
                 $sender,
-                $this->definition->attribute( 'name' ) . ' - ' . ezpI18n::tr( 'formmaker/email', 'New answer' ),
+                $this->definition->attribute( 'email_title' ),
                 'formmaker/email/recipient.tpl',
                 $data_to_send['data'],
                 $recipients,
@@ -274,7 +274,7 @@ class FormMakerFunctionCollection
 
                 $status = $this->sendEmail(
                         $sender,
-                        $this->definition->attribute( 'name' ),
+                        $this->definition->attribute( 'email_title' ),
                         'formmaker/email/user.tpl',
                         $data_to_send['data'],
                         array( $email_address ),
@@ -408,20 +408,19 @@ class FormMakerFunctionCollection
 
         foreach ( $_SESSION as $key => $page )
         {
-            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
+            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
+            {
                 continue;
             }
-
             $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'first_page' );
             
-
             foreach ( $page['attributes'] as $j => $attribute )
             {
                 $default_value = $attribute->attribute( 'default_value' );
 
                 switch ($attribute->attribute('type_id'))
                 {
-                    case formTypes::CHECKBOX_ID: // checkbox
+                    case formTypes::CHECKBOX_ID:
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
@@ -429,7 +428,7 @@ class FormMakerFunctionCollection
                         $email_data[$i]['attributes'][$j]['is_image'] = false;
                         break;
 
-                    case formTypes::RADIO_ID: // radio button
+                    case formTypes::RADIO_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
@@ -441,7 +440,7 @@ class FormMakerFunctionCollection
                         }
                         break;
 
-                    case formTypes::SELECT_ID: // radio button
+                    case formTypes::SELECT_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
@@ -454,12 +453,12 @@ class FormMakerFunctionCollection
                         break;
 
                     case formTypes::TEXTLINE_ID:
-                        if ( $attribute->attribute( 'email_receiver' ) == 1 )
+                        if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
-                            $receivers[] = $default_value;
-                        }
-                        else /* fixed: without else condition text attributes were skipped from summary... */
-                        {
+                            if ( $attribute->attribute( 'email_receiver' ) == 1 )
+                            {
+                                $receivers[] = $default_value;
+                            }
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
