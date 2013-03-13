@@ -7,6 +7,7 @@ Version 1.8
 - Setting file formmaker.ini.append.php renamed into formmaker.ini
 - Added possibility to restrict the forms for which external scripts (both - processing and injecting) will be run
 - Editors can set the email title for each form
+- Created bash script (bin/sh/sql_schema.sh) for generating install.sql file
 
 Version 1.7.3
 - 'File' attribute enabled

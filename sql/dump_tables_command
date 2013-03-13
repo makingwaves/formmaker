@@ -1,1 +1,0 @@
-mysqldump -uroot -p ezpublish47 form_validators form_definitions form_attributes form_attributes_options form_attr_valid form_types > sql/install.sql
