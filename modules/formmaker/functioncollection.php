@@ -501,25 +501,45 @@ class FormMakerFunctionCollection
     }
     
     /**
-     * Method executes the internal script
+     * Method executes the internal script. It depends on FormsAffected setting and runs in two caseses only: when FormsAffected array is empty (runs for all forms) or
+     * FormsAffected array is not empty and currently processed form matches its value
      */
     private function executeExternalScript()
     {
-        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalScript' ) )
+        if ( $this->ini->hasVariable( 'ExternalScript', 'Path' ) )
         {
-            require $this->ini->variable( 'FormmakerSettings', 'ExternalScript' );
+            $forms_affected = array();
+            if ( $this->ini->hasVariable( 'ExternalScript', 'FormsAffected' ) )
+            {
+                $forms_affected = $this->ini->variable( 'ExternalScript', 'FormsAffected' );
+            }
+
+            if ( empty( $forms_affected ) || in_array( $this->definition->attribute( 'id' ), $forms_affected ) )
+            {
+                require $this->ini->variable( 'ExternalScript', 'Path' );
+            }
         }        
     }
     
     /**
-     * Method overrides $form_page variable. 
+     * Method overrides $form_page variable by injecting the data from external source. It depends on FormsAffected setting and runs in two caseses only:
+     * when FormsAffected array is empty (runs for all forms) or FormsAffected array is not empty and currently processed form matches its value
      * @param array $form_page
      */
     private function injectExternalData( &$form_page )
     {
-        if ( $this->ini->hasVariable( 'FormmakerSettings', 'ExternalData' ) )
+        if ( $this->ini->hasVariable( 'ExternalDataInject', 'Path' ) )
         {
-            require $this->ini->variable( 'FormmakerSettings', 'ExternalData' );
+            $forms_affected = array();
+            if ( $this->ini->hasVariable( 'ExternalDataInject', 'FormsAffected' ) )
+            {
+                $forms_affected = $this->ini->variable( 'ExternalDataInject', 'FormsAffected' );
+            }
+
+            if ( empty( $forms_affected ) || in_array( $this->definition->attribute( 'id' ), $forms_affected ) )
+            {
+                require $this->ini->variable( 'ExternalDataInject', 'Path' );
+            }
         }
     }
 
