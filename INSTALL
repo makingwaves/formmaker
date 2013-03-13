@@ -9,7 +9,7 @@ git clone git@github.com:makingwaves/formmaker.git
 ActiveExtensions[]=formmaker
 
 2. Log in to admin panel as administrator, go to Setup -> Packages and click "Import new package". 
-Now browse for package which is included in formmaker/package and import it. 
+Now browse for package form-1.8-1.ezpkg which is included in formmaker/package and import it.
 After successfull import process, you will be asked to install package, so please perform.
 In case of any errors please check if proper file rights write are set on your `var` folder.
 

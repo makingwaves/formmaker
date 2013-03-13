@@ -8,6 +8,8 @@ Version 1.8
 - Added possibility to restrict the forms for which external scripts (both - processing and injecting) will be run
 - Editors can set the email title for each form
 - Created bash script (bin/sh/sql_schema.sh) for generating install.sql file
+- Package containing Form class updated (package/form-1.8-1.ezpkg), however it's not mandatory to update it.
+- Added possibility to select attribute_view_gui view. It is possible after updating the Form class with latest package.
 
 Version 1.7.3
 - 'File' attribute enabled
