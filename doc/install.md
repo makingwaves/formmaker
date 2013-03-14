@@ -20,7 +20,7 @@ In case of any errors please check if proper file rights write are set on your `
 6. It's also highly recommended to clear the cache, but be aware of running this on your production environment:
 `hp bin/php/ezcache.php --clear-all --purge`
 
-7. As forms requires changes in your MySQL database, you need to install sql file included in extension (sql/install.sql). You can use following pattern as a instalation command:
+7. As forms requires changes in your MySQL database, you need to install sql file included in extension (sql/install.sql). You can use following pattern as a instalation command:  
 `mysql -u {mysql-username} -p {your-ezpublish-database} < install.sql`
 
 8. If you have editor users in your project and you want them to have a possibility to add/remove forms, you need to grant them proper privilages.
