@@ -5,8 +5,8 @@ Good practices when working with FormMaker:
 -------------------------------------------
 * ALWAYS check the eZ debug informations when implementing or testing. It's **not allowed to commit the code which generates notices, warnings or errors**.
 * Remember that master branch is (or at least should be) always equal to latest tag
-* Tags are always created basing on master branch
-* Remember to update *doc/changelog file*
+* Tags are always created based on master branch
+* Remember to update *doc/changelog* file
 
 When to create new versions:
 ----------------------------
@@ -18,10 +18,11 @@ How to choose the number for new version:
 * Version number convention is based basically on **changes made to database structure**
 * In case when we made some changes in database structure we're incrementing the number after first decimal (i.e **1.1.0**, **1.2.0**)
 * Otherwise we're incrementing the number after second decimal (i.e **1.2.1**, **1.2.2**)
+* First number can be incremented in case of major changes
 
 How to implement new task:
 --------------------------
-1. Create your working branch basing on release branch
+1. Create your working branch based on release branch
 2. Update your database using *sql/install.sql* file
 3. Implement your change
 4. In case when you made the changes in database please do following:
