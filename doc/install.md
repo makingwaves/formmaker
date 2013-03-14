@@ -1,12 +1,10 @@
 Form Maker installation guide
 =============================
 
-1. Get the extension
-Go to your `extension` folder within your eZ installation, then run:
-git clone git@github.com:makingwaves/formmaker.git
+1. Get the extension. Go to your `extension` folder within your eZ installation, then run: *git clone git@github.com:makingwaves/formmaker.git*
 
 2. Enable extension adding entry to site.ini.append.php:
-[ExtensionSettings]
+[ExtensionSettings]  
 ActiveExtensions[]=formmaker
 
 3. Log in to admin panel as administrator, go to Setup -> Packages and click "Import new package".
