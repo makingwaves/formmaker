@@ -5,6 +5,7 @@ $tpl            = eZTemplate::factory();
 $form_id        = isset($Params['id']) ? $Params['id'] : ''; 
 $original_name  = '';
 $attributes     = array();
+$formmaker_ini  = eZINI::instance( 'formmaker.ini' );
 
 // key is the name of attribute and value is the "reqiured" flag, label and default value
 $form_elements = array( 'name'          => array(   'required'  => true, 
@@ -127,7 +128,7 @@ $tpl->setVariable( 'form_elements', $form_elements );
 $tpl->setVariable( 'form_attributes', $attributes );
 $tpl->setVariable( 'id', $form_id );
 $tpl->setVariable( 'form_name', $original_name );
-$tpl->setVariable( 'input_types', formTypes::getAllTypes());
+$tpl->setVariable( 'input_types', formTypes::getAllTypes( $formmaker_ini->variable( 'FormmakerSettings', 'ExcludedFormTypes' ) ) );
 $tpl->setVariable( 'separator_id', formTypes::SEPARATOR_ID );
 $tpl->setVariable( 'validator_email_id', formValidators::EMAIL_ID);
 $tpl->setVariable( 'validator_custom_regex_id', formValidators::CUSTOM_REGEX);
