@@ -38,7 +38,7 @@ How to create new version:
 --------------------------
 1. Checkout and update your local release branch code
 2. Go to file *doc/changelog* and change "Next version" header into "Version X.Y.Z"
-3. Change the version number in file *INSTALL*
+3. Change the version number in file *README.md*
 4. Rename file (if exists) *sql/update/next_version.sql* into *sql/update/A.B.C_to_X.Y.Z.sql*
 5. Push the changes into release branch
 6. Merge branch release into master
