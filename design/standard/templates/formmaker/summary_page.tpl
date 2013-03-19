@@ -4,7 +4,7 @@
 - $form_id, int *}
 
 {def $thumb = ''
-     $extension = flase()}
+     $extension = false()}
 
 <input type="hidden" name="summary_page" value="1" />
 <p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
