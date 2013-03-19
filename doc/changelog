@@ -1,7 +1,7 @@
 Form Maker changelog file
 =========================
 
-Next version
+Version 1.8.1
 - All documents except README.md moved into 'doc' folder
 - Created Developer's guide, which can be found under 'doc/developer.md'
 - Summary page contains the form ID since now - it helps when you want to override this page for particular form
