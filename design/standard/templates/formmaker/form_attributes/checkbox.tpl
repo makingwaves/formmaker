@@ -6,18 +6,18 @@
 {def $default_value = '' 
      $css_class = '' }
 
-{if ezini( 'AdditionalElements', 'description', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'Description', 'formmaker.ini' )|eq( 'enabled' )}
     <p class="form-element-description">{$attribute.description}</p>
 {/if}
 
-{if ezini( 'AdditionalElements', 'default_value', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'DefaultValue', 'formmaker.ini' )|eq( 'enabled' )}
     {set $default_value = $attribute.default_value }
     {if eq( $default_value, '0' )}
         {set $default_value = ''}
     {/if}    
 {/if}
 
-{if ezini( 'AdditionalElements', 'css', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'Css', 'formmaker.ini' )|eq( 'enabled' )}
     {set $css_class = $attribute.css|wash() }
 {/if}
 

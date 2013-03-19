@@ -2,7 +2,7 @@
 - $input_id
 - $allowed_file_types - string, displayed value *}
 
-{def $allowed_file_types_ini = ezini( 'AdditionalElements', 'allowed_file_types', 'formmaker.ini' )}
+{def $allowed_file_types_ini = ezini( 'AdditionalElements', 'AllowedFileTypes', 'formmaker.ini' )}
 
 {if and($allowed_file_types_ini, $allowed_file_types|not() ) }
 	{set $allowed_file_types = $allowed_file_types_ini}

@@ -6,6 +6,7 @@ Next version
 - Created Developer's guide, which can be found under 'doc/developer.md'
 - Summary page contains the form ID since now - it helps when you want to override this page for particular form
 - Added posibility to exclude form types from extension (by adding its ID into formmaker.ini)
+- Not camel-cased ini variables fixed (so be aware when update'ing - in case when you have overrided original FormMaker templates)
 
 Version 1.8
 - After processing file attribute delete attachments when form data have been sent
