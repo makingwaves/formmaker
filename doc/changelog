@@ -5,6 +5,7 @@ Next version
 - All documents except README.md moved into 'doc' folder
 - Created Developer's guide, which can be found under 'doc/developer.md'
 - Summary page contains the form ID since now - it helps when you want to override this page for particular form
+- Added posibility to exclude form types from extension (by adding its ID into formmaker.ini)
 
 Version 1.8
 - After processing file attribute delete attachments when form data have been sent
