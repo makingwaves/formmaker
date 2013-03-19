@@ -1,8 +1,10 @@
 {* Template renders summary page (if form has it enabled), params:
 - $all_pages, array
-- $body_text, string *}
+- $body_text, string
+- $form_id, int *}
 
-{def $thumb = ''}
+{def $thumb = ''
+     $extension = false()}
 
 <input type="hidden" name="summary_page" value="1" />
 <p>{$body_text|wash()|i18n( 'formmaker/front' )}</p>
@@ -31,7 +33,7 @@
 
             {* ...otherwise display link to file *}
             {else}
-                {def $extension = $attribute.value|explode('.')}
+                {set $extension = $attribute.value|explode('.')}
                 <span>{$attribute.label|i18n( 'formmaker/front' )}:
                 <a target="_blank" href="/{$attribute.value}">{$extension.1}</a>
                 <br/>

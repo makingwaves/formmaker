@@ -9,15 +9,15 @@
      $current_year = currentdate()|datetime( 'custom', '%Y' )
      $lowest_year = sum( $current_year, -150 )}
      
-{if ezini( 'AdditionalElements', 'css', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'Css', 'formmaker.ini' )|eq( 'enabled' )}
     {set $css_class = concat( $css_class, ' ', $attribute.css|wash() ) }
 {/if}
 
-{if ezini( 'AdditionalElements', 'description', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'Description', 'formmaker.ini' )|eq( 'enabled' )}
     <p class="form-element-description">{$attribute.description}</p>
 {/if}
 
-{if ezini( 'AdditionalElements', 'default_value', 'formmaker.ini' )|eq( 'enabled' )}
+{if ezini( 'AdditionalElements', 'DefaultValue', 'formmaker.ini' )|eq( 'enabled' )}
     {set $default_value = $attribute.default_value }
 {/if}
 
