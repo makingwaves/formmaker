@@ -31,7 +31,13 @@ jQuery(document).ready( function() {
                .val(value);
     });    
 
-    jQuery( ".sortable-attributes" ).sortable();
+    // Enabling the drag'n'drop
+    jQuery( ".sortable-attributes" ).sortable({
+        handle: '.attribute-header',
+        cursor: 'move',
+        opacity: 0.8,
+        scroll: true,
+    });
     
     // Adding new field
     jQuery('input[name=add_field]').click(function(){
@@ -137,7 +143,7 @@ jQuery(document).ready( function() {
         }
         
         // disabling/enabling whole form page
-        if ($(this).parents('.formField').find('input[type=hidden][name$="[type]"]').val() == separator_id) {
+        if ($(this).parents('.formField').find('input[type=hidden][name$="[type]"]').val() === separator_id) {
             var all_formfields = $('.sortable-attributes .formField');
             var form_field = false;
             var checkbox = false;
@@ -145,7 +151,7 @@ jQuery(document).ready( function() {
 
             for (var i = start_index; i < all_formfields.length; i++){
                 form_field = $(all_formfields[i]);
-                if (form_field.find('input[type=hidden][name$="[type]"]').val() == separator_id) {
+                if (form_field.find('input[type=hidden][name$="[type]"]').val() === separator_id) {
                     break;
                 }
                 checkbox = form_field.find('.enable-attribute input[type=checkbox]');
@@ -213,13 +219,13 @@ jQuery(document).ready( function() {
         var first_child = $(this).find('.formField:first-child');
         
         // "Page separator" can not be the first element of the form
-        if(first_child.hasClass('form-5') && first_child.find('.enable-attribute input[type=hidden]').val() == 1){
+        if(first_child.hasClass('form-5') && first_child.find('.enable-attribute input[type=hidden]').val() === 1){
             alert('"Page separator" can not be the first element of the form. If you want to set the title of first page you can do it in the form definition, field "First page label".');
             return false;
         }        
         
         // "Page separator" can not be the last element of the form
-        if(last_child.hasClass('form-5') && last_child.find('.enable-attribute input[type=hidden]').val() == 1){
+        if(last_child.hasClass('form-5') && last_child.find('.enable-attribute input[type=hidden]').val() === 1){
             alert('"Page separator" can not be the last element of the form. Please remove or disable it.');
             return false;
         }
