@@ -17,13 +17,11 @@
     padding: 10px;
     border: 1px solid #CCCCCC;
     margin-bottom: 15px;
-    cursor: move;
     position: relative;
     border-radius: 3px; 
     -moz-border-radius: 3px; 
     -webkit-border-radius: 3px;   
     box-shadow: 0 4px 4px #AAAAAA;    
-    cursor: move;
     width: 778px;
 }
 
@@ -58,6 +56,7 @@
         margin-bottom: 7px;
         padding-bottom: 5px;
         border-bottom: 1px dotted gray;
+        cursor: move;
     }
     
         .formField .attribute-header .attribute-name {
@@ -338,4 +337,11 @@ select[name=new-field-type] {
     
 .yui3-js-enabled .controlbar-fixed {
     z-index: 1;
+}
+
+.ui-sortable-placeholder {
+    border: 3px #ccc dashed;
+    visibility: visible !important;
+    background: transparent;
+    box-shadow: 0 0 0 white;
 }
