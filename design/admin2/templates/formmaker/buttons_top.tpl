@@ -24,6 +24,7 @@
                         <input type="button" class="button" name="add_field" value="{'Add attribute'|i18n( 'formmaker/admin' )}"/>
                     </div>
                 {/if}
+                <div class="form-ajax-loader element"></div>
                 <div class="float-break"></div>
             </div>
         </div>

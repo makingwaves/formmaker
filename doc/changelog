@@ -4,6 +4,7 @@ Form Maker changelog file
 Next Version
 - Improved drag'n'drop functionality
 - Fixed fatal error displayed when validating the 'Date (only year)' input
+- Added ajax loader in admin panel
 
 Version 1.8.1
 - All documents except README.md moved into 'doc' folder

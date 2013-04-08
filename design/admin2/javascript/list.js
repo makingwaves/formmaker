@@ -2,7 +2,7 @@ jQuery(document).ready(function(){
     
     jQuery('a.formmaker_remove_form').click(function() {
         var location = $(this).attr('href');
-        jQuery('div#page').css('cursor', 'progress');
+        jQuery('.form-ajax-loader').show();
         $.ez( 'formmaker::getFormConnectedObjects', {'form_id' :  $(this).parent().find('input[name=form-id]').val()}, function( data ) {
             if ( data.error_text ) {
                 alert(data.error_text);
@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
                     window.location.href = location;
                 }
             }
-            jQuery('div#page').css('cursor', 'default');
+            jQuery('.form-ajax-loader').hide();
         });
         return false;
     });
