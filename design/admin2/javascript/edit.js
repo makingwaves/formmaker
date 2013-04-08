@@ -41,7 +41,7 @@ jQuery(document).ready( function() {
     
     // Adding new field
     jQuery('input[name=add_field]').click(function(){
-        jQuery('div#page').css('cursor', 'progress');
+        jQuery('.form-ajax-loader').show();
         var post_data = {'input_id' :  $(this).parent().find('select[name=new-field-type]').val()};
         $.ez( 'formmaker::addField', post_data, function( data ) {
             
@@ -51,14 +51,13 @@ jQuery(document).ready( function() {
             else {
                 $('.sortable-attributes').append(data.content);
             }
-            
-            jQuery('div#page').css('cursor', 'default');
+            jQuery('.form-ajax-loader').hide();
         });           
     });
     
     // Adding new option line to attribute
     jQuery('.formField .add-option').live('click', function(){
-        jQuery('div#page').css('cursor', 'progress');
+        jQuery('.form-ajax-loader').show();
         var post_data = {'attribute_id' :  $(this).parents('.formField').find('.attribute-unique-id').val()};
         var object = $(this);
         
@@ -70,8 +69,7 @@ jQuery(document).ready( function() {
             else {
                 object.parent('.form-attribute-options').find('ul').append(data.content);
             }
-            
-            jQuery('div#page').css('cursor', 'default');
+            jQuery('.form-ajax-loader').hide();
         });         
     });
     
@@ -175,7 +173,7 @@ jQuery(document).ready( function() {
 
         if ($.inArray($(this).val(), $('#form-dynamic-validators').val().split(',')) > -1) {
 
-            jQuery('div#page').css('cursor', 'progress');
+            jQuery('.form-ajax-loader').show();
             var post_data = {
                 'attribute_id'  : $(this).parents('.formField').find('.attribute-unique-id').val(),
                 'validator_id'  : $(this).val(),
@@ -191,7 +189,7 @@ jQuery(document).ready( function() {
                     object.parents('.form-field-attributes-container').find('.dynamic-validator-holder').remove();
                     object.parents('.form-field-attributes-container').append(data.content);
                 }
-                jQuery('div#page').css('cursor', 'default');
+                jQuery('.form-ajax-loader').hide();
             });  
         } else {
             $(this).parents('.form-field-attributes-container').find('.dynamic-validator-holder').remove();

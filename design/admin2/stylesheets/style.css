@@ -345,3 +345,12 @@ select[name=new-field-type] {
     background: transparent;
     box-shadow: 0 0 0 white;
 }
+
+.form-ajax-loader {
+    float: right !important;
+    background: url("../images/ajax-loader.gif") no-repeat;
+    width: 15px;
+    height: 20px;
+    margin-top: 3px;
+    display: none;
+}

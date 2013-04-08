@@ -208,9 +208,9 @@ class formAttributes extends eZPersistentObject
                     case formValidators::CUSTOM_REGEX:
                         $regex = $attr_valid->attribute( 'regex' );
                         break;
-                   
+
                     default:
-                        $regex = '';
+                        $regex = $validator_row->attribute( 'regex' );
                         break;
                 }
 
