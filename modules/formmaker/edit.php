@@ -13,21 +13,6 @@ $form_elements = array( 'name'          => array(   'required'  => true,
                                                     'type'      => 'text',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
-                        'email_sender'  => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('formmaker/admin', 'Email sender' ), 
-                                                    'type'      => 'text',
-                                                    'css'       => 'attribute-full-width',
-                                                    'value'     => '' ),
-                        'recipients'    => array(   'required'  => true, 
-                                                    'label'     => ezpI18n::tr('formmaker/admin', 'E-mail recipients (separated by semicolon)' ), 
-                                                    'type'      => 'text',
-                                                    'css'       => 'attribute-full-width',
-                                                    'value'     => '' ),
-                        'email_title'   => array(   'required'  => true,
-                                                    'label'     => ezpI18n::tr('formmaker/admin', 'E-mail title' ),
-                                                    'type'      => 'text',
-                                                    'css'       => 'attribute-full-width',
-                                                    'value'     => 'New form answer' ),
                         'first_page'    => array(   'required'  => true, 
                                                     'label'     => ezpI18n::tr('formmaker/admin', 'First page label' ), 
                                                     'type'      => 'text',
@@ -60,21 +45,45 @@ $form_elements = array( 'name'          => array(   'required'  => true,
                                                     'type'      => 'textarea',
                                                     'css'       => 'attribute-full-width',
                                                     'value'     => 'Thank you for sending us the informations!' ),
+                        'email_action'  => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr( 'formmaker/admin', 'Send data via email' ),
+                                                    'type'      => 'checkbox',
+                                                    'value'     => true ),
+                        'email_title'   => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'E-mail title' ),
+                                                    'type'      => 'text',
+                                                    'css'       => '',
+                                                    'value'     => 'New form answer' ),
+                        'recipients'    => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr('formmaker/admin', 'E-mail recipients (separated by semicolon)' ),
+                                                    'type'      => 'text',
+                                                    'css'       => 'attribute-full-width',
+                                                    'value'     => '' ),
+                        'store_action'  => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr( 'formmaker/admin', 'Store data in database' ),
+                                                    'type'      => 'checkbox',
+                                                    'css'       => 'attribute-full-width',
+                                                    'value'     => false ),
+                        'object_action' => array(   'required'  => false,
+                                                    'label'     => ezpI18n::tr( 'formmaker/admin', 'Use process class method (advanced)' ),
+                                                    'type'      => 'checkbox',
+                                                    'value'     => false ),
                         'process_class' => array(   'required'  => false,
                                                     'label'     => ezpI18n::tr('formmaker/admin', 'Process class name' ),
                                                     'type'      => 'text',
-                                                    'css'       => 'attribute-full-width',
                                                     'value'     => '' ),
 );
 
 // When form is being edited, we need to fill up its definition data from database
-if (is_numeric($form_id))
+if ( is_numeric( $form_id ) )
 {
-    $definition = formDefinitions::getForm($form_id);
-    $attributes = $definition->getAllAttributes();
-    $original_name = $definition->attribute('name');
-    foreach ($form_elements as $key => $data) {
-        $form_elements[$key]['value'] = $definition->attribute($key);
+    $definition     = formDefinitions::getForm( $form_id );
+    $attributes     = $definition->getAllAttributes();
+    $original_name  = $definition->attribute( 'name' );
+    
+    foreach ( $form_elements as $key => $data )
+    {
+        $form_elements[$key]['value'] = $definition->attribute( $key );
     }    
 }
 

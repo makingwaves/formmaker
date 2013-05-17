@@ -5,13 +5,16 @@
  */
 class FormMakerFunctionCollection
 {  
-    // eZHTTPTool object instance
-    private $http;
-    // form definition object
-    private $definition;
-    // formmaker.ini instance
-    private $ini;
-    
+    private $http;                      // eZHTTPTool object instance
+    private $definition;                // form definition object
+    private $ini;                       // formmaker.ini instance
+
+    // a list actions responsible for processing form results
+    public static $action_types = array(
+        'email_action', 'store_action', 'object_action'
+    );
+
+
     /**
      * Method fetches form definition and all attributes for given Form id.
      * It also returns validation error or success template content if there are no errors.
@@ -174,12 +177,21 @@ class FormMakerFunctionCollection
                 // processing the data only if array contains the data
                 elseif ( !empty( $data_to_send['data'] ) )
                 {
+                    $operation_result = true;
+                    foreach ( self::$action_types as $action_type )
+                    {
+                        if ( $this->definition->attribute( $action_type ) && $operation_result )
+                        {
+                            $operation_result = $this->processFormData( $action_type, $data_to_send );
+                        }
+                    }
+
                     // Sending email message
-                    switch ($this->definition->attribute('post_action'))
+                    switch ( $this->definition->attribute( 'post_action' ) )
                     {
                         case 'email':
-                        $operation_result = $this->processEmail( $data_to_send );
-                        $this->removeSessionData();
+                            $operation_result = $this->processEmail( $data_to_send );
+                            $this->removeSessionData();
                             break;
 
                         case 'object':
@@ -284,6 +296,40 @@ class FormMakerFunctionCollection
             }
         }
         
+        return $status;
+    }
+
+    /**
+     * Method processes the given data, depending of given type.
+     * @param string $type
+     * @param array $data
+     * @return boolean
+     */
+    private function processFormData( $type, $data )
+    {
+        switch ( $type )
+        {
+            case 'email_action':
+                $status = $this->processEmail( $data );
+                $this->removeSessionData();
+                break;
+
+            case 'store_action':
+
+                break;
+
+            case 'object_action':
+                $process_class = $this->definition->attribute( 'process_class' );
+                $processing_object = new $process_class();
+                $status = $processing_object->processSubmit( $data );
+                $this->removeSessionData();
+                break;
+
+            default:
+                $status = false;
+                break;
+        }
+
         return $status;
     }
     

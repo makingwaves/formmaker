@@ -20,64 +20,70 @@ class formDefinitions extends eZPersistentObject
      */
     public static function definition()
     {
-        $def = array( "fields" => array( "id"               => array( "name" => "id",
-                                                                      "datatype" => "integer",
-                                                                      "required" => true ),
-                                         "name"             => array( "name" => "name",
-                                                                      "datatype" => "string",
-                                                                      "required" => true ),
-                                         "email_sender"     => array( "name" => "email_sender",
-                                                                      "datatype" => "string",
-                                                                      "required" => true ),            
-                                         "create_date"      => array( "name" => "create_date",
-                                                                      "datatype" => "datetime",
-                                                                      "required" => true ),
-                                         "owner_user_id"    => array( "name" => "owner_user_id",
-                                                                      "datatype" => "integer",
-                                                                      "required" => true ),
-                                         "summary_page"     => array( "name" => "summary_page",
-                                                                      "datatype" => "integer",
-                                                                      "required" => false ),
-                                         "first_page"       => array( "name" => "first_page",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),
-                                         "summary_label"    => array( "name" => "summary_label",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),       
-                                         "summary_body"     => array( "name" => "summary_body",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),             
-                                         "receipt_label"    => array( "name" => "receipt_label",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),      
-                                         "receipt_intro"    => array( "name" => "receipt_intro",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),            
-                                         "receipt_body"     => array( "name" => "receipt_body",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),              
-                                         "post_action"      => array( "name" => "post_action",
-                                                                      "datatype" => "string",
-                                                                      "required" => true ),
-                                         "recipients"       => array( "name" => "recipients",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),
-                                         "process_class"    => array( "name" => "process_class",
-                                                                      "datatype" => "string",
-                                                                      "required" => false ),
-                                         "email_title"      => array( "name" => "email_title",
-                                                                      "datatype" => "string",
-                                                                      "required" => true ) ),
-                      "keys" => array('id'),         
-                      "increment_key" => "id",
-                      "class_name" => "formDefinitions",
-                      "sort" => array(),
+        $def = array( 'fields' => array( 'id'               => array( 'name' => 'id',
+                                                                      'datatype'=> 'integer',
+                                                                      'required' => true ),
+                                         'name'             => array( 'name' => 'name',
+                                                                      'datatype' => 'string',
+                                                                      'required' => true ),
+                                         'email_sender'     => array( 'name' => 'email_sender',
+                                                                      'datatype' => 'string',
+                                                                      'required' => true ),
+                                         'create_date'      => array( 'name' => 'create_date',
+                                                                      'datatype' => 'datetime',
+                                                                      'required' => true ),
+                                         'owner_user_id'    => array( 'name' => 'owner_user_id',
+                                                                      'datatype' => 'integer',
+                                                                      'required' => true ),
+                                         'summary_page'     => array( 'name' => 'summary_page',
+                                                                      'datatype' => 'integer',
+                                                                      'required' => false ),
+                                         'first_page'       => array( 'name' => 'first_page',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'summary_label'    => array( 'name' => 'summary_label',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'summary_body'     => array( 'name' => 'summary_body',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'receipt_label'    => array( 'name' => 'receipt_label',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'receipt_intro'    => array( 'name' => 'receipt_intro',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'receipt_body'     => array( 'name' => 'receipt_body',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'recipients'       => array( 'name' => 'recipients',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'email_action'     => array( 'name' => 'email_action',
+                                                                      'datatype' => 'integer',
+                                                                      'required' => false ),
+                                         'store_action'     => array( 'name' => 'store_action',
+                                                                      'datatype' => 'integer',
+                                                                      'required' => false ),
+                                         'object_action'    => array( 'name' => 'object_action',
+                                                                      'datatype'=> 'integer',
+                                                                      'required' => false ),
+                                         'process_class'    => array( 'name' => 'process_class',
+                                                                      'datatype' => 'string',
+                                                                      'required' => false ),
+                                         'email_title'      => array( 'name' => 'email_title',
+                                                                      'datatype' => 'string',
+                                                                      'required' => true ) ),
+                      'keys' => array('id'),
+                      'increment_key' => 'id',
+                      'class_name' => 'formDefinitions',
+                      'sort' => array(),
                       'function_attributes' => array(
                           'user'                => 'getUserData',
                           'datepicker_format'   => 'getDatepickerFormat',
                           'multipart'           => 'isMultipart'
                       ),
-                      "name" => "form_definitions" );
+                      'name' => 'form_definitions' );
         return $def;
     }    
     
@@ -131,24 +137,14 @@ class formDefinitions extends eZPersistentObject
      */
     public static function addForm( $form_elements )
     {
-        $user = eZUser::currentUser();
-
-        //set by default
-        $post_action = 'email';
-        
-        if ( ! empty( $form_elements['process_class']['value'] ) )
-        {
-            $post_action = 'object';
-        }
-
         $data = array( 
             'id'            => null, 
             'create_date'   => null,
-            'owner_user_id' => $user->id(),
-            'post_action'   => $post_action
+            'owner_user_id' => eZUser::currentUser()->id()
         );
         
-        foreach ($form_elements as $id => $element) {
+        foreach ($form_elements as $id => $element)
+        {
             $data[$id] = $element['value'];
         }   
         
