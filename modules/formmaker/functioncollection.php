@@ -186,25 +186,6 @@ class FormMakerFunctionCollection
                         }
                     }
 
-                    // Sending email message
-                    switch ( $this->definition->attribute( 'post_action' ) )
-                    {
-                        case 'email':
-                            $operation_result = $this->processEmail( $data_to_send );
-                            $this->removeSessionData();
-                            break;
-
-                        case 'object':
-                            $process_class = $this->definition->attribute( 'process_class' );
-                            $processing_object = new $process_class();
-                            $operation_result = $processing_object->processSubmit( $data_to_send );
-                            $this->removeSessionData();
-                            break;
-
-                        default:
-                        $operation_result = false;
-                    }
-
                     // rendering success template
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
@@ -315,7 +296,7 @@ class FormMakerFunctionCollection
                 break;
 
             case 'store_action':
-
+                $status = $this->storeAnswer( $data );
                 break;
 
             case 'object_action':
@@ -415,15 +396,26 @@ class FormMakerFunctionCollection
         
         return $result;		
     }
+
+    /**
+     * Storing user input in a database
+     * @param array $data
+     * @return bool
+     */
+    private function storeAnswer( $data )
+    {
+        $answer = formAnswers::addNewAnswer( $this->definition->attribute( 'id' ) );
+        return formAnswersAttributes::addAttributes( $data, $answer->attribute( 'id' ) );
+    }
     
     /**
      * Fetch function checks if attribute of given ID is required or not
      * @param int $attribute_id
      * @return array
      */
-    public function isAttributeRequired($attribute_id) 
+    public function isAttributeRequired( $attribute_id )
     {
-        return array('result' => formAttrvalid::isAttributeRequired($attribute_id));
+        return array( 'result' => formAttrvalid::isAttributeRequired( $attribute_id ) );
     }
     
     /**
@@ -433,7 +425,8 @@ class FormMakerFunctionCollection
     {
         foreach ( $_SESSION as $key => $value )
         {
-            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
+            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
+            {
                 continue;
             }
             // clean up the session
@@ -468,6 +461,7 @@ class FormMakerFunctionCollection
                 switch ($attribute->attribute('type_id'))
                 {
                     case formTypes::CHECKBOX_ID:
+                        $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
@@ -478,6 +472,7 @@ class FormMakerFunctionCollection
                     case formTypes::RADIO_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
@@ -490,6 +485,7 @@ class FormMakerFunctionCollection
                     case formTypes::SELECT_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not selected' );
@@ -506,6 +502,7 @@ class FormMakerFunctionCollection
                             {
                                 $receivers[] = $default_value;
                             }
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
@@ -515,6 +512,7 @@ class FormMakerFunctionCollection
                         break;
 
                     case formTypes::FILE_ID:
+                        $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
@@ -526,6 +524,7 @@ class FormMakerFunctionCollection
                     default:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );

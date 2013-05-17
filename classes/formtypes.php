@@ -15,7 +15,7 @@ class formTypes extends eZPersistentObject
     const SELECT_ID = 7;
 
     /**
-     *  Table definition
+     * Table definition
      * @return array
      */
     public static function definition()

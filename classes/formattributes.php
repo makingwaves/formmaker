@@ -5,7 +5,6 @@
  */
 class formAttributes extends eZPersistentObject 
 {
-
     /**
      * Constructor
      * @param type $row
