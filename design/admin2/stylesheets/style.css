@@ -358,3 +358,12 @@ select[name=new-field-type] {
 .formmaker-set-answers-container {
     margin: 10px 0;
 }
+
+th.formmaker-answers-count-column {
+    width: 25px;
+}
+
+td.formmaker-answers-count-column {
+    font-weight: bold;
+    text-align: right;
+}

@@ -37,6 +37,7 @@
             <table border="0" cellspacing="1" cellpadding="0" class="tablesorter">
                 <thead>
                     <tr>
+                        <th class="formmaker-answers-count-column"></th>
                         <th>{'Answer date'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Form name'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Author'|i18n( 'formmaker/admin' )}</th>
@@ -44,8 +45,9 @@
                 </thead>
 
                 <tbody>
-                    {foreach $answers as $answer sequence array('odd', 'even') as $row_class}
+                    {foreach $answers as $i => $answer}
                         <tr>
+                            <td class="formmaker-answers-count-column">{$i|inc()|sum( $view_parameters.offset )}</td>
                             <td>{$answer.answer_date}</td>
                             <td>{$answer.form_data.name|wash()}</td>
                             <td>{$answer.user.contentobject.name}</td>
@@ -53,7 +55,7 @@
                     {/foreach}
 
                     {if not( $answers|count() )}
-                        <tr><td class="formmaker_no_forms" colspan="3">{'There are no answers for now.'|i18n( 'formmaker/admin' )}</td></tr>
+                        <tr><td class="formmaker_no_forms" colspan="4">{'There are no answers for now.'|i18n( 'formmaker/admin' )}</td></tr>
                     {/if}
                 </tbody>
             </table>
