@@ -93,7 +93,7 @@ class formDefinitions extends eZPersistentObject
      */
     public static function getAllForms()
     {
-        return eZPersistentObject::fetchObjectList(self::definition());
+        return self::fetchObjectList(self::definition());
     }
     
     /**
@@ -103,7 +103,7 @@ class formDefinitions extends eZPersistentObject
      */
     public static function getForm($id)
     {
-        return eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
+        return self::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
 
     /**

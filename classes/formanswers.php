@@ -28,11 +28,15 @@ class formAnswers extends eZPersistentObject
                                               'datatype' => 'integer',
                                               'required' => true )
             ),
-            'keys'          => array( 'id' ),
-            'increment_key' => 'id',
-            'class_name'    => 'formAnswers',
-            'sort'          => array( 'answer_date' => 'asc' ),
-            'name'          => 'form_answers'
+            'keys'                  => array( 'id' ),
+            'increment_key'         => 'id',
+            'class_name'            => 'formAnswers',
+            'sort'                  => array( 'answer_date' => 'desc' ),
+            'name'                  => 'form_answers',
+            'function_attributes'   => array(
+                'form_data' => 'getFormData',
+                'user'      => 'getUserData'
+            )
         );
     }
 
@@ -110,5 +114,23 @@ class formAnswers extends eZPersistentObject
         }
 
         return $this->attributes;
+    }
+
+    /**
+     * Returns current answer form object
+     * @return type
+     */
+    public function getFormData()
+    {
+        return formDefinitions::getForm( $this->attribute( 'definition_id' ) );
+    }
+
+    /**
+     * Method returns the data of answer author user
+     * @return eZUser
+     */
+    public function getUserData()
+    {
+        return eZUser::fetch( $this->attribute( 'user_id' ) );
     }
 }

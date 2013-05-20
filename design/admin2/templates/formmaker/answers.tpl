@@ -1,9 +1,12 @@
+{* Template displays a list on answers in admin interface. Params
+- $view_parameters array
+*}
 
 {ezcss_require( array( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css', 'tablesorter.css', 'style.css' ) )}
 {ezscript_load( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
-{ezscript_require( array( 'jquery.tablesorter.js' ) )}
+{ezscript_require( array( 'jquery.tablesorter.js', 'answers.js' ) )}
 
-{def $limit = 5
+{def $limit = 20
      $answers = fetch( 'formmaker', 'answers', hash( 'form_id', $view_parameters.form_id,
                                                      'limit', $limit,
                                                      'offset', $view_parameters.offset ) )
@@ -20,8 +23,8 @@
             <table border="0" cellspacing="1" cellpadding="0" class="tablesorter">
                 <thead>
                     <tr>
-                        <th class="mwezform-list-name">{'Form name'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Answer date'|i18n( 'formmaker/admin' )}</th>
+                        <th>{'Form name'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Author'|i18n( 'formmaker/admin' )}</th>
                     </tr>
                 </thead>
@@ -29,9 +32,9 @@
                 <tbody>
                     {foreach $answers as $answer sequence array('odd', 'even') as $row_class}
                         <tr>
-                            <td>test</td>
                             <td>{$answer.answer_date}</td>
-                            <td>test</td>
+                            <td>{$answer.form_data.name|wash()}</td>
+                            <td>{$answer.user.contentobject.name}</td>
                         </tr>
                     {/foreach}
 
@@ -43,10 +46,10 @@
         </div>
     </div>
 
-{include name=navigator
-         uri='design:navigator/google.tpl'
-         page_uri='/formmaker/answers'
-         view_parameters=$view_parameters
-         item_count=$answers_count
-         item_limit=$limit}
+    {include name=navigator
+             uri='design:navigator/google.tpl'
+             page_uri='/formmaker/answers'
+             view_parameters=$view_parameters
+             item_count=$answers_count
+             item_limit=$limit}
 </div>
