@@ -27,7 +27,7 @@
                         </thead>
 
                         <tbody>
-                            {foreach $forms as $form sequence array('odd', 'even') as $row_class}
+                            {foreach $forms as $form}
                                 <tr>
                                     <td>{$form.name|wash()}</td>
                                     <td>{$form.create_date}</td>            

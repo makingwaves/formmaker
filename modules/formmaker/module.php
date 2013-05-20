@@ -9,7 +9,7 @@ $FunctionList['edit'] = array(); // edit is for reading/listing/creating/editing
 $FunctionList['remove'] = array(); // remove is only for removing form
 $FunctionList['special'] = array(); // function to allow editing some special fields
 
-/*
+/**
  * list
  */
 $ViewList['list'] = array(
@@ -20,7 +20,7 @@ $ViewList['list'] = array(
     'default_navigation_part' => 'formmakernavigationpart'
 );
 
-/*
+/**
  * remove
  */
 $ViewList['remove'] = array(
@@ -45,4 +45,14 @@ $ViewList['edit'] = array(
  */
 $ViewList['special'] = array(
     'functions' => array('special')
+);
+
+/**
+ * Viewing the answers
+ */
+$ViewList['answers'] = array(
+    'functions'                 => array( 'edit' ),
+    'script'                    => 'answers.php',
+    'default_navigation_part'   => 'formmakernavigationpart',
+    'params'                    => array( 'id' )
 );

@@ -86,4 +86,14 @@ class formAnswersAttributes extends eZPersistentObject
         $db->commit();
         return true;
     }
+
+    /**
+     * Method returns all attributes for given answer
+     * @param int $answer_id
+     * @return array
+     */
+    public static function getAttributes( $answer_id )
+    {
+        return self::fetchObject( self::definition(), null, array( 'answer_id' => $answer_id ) );
+    }
 }

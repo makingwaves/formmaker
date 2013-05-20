@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class definec custom template fetches
+ * Class defines custom template fetches
  */
 class FormMakerFunctionCollection
 {  

@@ -1,7 +1,5 @@
 <?php
 
-$FunctionList = array();
-
 $FunctionList['data'] = array( 
     'name'              => 'data',
     'operation_types'   => array('read'),
@@ -34,4 +32,48 @@ $FunctionList['is_attrib_required'] = array(
             'required'  => true
         ),
     ) 
+);
+
+$FunctionList['answers'] = array(
+    'name'              => 'answers',
+    'operation_types'   => array( 'read' ),
+    'call_method'       => array(
+        'class'     => 'AnswersFunctionCollection',
+        'method'    => 'getAnswers'
+    ),
+    'parameter_type'    => 'standard',
+    'parameters'        => array(
+        array(
+            'name'      => 'form_id',
+            'type'      => 'integer',
+            'required'  => false
+        ),
+        array(
+            'name'      => 'offset',
+            'type'      => 'integer',
+            'required'  => false
+        ),
+        array(
+            'name'      => 'limit',
+            'type'      => 'integer',
+            'required'  => false
+        )
+    )
+);
+
+$FunctionList['answers_count'] = array(
+    'name'              => 'answers_count',
+    'operation_types'   => array( 'read' ),
+    'call_method'       => array(
+        'class'     => 'AnswersFunctionCollection',
+        'method'    => 'getAnswersCount'
+    ),
+    'parameter_type'    => 'standard',
+    'parameters'        => array(
+        array(
+            'name'      => 'form_id',
+            'type'      => 'integer',
+            'required'  => false
+        )
+    )
 );
