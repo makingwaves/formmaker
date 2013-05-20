@@ -40,6 +40,7 @@
                         <th class="formmaker-answers-count-column"></th>
                         <th class="formmaker-answers-date-column">{'Answer date'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Form name'|i18n( 'formmaker/admin' )}</th>
+                        <th>{'Answer summary'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Author'|i18n( 'formmaker/admin' )}</th>
                         <th>{'Actions'|i18n( 'formmaker/admin' )}</th>
                     </tr>
@@ -65,6 +66,7 @@
                                     </a>
                                 {/if}
                             </td>
+                            <td>{$answer.summary|wash()|shorten( 130 )}</td>
                             <td>{$answer.user.contentobject.name}</td>
                             <td>
                                 <a class="formmaker_edit_form" href={concat('formmaker/answer/', $answer.id)|ezurl()}>{'Display'|i18n( 'formmaker/admin' )}</a>

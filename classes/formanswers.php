@@ -34,7 +34,8 @@ class formAnswers extends eZPersistentObject
             'function_attributes'   => array(
                 'form_data'     => 'getFormData',
                 'user'          => 'getUserData',
-                'attributes'    => 'getAttributes'
+                'attributes'    => 'getAttributes',
+                'summary'       => 'getSummary'
             )
         );
     }
@@ -127,6 +128,35 @@ class formAnswers extends eZPersistentObject
     public function getFormData()
     {
         return formDefinitions::getForm( $this->attribute( 'definition_id' ) );
+    }
+
+    /**
+     * Generate a quick summary of the answer
+     * @return string
+     */
+    public function getSummary()
+    {
+        $accepted_attributes    = array( formTypes::TEXTLINE_ID, formTypes::SELECT_ID, formTypes::RADIO_ID, formTypes::CHECKBOX_ID );
+        $output                 = '';
+        $separator              = ' / ';
+
+        foreach ( $this->getAttributes() as $attribute )
+        {
+            $structure = $attribute->getStructure();
+            if ( !in_array( $structure->attribute( 'type_id' ), $accepted_attributes ) )
+            {
+                continue;
+            }
+            
+            if ( !empty( $output ) )
+            {
+                $output .= $separator;
+            }
+
+            $output .= $structure->attribute( 'label' ). ': ' . $attribute->attribute( 'answer' );
+        }
+
+        return $output;
     }
 
     /**
