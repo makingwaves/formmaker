@@ -367,3 +367,15 @@ td.formmaker-answers-count-column {
     font-weight: bold;
     text-align: right;
 }
+
+.formmaker-answers-date-column {
+    width: 150px;
+}
+
+.formmaker-answer-query-column {
+    width: 300px;
+}
+
+.formmaker-answer-type-column {
+    width: 100px;
+}

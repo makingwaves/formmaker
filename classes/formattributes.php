@@ -137,8 +137,7 @@ class formAttributes extends eZPersistentObject
      */
     public static function getAttribute( $id )
     {
-        $attribute = eZPersistentObject::fetchObject( self::definition(), null, array( 'id' => $id ) );
-        return $attribute;
+        return self::fetchObject( self::definition(), null, array( 'id' => $id ) );
     }
         
     

@@ -5,8 +5,6 @@
  */
 class formAnswers extends eZPersistentObject
 {
-    private $attributes = array();      // answer attributes
-
     /**
      * MySQL table definition
      * @return array
@@ -34,8 +32,9 @@ class formAnswers extends eZPersistentObject
             'sort'                  => array( 'answer_date' => 'desc' ),
             'name'                  => 'form_answers',
             'function_attributes'   => array(
-                'form_data' => 'getFormData',
-                'user'      => 'getUserData'
+                'form_data'     => 'getFormData',
+                'user'          => 'getUserData',
+                'attributes'    => 'getAttributes'
             )
         );
     }
@@ -54,6 +53,16 @@ class formAnswers extends eZPersistentObject
 
         $object->store();
         return $object;
+    }
+
+    /**
+     * Fetch and return answer object
+     * @param int $answer_id
+     * @return formAnswers
+     */
+    public static function getAnswer( $answer_id )
+    {
+        return self::fetchObject( self::definition(), null, array( 'id' => $answer_id ) );
     }
 
     /**
@@ -108,12 +117,7 @@ class formAnswers extends eZPersistentObject
      */
     public function getAttributes()
     {
-        if ( empty( $this->attributes ) )
-        {
-            $this->attributes = formAnswersAttributes::getAttributes( $this->attribute( 'id' ) );
-        }
-
-        return $this->attributes;
+        return formAnswersAttributes::getAttributes( $this->attribute( 'id' ) );
     }
 
     /**

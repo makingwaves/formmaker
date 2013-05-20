@@ -53,6 +53,15 @@ $ViewList['special'] = array(
 $ViewList['answers'] = array(
     'functions'                 => array( 'edit' ),
     'script'                    => 'answers.php',
+    'default_navigation_part'   => 'formmakernavigationpart'
+);
+
+/**
+ * Display one particular answer
+ */
+$ViewList['answer'] = array(
+    'functions'                 => array( 'edit' ),
+    'script'                    => 'answer.php',
     'default_navigation_part'   => 'formmakernavigationpart',
     'params'                    => array( 'id' )
 );

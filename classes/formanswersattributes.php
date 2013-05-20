@@ -26,11 +26,14 @@ class formAnswersAttributes extends eZPersistentObject
                                               'datatype' => 'string',
                                               'required' => true )
                 ),
-            'keys'          => array( 'id' ),
-            'increment_key' => 'id',
-            'class_name'    => 'formAnswersAttributes',
-            'sort'          => array( 'id' => 'asc' ),
-            'name'          => 'form_answers_attributes'
+            'keys'                  => array( 'id' ),
+            'increment_key'         => 'id',
+            'class_name'            => 'formAnswersAttributes',
+            'sort'                  => array( 'id' => 'asc' ),
+            'name'                  => 'form_answers_attributes',
+            'function_attributes'   => array(
+                'structure' => 'getStructure'
+            )
         );
     }
 
@@ -94,6 +97,11 @@ class formAnswersAttributes extends eZPersistentObject
      */
     public static function getAttributes( $answer_id )
     {
-        return self::fetchObject( self::definition(), null, array( 'answer_id' => $answer_id ) );
+        return self::fetchObjectList( self::definition(), null, array( 'answer_id' => $answer_id ) );
+    }
+
+    public function getStructure()
+    {
+        return formAttributes::getAttribute( $this->attribute( 'attribute_id' ) );
     }
 }
