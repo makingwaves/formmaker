@@ -93,7 +93,7 @@ class formDefinitions extends eZPersistentObject
      */
     public static function getAllForms()
     {
-        return self::fetchObjectList(self::definition());
+        return self::fetchObjectList( self::definition() );
     }
     
     /**

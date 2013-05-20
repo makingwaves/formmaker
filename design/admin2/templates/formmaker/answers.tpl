@@ -10,12 +10,26 @@
      $answers = fetch( 'formmaker', 'answers', hash( 'form_id', $view_parameters.form_id,
                                                      'limit', $limit,
                                                      'offset', $view_parameters.offset ) )
-     $answers_count = fetch( 'formmaker', 'answers_count', hash( 'form_id', $view_parameters.form_id ) )}
+     $answers_count = fetch( 'formmaker', 'answers_count', hash( 'form_id', $view_parameters.form_id ) )
+     $forms = fetch( 'formmaker', 'answers_forms', hash( 'only_collectors', true() ) )}
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
         <h1 class="context-title">{'Answers'|i18n( 'formmaker/admin' )}</h1>
         <div class="header-mainline"></div>
+    </div>
+
+    <div class="box-bc formmaker-set-answers-container">
+        <form action={concat( 'formmaker/answers/(offset)/', $view_parameters.offset )|ezurl( 'duble', 'full' )}>
+            {'Select form:'|i18n( 'formmaker/admin' )}
+            <select name="form_id">
+                <option value="0">{'- all forms -'|i18n( 'formmaker/admin' )}</option>
+                {foreach $forms as $form}
+                    <option {if $form.id|eq( $view_parameters.form_id )}selected{/if} value="{$form.id}">{$form.name|wash()}</option>
+                {/foreach}
+            </select>
+            <input id="formmaker-set-answers-form" class="button" type="button" value="{'Set'|i18n( 'formmaker/admin' )}"/>
+        </form>
     </div>
 
     <div class="box-bc">

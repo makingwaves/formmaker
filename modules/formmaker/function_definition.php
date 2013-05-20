@@ -77,3 +77,20 @@ $FunctionList['answers_count'] = array(
         )
     )
 );
+
+$FunctionList['answers_forms'] = array(
+    'name'              => 'answers_forms',
+    'operation_types'   => array( 'read' ),
+    'call_method'       => array(
+        'class'     => 'AnswersFunctionCollection',
+        'method'    => 'getFormsList'
+    ),
+    'parameter_type'    => 'standard',
+    'parameters'        => array(
+        array(
+            'name'      => 'only_collectors',
+            'type'      => 'boolean',
+            'required'  => false
+        )
+    )
+);

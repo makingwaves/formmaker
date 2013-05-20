@@ -26,4 +26,26 @@ class AnswersFunctionCollection
     {
         return array( 'result' => formAnswers::getAnswersCount( $form_id ) );
     }
+
+    /**
+     * This fetch returns a list of forms defined in a system.
+     * @param boolean $only_collectors - it set as true, method will return only forms which collects the data in database
+     * @return array
+     */
+    public function getFormsList( $only_collectors )
+    {
+        $forms = formDefinitions::getAllForms();
+        if ( $only_collectors )
+        {
+            foreach ( $forms as $i => $form )
+            {
+                if ( $form->attribute( 'store_action' ) == 0 )
+                {
+                    unset( $forms[$i] );
+                }
+            }
+        }
+
+        return array( 'result' => $forms );
+    }
 }
