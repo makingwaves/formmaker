@@ -15,7 +15,7 @@
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
-        <h1 class="context-title">{'Answers'|i18n( 'formmaker/admin' )}</h1>
+        <h1 class="context-title">{'Answers (%count)'|i18n( 'formmaker/admin', '', hash( '%count', $answers_count ) )}</h1>
         <div class="header-mainline"></div>
     </div>
 
@@ -49,8 +49,22 @@
                     {foreach $answers as $i => $answer}
                         <tr>
                             <td class="formmaker-answers-count-column">{$i|inc()|sum( $view_parameters.offset )}</td>
-                            <td>{$answer.answer_date}</td>
-                            <td>{$answer.form_data.name|wash()}</td>
+                            <td>
+                                <a title="{'Display user input for this answer'|i18n( 'formmaker/admin' )}"
+                                   href={concat( 'formmaker/answer/', $answer.id )|ezurl()}>
+                                    {$answer.answer_date}
+                                </a>
+                            </td>
+                            <td>
+                                {if $view_parameters.form_id}
+                                    {$answer.form_data.name|wash()}
+                                {else}
+                                    <a title="{'Show answers only for this form'|i18n( 'formmaker/admin' )}"
+                                       href={concat( 'formmaker/answers/(form_id)/', $answer.definition_id)|ezurl}>
+                                        {$answer.form_data.name|wash()}
+                                    </a>
+                                {/if}
+                            </td>
                             <td>{$answer.user.contentobject.name}</td>
                             <td>
                                 <a class="formmaker_edit_form" href={concat('formmaker/answer/', $answer.id)|ezurl()}>{'Display'|i18n( 'formmaker/admin' )}</a>
