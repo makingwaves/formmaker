@@ -6,6 +6,7 @@ Next version
 - Answers are viewable in admin panel - "Form maker" -> "See answers"
 - Removed email sender field, since this is handled by eZ
 - Recipients array is validated before sending the emails
+- SQL generate script updated with new tables
 
 Version 1.8.2
 - Improved drag'n'drop functionality

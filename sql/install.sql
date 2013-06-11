@@ -142,6 +142,44 @@ CREATE TABLE `form_types` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `form_answers`
+--
+
+DROP TABLE IF EXISTS `form_answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_answers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `definition_id` int(11) NOT NULL,
+  `answer_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `definition_id` (`definition_id`),
+  CONSTRAINT `form_answers_ibfk_1` FOREIGN KEY (`definition_id`) REFERENCES `form_definitions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `form_answers_attributes`
+--
+
+DROP TABLE IF EXISTS `form_answers_attributes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `form_answers_attributes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `answer_id` int(11) NOT NULL,
+  `attribute_id` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `answer_id` (`answer_id`,`attribute_id`),
+  KEY `attribute_id` (`attribute_id`),
+  CONSTRAINT `form_answers_attributes_ibfk_1` FOREIGN KEY (`answer_id`) REFERENCES `form_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `form_answers_attributes_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `form_attributes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -152,7 +190,7 @@ CREATE TABLE `form_types` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-11 12:33:33
+-- Dump completed on 2013-06-11 13:19:02
 LOCK TABLES `form_validators` WRITE;
 INSERT INTO `form_validators` VALUES (1,'Digits','Only digits',''),(2,'EmailAddress','Email address',''),(3,'Float','Float point value',''),(5,'NotEmpty','Not empty',''),(6,'Hostname','Hostname',''),(7,'Ip','IP address',''),(8,'Regex','Date (full)','/^(([0-2][0-9])|(3[0-1]))\\/((0[1-9])|(1[0-2]))\\/([1-2][0-9]{3})$/'),(9,'Regex','Date (year only)','/^([1-2][0-9]{3})$/'),(10,'Regex','Custom Regex','');
 UNLOCK TABLES;
