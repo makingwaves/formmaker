@@ -242,13 +242,11 @@ class FormMakerFunctionCollection
     private function processEmail( $data_to_send )
     {
         // creating email content
-        $sender     = $this->definition->attribute( 'email_sender' );
-        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
+        $recipients  = explode( ';', $this->definition->attribute( 'recipients' ) );
         $attachments = $data_to_send['attachments'];
         
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
-                $sender,
                 $this->definition->attribute( 'email_title' ),
                 'formmaker/email/recipient.tpl',
                 $data_to_send['data'],
@@ -267,7 +265,6 @@ class FormMakerFunctionCollection
                 }
 
                 $status = $this->sendEmail(
-                        $sender,
                         $this->definition->attribute( 'email_title' ),
                         'formmaker/email/user.tpl',
                         $data_to_send['data'],
@@ -316,16 +313,16 @@ class FormMakerFunctionCollection
     
     /**
      * Method sends an email message basing on fiven attributes
-     * @param string $sender
-     * @param string $sender
+     * @param string $subject
      * @param string $template
      * @param array $email_data
      * @param string $email_address
      * @param array $recipients
      * @return boolean
      */
-    private function sendEmail( $sender, $subject, $template, $email_data, $recipients, $attachments )
+    private function sendEmail( $subject, $template, $email_data, $recipients, $attachments )
     {
+        $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
             case 'eZMail':

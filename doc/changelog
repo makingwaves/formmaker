@@ -1,6 +1,10 @@
 Form Maker changelog file
 =========================
 
+Next version
+- Created possibility to store user answers in database
+- Removed email sender field, since this is handled by eZ
+
 Version 1.8.2
 - Improved drag'n'drop functionality
 - Fixed fatal error displayed when validating the 'Date (only year)' input

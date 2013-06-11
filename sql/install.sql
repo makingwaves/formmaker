@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.29, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: ezpublish47
 -- ------------------------------------------------------
--- Server version	5.5.29-0ubuntu0.12.04.2
+-- Server version	5.5.31-0ubuntu0.12.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -43,9 +43,7 @@ CREATE TABLE `form_definitions` (
   `name` varchar(255) DEFAULT NULL,
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `owner_user_id` int(11) DEFAULT NULL,
-  `post_action` enum('email','table','object') DEFAULT NULL,
   `recipients` text,
-  `email_sender` varchar(255) NOT NULL,
   `email_title` varchar(255) NOT NULL,
   `summary_page` smallint(6) NOT NULL DEFAULT '0',
   `summary_label` varchar(255) NOT NULL,
@@ -54,6 +52,9 @@ CREATE TABLE `form_definitions` (
   `receipt_label` varchar(255) NOT NULL,
   `receipt_intro` text NOT NULL,
   `receipt_body` text NOT NULL,
+  `email_action` tinyint(4) NOT NULL,
+  `store_action` tinyint(4) NOT NULL,
+  `object_action` tinyint(4) NOT NULL,
   `process_class` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
@@ -151,7 +152,7 @@ CREATE TABLE `form_types` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-03-13 11:37:20
+-- Dump completed on 2013-06-11 12:33:33
 LOCK TABLES `form_validators` WRITE;
 INSERT INTO `form_validators` VALUES (1,'Digits','Only digits',''),(2,'EmailAddress','Email address',''),(3,'Float','Float point value',''),(5,'NotEmpty','Not empty',''),(6,'Hostname','Hostname',''),(7,'Ip','IP address',''),(8,'Regex','Date (full)','/^(([0-2][0-9])|(3[0-1]))\\/((0[1-9])|(1[0-2]))\\/([1-2][0-9]{3})$/'),(9,'Regex','Date (year only)','/^([1-2][0-9]{3})$/'),(10,'Regex','Custom Regex','');
 UNLOCK TABLES;
