@@ -243,15 +243,14 @@ class FormMakerFunctionCollection
     {
         // creating email content
         $recipients  = explode( ';', $this->definition->attribute( 'recipients' ) );
-        $attachments = $data_to_send['attachments'];
-        
+
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
                 $this->definition->attribute( 'email_title' ),
                 'formmaker/email/recipient.tpl',
                 $data_to_send['data'],
                 $recipients,
-                $attachments
+                $data_to_send['attachments']
         );     
         
         // sending email to additional receivers
@@ -322,6 +321,21 @@ class FormMakerFunctionCollection
      */
     private function sendEmail( $subject, $template, $email_data, $recipients, $attachments )
     {
+        $validator = new FormMaker_Validate_EmailAddress();
+        foreach ( $recipients as $i => $recipient )
+        {
+            if ( !$validator->isValid( $recipient ) )
+            {
+                unset( $recipients[$i] );
+            }
+        }
+
+        // there are no correct recipient addresses, so nothing to do here
+        if ( empty( $recipients ) )
+        {
+            return false;
+        }
+
         $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
@@ -334,7 +348,7 @@ class FormMakerFunctionCollection
                 $mail->setSubject( $subject );
                 $mail->setContentType('text/html');
                 $mail->setBody( $tpl->fetch( 'design:' . $template ) );
-                foreach( $recipients as $recipient ) 
+                foreach( $recipients as $recipient )
                 {
                     $mail->addReceiver( $recipient );
                 }                 
@@ -386,9 +400,7 @@ class FormMakerFunctionCollection
                         unlink($this->thumbName($attachment));
                     }
                 }
-
                 break;
-
         }
         
         return $result;		
