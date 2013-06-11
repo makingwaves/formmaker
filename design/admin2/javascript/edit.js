@@ -37,6 +37,7 @@ jQuery(document).ready( function() {
         cursor: 'move',
         opacity: 0.8,
         scroll: true,
+        tolerance: 'pointer'
     });
     
     // Adding new field

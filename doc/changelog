@@ -7,6 +7,7 @@ Next version
 - Removed email sender field, since this is handled by eZ
 - Recipients array is validated before sending the emails
 - SQL generate script updated with new tables
+- Improved D&D tolerance
 
 Version 1.8.2
 - Improved drag'n'drop functionality
