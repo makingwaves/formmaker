@@ -31,7 +31,7 @@
     
     <h1>{$header_text|wash()|i18n( 'formmaker/front' )}</h1>
 
-    <form id="mwezform" method="POST" action={$node.url_alias|ezurl()} {if $form_definition.multipart}enctype="multipart/form-data"{/if}>
+    <form id="mwezform" class="{$form_definition.css_class}" method="POST" action={$node.url_alias|ezurl()} {if $form_definition.multipart}enctype="multipart/form-data"{/if}>
 
         <input type="hidden" name="form_id" value="{$form_definition.id}"/>
         <input type="hidden" name="node_id" value="{$node.node_id}"/>

@@ -17,7 +17,7 @@ if [ $# -gt $REQUIRED_PARAMS ]; then
 fi
 
 # dumping all tables structure
-mysqldump -d -u$1 -p$2 $3 form_validators form_definitions form_attributes form_attributes_options form_attr_valid form_types | sed 's/ AUTO_INCREMENT=[0-9]*\b//' > $SQL_FILE
+mysqldump -d -u$1 -p$2 $3 form_validators form_definitions form_attributes form_attributes_options form_attr_valid form_types form_answers form_answers_attributes | sed 's/ AUTO_INCREMENT=[0-9]*\b//' > $SQL_FILE
 
 # dumping the data from form_validators and form_types tables
 mysqldump --skip-triggers --compact --add-locks --no-create-info -u$1 -p$2 $3 form_validators form_types >> $SQL_FILE

@@ -1,6 +1,16 @@
 Form Maker changelog file
 =========================
 
+Next version
+- Created possibility to store user answers in database
+- Answers are viewable in admin panel - "Form maker" -> "See answers"
+- Removed email sender field, since this is handled by eZ
+- Recipients array is validated before sending the emails
+- SQL generate script updated with new tables
+- Improved D&D tolerance
+- Changed the form removal confirmation text, because editor needs to know that he's removing also the answers
+- Added possibility to set a CSS class for each form
+
 Version 1.8.2
 - Improved drag'n'drop functionality
 - Fixed fatal error displayed when validating the 'Date (only year)' input
