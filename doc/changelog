@@ -9,6 +9,7 @@ Next version
 - SQL generate script updated with new tables
 - Improved D&D tolerance
 - Changed the form removal confirmation text, because editor needs to know that he's removing also the answers
+- Added possibility to set a CSS class for each form
 
 Version 1.8.2
 - Improved drag'n'drop functionality

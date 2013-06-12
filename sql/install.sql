@@ -56,6 +56,7 @@ CREATE TABLE `form_definitions` (
   `store_action` tinyint(4) NOT NULL,
   `object_action` tinyint(4) NOT NULL,
   `process_class` varchar(255) NOT NULL,
+  `css_class` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `owner_user_id` (`owner_user_id`),
   CONSTRAINT `form_definitions_ibfk_2` FOREIGN KEY (`owner_user_id`) REFERENCES `ezuser` (`contentobject_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -190,7 +191,7 @@ CREATE TABLE `form_answers_attributes` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-11 13:19:02
+-- Dump completed on 2013-06-12  9:05:54
 LOCK TABLES `form_validators` WRITE;
 INSERT INTO `form_validators` VALUES (1,'Digits','Only digits',''),(2,'EmailAddress','Email address',''),(3,'Float','Float point value',''),(5,'NotEmpty','Not empty',''),(6,'Hostname','Hostname',''),(7,'Ip','IP address',''),(8,'Regex','Date (full)','/^(([0-2][0-9])|(3[0-1]))\\/((0[1-9])|(1[0-2]))\\/([1-2][0-9]{3})$/'),(9,'Regex','Date (year only)','/^([1-2][0-9]{3})$/'),(10,'Regex','Custom Regex','');
 UNLOCK TABLES;

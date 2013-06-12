@@ -4,6 +4,9 @@ ALTER TABLE `form_definitions` DROP COLUMN `post_action`;
 # remove the email sender field, since it's handled by eZ
 ALTER TABLE `form_definitions` DROP COLUMN `email_sender`;
 
+# add css class column
+ALTER TABLE `form_definitions` ADD `css_class` VARCHAR( 255 ) NOT NULL ;
+
 # add new processing types
 ALTER TABLE `form_definitions` ADD `email_action` TINYINT NOT NULL AFTER `receipt_body` ,
 ADD `store_action` TINYINT NOT NULL AFTER `email_action` ,
