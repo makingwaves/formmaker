@@ -97,7 +97,7 @@ class formAnswers extends eZPersistentObject
     }
 
     /**
-     *
+     * Method counts all the answers (or all answers for given the id) and returns the number.
      * @param type $form_id
      * @return type
      */
@@ -113,7 +113,7 @@ class formAnswers extends eZPersistentObject
     }
 
     /**
-     * Metgod returns a list of attributes for current answeer object
+     * Method returns a list of attributes for current answer object
      * @return array
      */
     public function getAttributes()
@@ -131,7 +131,7 @@ class formAnswers extends eZPersistentObject
     }
 
     /**
-     * Generate a quick summary of the answer
+     * Generate a quick summary of the answer. The result is used on answer list page.
      * @return string
      */
     public function getSummary()
