@@ -4,7 +4,7 @@
 {ezscript_load( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 {ezscript_require( array( 'jquery.tablesorter.js', 'list.js' ) )}
 
-<div id="dialog-confirm">{'Are you sure?'|i18n( 'formmaker/admin' )}</div>
+<div id="dialog-confirm">{"You're about to remove the form with all possible answers. Are you sure you want to do that?"|i18n( 'formmaker/admin' )}</div>
 
 <div class="context-block tags-dashboard">
     <div class="box-header">
@@ -27,7 +27,7 @@
                         </thead>
 
                         <tbody>
-                            {foreach $forms as $form sequence array('odd', 'even') as $row_class}
+                            {foreach $forms as $form}
                                 <tr>
                                     <td>{$form.name|wash()}</td>
                                     <td>{$form.create_date}</td>            

@@ -1,17 +1,20 @@
 <?php
 
 /**
- * Class definec custom template fetches
+ * Class defines custom template fetches
  */
 class FormMakerFunctionCollection
 {  
-    // eZHTTPTool object instance
-    private $http;
-    // form definition object
-    private $definition;
-    // formmaker.ini instance
-    private $ini;
-    
+    private $http;                      // eZHTTPTool object instance
+    private $definition;                // form definition object
+    private $ini;                       // formmaker.ini instance
+
+    // a list actions responsible for processing form results
+    public static $action_types = array(
+        'email_action', 'store_action', 'object_action'
+    );
+
+
     /**
      * Method fetches form definition and all attributes for given Form id.
      * It also returns validation error or success template content if there are no errors.
@@ -174,23 +177,13 @@ class FormMakerFunctionCollection
                 // processing the data only if array contains the data
                 elseif ( !empty( $data_to_send['data'] ) )
                 {
-                    // Sending email message
-                    switch ($this->definition->attribute('post_action'))
+                    $operation_result = true;
+                    foreach ( self::$action_types as $action_type )
                     {
-                        case 'email':
-                        $operation_result = $this->processEmail( $data_to_send );
-                        $this->removeSessionData();
-                            break;
-
-                        case 'object':
-                            $process_class = $this->definition->attribute( 'process_class' );
-                            $processing_object = new $process_class();
-                            $operation_result = $processing_object->processSubmit( $data_to_send );
-                            $this->removeSessionData();
-                            break;
-
-                        default:
-                        $operation_result = false;
+                        if ( $this->definition->attribute( $action_type ) && $operation_result )
+                        {
+                            $operation_result = $this->processFormData( $action_type, $data_to_send );
+                        }
                     }
 
                     // rendering success template
@@ -249,18 +242,15 @@ class FormMakerFunctionCollection
     private function processEmail( $data_to_send )
     {
         // creating email content
-        $sender     = $this->definition->attribute( 'email_sender' );
-        $recipients = explode( ';', $this->definition->attribute( 'recipients' ) );
-        $attachments = $data_to_send['attachments'];
-        
+        $recipients  = explode( ';', $this->definition->attribute( 'recipients' ) );
+
         // sendnig message to default recipient(s) (for form definition)
         $status = $this->sendEmail(
-                $sender,
                 $this->definition->attribute( 'email_title' ),
                 'formmaker/email/recipient.tpl',
                 $data_to_send['data'],
                 $recipients,
-                $attachments
+                $data_to_send['attachments']
         );     
         
         // sending email to additional receivers
@@ -274,7 +264,6 @@ class FormMakerFunctionCollection
                 }
 
                 $status = $this->sendEmail(
-                        $sender,
                         $this->definition->attribute( 'email_title' ),
                         'formmaker/email/user.tpl',
                         $data_to_send['data'],
@@ -286,19 +275,68 @@ class FormMakerFunctionCollection
         
         return $status;
     }
+
+    /**
+     * Method processes the given data, depending of given type.
+     * @param string $type
+     * @param array $data
+     * @return boolean
+     */
+    private function processFormData( $type, $data )
+    {
+        switch ( $type )
+        {
+            case 'email_action':
+                $status = $this->processEmail( $data );
+                $this->removeSessionData();
+                break;
+
+            case 'store_action':
+                $status = $this->storeAnswer( $data );
+                break;
+
+            case 'object_action':
+                $process_class = $this->definition->attribute( 'process_class' );
+                $processing_object = new $process_class();
+                $status = $processing_object->processSubmit( $data );
+                $this->removeSessionData();
+                break;
+
+            default:
+                $status = false;
+                break;
+        }
+
+        return $status;
+    }
     
     /**
      * Method sends an email message basing on fiven attributes
-     * @param string $sender
-     * @param string $sender
+     * @param string $subject
      * @param string $template
      * @param array $email_data
      * @param string $email_address
      * @param array $recipients
      * @return boolean
      */
-    private function sendEmail( $sender, $subject, $template, $email_data, $recipients, $attachments )
+    private function sendEmail( $subject, $template, $email_data, $recipients, $attachments )
     {
+        $validator = new FormMaker_Validate_EmailAddress();
+        foreach ( $recipients as $i => $recipient )
+        {
+            if ( !$validator->isValid( $recipient ) )
+            {
+                unset( $recipients[$i] );
+            }
+        }
+
+        // there are no correct recipient addresses, so nothing to do here
+        if ( empty( $recipients ) )
+        {
+            return false;
+        }
+
+        $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
             case 'eZMail':
@@ -310,7 +348,7 @@ class FormMakerFunctionCollection
                 $mail->setSubject( $subject );
                 $mail->setContentType('text/html');
                 $mail->setBody( $tpl->fetch( 'design:' . $template ) );
-                foreach( $recipients as $recipient ) 
+                foreach( $recipients as $recipient )
                 {
                     $mail->addReceiver( $recipient );
                 }                 
@@ -362,12 +400,21 @@ class FormMakerFunctionCollection
                         unlink($this->thumbName($attachment));
                     }
                 }
-
                 break;
-
         }
         
         return $result;		
+    }
+
+    /**
+     * Storing user input in a database
+     * @param array $data
+     * @return bool
+     */
+    private function storeAnswer( $data )
+    {
+        $answer = formAnswers::addNewAnswer( $this->definition->attribute( 'id' ) );
+        return formAnswersAttributes::addAttributes( $data, $answer->attribute( 'id' ) );
     }
     
     /**
@@ -375,9 +422,9 @@ class FormMakerFunctionCollection
      * @param int $attribute_id
      * @return array
      */
-    public function isAttributeRequired($attribute_id) 
+    public function isAttributeRequired( $attribute_id )
     {
-        return array('result' => formAttrvalid::isAttributeRequired($attribute_id));
+        return array( 'result' => formAttrvalid::isAttributeRequired( $attribute_id ) );
     }
     
     /**
@@ -387,7 +434,8 @@ class FormMakerFunctionCollection
     {
         foreach ( $_SESSION as $key => $value )
         {
-            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) ) {
+            if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
+            {
                 continue;
             }
             // clean up the session
@@ -422,6 +470,7 @@ class FormMakerFunctionCollection
                 switch ($attribute->attribute('type_id'))
                 {
                     case formTypes::CHECKBOX_ID:
+                        $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
@@ -432,6 +481,7 @@ class FormMakerFunctionCollection
                     case formTypes::RADIO_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
@@ -444,6 +494,7 @@ class FormMakerFunctionCollection
                     case formTypes::SELECT_ID:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $option_object = formAttributesOptions::fetchOption( $default_value );
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not selected' );
@@ -460,6 +511,7 @@ class FormMakerFunctionCollection
                             {
                                 $receivers[] = $default_value;
                             }
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
@@ -469,6 +521,7 @@ class FormMakerFunctionCollection
                         break;
 
                     case formTypes::FILE_ID:
+                        $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                         $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                         $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                         $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
@@ -480,6 +533,7 @@ class FormMakerFunctionCollection
                     default:
                         if ( $filled_only != 'true' || !empty( $default_value ) )
                         {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
                             $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );

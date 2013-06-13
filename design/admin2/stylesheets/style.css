@@ -354,3 +354,28 @@ select[name=new-field-type] {
     margin-top: 3px;
     display: none;
 }
+
+.formmaker-set-answers-container {
+    margin: 10px 0;
+}
+
+th.formmaker-answers-count-column {
+    width: 25px;
+}
+
+td.formmaker-answers-count-column {
+    font-weight: bold;
+    text-align: right;
+}
+
+.formmaker-answers-date-column {
+    width: 150px;
+}
+
+.formmaker-answer-query-column {
+    width: 300px;
+}
+
+.formmaker-answer-type-column {
+    width: 100px;
+}

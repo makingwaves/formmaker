@@ -31,5 +31,6 @@ Links[list]=formmaker/list
 PolicyList_list[]=formmaker/edit
 Links[edit]=formmaker/edit
 PolicyList_edit[]=formmaker/edit
-
+Links[answers]=formmaker/answers
+PolicyList_answers[]=formmaker/answers
 */ ?>
