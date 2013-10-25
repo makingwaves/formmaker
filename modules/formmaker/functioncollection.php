@@ -51,7 +51,7 @@ class FormMakerFunctionCollection
             $tpl->setVariable( 'result', false );
             $tpl->setVariable( 'form_definition', $this->definition );
             $result = array(
-                'success'               => $tpl->fetch( 'design:formmaker/form_processed.tpl' ),
+                'success'               => $tpl->fetch( 'design:formmaker/view/' . $view . '/form_processed.tpl' ),
                 'validation'            => $errors,
                 'definition'            => $this->definition,
                 'attributes'            => $form_page['attributes'],
@@ -190,7 +190,7 @@ class FormMakerFunctionCollection
                     // rendering success template
                     $tpl->setVariable( 'result', $operation_result );
                     $tpl->setVariable( 'form_definition', $this->definition );
-                    $result['success'] = $tpl->fetch( 'design:formmaker/form_processed.tpl' );
+                    $result['success'] = $tpl->fetch( 'design:formmaker/view/' . $view . '/form_processed.tpl' );
                     eZSession::set( formDefinitions::SESSION_FORM_SENT_KEY, true );
                 }
             }
