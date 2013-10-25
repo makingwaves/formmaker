@@ -4,7 +4,7 @@
  * Class defines custom template fetches
  */
 class FormMakerFunctionCollection
-{  
+{
     private $http;                      // eZHTTPTool object instance
     private $definition;                // form definition object
     private $ini;                       // formmaker.ini instance
@@ -19,9 +19,10 @@ class FormMakerFunctionCollection
      * Method fetches form definition and all attributes for given Form id.
      * It also returns validation error or success template content if there are no errors.
      * @param int $form_id
+     * @param string $view - "default" for default
      * @return array
-     */  
-    public function fetchFormData( $form_id )
+     */
+    public function fetchFormData( $form_id, $view )
     {
         $this->http         = eZHTTPTool::instance();
         $this->definition   = formDefinitions::getForm( $form_id );
@@ -36,13 +37,13 @@ class FormMakerFunctionCollection
 
         // checking whether user has access to form
         $this->executeExternalScript();
-        
+
         // removing sent flag from session
         if ( eZSession::issetkey( formDefinitions::SESSION_FORM_SENT_KEY ) && empty( $_POST ) )
         {
             eZSession::unsetkey( formDefinitions::SESSION_FORM_SENT_KEY );
-        }        
-        
+        }
+
         // rendering receipt template. This part handles F5 hitting problem on receipt page
         if ( eZSession::issetkey( formDefinitions::SESSION_FORM_SENT_KEY ) )
         {
@@ -59,7 +60,7 @@ class FormMakerFunctionCollection
                 'all_pages'             => $all_pages,
                 'date_validator'        => formValidators::DATE_ID,
                 'date_year_validator'   => formValidators::DATE_YEAR_ID,
-            ); 
+            );
             return array('result' => $result);
         }
 
@@ -165,14 +166,14 @@ class FormMakerFunctionCollection
             {
                 $tpl = eZTemplate::factory();
                 $data_to_send = $this->getDataToSend();
-                
+
                 if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
                 {
                     // rendering summary page
                     $tpl->setVariable( 'all_pages', $data_to_send['data'] );
                     $tpl->setVariable( 'body_text', $this->definition->attribute( 'summary_body' ) );
                     $tpl->setVariable( 'form_id', $this->definition->attribute( 'id' ) );
-                    $result['summary_page'] = $tpl->fetch( 'design:formmaker/summary_page.tpl' );
+                    $result['summary_page'] = $tpl->fetch( 'design:formmaker/view/' . $view . '/summary_page.tpl' );
                 }
                 // processing the data only if array contains the data
                 elseif ( !empty( $data_to_send['data'] ) )
@@ -192,16 +193,16 @@ class FormMakerFunctionCollection
                     $result['success'] = $tpl->fetch( 'design:formmaker/form_processed.tpl' );
                     eZSession::set( formDefinitions::SESSION_FORM_SENT_KEY, true );
                 }
-            } 
+            }
         }
-        
+
         if ( $this->http->hasPostVariable( 'form-back' ) )
         {
             if ( !$this->http->hasPostVariable( 'summary_page' ) )
             {
                 $current_page -= 1;
             }
-            
+
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
             $form_page['attributes'] = $form_page['attributes']['attributes'];
 
@@ -210,7 +211,7 @@ class FormMakerFunctionCollection
         elseif ( $this->http->hasPostVariable( 'form-next' ) && eZSession::issetkey( formDefinitions::PAGE_SESSION_PREFIX . $current_page ) )
         {
             $form_page['attributes'] = eZSession::get( formDefinitions::PAGE_SESSION_PREFIX . $current_page );
-            $form_page['attributes'] = $form_page['attributes']['attributes'];            
+            $form_page['attributes'] = $form_page['attributes']['attributes'];
         }
 
         $result = array_merge($result, array( 'definition'          => $this->definition,
@@ -223,7 +224,7 @@ class FormMakerFunctionCollection
                                               'counted_validators'  => formAttrvalid::countValidatorsForAttributes()));
         return array('result' => $result);
     }
-    
+
     /**
      * Method returns attribute post name/id based on indentifier or generated
      * @param type $attrib
@@ -233,7 +234,7 @@ class FormMakerFunctionCollection
     {
         return $post_id = 'field_' . $attrib->attribute('type_id') . '_' . $attrib->attribute('id');
     }
-    
+
     /**
      * Method generates email message to recipients and sends it
      * @param array $data_to_send
@@ -251,8 +252,8 @@ class FormMakerFunctionCollection
                 $data_to_send['data'],
                 $recipients,
                 $data_to_send['attachments']
-        );     
-        
+        );
+
         // sending email to additional receivers
         if ( $status && !empty( $data_to_send['receivers'] ) )
         {
@@ -272,7 +273,7 @@ class FormMakerFunctionCollection
                 );
             }
         }
-        
+
         return $status;
     }
 
@@ -309,7 +310,7 @@ class FormMakerFunctionCollection
 
         return $status;
     }
-    
+
     /**
      * Method sends an email message basing on fiven attributes
      * @param string $subject
@@ -342,19 +343,19 @@ class FormMakerFunctionCollection
             case 'eZMail':
                 $tpl    = eZTemplate::factory();
                 $mail   = new eZMail();
-                
+
                 $tpl->setVariable( 'data', $email_data );
-                $mail->setSender( $sender ); 
+                $mail->setSender( $sender );
                 $mail->setSubject( $subject );
                 $mail->setContentType('text/html');
                 $mail->setBody( $tpl->fetch( 'design:' . $template ) );
                 foreach( $recipients as $recipient )
                 {
                     $mail->addReceiver( $recipient );
-                }                 
-                $result = eZMailTransport::send( $mail );                          
+                }
+                $result = eZMailTransport::send( $mail );
                 break;
-            
+
             case 'PHPMailer':
                 $tpl = eZTemplate::factory();
                 $tpl->setVariable( 'data', $email_data );
@@ -402,8 +403,8 @@ class FormMakerFunctionCollection
                 }
                 break;
         }
-        
-        return $result;		
+
+        return $result;
     }
 
     /**
@@ -416,7 +417,7 @@ class FormMakerFunctionCollection
         $answer = formAnswers::addNewAnswer( $this->definition->attribute( 'id' ) );
         return formAnswersAttributes::addAttributes( $data, $answer->attribute( 'id' ) );
     }
-    
+
     /**
      * Fetch function checks if attribute of given ID is required or not
      * @param int $attribute_id
@@ -426,7 +427,7 @@ class FormMakerFunctionCollection
     {
         return array( 'result' => formAttrvalid::isAttributeRequired( $attribute_id ) );
     }
-    
+
     /**
      * Method removes form session data
      */
@@ -440,9 +441,9 @@ class FormMakerFunctionCollection
             }
             // clean up the session
             unset( $_SESSION[$key] );
-        }         
+        }
     }
-    
+
     /**
      * Method returns data ready for sending
      * @return type
@@ -462,7 +463,7 @@ class FormMakerFunctionCollection
                 continue;
             }
             $email_data[$i]['page_label'] = ( $page['page_info'] instanceof formAttributes ) ? $page['page_info']->attribute( 'label' ) : $this->definition->attribute( 'first_page' );
-            
+
             foreach ( $page['attributes'] as $j => $attribute )
             {
                 $default_value = $attribute->attribute( 'default_value' );
@@ -541,19 +542,19 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['is_image'] = false;
                         }
                         break;
-                }    
-                
+                }
+
             }
             $i++;
-        }  
+        }
 
         return array(
             'data'          => $email_data,
             'receivers'     => $receivers,
             'attachments'   => $attachments,
-        );        
+        );
     }
-    
+
     /**
      * Method executes the internal script. It depends on FormsAffected setting and runs in two caseses only: when FormsAffected array is empty (runs for all forms) or
      * FormsAffected array is not empty and currently processed form matches its value
@@ -572,9 +573,9 @@ class FormMakerFunctionCollection
             {
                 require $this->ini->variable( 'ExternalScript', 'Path' );
             }
-        }        
+        }
     }
-    
+
     /**
      * Method overrides $form_page variable by injecting the data from external source. It depends on FormsAffected setting and runs in two caseses only:
      * when FormsAffected array is empty (runs for all forms) or FormsAffected array is not empty and currently processed form matches its value

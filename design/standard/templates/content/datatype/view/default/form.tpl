@@ -1,9 +1,10 @@
 {* Template renders view of form attribute *}
 
-{def $form_data         = fetch( 'formmaker', 'data', hash( 'form_id', $node.data_map.form.content.form_id ) )
+{def $form_data         = fetch( 'formmaker', 'data', hash( 'form_id', $node.data_map.form.content.form_id,
+                                                            'view', first_set( $node.data_map.view_type.contentclass_attribute.content.options[$node.data_map.view_type.content.0].name, 'default' ) ) )
      $errors            = $form_data.validation
      $form_definition   = $form_data.definition
-     $form_attributes   = $form_data.attributes 
+     $form_attributes   = $form_data.attributes
      $counted_validators= $form_data.counted_validators
      $attr_required     = false()
      $current_page      = $form_data.current_page
@@ -28,7 +29,7 @@
 {/if}
 
 <div class="form-container">
-    
+
     <h1>{$header_text|wash()|i18n( 'formmaker/front' )}</h1>
 
     <form id="mwezform" class="{$form_definition.css_class}" method="POST" action={$node.url_alias|ezurl()} {if $form_definition.multipart}enctype="multipart/form-data"{/if}>
@@ -38,7 +39,7 @@
         <input type="hidden" name="current_page" value="{$current_page}" />
         <input type="hidden" id="date-validator" value="{$form_data.date_validator}" />
         <input type="hidden" id="form-datepicker-format" value="{$form_definition.datepicker_format}" />
-            
+
         {if is_set( $form_data.summary_page )}
             {* $form_data.summary_page contains rendered template summary_page.tpl *}
             {$form_data.summary_page}
