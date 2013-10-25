@@ -3,6 +3,7 @@ Form Maker changelog file
 
 Next Version
 - Removed deprecated .live() jQuery method - it's replaced by .on()
+- Make it possible to not display field identifier on form edit page
 
 Version 2.0.0
 - Created possibility to store user answers in database
@@ -83,7 +84,7 @@ Version 1.5
 - Changed validation message for Regex, so we could have an access to pattern and possibility to set precise error messages (i18n)
 
 Version 1.4.1
-- Added possibility to inject external script to check whether user has access to form. 
+- Added possibility to inject external script to check whether user has access to form.
   Script path can be set by adding 'ExternalScript' variable into 'FormmakerSettings' settings group.
 
 Version 1.4
