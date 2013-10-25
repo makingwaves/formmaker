@@ -173,6 +173,8 @@ class FormMakerFunctionCollection
                     $tpl->setVariable( 'all_pages', $data_to_send['data'] );
                     $tpl->setVariable( 'body_text', $this->definition->attribute( 'summary_body' ) );
                     $tpl->setVariable( 'form_id', $this->definition->attribute( 'id' ) );
+                    $tpl->setVariable( 'checkbox_type_id', formTypes::CHECKBOX_ID );
+                    $tpl->setVariable( 'view', $view );
                     $result['summary_page'] = $tpl->fetch( 'design:formmaker/view/' . $view . '/summary_page.tpl' );
                 }
                 // processing the data only if array contains the data
