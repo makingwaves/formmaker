@@ -165,7 +165,7 @@ class FormMakerFunctionCollection
             if ( empty( $errors ) && $is_page_last && $this->http->hasPostVariable( 'form-send' ) )
             {
                 $tpl = eZTemplate::factory();
-                $data_to_send = $this->getDataToSend();
+                $data_to_send = $this->getDataToSend( $view );
 
                 if ( $this->definition->attribute( 'summary_page' ) && !$this->http->hasPostVariable( 'summary_page' ) )
                 {
@@ -446,15 +446,16 @@ class FormMakerFunctionCollection
 
     /**
      * Method returns data ready for sending
+     * @param string $view
      * @return type
      */
-    private function getDataToSend()
+    private function getDataToSend( $view )
     {
         $email_data     = array();
         $receivers      = array();
         $attachments    = array();
         $i              = 0;
-        $filled_only    = $this->ini->variable( 'FormmakerSettings', 'SendOnlyFilledData' );
+        $filled_only    = $this->ini->variable( 'ViewSettings_' . $view, 'SendOnlyFilledData' );
 
         foreach ( $_SESSION as $key => $page )
         {
@@ -466,17 +467,22 @@ class FormMakerFunctionCollection
 
             foreach ( $page['attributes'] as $j => $attribute )
             {
-                $default_value = $attribute->attribute( 'default_value' );
+                $default_value  = $attribute->attribute( 'default_value' );
+                $type_id        = $attribute->attribute( 'type_id' );
 
-                switch ($attribute->attribute('type_id'))
+                switch ( $type_id )
                 {
                     case formTypes::CHECKBOX_ID:
-                        $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
-                        $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
-                        $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
-                        $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
-                        $email_data[$i]['attributes'][$j]['is_file'] = false;
-                        $email_data[$i]['attributes'][$j]['is_image'] = false;
+                        if ( $filled_only != 'true' || !empty( $default_value ) )
+                        {
+                            $email_data[$i]['attributes'][$j]['id'] = $attribute->attribute( 'id' );
+                            $email_data[$i]['attributes'][$j]['label'] = $attribute->attribute( 'label' );
+                            $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
+                            $email_data[$i]['attributes'][$j]['value'] = ezpI18n::tr( 'formmaker/email', ( $default_value == 'on') ? 'Yes': 'No');
+                            $email_data[$i]['attributes'][$j]['is_file'] = false;
+                            $email_data[$i]['attributes'][$j]['is_image'] = false;
+                            $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
+                        }
                         break;
 
                     case formTypes::RADIO_ID:
@@ -489,6 +495,7 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['value'] = (!is_null($option_object)) ? $option_object->attribute( 'label' ) : ezpI18n::tr( 'formmaker/email', 'Not checked' );
                             $email_data[$i]['attributes'][$j]['is_file'] = false;
                             $email_data[$i]['attributes'][$j]['is_image'] = false;
+                            $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
                         }
                         break;
 
@@ -502,6 +509,7 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['identifier'] = $attribute->attribute( 'identifier' );
                             $email_data[$i]['attributes'][$j]['is_file'] = false;
                             $email_data[$i]['attributes'][$j]['is_image'] = false;
+                            $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
                         }
                         break;
 
@@ -518,6 +526,7 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
                             $email_data[$i]['attributes'][$j]['is_file'] = false;
                             $email_data[$i]['attributes'][$j]['is_image'] = false;
+                            $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
                         }
                         break;
 
@@ -529,6 +538,7 @@ class FormMakerFunctionCollection
                         $email_data[$i]['attributes'][$j]['is_file'] = file_exists($attribute->attribute( 'default_value' ));
                         $email_data[$i]['attributes'][$j]['is_image'] = $this->isImage($attribute->attribute( 'default_value' ));
                         $attachments[] = $attribute->attribute( 'default_value' );
+                        $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
                         break;
 
                     default:
@@ -540,10 +550,10 @@ class FormMakerFunctionCollection
                             $email_data[$i]['attributes'][$j]['value'] = $attribute->attribute( 'default_value' );
                             $email_data[$i]['attributes'][$j]['is_file'] = false;
                             $email_data[$i]['attributes'][$j]['is_image'] = false;
+                            $email_data[$i]['attributes'][$j]['type_id'] = $type_id;
                         }
                         break;
                 }
-
             }
             $i++;
         }

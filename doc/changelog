@@ -5,6 +5,7 @@ Next Version
 - Removed deprecated .live() jQuery method - it's replaced by .on()
 - Make it possible to not display field identifier on form edit page
 - Confirmation page template (summary_page.tpl) and receipt page template (form_processed.tpl) moved view directory
+- Added the settings group for each view. Moved SendOnlyFilledData option into it (default group)
 
 Version 2.0.0
 - Created possibility to store user answers in database
