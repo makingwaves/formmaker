@@ -9,6 +9,6 @@
                                                          'user_id',  $current_user.contentobject_id) )}
     <div class="form-field-attribute">
         {'Identifier:'|i18n( 'formmaker/admin' )}
-        <input type="text" value="{$identifier}" name="formelement_{$input_id}[identifier]"{if $access|not()} readonly {/if}/>
+        <input type="text" value="{$identifier|wash()}" name="formelement_{$input_id}[identifier]"{if $access|not()} readonly {/if}/>
     </div>
 {/if}

@@ -4,7 +4,7 @@
 
 {if ezini( 'AdditionalElements', 'Description', 'formmaker.ini' )|eq( 'enabled' )}
     <div class="form-field-attribute">
-        {'Description:'|i18n( 'formmaker/admin' )} 
-        <input class="input-description-field" type="text" value="{$description}" name="formelement_{$input_id}[description]" />
+        {'Description:'|i18n( 'formmaker/admin' )}
+        <input class="input-description-field" type="text" value="{$description|wash()}" name="formelement_{$input_id}[description]" />
     </div>
 {/if}
