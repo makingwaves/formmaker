@@ -1,9 +1,9 @@
 {* Template renders summary page (if form has it enabled), params:
-- $all_pages, array
-- $body_text, string
-- $form_id, int
-- $view, string
-- $checkbox_type_id, int *}
+- @param array $all_pages
+- @param string $body_text
+- @param int $form_id
+- @param string $view - default value of this variable is "default". Can be changed in form node attribute "view"
+- @param int $checkbox_type_id - numerical identifier of form checkbox attribute *}
 
 {def $thumb = ''
      $extension = false()}
