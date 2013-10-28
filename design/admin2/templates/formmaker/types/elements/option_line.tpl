@@ -5,9 +5,9 @@
 - $label - string *}
 
 <li>
-    <input type="text" name="formelement_{$input_id}[options][{$option_id}]" value="{$label}" />
+    <input type="text" name="formelement_{$input_id}[options][{$option_id}]" value="{$label|wash()}" />
     <span class="default-radio" >
-        {'Default'|i18n( 'formmaker/admin' )} 
+        {'Default'|i18n( 'formmaker/admin' )}
         <input type="checkbox" option_id="{$option_id}" connected="formelement_{$input_id}[default]" {if eq( $default_value, $option_id )}checked="checked"{/if} />
     </span>
     <a class="option-move-down"><img src={'button-move_down.gif'|ezimage()}/></a>

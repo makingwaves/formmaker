@@ -1,7 +1,9 @@
 {* Template renders summary page (if form has it enabled), params:
-- $all_pages, array
-- $body_text, string
-- $form_id, int *}
+- @param array $all_pages
+- @param string $body_text
+- @param int $form_id
+- @param string $view - default value of this variable is "default". Can be changed in form node attribute "view"
+- @param int $checkbox_type_id - numerical identifier of form checkbox attribute *}
 
 {def $thumb = ''
      $extension = false()}
@@ -25,7 +27,7 @@
             {if $attribute.is_image}
 
                 {set $thumb = $attribute.value|explode('.') }
-                {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}            
+                {set $thumb = concat($thumb.0, '_thumb.', $thumb.1)}
 
                 <span>{$attribute.label|i18n( 'formmaker/front' )}:<br/>
                 <a target="_blank" href="/{$attribute.value}"><img src="/{$thumb}" /></a>
@@ -42,7 +44,7 @@
             <span>{$attribute.label|i18n( 'formmaker/front' )}: <i>{$attribute.value}</i></span><br/>
         {/if}
     {/foreach}
-    <br/>    
+    <br/>
 {/foreach}
 
 {include uri="design:formmaker/form_buttons.tpl" send_name='form-send' send_value='Send' back_display=true() back_value='Edit'}

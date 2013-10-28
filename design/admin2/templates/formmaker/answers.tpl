@@ -75,7 +75,7 @@
                     {/foreach}
 
                     {if not( $answers|count() )}
-                        <tr><td class="formmaker_no_forms" colspan="5">{'There are no answers for now.'|i18n( 'formmaker/admin' )}</td></tr>
+                        <tr><td class="formmaker_no_forms" colspan="6">{'There are no answers for now.'|i18n( 'formmaker/admin' )}</td></tr>
                     {/if}
                 </tbody>
             </table>
