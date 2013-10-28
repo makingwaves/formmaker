@@ -7,6 +7,7 @@ Next Version
 - Confirmation page template (summary_page.tpl) and receipt page template (form_processed.tpl) moved view directory
 - Added the settings group for each view. Moved SendOnlyFilledData option into it (default group)
 - Added washes into admin panel form attribute templates
+- Fixed non-sorting column on the table under 'See answers'
 
 Version 2.0.0
 - Created possibility to store user answers in database
