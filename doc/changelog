@@ -1,7 +1,7 @@
 Form Maker changelog file
 =========================
 
-Next Version
+Version 2.0.1
 - Removed deprecated .live() jQuery method - it's replaced by .on()
 - Make it possible to not display field identifier on form edit page
 - Confirmation page template (summary_page.tpl) and receipt page template (form_processed.tpl) moved view directory
