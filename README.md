@@ -117,20 +117,33 @@ Text attribute is a simple text typed input field. However, it can look differen
 * **CSS class** - string placed here will be added as a CSS class to <input /> tag
 * **Validation** - you can pick one of possible validation methods
 
-Text attribute filled with data will be rendered on a form page as follows:
-![Text attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20front.jpg)
+Text attribute filled with data will be rendered on a form page as follows:  
 
+![Text attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20front.jpg)  
+  
 In many cases you may want to use some validation. You can choose from following:
 
 * **Custom Regex** - this is advanced validator for users who know how to create and use regular expressions. After selecting this option, additional field (**Validation Regex**) will show up, where you can put the expression string. Please note that it is **mandatory to use slashes** ( / ) as the opening and ending characters of the string.  
 
-![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)
+![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)  
+
 Example regular expression accepts only letters. Putting other characters in such text field will produce a validation error:  
 
 ![Custom regex front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex%20front.jpg)
 
+4.2. Checkbox
+-------------
+![Checkbox attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/checkbox%20attribute.jpg)  
 
+* **Label** (required) - short name of the attribute, will be displayed on front
+* **Identifier** - can by used by developers to identify the field
+* **Mandatory** - indicates whether field will be required or not. In checkbox context it means that input needs to be selected to proceed.
+* **Description**
+* **Default value** - if checked, input on front will be checked by default
+* **CSS class** - string placed here will be added as a CSS class to <input /> tag
+* **Checkbox** attribute filled with data will be rendered on a form page as follows:
 
+![Checkbox attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/checkbox%20attribute%20front.jpg)
 
 
 
