@@ -123,8 +123,10 @@ Text attribute filled with data will be rendered on a form page as follows:
 In many cases you may want to use some validation. You can choose from following:
 
 * **Custom Regex** - this is advanced validator for users who know how to create and use regular expressions. After selecting this option, additional field (**Validation Regex**) will show up, where you can put the expression string. Please note that it is **mandatory to use slashes** ( / ) as the opening and ending characters of the string.  
+
 ![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)
 Example regular expression accepts only letters. Putting other characters in such text field will produce a validation error:  
+
 ![Custom regex front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex%20front.jpg)
 
 
