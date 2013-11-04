@@ -7,8 +7,8 @@ Owner
 
 Authors
 -------
-* Piotr Szczygieł (piotr.szczygiel@makingwaves.pl)
-* Bogdan Juszczak (bogdan.juszczak@makingwaves.pl)
+* [Piotr Szczygieł](https://github.com/piotr-szczygiel/)
+* [Bogdan Juszczak](https://github.com/bogdanjuszczak/)
 
 Description
 -----------
@@ -63,7 +63,26 @@ When adding a new form, FormMaker comes with a several options (not all are requ
 * **E-mail title** - the subject of e-mail message
 * **E-mail recipients** - addresses separated by semicolons
 * **Store data in database** (checkbox) - when checked, all form input will be stored in database. Then editor can use "See answers" option to list stored data (5. Viewing answers).
-* **Use process class method** and **Process class name** - third way of processing input data. Developer can define here the PHP class name which will be executed when form is send. If you need more information about this feature, ask [Patryk Manterys](https://github.com/pmanterys).
+* **Use process class method** and **Process class name** - third way of processing input data. Developer can define here the PHP class name which will be executed when form is send. If you need more information about this feature, ask [Patryk Manterys](https://github.com/pmanterys).  
+
+The next step of adding a form is creating some attributes. You can create as many attributes as you want. All of them are described on Form attributes page. After that you should be able to see your form on a forms list.  
+  
+The final step, before you will be able to see your from on front page, is to create form eZ object.
+
+1. Go to **Content structure** tab  
+2. Enter the destination you want using the directory tree in a left hand menu  
+3. Click on **Create new** button and add new **Form** object  
+
+![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form.jpg)  
+
+4. You will be asked to put the **form name** (node name) and **pick the form** that you want to connect with the node. In come cases you may want **pick the the view** which will be used to render the form (described in Using Form Views chapter).  
+
+![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%202.jpg)  
+
+5. Publish the object  
+6. That's it! Your form is available on front page.
+
+![Thats it](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/form%20front.jpg)
 
 
 
