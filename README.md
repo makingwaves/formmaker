@@ -36,4 +36,4 @@ After FormMaker is successfully installed you can spot the new tab in eZ admin p
 1.1. List of forms
 ------------------
 This is a default action. All forms saved in database are listed in this table. Editor can edit or remove each of them. It it also possible to sort forms by table headers (name, created, author).  
-![List of forms]https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg
+![List of forms](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg)
