@@ -79,6 +79,25 @@ The final step, before you will be able to see your from on front page, is to cr
 6. That's it! Your form is available on front page.
 ![Thats it](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/form%20front.jpg)
 
+3. Editing form
+===============
+To edit the form, please find the form you like on **List of forms** page and the click **Edit** link.
+![List of forms](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg)
+You will be redirected to edit form page, which looks like below:
+![Edit form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/edit%20form.jpg)
+
+Click on the show button to expand form options container, which is the same with form definition described in 2. Adding new form.  
+The difference between adding new form and editing existing one can be also noticed (beside Editing form... label :)) in a toolbar. As you see on the image above, there are four buttons and one select list on it:
+* **Save and exit** - saves the form and redirects editor to **list of forms**
+* **Save** - saving without redirecting (useful when you want to see published changes in separate browser window)
+* **Cancel - doesn't save the changes and redirects to **list of forms**
+* **Add attribute** - adds the attribute selected on a list
+
+
+
+
+
+
 
 
 
