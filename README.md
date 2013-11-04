@@ -105,6 +105,28 @@ As you can see in a top right corner, editor is possible to **enable/disable** t
 Last important thing about attributes is the **ordering**. To make it more easy in use, we provided the possibility to drag and drop each attribute. Just grab the header of an attribute you want and place wherever you want - see the picture.
 ![Drag and drop](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/dnd.jpg)
 
+4.1. Text
+---------
+Text attribute is a simple text typed input field. However, it can look different depending on validators that you will use. But for now, let's take following attribute:
+![Text attribute admin](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20admin.jpg)
+* **Label** (required) - short name of the attribute, will be displayed on front
+* **Identifier** - can by used by developers to identify the field
+* **Mandatory** - indicates whether field will be required or not
+* **Description**
+* **Default value** - will be placed inside the input field
+* **CSS class** - string placed here will be added as a CSS class to <input /> tag
+* **Validation** - you can pick one of possible validation methods
+
+Text attribute filled with data will be rendered on a form page as follows:
+![Text attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20front.jpg)
+
+In many cases you may want to use some validation. You can choose from following:
+
+* **Custom Regex** - this is advanced validator for users who know how to create and use regular expressions. After selecting this option, additional field (**Validation Regex**) will show up, where you can put the expression string. Please note that it is **mandatory to use slashes** ( / ) as the opening and ending characters of the string.
+![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)
+Example regular expression accepts only letters. Putting other characters in such text field will produce a validation error:
+![Custom regex front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex%20front.jpg)
+
 
 
 
