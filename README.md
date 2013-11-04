@@ -37,3 +37,12 @@ After FormMaker is successfully installed you can spot the new tab in eZ admin p
 ------------------
 This is a default action. All forms saved in database are listed in this table. Editor can edit or remove each of them. It it also possible to sort forms by table headers (name, created, author).  
 ![List of forms](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg)
+
+1.2. Create new form
+----------------------------------------------
+![Create new form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%203.jpg)
+
+1.3. See answers
+----------------
+Action displays a list of answers that are stored in database. A table rendered here provides an information about answer form and also displays answer quick summary (described closely later in chapter Viewing answers)
+![See answers](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/see%20answers.jpg)
