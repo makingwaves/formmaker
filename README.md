@@ -17,7 +17,3 @@ This is an exclusive eZPublish extension, which provides possibility to creating
 Installation
 ------------
 You can find installation guide in *doc/install.md*
-
-Developer's guide
------------------
-If you want to participate in FormMaker project, please get familiar with our rules, which you can find in *doc/developer.md*
