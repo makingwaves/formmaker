@@ -72,16 +72,11 @@ The final step, before you will be able to see your from on front page, is to cr
 1. Go to **Content structure** tab  
 2. Enter the destination you want using the directory tree in a left hand menu  
 3. Click on **Create new** button and add new **Form** object  
-
 ![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form.jpg)  
-
 4. You will be asked to put the **form name** (node name) and **pick the form** that you want to connect with the node. In come cases you may want **pick the the view** which will be used to render the form (described in Using Form Views chapter).  
-
 ![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%202.jpg)  
-
 5. Publish the object  
 6. That's it! Your form is available on front page.
-
 ![Thats it](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/form%20front.jpg)
 
 
