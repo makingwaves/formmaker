@@ -86,11 +86,11 @@ To edit the form, please find the form you like on **List of forms** page and th
 You will be redirected to edit form page, which looks like below:
 ![Edit form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/edit%20form.jpg)
 
-Click on the show button to expand form options container, which is the same with form definition described in 2. Adding new form.  
+Click on the show button to expand form options container, which is the same with form definition described in [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form).  
 The difference between adding new form and editing existing one can be also noticed (beside Editing form... label :)) in a toolbar. As you see on the image above, there are four buttons and one select list on it:
 * **Save and exit** - saves the form and redirects editor to **list of forms**
 * **Save** - saving without redirecting (useful when you want to see published changes in separate browser window)
-* **Cancel - doesn't save the changes and redirects to **list of forms**
+* **Cancel** - doesn't save the changes and redirects to **list of forms**
 * **Add attribute** - adds the attribute selected on a list
 
 
