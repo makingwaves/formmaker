@@ -93,8 +93,17 @@ The difference between adding new form and editing existing one can be also noti
 * **Cancel** - doesn't save the changes and redirects to **list of forms**
 * **Add attribute** - adds the attribute selected on a list
 
+4. Form attributes
+==================
+Each form can have as many attributes as you want. They can be added by using **Add attribute** button visible on a top and bottom toolbars.
+![Edit form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/edit%20form.jpg)
+To make it more readable, each attribute type has it's own background colour. Let's take the text attribute for instance:
+![Text attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute.jpg)
 
-
+As you can see in a top right corner, editor is possible to **enable/disable** the attribute or **remove** it. When attribute is disabled, it is visible in admin panel, but of course it's not available on a form page.  
+  
+Last important thing about attributes is the **ordering**. To make it more easy in use, we provided the possibility to drag and drop each attribute. Just grab the header of an attribute you want and place wherever you want - see the picture.
+![Drag and drop](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/dnd.jpg)
 
 
 
