@@ -140,11 +140,26 @@ Example regular expression accepts only letters. Putting other characters in suc
 * **Mandatory** - indicates whether field will be required or not. In checkbox context it means that input needs to be selected to proceed.
 * **Description**
 * **Default value** - if checked, input on front will be checked by default
-* **CSS class** - string placed here will be added as a CSS class to <input /> tag
-* **Checkbox** attribute filled with data will be rendered on a form page as follows:
+* **CSS class** - string placed here will be added as a CSS class to <input /> tag  
+
+Checkbox attribute filled with data will be rendered on a form page as follows:
 
 ![Checkbox attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/checkbox%20attribute%20front.jpg)
 
+4.3. Radio buttons
+------------------
+![Radio buttons](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/radio%20buttons.jpg)
+
+* **Label** (required) - short name of the attribute, will be displayed on front
+* **Identifier** - can by used by developers to identify the field
+* **Mandatory** - indicates whether field will be required or not. This setting is useful when there is no default option checked (that's because after any radio is checked, there is no way back to un-check it - except reloading the page of course (smile))
+* **Description**
+* **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of all radio inputs defined in options field
+* **Options** - this is most important setting for radio attribute. Here you need to define radio buttons which will be displayed on front. To add new item use Add option button. One of defined here items can be set as default. You can move up/down options by using arrows. Item can be removed by clicking delete icon.  
+
+Radio buttons attribute filled with data will be rendered on a form page as follows:
+
+![Radio buttons front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/radio%20attribute%20front.jpg)
 
 
 
