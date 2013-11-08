@@ -216,7 +216,17 @@ In this case page separator is placed between radio button and select attributes
 
 Important thing about the pagination is the possibility to get back to previous page whenever you want (even when you're on confirmation page). User is able to change the previous input and continue.
 
+5. Viewing answers
+==================
+As it was mentioned when talking about [adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form), it is possible to set up a form to store the user inputs in FormMaker database. Then, we'll end up with a table like this:
 
+![Viewing answers](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/answers.jpg)
+
+That's the list of all answers available in database. It is possible to precise which from answers to list (by setting **Select form**) field. Each line has a quick summary list (**Answer summary**) which gives the editor a quick overview about the answer content. To see whole user input for particular answer, click on **Display** link and you will be redirected to answer page, which looks like this:
+
+![Viewing answers](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/answer%20page.jpg)
+
+Here you can see all of possible user inputs (including checkboxes as well). **Query** column contains the label of the attribute which type is presented in **Field type**. Answer column is the direct input from user.
 
 
 
