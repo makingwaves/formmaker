@@ -161,8 +161,24 @@ Radio buttons attribute filled with data will be rendered on a form page as foll
 
 ![Radio buttons front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/radio%20attribute%20front.jpg)
 
+4.4. Select list
+----------------
+![Select attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/select%20attribute.jpg)
 
+* **Label** (required) - short name of the attribute, will be displayed on front
+* **Identifier** - can by used by developers to identify the field
+* **Mandatory** - indicates whether field will be required or not. The point of this setting is that all select list has a default option "- please select -", so mandatory setting makes sure that user chosen correct value.
+* **Description**
+* **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of select input.
+* **Options** - this is most important setting for select list attribute. Here you need to define options which will be displayed on front. 
+    * To add new item use **Add option** button
+    * One of defined here items can be set as default 
+    * You can move up/down options by using arrows
+    * Item can be removed by clicking delete icon
 
+Select list attribute filled with data will be rendered on a form page as follows:
+
+![Select attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/select%20attribute%20front.jpg)
 
 
 
