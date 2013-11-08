@@ -180,10 +180,41 @@ Select list attribute filled with data will be rendered on a form page as follow
 
 ![Select attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/select%20attribute%20front.jpg)
 
+4.5. Textarea
+-------------
+Textarea attribute is a bit simplier than text attribute. It doesn't have validation possibility nor default value.
 
+![Textarea admin](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/textarea.jpg)
 
+* **Label** (required) - short name of the attribute, will be displayed on front
+* **Identifier** - can by used by developers to identify the field
+* **Mandatory** - indicates whether field will be required or not
+* **Description**
+* **CSS class** - string placed here will be added as a CSS class to <textarea /> tag
 
+That's the front result of textarea configured with given data:
 
+![Textarea front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/textarea%20front.jpg)
+
+4.6. File
+---------
+*Not documented - ask [Bogdan Juszczak](https://github.com/bogdanjuszczak/) for details.*
+
+4.7. Page separator
+-------------------
+Page separator is an abstract attribute. That means you can use it in admin panel as regular attributes, however it won't be rendered as others. Its function is to split the attributes into pages, so that's why it should be placed between two regular attributes (as text, textarea, etc.).
+
+![Page separator admin](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/page%20separator.jpg)
+
+Attribute contains only one setting (Label), which is used in navigation breadcrumb, but also it's displayed on confirmation page and sent in email message. OK, so let's configure the form to handle two pages (label for first of them can be defined in form definition - [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form)).
+
+![Page separator admin](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/page%20separator%20admin.jpg)
+
+In this case page separator is placed between radio button and select attributes, so "Pick a color" will be the last element of first page. "Country" list will be first element on second page. To get sure about that, please take a look on below picture, which presents the second page.
+
+![Page separator front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/page%20separator%20front.jpg)
+
+Important thing about the pagination is the possibility to get back to previous page whenever you want (even when you're on confirmation page). User is able to change the previous input and continue.
 
 
 
