@@ -29,11 +29,24 @@ What you can do by using FormMaker?
 * Set form view type
 * Some advanced things like: injecting data from external source or injecting a script
 
+List on contents
+----------------
+
 1. [Main menu options](https://github.com/makingwaves/formmaker#1-main-menu-options)
     * 1.1. [List of forms](https://github.com/makingwaves/formmaker#11-list-of-forms)
     * 1.2. [Create new form](https://github.com/makingwaves/formmaker#12-create-new-form)
     * 1.3. [See answers](https://github.com/makingwaves/formmaker#13-see-answers)
 2. [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form)
+3. [Editing form](https://github.com/makingwaves/formmaker#3-editing-form)
+4. [Form attributes](https://github.com/makingwaves/formmaker#4-form-attributes)
+    * 4.1. [Text](https://github.com/makingwaves/formmaker#41-text)
+    * 4.2. [Checkbox](https://github.com/makingwaves/formmaker#42-checkbox)
+    * 4.3. [Radio buttons](https://github.com/makingwaves/formmaker#43-radio-buttons)
+    * 4.4. [Select list](https://github.com/makingwaves/formmaker#44-select-list)
+    * 4.5. [Textarea](https://github.com/makingwaves/formmaker#45-textarea)
+    * 4.6. [File](https://github.com/makingwaves/formmaker#46-file)
+    * 4.7. [Page separator](https://github.com/makingwaves/formmaker#47-page-separator)
+5. [Viewing answers](https://github.com/makingwaves/formmaker#5-viewing-answers)
 
 1. Main menu options
 ====================
