@@ -29,6 +29,12 @@ What you can do by using FormMaker?
 * Set form view type
 * Some advanced things like: injecting data from external source or injecting a script
 
+1. [Main menu options](https://github.com/makingwaves/formmaker#1-main-menu-options)
+    * 1.1. [List of forms](https://github.com/makingwaves/formmaker#11-list-of-forms)
+    * 1.2. [Create new form](https://github.com/makingwaves/formmaker#12-create-new-form)
+    * 1.3. [See answers](https://github.com/makingwaves/formmaker#13-see-answers)
+2. [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form)
+
 1. Main menu options
 ====================
 After FormMaker is successfully installed you can spot the new tab in eZ admin panel top menu. After entering it, editor is allowed to use one of three options:  
@@ -39,7 +45,7 @@ This is a default action. All forms saved in database are listed in this table. 
 ![List of forms](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg)
 
 1.2. Create new form
-----------------------------------------------
+--------------------
 ![Create new form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%203.jpg)
 
 1.3. See answers
