@@ -1,4 +1,4 @@
-Form Maker 2.0.1
+Form Maker 2.0.2
 ================
 
 Owner
@@ -50,11 +50,11 @@ List on contents
 
 1. Main menu options
 ====================
-After FormMaker is successfully installed you can spot the new tab in eZ admin panel top menu. After entering it, editor is allowed to use one of three options:  
+After FormMaker is successfully installed you can spot the new tab in eZ admin panel top menu. After entering it, editor is allowed to use one of three options:
 
 1.1. List of forms
 ------------------
-This is a default action. All forms saved in database are listed in this table. Editor can edit or remove each of them. It it also possible to sort forms by table headers (name, created, author).  
+This is a default action. All forms saved in database are listed in this table. Editor can edit or remove each of them. It it also possible to sort forms by table headers (name, created, author).
 ![List of forms](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/list%20of%20forms.jpg)
 
 1.2. Create new form
@@ -68,8 +68,8 @@ Action displays a list of answers that are stored in database. A table rendered 
 
 2. Adding new form
 ==================
-When adding a new form, FormMaker comes with a several options (not all are required).  
-![Adding new form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/add%20new%20form.jpg)  
+When adding a new form, FormMaker comes with a several options (not all are required).
+![Adding new form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/add%20new%20form.jpg)
 
 * **Form name (required)** - this name will be used for identifying a from on a list.
 * **First page label** (required) - a label which will be displayed on a first page. If you want to have a more than one page, you will define the labels in page separator.
@@ -82,19 +82,19 @@ When adding a new form, FormMaker comes with a several options (not all are requ
 * **E-mail title** - the subject of e-mail message
 * **E-mail recipients** - addresses separated by semicolons
 * **Store data in database** (checkbox) - when checked, all form input will be stored in database. Then editor can use "See answers" option to list stored data (5. Viewing answers).
-* **Use process class method** and **Process class name** - third way of processing input data. Developer can define here the PHP class name which will be executed when form is send. If you need more information about this feature, ask [Patryk Manterys](https://github.com/pmanterys).  
+* **Use process class method** and **Process class name** - third way of processing input data. Developer can define here the PHP class name which will be executed when form is send. If you need more information about this feature, ask [Patryk Manterys](https://github.com/pmanterys).
 
-The next step of adding a form is creating some attributes. You can create as many attributes as you want. All of them are described on Form attributes page. After that you should be able to see your form on a forms list.  
-  
+The next step of adding a form is creating some attributes. You can create as many attributes as you want. All of them are described on Form attributes page. After that you should be able to see your form on a forms list.
+
 The final step, before you will be able to see your from on front page, is to create form eZ object.
 
-1. Go to **Content structure** tab  
-2. Enter the destination you want using the directory tree in a left hand menu  
-3. Click on **Create new** button and add new **Form** object  
-![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form.jpg)  
-4. You will be asked to put the **form name** (node name) and **pick the form** that you want to connect with the node. In come cases you may want **pick the the view** which will be used to render the form (described in Using Form Views chapter).  
-![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%202.jpg)  
-5. Publish the object  
+1. Go to **Content structure** tab
+2. Enter the destination you want using the directory tree in a left hand menu
+3. Click on **Create new** button and add new **Form** object
+![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form.jpg)
+4. You will be asked to put the **form name** (node name) and **pick the form** that you want to connect with the node. In come cases you may want **pick the the view** which will be used to render the form (described in Using Form Views chapter).
+![Add form object](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/create%20new%20form%202.jpg)
+5. Publish the object
 6. That's it! Your form is available on front page.
 ![Thats it](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/form%20front.jpg)
 
@@ -105,7 +105,7 @@ To edit the form, please find the form you like on **List of forms** page and th
 You will be redirected to edit form page, which looks like below:
 ![Edit form](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/edit%20form.jpg)
 
-Click on the show button to expand form options container, which is the same with form definition described in [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form).  
+Click on the show button to expand form options container, which is the same with form definition described in [Adding new form](https://github.com/makingwaves/formmaker#2-adding-new-form).
 The difference between adding new form and editing existing one can be also noticed (beside Editing form... label :)) in a toolbar. As you see on the image above, there are four buttons and one select list on it:
 * **Save and exit** - saves the form and redirects editor to **list of forms**
 * **Save** - saving without redirecting (useful when you want to see published changes in separate browser window)
@@ -119,8 +119,8 @@ Each form can have as many attributes as you want. They can be added by using **
 To make it more readable, each attribute type has it's own background colour. Let's take the text attribute for instance:
 ![Text attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute.jpg)
 
-As you can see in a top right corner, editor is possible to **enable/disable** the attribute or **remove** it. When attribute is disabled, it is visible in admin panel, but of course it's not available on a form page.  
-  
+As you can see in a top right corner, editor is possible to **enable/disable** the attribute or **remove** it. When attribute is disabled, it is visible in admin panel, but of course it's not available on a form page.
+
 Last important thing about attributes is the **ordering**. To make it more easy in use, we provided the possibility to drag and drop each attribute. Just grab the header of an attribute you want and place wherever you want - see the picture.
 ![Drag and drop](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/dnd.jpg)
 
@@ -136,30 +136,30 @@ Text attribute is a simple text typed input field. However, it can look differen
 * **CSS class** - string placed here will be added as a CSS class to <input /> tag
 * **Validation** - you can pick one of possible validation methods
 
-Text attribute filled with data will be rendered on a form page as follows:  
+Text attribute filled with data will be rendered on a form page as follows:
 
-![Text attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20front.jpg)  
-  
+![Text attribute front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/text%20attribute%20front.jpg)
+
 In many cases you may want to use some validation. You can choose from following:
 
-* **Custom Regex** - this is advanced validator for users who know how to create and use regular expressions. After selecting this option, additional field (**Validation Regex**) will show up, where you can put the expression string. Please note that it is **mandatory to use slashes** ( / ) as the opening and ending characters of the string.  
+* **Custom Regex** - this is advanced validator for users who know how to create and use regular expressions. After selecting this option, additional field (**Validation Regex**) will show up, where you can put the expression string. Please note that it is **mandatory to use slashes** ( / ) as the opening and ending characters of the string.
 
-![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)  
+![Custom regex](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex.jpg)
 
-Example regular expression accepts only letters. Putting other characters in such text field will produce a validation error:  
+Example regular expression accepts only letters. Putting other characters in such text field will produce a validation error:
 
 ![Custom regex front](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/custom_regex%20front.jpg)
 
 4.2. Checkbox
 -------------
-![Checkbox attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/checkbox%20attribute.jpg)  
+![Checkbox attribute](https://raw.github.com/makingwaves/formmaker/release/doc/screenshots/checkbox%20attribute.jpg)
 
 * **Label** (required) - short name of the attribute, will be displayed on front
 * **Identifier** - can by used by developers to identify the field
 * **Mandatory** - indicates whether field will be required or not. In checkbox context it means that input needs to be selected to proceed.
 * **Description**
 * **Default value** - if checked, input on front will be checked by default
-* **CSS class** - string placed here will be added as a CSS class to <input /> tag  
+* **CSS class** - string placed here will be added as a CSS class to <input /> tag
 
 Checkbox attribute filled with data will be rendered on a form page as follows:
 
@@ -174,7 +174,7 @@ Checkbox attribute filled with data will be rendered on a form page as follows:
 * **Mandatory** - indicates whether field will be required or not. This setting is useful when there is no default option checked (that's because after any radio is checked, there is no way back to un-check it - except reloading the page of course (smile))
 * **Description**
 * **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of all radio inputs defined in options field
-* **Options** - this is most important setting for radio attribute. Here you need to define radio buttons which will be displayed on front. To add new item use Add option button. One of defined here items can be set as default. You can move up/down options by using arrows. Item can be removed by clicking delete icon.  
+* **Options** - this is most important setting for radio attribute. Here you need to define radio buttons which will be displayed on front. To add new item use Add option button. One of defined here items can be set as default. You can move up/down options by using arrows. Item can be removed by clicking delete icon.
 
 Radio buttons attribute filled with data will be rendered on a form page as follows:
 
@@ -189,9 +189,9 @@ Radio buttons attribute filled with data will be rendered on a form page as foll
 * **Mandatory** - indicates whether field will be required or not. The point of this setting is that all select list has a default option "- please select -", so mandatory setting makes sure that user chosen correct value.
 * **Description**
 * **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of select input.
-* **Options** - this is most important setting for select list attribute. Here you need to define options which will be displayed on front. 
+* **Options** - this is most important setting for select list attribute. Here you need to define options which will be displayed on front.
     * To add new item use **Add option** button
-    * One of defined here items can be set as default 
+    * One of defined here items can be set as default
     * You can move up/down options by using arrows
     * Item can be removed by clicking delete icon
 
