@@ -1,0 +1,7 @@
+parameters:
+#    form_maker.example.class: MakingWaves\FormMakerBundle\Example
+
+services:
+#    form_maker.example:
+#        class: %form_maker.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
