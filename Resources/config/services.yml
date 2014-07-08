@@ -1,7 +1,11 @@
 parameters:
-#    form_maker.example.class: MakingWaves\FormMakerBundle\Example
+  test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\AdminController
 
 services:
-#    form_maker.example:
-#        class: %form_maker.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+  # Defining this controller as a service so it can be called from the container
+  # in the legacy module
+  test.admin.controller:
+    class: %test.admin.controller.class%
+    calls:
+    # This setter is mandatory to be able to use all shorthand methods
+      - [setContainer, [@service_container]]
