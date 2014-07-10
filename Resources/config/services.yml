@@ -1,5 +1,6 @@
 parameters:
   test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\AdminController
+  request.getter.class: Symfony\Component\HttpFoundation\Request
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -9,3 +10,6 @@ services:
     calls:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
+
+  request.getter:
+    class: %request.getter.class%
