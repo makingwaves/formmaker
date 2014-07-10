@@ -1,0 +1,7 @@
+{% extends 'FormMakerBundle::admin_layout.html.twig' %}
+
+{% block content %}
+    {% for definition in formDefinitions %}
+        {{ definition.name }}<br/>
+    {% endfor %}
+{% endblock %}
