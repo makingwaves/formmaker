@@ -9,13 +9,23 @@ namespace MakingWaves\FormMakerBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 
+
 class AdminController extends Controller
 {
+
     public function testAdminAction($someParam = null)
     {
         return $this->render(
-            'FormMakerBundle:Admin:test_admin_action.html.twig',
+            'FormMakerBundle:Admin:test.html.twig',
             array('some_param' => $someParam)
         );
     } // testAdminAction
+
+
+    public function menuAction()
+    {
+        return $this->render(
+            'FormMakerBundle:Admin:menu.html.twig'
+        );
+    }
 } // class AdminController
