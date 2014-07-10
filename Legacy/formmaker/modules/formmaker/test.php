@@ -13,6 +13,9 @@ $Result = array();
 
 
 $container = ezpKernel::instance()->getServiceContainer();
+
 /** @var \MakingWaves\FormMakerBundle\Controller\AdminController $controller */
 $controller = $container->get( 'test.admin.controller' );
-$Result['content'] = $controller->testAdminAction( 'blabla' )->getContent();
+$request = $container->get( 'request.getter' );
+
+$Result['content'] = $controller->testAdminAction( $request::createFromGlobals(), 'blabla' )->getContent();
