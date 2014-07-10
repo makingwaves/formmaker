@@ -1,5 +1,5 @@
 parameters:
-  test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\AdminController
+  test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\DefaultController
   request.getter.class: Symfony\Component\HttpFoundation\Request
 
 services:
