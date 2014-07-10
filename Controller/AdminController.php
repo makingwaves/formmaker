@@ -8,10 +8,11 @@
 namespace MakingWaves\FormMakerBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminController extends Controller
 {
-    public function testAdminAction($someParam = null)
+    public function testAdminAction(Request $request, $someParam = null)
     {
         return $this->render(
             'FormMakerBundle:Admin:test_admin_action.html.twig',
