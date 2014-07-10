@@ -1,0 +1,12 @@
+<div id="formmaker_wrapper">
+    <div id="formmaker_sidebar">
+        {% block sidebar %}
+            {% include 'FormMakerBundle::admin_left_menu.html.twig' %}
+        {% endblock %}
+    </div>
+
+    <div id="formmaker_content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
