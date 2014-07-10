@@ -8,6 +8,7 @@
 
 $Module = $Params['Module'];
 $Result = array();
+$Result['content_info'] = array('persistent_variable' => array( 'left_menu'  => false ));
 
 
 
