@@ -1,10 +1,12 @@
-{% include 'FormMakerBundle:Admin:menu.html.twig' %}
+{% extends 'FormMakerBundle::admin_layout.html.twig' %}
 
-<h1>Test admin action with sf2</h1>
-<h2>{{ some_param }}</h2>
+{% block content %}
+    <h1>Test admin action with sf2</h1>
+    <h2>{{ some_param }}</h2>
 
 
-<form method="post" action="/formmaker/test">
-    <input type="text" name="test"/>
-    <input type="submit"/>
-</form>
+    <form method="post" action="/formmaker/test">
+        <input type="text" name="test"/>
+        <input type="submit"/>
+    </form>
+{% endblock %}
