@@ -523,10 +523,10 @@ class FormDefinitions
     /**
      * Set ownerUser
      *
-     * @param \MakingWaves\FormMakerBundle\Entity\Ezuser $ownerUser
+     * @param integer $ownerUser
      * @return FormDefinitions
      */
-    public function setOwnerUser(\MakingWaves\FormMakerBundle\Entity\Ezuser $ownerUser = null)
+    public function setOwnerUser($ownerUser = null)
     {
         $this->ownerUser = $ownerUser;
 
@@ -536,7 +536,7 @@ class FormDefinitions
     /**
      * Get ownerUser
      *
-     * @return \MakingWaves\FormMakerBundle\Entity\Ezuser 
+     * @return integer
      */
     public function getOwnerUser()
     {
