@@ -3,6 +3,8 @@
 namespace MakingWaves\FormMakerBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
+use MakingWaves\FormMakerBundle\Entity\FormDefinitions;
+use MakingWaves\FormMakerBundle\Form\FormDefinitionsType;
 
 /**
  * Class EditController
@@ -16,10 +18,14 @@ class EditController extends Controller
      */
     public function createAction()
     {
+        $formDefinitions = new FormDefinitions();
+
+        $formDefForm = $this->createForm(new FormDefinitionsType(), $formDefinitions);
+
         return $this->render(
             'FormMakerBundle:Edit:create.html.twig',
             array(
-                'formDefinitions' => $this->getDoctrine()->getRepository('FormMakerBundle:FormDefinitions')->findAll()
+                'formDefForm' => $formDefForm->createView()
             )
         );
     }

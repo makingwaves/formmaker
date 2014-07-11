@@ -15,14 +15,14 @@ class FormDefinitions
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_date", type="datetime", nullable=false)
+     * @ORM\Column(name="create_date", type="datetime", nullable=true)
      */
     private $createDate;
 
@@ -36,28 +36,28 @@ class FormDefinitions
     /**
      * @var string
      *
-     * @ORM\Column(name="email_title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email_title", type="string", length=255, nullable=true)
      */
     private $emailTitle;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="summary_page", type="smallint", nullable=false)
+     * @ORM\Column(name="summary_page", type="smallint", nullable=true)
      */
     private $summaryPage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary_label", type="string", length=255, nullable=false)
+     * @ORM\Column(name="summary_label", type="string", length=255, nullable=true)
      */
     private $summaryLabel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary_body", type="text", nullable=false)
+     * @ORM\Column(name="summary_body", type="text", nullable=true)
      */
     private $summaryBody;
 
@@ -78,49 +78,49 @@ class FormDefinitions
     /**
      * @var string
      *
-     * @ORM\Column(name="receipt_intro", type="text", nullable=false)
+     * @ORM\Column(name="receipt_intro", type="text", nullable=true)
      */
     private $receiptIntro;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="receipt_body", type="text", nullable=false)
+     * @ORM\Column(name="receipt_body", type="text", nullable=true)
      */
     private $receiptBody;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="email_action", type="boolean", nullable=false)
+     * @ORM\Column(name="email_action", type="boolean", nullable=true)
      */
     private $emailAction;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="store_action", type="boolean", nullable=false)
+     * @ORM\Column(name="store_action", type="boolean", nullable=true)
      */
     private $storeAction;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="object_action", type="boolean", nullable=false)
+     * @ORM\Column(name="object_action", type="boolean", nullable=true)
      */
     private $objectAction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="process_class", type="string", length=255, nullable=false)
+     * @ORM\Column(name="process_class", type="string", length=255, nullable=true)
      */
     private $processClass;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="css_class", type="string", length=255, nullable=false)
+     * @ORM\Column(name="css_class", type="string", length=255, nullable=true)
      */
     private $cssClass;
 
