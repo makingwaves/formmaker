@@ -2,6 +2,7 @@ parameters:
   test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\DefaultController
   request.getter.class: Symfony\Component\HttpFoundation\Request
   list.controller.class: MakingWaves\FormMakerBundle\Controller\ListController
+  edit.controller.class: MakingWaves\FormMakerBundle\Controller\EditController
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -17,6 +18,12 @@ services:
 
   list.controller:
     class: %list.controller.class%
+    calls:
+    # This setter is mandatory to be able to use all shorthand methods
+      - [setContainer, [@service_container]]
+
+  edit.controller:
+    class: %edit.controller.class%
     calls:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
