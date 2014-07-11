@@ -11,6 +11,6 @@ $Result = array(
         ),
     ),
     'path' => array( array(
-        'text' => $container->get('translator')->trans('FormMaker Dashboard')
+        'text' => $container->get('translator')->trans('list.of.forms', array(), 'formmaker')
     ))
 );

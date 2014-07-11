@@ -8,7 +8,7 @@ Tabs[]=formmaker
 
 [Topmenu_formmaker]
 NavigationPartIdentifier=formmakernavigationpart
-Name=Form maker
+Name=FormMaker
 Tooltip=forms generator
 URL[]
 URL[default]=formmaker/list
