@@ -2,6 +2,7 @@ parameters:
   test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\DefaultController
   request.getter.class: Symfony\Component\HttpFoundation\Request
   list.controller.class: MakingWaves\FormMakerBundle\Controller\ListController
+  formmaker.fieldType.form.class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Type
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -20,3 +21,14 @@ services:
     calls:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
+
+  formmaker.fieldType.form:
+    parent: ezpublish.fieldType
+    class: %formmaker.fieldType.form.class%
+    tags:
+      - {name: ezpublish.fieldType, alias: form}
+
+  formmaker.storageEngine.legacy.converter:
+    class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\LegacyConverter
+    tags:
+      - {name: ezpublish.storageEngine.legacy.converter, alias: form}
