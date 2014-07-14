@@ -22,12 +22,14 @@ services:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
 
+  # Register field type
   formmaker.fieldType.form:
     parent: ezpublish.fieldType
     class: %formmaker.fieldType.form.class%
     tags:
       - {name: ezpublish.fieldType, alias: form}
 
+  # Register field type converter
   formmaker.storageEngine.legacy.converter:
     class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\LegacyConverter
     tags:

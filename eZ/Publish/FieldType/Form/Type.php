@@ -6,31 +6,15 @@ use eZ\Publish\Core\FieldType\FieldType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\SPI\FieldType\Value as SPIValue;
 use eZ\Publish\Core\FieldType\Value as CoreValue;
-use eZ\Publish\SPI\Persistence\Content\FieldValue as PersistenceValue;
+use eZ\Publish\SPI\Persistence\Content\FieldValue;
 
+/**
+ * Class Type - implemented according to tutorial https://doc.ez.no/display/EZP/eZ+Publish+5+Field+Type+Tutorial
+ * @package MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form
+ */
 class Type extends FieldType
 {
     private $typeIdentifier = 'form';
-
-    /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
-     */
-    private $doctrine;
-
-    /**
-     * @var \Symfony\Component\Translation\Translator
-     */
-    private $translator;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $container = \ezpKernel::instance()->getServiceContainer();
-        $this->doctrine = $container->get('doctrine');
-        $this->translator = $container->get('translator');
-    }
     
     /**
      * Getter for type identifier
@@ -101,8 +85,8 @@ class Type extends FieldType
 
     public function fromHash($hash)
     {
-        if ($hash === null)
-        {
+        if ($hash === null) {
+
             return $this->getEmptyValue();
         }
 
@@ -111,10 +95,11 @@ class Type extends FieldType
 
     public function toHash(SPIValue $value)
     {
-        if ( $this->isEmptyValue($value))
-        {
+        if ( $this->isEmptyValue($value)) {
+
             return null;
         }
+
         return array(
             'formId' => $value->formId
         );
@@ -126,32 +111,23 @@ class Type extends FieldType
      */
     public function toPersistenceValue( SPIValue $value )
     {
-        if ( $value === null )
-        {
-            return new PersistenceValue(
-                array(
-                    "data" => null,
-                    "externalData" => null,
-                    "sortKey" => null,
-                )
-            );
-        }
-        return new PersistenceValue(
+        return new FieldValue(
             array(
-                "data" => $this->toHash( $value ),
-                "sortKey" => $this->getSortInfo( $value ),
+                "data" => $this->toHash($value),
+                "externalData" => null,
+                "sortKey" => $this->getSortInfo($value),
             )
         );
     }
 
     /**
      * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
-     * @return \EzSystems\TweetFieldTypeBundle\eZ\Publish\FieldType\Form\Value
+     * @return \MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Value
      */
-    public function fromPersistenceValue( PersistenceValue $fieldValue )
+    public function fromPersistenceValue( FieldValue $fieldValue )
     {
-        if ( $fieldValue->data === null )
-        {
+        if ($fieldValue->data === null){
+
             return $this->getEmptyValue();
         }
 
