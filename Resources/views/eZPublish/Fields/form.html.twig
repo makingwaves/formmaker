@@ -2,6 +2,6 @@
 
 {% block form_field %}
     <div class="form-content">
-        {{ field.value }}
+        {{ dump(field.value.formDefinition.getName) }}
     </div>
 {% endblock %}

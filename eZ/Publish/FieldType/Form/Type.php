@@ -2,6 +2,7 @@
 
 namespace MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form;
 
+use Doctrine\ORM\EntityManager;
 use eZ\Publish\Core\FieldType\FieldType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\SPI\FieldType\Value as SPIValue;
@@ -15,6 +16,20 @@ use eZ\Publish\SPI\Persistence\Content\FieldValue;
 class Type extends FieldType
 {
     private $typeIdentifier = 'form';
+
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
+    private $doctrine;
+
+    /**
+     * Constructor
+     * @param \Doctrine\ORM\EntityManager $doctrine
+     */
+    public function __construct(EntityManager $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
     
     /**
      * Getter for type identifier
@@ -31,7 +46,7 @@ class Type extends FieldType
      */
     protected function createValueFromInput( $inputValue )
     {
-        $valueInstance = new Value(array(
+        $valueInstance = $this->createNewValue(array(
             'formId' => $inputValue
         ));
         
@@ -60,7 +75,7 @@ class Type extends FieldType
      */
     public function getEmptyValue()
     {
-        return new Value();
+        return $this->createNewValue();
     }
 
     public function validateValidatorConfiguration( $validatorConfiguration )
@@ -90,7 +105,7 @@ class Type extends FieldType
             return $this->getEmptyValue();
         }
 
-        return new Value( $hash );
+        return $this->createNewValue( $hash );
     }
 
     public function toHash(SPIValue $value)
@@ -124,13 +139,26 @@ class Type extends FieldType
      * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
      * @return \MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Value
      */
-    public function fromPersistenceValue( FieldValue $fieldValue )
+    public function fromPersistenceValue(FieldValue $fieldValue)
     {
         if ($fieldValue->data === null){
 
             return $this->getEmptyValue();
         }
 
-        return new Value( $fieldValue->data );
+        return $this->createNewValue($fieldValue->data);
+    }
+
+    /**
+     * Fetches the form data from definitions table and creates Value object.
+     * @param array $data
+     * @return Value
+     */
+    private function createNewValue(array $data = array())
+    {
+        $formDefinitions = $this->doctrine->getRepository('FormMakerBundle:FormDefinitions');
+        $data['formDefinition'] = !isset($data['formId']) ? null : $formDefinitions->find($data['formId']);
+
+        return new Value($data);
     }
 }
