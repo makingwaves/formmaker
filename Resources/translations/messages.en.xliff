@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>form.label.form.name</source>
+                <target>Form name</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>form.label.first.page</source>
+                <target>First page label</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>form.label.css.class</source>
+                <target>Form CSS class</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>form.label.want.confirmation</source>
+                <target>I want a confirmation page with the following label</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>form.label.confirmation.body</source>
+                <target>Confirmation page body text</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>form.label.receipt.page.text</source>
+                <target>Receipt page intro text</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>form.label.receipt.page.label</source>
+                <target>Receipt page intro label</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>form.label.receipt.page.body</source>
+                <target>Receipt page body text</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>form.label.send.data.via.email</source>
+                <target>Send data via email</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>form.label.email.title</source>
+                <target>E-mail title</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>form.label.email.recipients</source>
+                <target>E-mail recipients (separated by semicolon)</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>form.label.store.data.in.db</source>
+                <target>Store data in database</target>
+            </trans-unit>
+            <trans-unit id="13">
+                <source>form.label.user.process.class</source>
+                <target>Use process class method (advanced)</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>form.label.process.class.name</source>
+                <target>Process class name</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -10,6 +10,10 @@
                 <source>create.form</source>
                 <target>Create new form</target>
             </trans-unit>
+            <trans-unit id="4">
+                <source>form.not.found</source>
+                <target>Unable to find form</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

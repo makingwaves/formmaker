@@ -3,19 +3,32 @@
 namespace MakingWaves\FormMakerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 /**
  * FormDefinitions
  *
  * @ORM\Table(name="form_definitions", indexes={@ORM\Index(name="owner_user_id", columns={"owner_user_id"})})
  * @ORM\Entity
+ *
+ *
+ * @Assert\Callback(methods={"validateRecipients"})
  */
 class FormDefinitions
 {
+    const RECIPIENTS_SEPARATORS = ';';
+
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.name.not_blank")
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "255",
+     *      minMessage = "form.name.min.length",
+     *      maxMessage = "form.name.max.length"
+     * )
      */
     private $name;
 
@@ -23,6 +36,7 @@ class FormDefinitions
      * @var \DateTime
      *
      * @ORM\Column(name="create_date", type="datetime", nullable=true)
+     * @Assert\DateTime(message = "form.create_date.type")
      */
     private $createDate;
 
@@ -30,6 +44,7 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="recipients", type="text", nullable=true)
+     * Validated by callback function
      */
     private $recipients;
 
@@ -41,9 +56,9 @@ class FormDefinitions
     private $emailTitle;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="summary_page", type="smallint", nullable=true)
+     * @ORM\Column(name="summary_page", type="boolean", nullable=true)
      */
     private $summaryPage;
 
@@ -65,6 +80,7 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="first_page", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.first_page.not_blank")
      */
     private $firstPage;
 
@@ -72,6 +88,7 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="receipt_label", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.receipt_label.not_blank")
      */
     private $receiptLabel;
 
@@ -542,4 +559,21 @@ class FormDefinitions
     {
         return $this->ownerUser;
     }
-}
+
+
+
+    public function validateRecipients(ExecutionContextInterface $context)
+    {
+        $strRecipients = trim($this->getRecipients());
+        if ( $strRecipients != '' ) {
+            $arrEmails = explode(self::RECIPIENTS_SEPARATORS, $strRecipients );
+            foreach($arrEmails as $strEmail) {
+                $valid = filter_var($strEmail, FILTER_VALIDATE_EMAIL);
+                if ($valid === false) {
+                    $context->addViolationAt('recipients', 'form.recipients_list', array('{{ value }}' => $strEmail), null);
+                    break;
+                }
+            } // endforeach
+        } // if
+    } // validateRecipients
+} // class FormDefinitions

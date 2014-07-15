@@ -15,56 +15,48 @@ class FormDefinitionsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name','text', array('label' => 'Form name'))
-            ->add('firstPage', 'text', array('label' => 'First page label') )
-            ->add('cssClass', 'text', array('label' => 'Form CSS class',
+            ->add('name','text', array('label' => 'form.label.form.name'))
+
+            ->add('firstPage', 'text', array('label' => 'form.label.first.page') )
+            ->add('cssClass', 'text', array('label' => 'form.label.css.class',
                                             'required' => false
                                       ))
-            ->add('summaryPage', 'checkbox', array('label' => 'I want a confirmation page with the following label',
+            ->add('summaryPage', 'checkbox', array('label' => 'form.label.want.confirmation',
                                                    'required' => false
                                              ))
             ->add('summaryLabel', 'text', array('label' => false,
                                                 'required' => false
                                           ))
-            ->add('summaryBody', 'textarea', array('label' => 'Confirmation page body text',
-                                                   'required' => false,
-                                                    'attr' => array(
-                                                        'placeholder' => 'You\'re about to send following information. Are they OK?'
-                                                    )
+            ->add('summaryBody', 'textarea', array('label' => 'form.label.confirmation.body',
+                                                   'required' => false
                                             ))
-            ->add('receiptLabel', 'text', array('label' => 'Receipt page label'))
-            ->add('receiptIntro', 'textarea', array('label' => 'Receipt page intro text',
+            ->add('receiptLabel', 'text', array('label' => 'form.label.receipt.page.label'))
+            ->add('receiptIntro', 'textarea', array('label' => 'form.label.receipt.page.text',
                                                     'required' => false
                                               ))
-            ->add('receiptBody', 'textarea', array('label' => 'Receipt page body text',
-                                                   'required' => false,
-                                                   'attr'  => array(
-                                                        'placeholder' => 'Thank you for sending us the information!'
-                                                    )
+            ->add('receiptBody', 'textarea', array('label' => 'form.label.receipt.page.body',
+                                                   'required' => false
                                             ))
-            ->add('emailAction', 'checkbox', array('label' => 'Send data via email',
+            ->add('emailAction', 'checkbox', array('label' => 'form.label.send.data.via.email',
                                                    'required' => false,
                                                    'attr'  => array(
                                                        'checked' => 'checked'
                                                    )
                                             ))
-            ->add('emailTitle', 'text', array('label' => 'E-mail title',
+            ->add('emailTitle', 'text', array('label' => 'form.label.email.title',
                                               'required' => false,
-                                              'attr'  => array(
-                                                  'placeholder' => 'New form answer'
-                                              )
                                         ))
-            ->add('recipients', 'text', array('label' => 'E-mail recipients (separated by semicolon)',
+            ->add('recipients', 'text', array('label' => 'form.label.email.recipients',
                                               'required' => false,
                                         ))
 
-            ->add('storeAction', 'checkbox', array('label' => 'Store data in database',
+            ->add('storeAction', 'checkbox', array('label' => 'form.label.store.data.in.db',
                                                    'required' => false,
                                              ))
-            ->add('objectAction', 'checkbox', array('label' => 'Use process class method (advanced)',
+            ->add('objectAction', 'checkbox', array('label' => 'form.label.user.process.class',
                                                     'required' => false,
                                              ))
-            ->add('processClass', 'text', array('label' => 'Process class name',
+            ->add('processClass', 'text', array('label' => 'form.label.process.class.name',
                                                 'required' => false,
                                           ))
             ->add('save', 'submit')
