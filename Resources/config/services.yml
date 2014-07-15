@@ -28,6 +28,7 @@ services:
     class: %formmaker.fieldType.form.class%
     tags:
       - {name: ezpublish.fieldType, alias: form}
+    arguments: [ @doctrine.orm.entity_manager ]
 
   # Register field type converter
   formmaker.storageEngine.legacy.converter:

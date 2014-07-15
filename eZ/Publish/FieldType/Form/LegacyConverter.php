@@ -16,11 +16,11 @@ class LegacyConverter implements Converter
      * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $value
      * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue $storageFieldValue
      */
-    public function toStorageValue( FieldValue $value, StorageFieldValue $storageFieldValue )
+    public function toStorageValue(FieldValue $value, StorageFieldValue $storageFieldValue)
     {
         // according to tutorial, we need to implement this lines as well. However, at this point
         // I don't know how to text them, so leaving commented out.
-        /*$storageFieldValue->dataText = json_encode( $value->data );
+        /*$storageFieldValue->dataText = json_encode($value->data);
         $storageFieldValue->sortKeyString = $value->sortKey;*/
     }
 
@@ -30,20 +30,20 @@ class LegacyConverter implements Converter
      * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue $value
      * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
      */
-    public function toFieldValue( StorageFieldValue $value, FieldValue $fieldValue )
+    public function toFieldValue(StorageFieldValue $value, FieldValue $fieldValue)
     {
         $fieldValue->data = array(
             'formId' => $value->dataText
-        );
+       );
         $fieldValue->sortKey = $value->sortKeyString;
     }
 
-    public function toStorageFieldDefinition( FieldDefinition $fieldDef, StorageFieldDefinition $storageDef )
+    public function toStorageFieldDefinition(FieldDefinition $fieldDef, StorageFieldDefinition $storageDef)
     {
 
     }
 
-    public function toFieldDefinition( StorageFieldDefinition $storageDef, FieldDefinition $fieldDef )
+    public function toFieldDefinition(StorageFieldDefinition $storageDef, FieldDefinition $fieldDef)
     {
 
     }
