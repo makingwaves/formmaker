@@ -18,7 +18,7 @@ class Type extends FieldType
     private $typeIdentifier = 'form';
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectRepository
+     * @var \Doctrine\ORM\EntityManager
      */
     private $doctrine;
 

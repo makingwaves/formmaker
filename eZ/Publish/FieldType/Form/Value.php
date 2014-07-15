@@ -36,15 +36,16 @@ class Value extends BaseValue
     private function getFormName()
     {
         $formName = '';
-
         if ($this->formDefinition instanceof FormDefinitions) {
-
             $formName = $this->formDefinition->getName();
         }
 
         return $formName;
     }
 
+    /**
+     * @return FormDefinitions
+     */
     public function getFormDefinition()
     {
         return $this->formDefinition;
