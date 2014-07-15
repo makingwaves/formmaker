@@ -14,6 +14,14 @@
                 <source>form.not.found</source>
                 <target>Unable to find form</target>
             </trans-unit>
+            <trans-unit id="102">
+                <source>form.is.required</source>
+                <target>Form is required</target>
+            </trans-unit>
+            <trans-unit id="103">
+                <source>form.id.doesnt.exist</source>
+                <target>Given Form ID doesn't exist</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

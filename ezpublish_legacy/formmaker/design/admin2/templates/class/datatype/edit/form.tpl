@@ -1,0 +1,1 @@
+{* From some reason (end the reason is legacy eZ Publish), this template needs to be empty :) *}
