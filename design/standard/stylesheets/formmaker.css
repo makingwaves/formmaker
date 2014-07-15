@@ -6,76 +6,157 @@
         Stylesheet for Form Maker extension
 */
 
-.form_error {
-    color:red;
+.form-steps,
+.intro {
+    margin: 2%;
+}
+
+.form-steps .form-current-step {
     font-weight: bold;
+    color: #005493;
 }
 
 .form-container {
     margin: 2%;
     padding: 2%;
     width: 94%;
-    border: 1px solid #63a5c8;
-    background-color: #eef6f9;
-    border-radius: 3px;   
-}
-    .form-element-container {
-        margin-bottom: 10px;
-        padding: 2px 2px 10px 2px;
-        overflow: hidden;
-        border-bottom: 1px solid #dfcbd1;        
-    }
-    .form-footer {
-        overflow: hidden;
-    }
-        .form-footer-back {
-            float: left;
-        }
-        .form-footer-next {
-            float: right;
-        }
-
-.form_label_checkbox {
-    display: inline;
+    background: transparent;
+    border: 1px solid #dcdcdc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.form_attribute_required {
-    color: red;
-    font-weight: bold;
+.form-container .form-element-container {
+    overflow: hidden;
+    border-bottom: 1px solid #dfcbd1;
+    padding: 2px 2px 14px 2px;
+    margin-bottom: 14px;
 }
 
-.form_attribute_content {
+.form-container .form-element-description {
+    margin-bottom: 10px;
+}
+
+.form-container .form-element-description:empty {
+    display: none;
+}
+
+.form-container .form-footer {
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+.form-container .form-footer-back {
     float: left;
 }
 
-.form_error_content {
-    float: left;
-    width: 55%;
+.form-container .form-footer-next {
+    float: right;
 }
 
-.form-element-description {
+.form-container .form-receipt-intro {
     font-style: italic;
+    margin-bottom: 10px;
 }
 
-.form-steps {
-    margin: 2%;
-}
-    .form-current-step {
-        font-weight: bold;
-        color: #005493;
-    }
-    
-.form-receipt-intro {
-    font-style: italic;
+.form-container .upload-new-file {
+    cursor: pointer;
 }
 
-input[type=text].form_element, div.form_element {
+.form-container input[type=text].form_element,
+.form-container div.form_element {
     width: 200px;
 }
 
-span.hidden, input.hidden {
+.form-container span.hidden,
+.form-container input.hidden {
     display: none;
 }
-.upload-new-file {
+
+.form-container label,
+.form-container p {
+    color: #212121;
+}
+
+.form-container label,
+.form-container input[type=file].form_element {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-container .form_attribute_content > label {
+    font-weight: bold;
+}
+
+.form-container .form_error,
+.form-container .form_attribute_required {
+    color: #b92424;
+    font-weight: normal;
+}
+
+.form-container textarea,
+.form-container input[type=text],
+.form-container select {
+    background: #fff;
+    border: 1px solid #dcdcdc;
+    color: #404040;
+    height: 20px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+    line-height: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.form-container textarea {
+    height: auto;
+    width: 200px;
+    max-width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-container .form_label_checkbox {
+    display: block;
+}
+
+.form-container input[type=checkbox],
+.form-container input[type=radio] {
+    margin-right: 5px;
+    vertical-align: middle;
+    display: inline;
+}
+
+.form-container input[type=button],
+.form-container input[type=submit] {
+    background-color: #efefef;
+    background-image: -moz-linear-gradient(top, #fff, #eee);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
+    background-image: -webkit-linear-gradient(top, #fff, #eee);
+    background-image: -o-linear-gradient(top, #fff, #eee);
+    background-image: linear-gradient(to bottom, #fff, #eee);
+    border: 1px solid #a5a5a5;
+    color: #3f3f3f;
+    padding: 4px 6px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    min-width: 100px;
     cursor: pointer;
+}
+
+.form-container select {
+    height: 30px;
+    min-width: 200px;
 }
