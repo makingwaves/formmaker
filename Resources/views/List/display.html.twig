@@ -23,17 +23,22 @@
                         <td>
                             <button class="edit-form btn btn-primary" type="button">
                                 <span class="glyphicon glyphicon-edit"></span>
-                                {{ "" }}
+                                {{ "edit"|trans({}, "formmaker") }}
                             </button>
                             <button class="remove-form js-remove-form btn btn-danger" type="button" data-original-title="" title="">
                                 <span class="glyphicon glyphicon-trash"></span>
-                                Remove
+                                {{ "remove"|trans({}, "formmaker") }}
                             </button>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+
+        <button type="button" class="add-form btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span>
+            {{ "create.new.form"|trans({}, "formmaker") }}
+        </button>
 
     </div>
 
