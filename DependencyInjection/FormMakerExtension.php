@@ -34,7 +34,10 @@ class FormMakerExtension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
-        $config = Yaml::parse(__DIR__ . '/../Resources/config/field_templates.yml');
-        $container->prependExtensionConfig( 'ezpublish', $config );
+        $fieldTemplates = Yaml::parse(__DIR__ . '/../Resources/config/field_templates.yml');
+        $container->prependExtensionConfig('ezpublish', $fieldTemplates);
+
+        $assetic = Yaml::parse(__DIR__ . '/../Resources/config/assetic.yml');
+        $container->prependExtensionConfig('assetic', $assetic);
     }
 }
