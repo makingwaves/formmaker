@@ -1,6 +1,9 @@
 Form Maker changelog file
 =========================
 
+Version 2.0.4
+- Changed way of including jquery-ui.js.
+
 Version 2.0.3
 - Updated stylesheet for form elements.
 
