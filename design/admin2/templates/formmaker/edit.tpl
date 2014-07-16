@@ -10,7 +10,7 @@
 - $input_types - array of all available input types *}
 
 {ezcss_require( array( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css', 'style.css' ) )}
-{ezscript_load( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
+{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 {ezscript_require(array( 'edit.js', 'fixed_toolbar.js' ) )}
 
 {def $selected = ''

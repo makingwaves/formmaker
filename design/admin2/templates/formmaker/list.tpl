@@ -1,7 +1,7 @@
 {def $remove_access = fetch( 'user', 'has_access_to', hash( 'module', 'formmaker', 'function', 'remove' ) )}
 
 {ezcss_require( array( 'http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css', 'tablesorter.css', 'style.css' ) )} 
-{ezscript_load( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
+{ezscript_require( 'http://code.jquery.com/ui/1.9.2/jquery-ui.js' )}
 {ezscript_require( array( 'jquery.tablesorter.js', 'list.js' ) )}
 
 <div id="dialog-confirm">{"You're about to remove the form with all possible answers. Are you sure you want to do that?"|i18n( 'formmaker/admin' )}</div>
