@@ -536,7 +536,7 @@ class FormDefinitions
     /**
      * Get ownerUser
      *
-     * @return \MakingWaves\FormMakerBundle\Entity\Ezuser 
+     * @return \MakingWaves\FormMakerBundle\Entity\Ezuser
      */
     public function getOwnerUser()
     {

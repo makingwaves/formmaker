@@ -14,6 +14,38 @@
                 <source>form.id.doesnt.exist</source>
                 <target>Given Form ID doesn't exist</target>
             </trans-unit>
+            <trans-unit id="104">
+                <source>list.of.forms</source>
+                <target>List of forms</target>
+            </trans-unit>
+            <trans-unit id="105">
+                <source>name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="106">
+                <source>created</source>
+                <target>Created</target>
+            </trans-unit>
+            <trans-unit id="107">
+                <source>author</source>
+                <target>Author</target>
+            </trans-unit>
+            <trans-unit id="108">
+                <source>actions</source>
+                <target>Actions</target>
+            </trans-unit>
+            <trans-unit id="109">
+                <source>edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="110">
+                <source>remove</source>
+                <target>Remove</target>
+            </trans-unit>
+            <trans-unit id="111">
+                <source>create.new.form</source>
+                <target>Create new form</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

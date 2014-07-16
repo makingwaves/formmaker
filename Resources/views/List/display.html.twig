@@ -1,7 +1,40 @@
 {% extends 'FormMakerBundle::admin_layout.html.twig' %}
 
 {% block content %}
-    {% for definition in formDefinitions %}
-        {{ definition.name }}<br/>
-    {% endfor %}
+
+    <div class="formmaker form-list">
+        <section class="attributes">
+            <h2 class="page-header">{{ "list.of.forms"|trans({}, "formmaker") }}</h2>
+        </section>
+
+        <table class="js-form-list-table table table-sorted table-striped table-bordered">
+            <thead>
+                <th class="header">{{ "name"|trans({}, "formmaker") }}</th>
+                <th class="header">{{ "created"|trans({}, "formmaker") }}</th>
+                <th class="header">{{ "author"|trans({}, "formmaker") }}</th>
+                <th class="form-actions">{{ "actions"|trans({}, "formmaker") }}</th>
+            </thead>
+            <tbody>
+                {% for definition in formDefinitions %}
+                    <tr>
+                        <td>{{ definition.getName }}</td>
+                        <td>{{ definition.getCreateDate|date("D Y-d-m H:i:s") }}</td>
+                        <td>{{ userNames[definition.getOwnerUser] }}</td>
+                        <td>
+                            <button class="edit-form btn btn-primary" type="button">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                {{ "" }}
+                            </button>
+                            <button class="remove-form js-remove-form btn btn-danger" type="button" data-original-title="" title="">
+                                <span class="glyphicon glyphicon-trash"></span>
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
 {% endblock %}
