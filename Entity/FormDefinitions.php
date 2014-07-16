@@ -3,26 +3,40 @@
 namespace MakingWaves\FormMakerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 /**
  * FormDefinitions
  *
  * @ORM\Table(name="form_definitions", indexes={@ORM\Index(name="owner_user_id", columns={"owner_user_id"})})
  * @ORM\Entity
+ *
+ *
+ * @Assert\Callback(methods={"validateRecipients"})
  */
 class FormDefinitions
 {
+    const RECIPIENTS_SEPARATORS = ';';
+
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.name.not_blank")
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "255",
+     *      minMessage = "form.name.min.length",
+     *      maxMessage = "form.name.max.length"
+     * )
      */
     private $name;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="create_date", type="datetime", nullable=false)
+     * @ORM\Column(name="create_date", type="datetime", nullable=true)
+     * @Assert\DateTime(message = "form.create_date.type")
      */
     private $createDate;
 
@@ -30,34 +44,35 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="recipients", type="text", nullable=true)
+     * Validated by callback function
      */
     private $recipients;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email_title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email_title", type="string", length=255, nullable=true)
      */
     private $emailTitle;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="summary_page", type="smallint", nullable=false)
+     * @ORM\Column(name="summary_page", type="boolean", nullable=true)
      */
     private $summaryPage;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary_label", type="string", length=255, nullable=false)
+     * @ORM\Column(name="summary_label", type="string", length=255, nullable=true)
      */
     private $summaryLabel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="summary_body", type="text", nullable=false)
+     * @ORM\Column(name="summary_body", type="text", nullable=true)
      */
     private $summaryBody;
 
@@ -65,6 +80,7 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="first_page", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.first_page.not_blank")
      */
     private $firstPage;
 
@@ -72,55 +88,56 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="receipt_label", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message = "form.receipt_label.not_blank")
      */
     private $receiptLabel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="receipt_intro", type="text", nullable=false)
+     * @ORM\Column(name="receipt_intro", type="text", nullable=true)
      */
     private $receiptIntro;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="receipt_body", type="text", nullable=false)
+     * @ORM\Column(name="receipt_body", type="text", nullable=true)
      */
     private $receiptBody;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="email_action", type="boolean", nullable=false)
+     * @ORM\Column(name="email_action", type="boolean", nullable=true)
      */
     private $emailAction;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="store_action", type="boolean", nullable=false)
+     * @ORM\Column(name="store_action", type="boolean", nullable=true)
      */
     private $storeAction;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="object_action", type="boolean", nullable=false)
+     * @ORM\Column(name="object_action", type="boolean", nullable=true)
      */
     private $objectAction;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="process_class", type="string", length=255, nullable=false)
+     * @ORM\Column(name="process_class", type="string", length=255, nullable=true)
      */
     private $processClass;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="css_class", type="string", length=255, nullable=false)
+     * @ORM\Column(name="css_class", type="string", length=255, nullable=true)
      */
     private $cssClass;
 
@@ -523,10 +540,10 @@ class FormDefinitions
     /**
      * Set ownerUser
      *
-     * @param \MakingWaves\FormMakerBundle\Entity\Ezuser $ownerUser
+     * @param integer $ownerUser
      * @return FormDefinitions
      */
-    public function setOwnerUser(\MakingWaves\FormMakerBundle\Entity\Ezuser $ownerUser = null)
+    public function setOwnerUser($ownerUser = null)
     {
         $this->ownerUser = $ownerUser;
 
@@ -536,10 +553,27 @@ class FormDefinitions
     /**
      * Get ownerUser
      *
-     * @return \MakingWaves\FormMakerBundle\Entity\Ezuser
+     * @return integer
      */
     public function getOwnerUser()
     {
         return $this->ownerUser;
     }
-}
+
+
+
+    public function validateRecipients(ExecutionContextInterface $context)
+    {
+        $strRecipients = trim($this->getRecipients());
+        if ( $strRecipients != '' ) {
+            $arrEmails = explode(self::RECIPIENTS_SEPARATORS, $strRecipients );
+            foreach($arrEmails as $strEmail) {
+                $valid = filter_var($strEmail, FILTER_VALIDATE_EMAIL);
+                if ($valid === false) {
+                    $context->addViolationAt('recipients', 'form.recipients_list', array('{{ value }}' => $strEmail), null);
+                    break;
+                }
+            } // endforeach
+        } // if
+    } // validateRecipients
+} // class FormDefinitions
