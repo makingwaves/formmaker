@@ -1,0 +1,231 @@
+/*
+ Name: Form Maker
+ Information: Using modified! Bootstrap v3.2.0 (more details in README.txt)
+ Version: 1.0
+*/
+ 
+/*
+ Demo Styles
+--------------------------------------------------------------*/
+
+#formmaker_wrapper {
+    margin:0 auto;
+    padding:10px;
+}
+
+#formmaker_sidebar {
+    float:left;
+    width:225px;
+    padding:5px;
+    border:1px dashed #666;
+}
+
+#formmaker_content {
+    float:left;
+    padding: 5px;
+    border: 1px dashed #aaa;
+    margin-left:5px;
+    width: 1024px;
+}
+
+li.active {
+    font-weight: bolder;
+}
+/*
+ Panels
+--------------------------------------------------------------*/
+.formmaker .panel {
+	margin-bottom:10px;
+}
+.formmaker .panel-heading {
+	position:relative;
+}
+.formmaker .panel-title {
+	padding-left:23px;
+}
+.formmaker .panel-menu {
+	padding:0;
+	position:absolute; right:16px; top:10px;
+	list-style-type:none;
+	cursor:default;
+}
+.formmaker .panel-menu li {
+	margin-left:15px;
+	float:left;
+}
+.formmaker .panel-menu label {
+	font-weight:normal;
+	cursor:pointer;
+}
+.formmaker .panel-menu input[type="checkbox"] {
+	margin:0;
+	position:relative; top:1px;
+}
+.formmaker .panel-menu button {
+	outline:none;
+}
+.formmaker .close-panel {
+	padding:0;
+	background:none;
+	border:none;
+}
+/* title label */
+.formmaker .panel-title-label {
+	color:#aaa;
+	font-style:italic;
+}
+.formmaker .panel-title-label:before {
+	content:" - ";
+}
+.formmaker .panel-title-label:empty:before {
+	content:"";
+}
+/* expand buttons */
+.formmaker .page-header {
+	padding-bottom:0;
+	position:relative;
+}
+.formmaker .expand-section-panel,
+.formmaker .expand-all-panels {
+	position:absolute; right:0; top:5px;
+}
+.formmaker .expand-panel {
+	padding:10px 13px;
+	cursor:pointer;	
+	position:absolute; left:1px; top:0;
+}
+.formmaker .closed .expand-panel {
+	left:0; top:1px;
+	-moz-transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+/* expandable panels */
+.formmaker .expandable-item.closed .panel-body {
+	display:none;
+}
+.formmaker .expandable-section-panel.closed {
+	display:none;
+}
+
+/*
+ Sortable list
+--------------------------------------------------------------*/
+.formmaker .sortable {
+	padding:0;
+	list-style-type:none;
+}
+.formmaker .sortable-item .panel-heading {
+	cursor:move;
+}
+.formmaker .ui-sortable-placeholder {
+	margin-bottom:10px;
+	visibility:visible !important;
+	position:relative;
+}
+.formmaker .ui-sortable-placeholder:after {
+	content:"";
+	display:block;
+	width:100%; height:100%;
+	border:2px dashed #ccc;
+	position:absolute; left:0; top:0;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+}
+
+/*
+ Forms
+--------------------------------------------------------------*/
+.formmaker input[type="radio"],
+.formmaker input[type="checkbox"] {
+	cursor:pointer;
+}
+.formmaker .required-label:after {
+	content:" *";
+	color:#f15e22;
+}
+.formmaker .form-control-thin {
+	width:33%;
+}
+/* Options */
+.formmaker .option-item {
+	padding-right:20px; margin-bottom:10px;
+	position:relative;
+}
+.formmaker .remove-option {
+	position:absolute; right:0; top:7px;
+	border:none;
+	background-color:transparent;
+}
+.formmaker .option-list .glyphicon-move {
+	color:#ccc;
+	cursor:move;
+}
+/* Buttons */
+.formmaker .popover {
+	min-width:150px
+}
+
+/*
+ Table
+--------------------------------------------------------------*/
+.formmaker.answer-list .table td,
+.formmaker.form-list .table td {
+	vertical-align:middle;
+}
+.formmaker .list-filter {
+	margin-bottom:20px;
+}
+.formmaker .list-filter .filter-options {
+	margin-left:10px;
+}
+.formmaker .list-filter .filter-options option {
+	min-width:120px;
+}
+.formmaker .list-filter .filter-button {
+	min-width:60px;
+}
+.formmaker .form-actions {
+	text-align:center;
+}
+.formmaker .edit-form,
+.formmaker .remove-form {
+	float:left;
+	padding:4px 8px;
+}
+.formmaker .remove-form {
+	margin-left:7px;
+}
+.formmaker .table-sorted .header,
+.formmaker .table-sorted .tablesorter-header {
+	background-image:url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+	background-repeat:no-repeat;
+	background-position:center right;
+	white-space:normal;
+	cursor:pointer;
+}
+.formmaker .table-sorted .headerSortUp,
+.formmaker .table-sorted .tablesorter-headerSortUp,
+.formmaker .table-sorted .tablesorter-headerAsc {
+	background-color: #fcf8e3;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+}
+.formmaker .table-sorted .headerSortDown,
+.formmaker .table-sorted .tablesorter-headerSortDown,
+.formmaker .table-sorted .tablesorter-headerDesc {
+	background-color: #fcf8e3;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+}
+.formmaker .table-sorted .no-icon {
+	background-image:none;
+}
+.formmaker .table-sorted thead .sorter-false {
+	background-image:none;
+	cursor:default;
+	padding:4px;
+}
+.formmaker.answer-list .number {
+	font-weight:bold;
+}
