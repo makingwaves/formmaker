@@ -69,7 +69,8 @@ class FormDefinitionsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'MakingWaves\FormMakerBundle\Entity\FormDefinitions'
+            'data_class' => 'MakingWaves\FormMakerBundle\Entity\FormDefinitions',
+            'translation_domain' => 'form_definitions_type'
         ));
     }
 

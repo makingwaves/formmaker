@@ -1,6 +1,7 @@
+{%  set route = app.request.pathinfo|split('/')|last %}
 <ul>
-    <li><a href="list">List of forms</a></li>
-    <li><a href="edit">Create new form</a></li>
-    <li><a href="answers">See answers</a></li>
-    <li><a href="test">Test</a></li>
+    <li{%  if route == 'list' %} class="active" {% endif %}><a href="{{ url('list_display') }}">List of forms</a></li>
+    <li{%  if route == 'edit' %} class="active" {% endif %}><a href="{{ url('edit_create') }}">Create new form</a></li>
+    <li{%  if route == 'answers' %} class="active" {% endif %}><a href="{{ url('answers') }}">See answers</a></li>
+    <li{%  if route == 'test' %} class="active" {% endif %}><a href="{{ url('default_test') }}">Test</a></li>
 </ul>

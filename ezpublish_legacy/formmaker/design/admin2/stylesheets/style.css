@@ -18,3 +18,7 @@
     width: 1024px;
 
 }
+
+li.active {
+    font-weight: bolder;
+}
