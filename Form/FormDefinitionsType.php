@@ -4,6 +4,9 @@ namespace MakingWaves\FormMakerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FormDefinitionsType extends AbstractType
@@ -59,10 +62,38 @@ class FormDefinitionsType extends AbstractType
             ->add('processClass', 'text', array('label' => 'form.label.process.class.name',
                                                 'required' => false,
                                           ))
-            ->add('save', 'submit')
-        ;
-    }
-    
+            ->add('save', 'submit');
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPreSubmit'));
+    } // buildForm
+
+
+    public function onPreSubmit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        // if checkbox "i want confirmation page.. " checked
+        if ( $form->getViewData()->getSummaryPage() ) {
+            if ( $form->getViewData()->getSummaryLabel() == "") {
+                $form->get('summaryLabel')->addError(new FormError('form.conf.page.label'));
+                
+            }
+            if ( $form->getViewData()->getSummaryBody() == "") {
+                $form->get('summaryBody')->addError(new FormError('form.conf.page.body'));
+            }
+        } // endif
+
+        if ( $form->getViewData()->getEmailAction() ) {
+            if ( $form->getViewData()->getEmailTitle() == "") {
+                $form->get('emailTitle')->addError(new FormError('form.data.email'));
+            }
+            if ( $form->getViewData()->getRecipients() == "") {
+                $form->get('recipients')->addError(new FormError('form.email.recipients'));
+            }
+        } // endif
+
+    } // onPreSubmit
+
+
     /**
      * @param OptionsResolverInterface $resolver
      */
