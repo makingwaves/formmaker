@@ -1,3 +1,15 @@
-form_maker_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: FormMakerBundle:Default:index }
+list_display:
+    pattern:  /list
+    defaults: { _controller: formMakerBundle:List:display }
+
+edit_create:
+    pattern:  /edit
+    defaults: { _controller: formMakerBundle:Edit:edit }
+
+answers:
+    pattern:  /answers
+    defaults: { _controller: formMakerBudnle:Answers:list }
+
+default_test:
+    pattern:  /test
+    defaults: { _controller: formMakerBundle:Default:testAdmin }

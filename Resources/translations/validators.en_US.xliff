@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>form.name.min.length</source>
+                <target>Form name must be at least {{ limit }} characters length</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>form.name.max.length</source>
+                <target>Form name cannot be longer than {{ limit }} characters length</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>form.name.not_blank</source>
+                <target>Form name cannot be empty</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>form.create_date.type</source>
+                <target>Please enter valid datetime</target>
+            </trans-unit>
+            <trans-unit id="5">
+                <source>form.first_page.not_blank</source>
+                <target>First page label cannot be blank</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>form.receipt_label.not_blank</source>
+                <target>Receipt page label cannot be blank</target>
+            </trans-unit>
+            <trans-unit id="7">
+                <source>form.recipients_list</source>
+                <target>This email "{{ value }}" is not valid</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
