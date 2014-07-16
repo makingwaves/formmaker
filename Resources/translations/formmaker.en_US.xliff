@@ -50,10 +50,6 @@
                 <source>remove</source>
                 <target>Remove</target>
             </trans-unit>
-            <trans-unit id="111">
-                <source>create.new.form</source>
-                <target>Create new form</target>
-            </trans-unit>
         </body>
     </file>
 </xliff>
