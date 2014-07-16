@@ -4,7 +4,7 @@ $container = ezpKernel::instance()->getServiceContainer();
 $controller = $container->get( 'edit.controller' );
 $request = $container->get( 'request.getter' );
 
-$formId        = isset($Params['id']) ? $Params['id'] : '0';
+$formId = isset($Params['id']) ? $Params['id'] : 0;
 
 $Result = array(
     'content' => $controller->editAction($request::createFromGlobals(), $formId)->getContent(),

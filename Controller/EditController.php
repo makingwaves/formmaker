@@ -16,11 +16,11 @@ class EditController extends Controller
 
     /**
      * @param Request $request
-     * @param null $formId
+     * @param integer $formId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function editAction(Request $request, $formId = 0)
+    public function editAction(Request $request, $formId)
     {
         if ( $formId == 0 ) {
             $formDefinitions = new FormDefinitions();
