@@ -2,8 +2,11 @@
     <link rel="stylesheet" href="{{ asset_url }}" />
 {% endstylesheets %}
 
-{% javascripts '@FormMakerBundle/Resources/public/js/*' %}
-<script type="text/javascript" src="{{ asset_url }}"></script>
+{% javascripts
+    'extension/ezjscore/design/standard/javascript/jquery-ui-1.10.3.custom.min.js'
+'@FormMakerBundle/Resources/public/js/*'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %}
 
 <div id="formmaker_wrapper">
