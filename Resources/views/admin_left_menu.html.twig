@@ -1,7 +1,14 @@
 {%  set route = app.request.pathinfo|split('/')|last %}
-<ul>
-    <li{%  if route == 'list' %} class="active" {% endif %}><a href="{{ url('list_display') }}">List of forms</a></li>
-    <li{%  if route == 'edit' %} class="active" {% endif %}><a href="{{ url('edit_create') }}">Create new form</a></li>
-    <li{%  if route == 'answers' %} class="active" {% endif %}><a href="{{ url('answers') }}">See answers</a></li>
-    <li{%  if route == 'test' %} class="active" {% endif %}><a href="{{ url('default_test') }}">Test</a></li>
-</ul>
+
+<div class="formmaker">
+    <article class="attributes">
+        <div class="page-header">
+            <h2>{{ "formmaker"|trans({}, 'formmaker') }}</h2>
+        </div>
+        <div class="list-group">
+            <a href="{{ url('list_display') }}" class="list-group-item {%  if route == 'list' %}active{% endif %}">List of forms</a>
+            <a href="{{ url('edit_create') }}" class="list-group-item {%  if route == 'edit' %}active{% endif %}">Create new form</a>
+            <a href="{{ url('answers') }}" class="list-group-item {%  if route == 'answers' %}active{% endif %}">See answers</a>
+        </div>
+    </article>
+</div>
