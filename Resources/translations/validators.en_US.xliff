@@ -30,6 +30,26 @@
                 <source>form.recipients_list</source>
                 <target>This email "{{ value }}" is not valid</target>
             </trans-unit>
+            <trans-unit id="8">
+                <source>form.conf.page.label</source>
+                <target>Please fill confirmation page label</target>
+            </trans-unit>
+            <trans-unit id="9">
+                <source>form.conf.page.body</source>
+                <target>Please fill confirmation page body text</target>
+            </trans-unit>
+            <trans-unit id="10">
+                <source>form.data.email</source>
+                <target>Please fill email title</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>form.email.recipients</source>
+                <target>Please fill email recipients</target>
+            </trans-unit>
+            <trans-unit id="12">
+                <source>form.process.class</source>
+                <target>Please fill process class name</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -45,6 +45,9 @@ class FormDefinitions
      *
      * @ORM\Column(name="recipients", type="text", nullable=true)
      * Validated by callback function
+     * @Assert\NotBlank(message="form.email.recipients",
+     *                  groups="email_recipients_group"
+     * )
      */
     private $recipients;
 
@@ -52,6 +55,9 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="email_title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message="form.data.email",
+     *                  groups="email_recipients_group"
+     * )
      */
     private $emailTitle;
 
@@ -66,6 +72,9 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="summary_label", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "form.conf.page.label",
+     *                  groups="summary_page_group"
+     * )
      */
     private $summaryLabel;
 
@@ -73,6 +82,9 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="summary_body", type="text", nullable=true)
+     * @Assert\NotBlank(message = "form.conf.page.body",
+     *                  groups="summary_page_group"
+     * )
      */
     private $summaryBody;
 
@@ -131,6 +143,9 @@ class FormDefinitions
      * @var string
      *
      * @ORM\Column(name="process_class", type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "form.process.class",
+     *                  groups="process_class_name"
+     * )
      */
     private $processClass;
 
@@ -561,7 +576,6 @@ class FormDefinitions
     }
 
 
-
     public function validateRecipients(ExecutionContextInterface $context)
     {
         $strRecipients = trim($this->getRecipients());
@@ -571,9 +585,24 @@ class FormDefinitions
                 $valid = filter_var($strEmail, FILTER_VALIDATE_EMAIL);
                 if ($valid === false) {
                     $context->addViolationAt('recipients', 'form.recipients_list', array('{{ value }}' => $strEmail), null);
-                    break;
                 }
             } // endforeach
         } // if
+
+        // conditional validation:
+        // when given checkbox is checked, fields with following validation groups are validated.
+        // they are not validated when checkbox is unchecked
+
+        if ( $this->getSummaryPage() ) {
+            $context->validate($this, '', 'summary_page_group', true);
+        }
+
+        if ( $this->getEmailAction() ) {
+            $context->validate($this, '', 'email_recipients_group',true);
+        }
+
+        if ( $this->getObjectAction() ) {
+            $context->validate($this, '', 'process_class_name', true);
+        }
     } // validateRecipients
 } // class FormDefinitions
