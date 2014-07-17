@@ -10,6 +10,10 @@ answers:
     pattern:  /answers
     defaults: { _controller: formMakerBudnle:Answers:list }
 
+remove:
+    pattern: /remove/{formId}
+    defaults: { _controller: FormMakerBundle:Remove:remove }
+
 default_test:
     pattern:  /test
     defaults: { _controller: formMakerBundle:Default:testAdmin }
