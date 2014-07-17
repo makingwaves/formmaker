@@ -1,13 +1,23 @@
-{% stylesheets 'bundles/formmaker/css/*' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
+{% block formmakerAdminStylesheets %}
+    {% stylesheets 'bundles/formmaker/css/*' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
 
-{% javascripts
-    'extension/ezjscore/design/standard/javascript/jquery-ui-1.10.3.custom.min.js'
-'@FormMakerBundle/Resources/public/js/*'
-%}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
+{% block formmakerAdminJavascripts %}
+    <script type="text/javascript">
+        var formmakerTranslations = {
+            'removeFormConfirmation': "{{ "remove.form.confirmation"|trans({}, "formmaker") }}"
+        };
+    </script>
+
+    {% javascripts
+        'extension/ezjscore/design/standard/javascript/jquery-ui-1.10.3.custom.min.js'
+        '@FormMakerBundle/Resources/public/js/*'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
 
 <div id="formmaker_wrapper">
     <div id="formmaker_sidebar">

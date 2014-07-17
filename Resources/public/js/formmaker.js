@@ -123,7 +123,7 @@ $(document).ready(function() {
 		placement: "top"
 	});
 	$('.js-remove-form').popConfirm({
-		title: "You're about to remove the form with all possible answers. Are you sure you want to do that?",
+		title: formmakerTranslations[removeFormConfirmation],
 		placement: "top"
 	});
 	

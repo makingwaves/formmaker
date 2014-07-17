@@ -54,6 +54,10 @@
                 <source>remove.form</source>
                 <target>Remove form</target>
             </trans-unit>
+            <trans-unit id="112">
+                <source>remove.form.confirmation</source>
+                <target>You're about to remove the form with all possible answers. Are you sure you want to do that?</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
