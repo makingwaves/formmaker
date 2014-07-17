@@ -19,15 +19,16 @@
     {% endjavascripts %}
 {% endblock %}
 
-<div id="formmaker_wrapper">
-    <div id="formmaker_sidebar">
-        {% block sidebar %}
-            {% include 'FormMakerBundle::admin_left_menu.html.twig' %}
-        {% endblock %}
-    </div>
+<div class="formmaker container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            {% block sidebar %}
+                {% include 'FormMakerBundle::admin_left_menu.html.twig' %}
+            {% endblock %}
+        </div>
 
-    <div id="formmaker_content">
-        {% block content %}
-        {% endblock %}
+        <div class="col-sm-9">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 </div>

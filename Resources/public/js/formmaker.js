@@ -123,7 +123,7 @@ $(document).ready(function() {
 		placement: "top"
 	});
 	$('.js-remove-form').popConfirm({
-		title: formmakerTranslations[removeFormConfirmation],
+		title: formmakerTranslations['removeFormConfirmation'],
 		placement: "top"
 	});
 	
@@ -134,7 +134,8 @@ $(document).ready(function() {
 	panelLabel();
 	
 	// Sorting tables
-	$(".js-form-list-table").tablesorter({ 
+	$(".js-form-list-table").tablesorter({
+        sortList: [[1,1]],
         headers: { 
             3: { 
                 sorter: false 
