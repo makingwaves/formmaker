@@ -30,7 +30,7 @@ class EditController extends Controller
             $formDefinitions = $entityManager->getRepository('FormMakerBundle:FormDefinitions')->find($formId);
             if ( !$formDefinitions ) {
                 $translator = $this->get('translator');
-                throw $this->createNotFoundException($translator->trans('form.not.found'));
+                throw $this->createNotFoundException($translator->trans('form.not.found', array(), 'formmaker'));
             }
         }
 

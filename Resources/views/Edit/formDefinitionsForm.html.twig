@@ -1,11 +1,27 @@
-{{ form_start(formDefForm, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_errors(formDefForm) }}
+{% form_theme formDefForm 'FormMakerBundle:Form:fields.html.twig' %}
 
-<div>
-    {{ form_label(formDefForm.name) }}
-    {{ form_errors(formDefForm.name) }}
-    {{ form_widget(formDefForm.name) }}
-</div>
+{{ form_start(formDefForm, {'attr': {'novalidate': 'novalidate', 'role': 'form'}}) }}
+
+<!-- START Definition -->
+<article class="definition">
+    <div class="page-header">
+        <h2>Definition</h2>
+        <!-- expand button -->
+        <button type="button" class="expand-section-panel js-expand-section-panel btn btn-default btn-sm">Show / Hide</button>
+    </div>
+
+    <div class="expandable-section-panel panel panel-default">
+        <div class="panel-body">
+            <div class="well">
+                {# { form_row(formDefForm.name, {'attr': {'class': 'row'} }) } #}
+                {{ form_row(formDefForm.name) }}
+            </div>
+        </div>
+    <div>
+</article>
+
+
+
 
 <div>
     {{ form_label(formDefForm.firstPage) }}

@@ -1,6 +1,8 @@
 {% extends 'FormMakerBundle::admin_layout.html.twig' %}
 
 {% block content %}
-    {% include 'FormMakerBundle:Edit:formDefinitionsForm.html.twig' with { 'formDefForm': formDefForm } %}
+    <div class="formmaker">
+        {% include 'FormMakerBundle:Edit:formDefinitionsForm.html.twig' with { 'formDefForm': formDefForm } %}
+    </div>
 {% endblock %}
 
