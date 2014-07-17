@@ -46,6 +46,10 @@
                 <source>form.email.recipients</source>
                 <target>Please fill email recipients</target>
             </trans-unit>
+            <trans-unit id="12">
+                <source>form.process.class</source>
+                <target>Please fill process class name</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

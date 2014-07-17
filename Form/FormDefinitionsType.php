@@ -64,18 +64,18 @@ class FormDefinitionsType extends AbstractType
                                           ))
             ->add('save', 'submit');
 
-        $builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPreSubmit'));
-    } // buildForm
+        //$builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPostSubmit'));
+    } // buildForml
 
 
-    public function onPreSubmit(FormEvent $event)
+    public function onPostSubmit( FormEvent $event )
     {
         $form = $event->getForm();
         // if checkbox "i want confirmation page.. " checked
         if ( $form->getViewData()->getSummaryPage() ) {
             if ( $form->getViewData()->getSummaryLabel() == "") {
                 $form->get('summaryLabel')->addError(new FormError('form.conf.page.label'));
-                
+
             }
             if ( $form->getViewData()->getSummaryBody() == "") {
                 $form->get('summaryBody')->addError(new FormError('form.conf.page.body'));
