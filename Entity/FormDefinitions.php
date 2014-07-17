@@ -585,10 +585,13 @@ class FormDefinitions
                 $valid = filter_var($strEmail, FILTER_VALIDATE_EMAIL);
                 if ($valid === false) {
                     $context->addViolationAt('recipients', 'form.recipients_list', array('{{ value }}' => $strEmail), null);
-                    //break;
                 }
             } // endforeach
         } // if
+
+        // conditional validation:
+        // when given checkbox is checked, fields with following validation groups are validated.
+        // they are not validated when checkbox is unchecked
 
         if ( $this->getSummaryPage() ) {
             $context->validate($this, '', 'summary_page_group', true);
