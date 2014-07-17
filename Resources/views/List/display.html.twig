@@ -2,10 +2,10 @@
 
 {% block content %}
 
-    <div class="formmaker form-list">
-        <section class="attributes">
-            <h2 class="page-header">{{ "list.of.forms"|trans({}, "formmaker") }}</h2>
-        </section>
+    <section class="attributes">
+        <div class="page-header">
+            <h2>{{ "list.of.forms"|trans({}, "formmaker") }}</h2>
+        </div>
 
         <table class="js-form-list-table table table-sorted table-striped table-bordered">
             <thead>
@@ -21,25 +21,24 @@
                         <td>{{ definition.getCreateDate|date("D Y-d-m H:i:s") }}</td>
                         <td>{{ userNames[definition.getOwnerUser] }}</td>
                         <td>
-                            <button class="edit-form btn btn-primary" type="button">
+                            <a href="" class="edit-form btn btn-primary" type="button">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 {{ "edit"|trans({}, "formmaker") }}
-                            </button>
-                            <button class="remove-form js-remove-form btn btn-danger" type="button" data-original-title="" title="">
+                            </a>
+                            <a href="{{ path("remove", {"formId": definition.id}) }}" class="remove-form js-remove-form btn btn-danger" type="button" data-original-title="" title="">
                                 <span class="glyphicon glyphicon-trash"></span>
                                 {{ "remove"|trans({}, "formmaker") }}
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <button type="button" class="add-form btn btn-success">
+        <a href="{{ url("edit_create") }}" type="button" class="add-form btn btn-success">
             <span class="glyphicon glyphicon-plus"></span>
             {{ "create.form"|trans({}, "formmaker") }}
-        </button>
-
-    </div>
+        </a>
+    </section>
 
 {% endblock %}

@@ -1,27 +1,19 @@
 <?php
 
-$Module = $Params['Module'];
+$container = ezpKernel::instance()->getServiceContainer();
+$controller = $container->get( 'remove.controller' );
+$formId = isset($Params['id']) ? $Params['id'] : 0;
 
-if ( !isset( $Params['id'] ) )
-{
-    return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
-}
-
-$http = eZHTTPTool::instance();
-$id = $Params['id'];
-$form_object = formDefinitions::getForm( $id );
-
-// checking whether there are objects in which current form is assigned as an attribute
-if ( count( $form_object->getConnectedObjects() ) )
-{
-    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
-}
-
-// removing the object from database
-$form_object->removeContentObject();
-
-// redirect back to the list
-$url = '/formmaker/list/';
-eZURI::transformURI($url, false, 'full');
-eZHTTPTool::redirect( $url );
-eZExecution::cleanExit();
+$Result = array(
+    'content' => $controller->removeAction( $formId )->getContent(),
+    'content_info' => array(
+        'persistent_variable' => array(
+            'left_menu' => false
+        )
+    ),
+    'path' => array(
+        array(
+            'text' => $container->get('translator')->trans('remove.form', array(), 'formmaker')
+        )
+    )
+);

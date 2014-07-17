@@ -3,34 +3,8 @@
  Information: Using modified! Bootstrap v3.2.0 (more details in README.txt)
  Version: 1.0
 */
- 
-/*
- Demo Styles
---------------------------------------------------------------*/
 
-#formmaker_wrapper {
-    margin:0 auto;
-    padding:10px;
-}
 
-#formmaker_sidebar {
-    float:left;
-    width:225px;
-    padding:5px;
-    border:1px dashed #666;
-}
-
-#formmaker_content {
-    float:left;
-    padding: 5px;
-    border: 1px dashed #aaa;
-    margin-left:5px;
-    width: 1024px;
-}
-
-li.active {
-    font-weight: bolder;
-}
 /*
  Panels
 --------------------------------------------------------------*/
@@ -189,6 +163,7 @@ li.active {
 }
 .formmaker .form-actions {
 	text-align:center;
+    width: 174px;
 }
 .formmaker .edit-form,
 .formmaker .remove-form {
