@@ -113,7 +113,7 @@ class FormTypes
     /**
      * Get validation
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getValidation()
     {
