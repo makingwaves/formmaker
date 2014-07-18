@@ -25,12 +25,13 @@ class EditController extends Controller
         if ( $formId == 0 ) {
             $formDefinitions = new FormDefinitions();
             $formDefinitions->setOwnerUser($this->getUser()->getApiUser()->id);
+            $formDefinitions->setCreateDate(new \DateTime());
         } else {
             $entityManager = $this->getDoctrine()->getManager();
             $formDefinitions = $entityManager->getRepository('FormMakerBundle:FormDefinitions')->find($formId);
             if ( !$formDefinitions ) {
                 $translator = $this->get('translator');
-                throw $this->createNotFoundException($translator->trans('form.not.found'));
+                throw $this->createNotFoundException($translator->trans('form.not.found', array(), 'formmaker'));
             }
         }
 
