@@ -1,5 +1,5 @@
 {
-    "name": "MakingWaves/FormMakerBundle",
+    "name": "makingwaves/formmaker",
     "type": "symfony-bundle",
     "description": "Bundle which makes it easy to create and manage forms in eZ Publish 5",
     "keywords": ["form", "forms", "ez", "ezpublish"],
