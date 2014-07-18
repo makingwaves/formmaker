@@ -16,7 +16,6 @@
     "require": {
         "php":                          ">=5.3.3",
         "symfony/framework-bundle":     "~2.0",
-        "knplabs/knp-paginator-bundle": "~2.4",
         "twig/twig":                    "~1.5"
     },
 

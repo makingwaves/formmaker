@@ -18,6 +18,7 @@ class ListController extends Controller
     {
         $formDefinitions = $this->getDoctrine()->getRepository('FormMakerBundle:FormDefinitions')->findAll();
         $userNames = array();
+        $userService = $this->get( 'formmaker.user' );
 
         // get users names
         foreach($formDefinitions as $definition) {
@@ -27,7 +28,8 @@ class ListController extends Controller
                 continue;
             }
 
-            $userNames[$userId] = $this->getUserName($userId);
+            $userService->loadUser( $userId );
+            $userNames[$userId] = $userService->getName();
         }
 
         return $this->render(
@@ -37,18 +39,5 @@ class ListController extends Controller
                 'userNames' => $userNames
             )
         );
-    }
-
-    /**
-     * Method returns the user name
-     * @param $userId
-     * @return string
-     */
-    private function getUserName($userId)
-    {
-        $userService = $this->get('ezpublish.api.service.user');
-        $user = $userService->loadUser($userId);
-
-        return join(' ', array($user->getFieldValue('first_name'), $user->getFieldValue('last_name')));
     }
 }
