@@ -27,7 +27,7 @@ class FormDefinitionsType extends AbstractType
             ->add('summaryPage', 'checkbox', array('label' => 'form.label.want.confirmation',
                                                    'required' => false
                                              ))
-            ->add('summaryLabel', 'text', array('label' => false,
+            ->add('summaryLabel', 'text', array('label' => 'form.label.confirmaton.label',
                                                 'required' => false
                                           ))
             ->add('summaryBody', 'textarea', array('label' => 'form.label.confirmation.body',

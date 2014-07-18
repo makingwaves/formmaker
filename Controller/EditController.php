@@ -25,6 +25,7 @@ class EditController extends Controller
         if ( $formId == 0 ) {
             $formDefinitions = new FormDefinitions();
             $formDefinitions->setOwnerUser($this->getUser()->getApiUser()->id);
+            $formDefinitions->setCreateDate(new \DateTime());
         } else {
             $entityManager = $this->getDoctrine()->getManager();
             $formDefinitions = $entityManager->getRepository('FormMakerBundle:FormDefinitions')->find($formId);

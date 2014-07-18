@@ -10,100 +10,74 @@
         <button type="button" class="expand-section-panel js-expand-section-panel btn btn-default btn-sm">Show / Hide</button>
     </div>
 
-    <div class="expandable-section-panel panel panel-default">
+    <div class="expandable-section-panel panel panel-default" style="display: block">
         <div class="panel-body">
-            <div class="well">
-                {# { form_row(formDefForm.name, {'attr': {'class': 'row'} }) } #}
+            <div class="well clearfix">
+
                 {{ form_row(formDefForm.name) }}
+
+                {# Two column row cannot be handled with form_row function right now #}
+                {# styling requires addition class for wrapping div when validation errer occurs#}
+                <div class="form-group row{% if formDefForm.firstPage.vars.valid == false or formDefForm.cssClass.vars.valid == false %}has-error has-feedback{% endif %}">
+                    <div class="col-sm-6">
+                        {{ form_label(formDefForm.firstPage) }}
+                        {{ form_widget(formDefForm.firstPage) }}
+                        {{ form_errors(formDefForm.firstPage) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form_label(formDefForm.cssClass) }}
+                        {{ form_errors(formDefForm.cssClass) }}
+                        {{ form_widget(formDefForm.cssClass) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="well clearfix">
+                {{ form_row(formDefForm.summaryPage) }}
+
+                {{ form_row(formDefForm.summaryLabel) }}
+
+                {{ form_row(formDefForm.summaryBody) }}
+            </div>
+
+            <div class="well clearfix">
+                {{ form_row(formDefForm.receiptLabel) }}
+
+                {{ form_row(formDefForm.receiptIntro) }}
+
+                {{ form_row(formDefForm.receiptBody) }}
+            </div>
+
+            <div class="well clearfix">
+                {{ form_row(formDefForm.emailAction) }}
+
+                {{ form_row(formDefForm.emailTitle) }}
+
+                {{ form_row(formDefForm.recipients) }}
+
+                {{ form_row(formDefForm.storeAction) }}
+
+                {# Two column row cannot be handled with form_row function right now #}
+                <div class="form-group row{% if formDefForm.processClass.vars.valid == false %}has-error has-feedback{% endif %}">
+                    <div class="col-sm-6">
+                        {{ form_label(formDefForm.objectAction) }}
+                        {{ form_widget(formDefForm.objectAction) }}
+                        {{ form_errors(formDefForm.objectAction) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {# for checboxes widget comes before labesl#}
+                        {{ form_widget(formDefForm.processClass) }}
+                        {{ form_label(formDefForm.processClass) }}
+                        {{ form_errors(formDefForm.processClass) }}
+                    </div>
+                </div>
             </div>
         </div>
     <div>
 </article>
 
-
-
-
-<div>
-    {{ form_label(formDefForm.firstPage) }}
-    {{ form_errors(formDefForm.firstPage) }}
-    {{ form_widget(formDefForm.firstPage) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.cssClass) }}
-    {{ form_errors(formDefForm.cssClass) }}
-    {{ form_widget(formDefForm.cssClass) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.summaryPage) }}
-    {{ form_errors(formDefForm.summaryPage) }}
-    {{ form_widget(formDefForm.summaryPage) }}
-
-    {{ form_label(formDefForm.summaryLabel) }}
-    {{ form_errors(formDefForm.summaryLabel) }}
-    {{ form_widget(formDefForm.summaryLabel) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.summaryBody) }}
-    {{ form_errors(formDefForm.summaryBody) }}
-    {{ form_widget(formDefForm.summaryBody) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.receiptLabel) }}
-    {{ form_errors(formDefForm.receiptLabel) }}
-    {{ form_widget(formDefForm.receiptLabel) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.receiptIntro) }}
-    {{ form_errors(formDefForm.receiptIntro) }}
-    {{ form_widget(formDefForm.receiptIntro) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.receiptBody) }}
-    {{ form_errors(formDefForm.receiptBody) }}
-    {{ form_widget(formDefForm.receiptBody) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.emailAction) }}
-    {{ form_errors(formDefForm.emailAction) }}
-    {{ form_widget(formDefForm.emailAction) }}
-
-    {{ form_label(formDefForm.emailTitle) }}
-    {{ form_errors(formDefForm.emailTitle) }}
-    {{ form_widget(formDefForm.emailTitle) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.recipients) }}
-    {{ form_errors(formDefForm.recipients) }}
-    {{ form_widget(formDefForm.recipients) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.storeAction) }}
-    {{ form_errors(formDefForm.storeAction) }}
-    {{ form_widget(formDefForm.storeAction) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.objectAction) }}
-    {{ form_errors(formDefForm.objectAction) }}
-    {{ form_widget(formDefForm.objectAction) }}
-</div>
-
-<div>
-    {{ form_label(formDefForm.processClass) }}
-    {{ form_errors(formDefForm.processClass) }}
-    {{ form_widget(formDefForm.processClass) }}
-</div>
-
 <div>
     {{ form_widget(formDefForm.save) }}
 </div>
+
 {{ form_end(formDefForm) }}
