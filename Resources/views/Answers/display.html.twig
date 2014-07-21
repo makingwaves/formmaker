@@ -4,7 +4,22 @@
 
     <section class="attributes answer-list">
         <div class="page-header">
-            <h2>{{ "answers"|trans({}, "formmaker") }} <span class="badge">335</span></h2>
+            <h2>{{ "answers"|trans({}, "formmaker") }} <span class="badge">{{ allResultsCount }}</span></h2>
+        </div>
+
+        <div class="form-inline list-filter">
+            <div class="form-group">
+                <form action="{{ url( "answers_clean" ) }}">
+                    <label for="">{{ "select.form"|trans( {}, "formmaker" ) }}</label>
+                    <select class="filter-options form-control">
+                        <option value="0">{{ "all.forms"|trans( {}, "formmaker" ) }}</option>
+                        {% for formDefinition in formDefinitions %}
+                            <option value="{{ formDefinition.getId }}">{{ formDefinition.getName }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="formmaker-set-answers-form" class="filter-button btn btn-success">{{ "set"|trans( {}, "formmaker" ) }}</button>
+                </form>
+            </div>
         </div>
 
         <table class="js-answers-list-table table table-striped table-bordered">
@@ -21,7 +36,7 @@
             <tbody>
                 {% for answer in results %}
                     <tr>
-                        <td class="number"></td>
+                        <td class="number">{{ offset + loop.index }}</td>
                         <td><a href="">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
                         <td><a href="">{{ answer.getDefinition.getName }}</a></td>
                         <td>{{ summaries[answer.getId] }}</td>
@@ -36,6 +51,26 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <ul class="pagination">
+            {% if currentPage > 1 %}
+                <li>
+                    <a href="{{ path( "answers", {"offset": (currentPage-2)*itemsPerPage} ) }}">«</a>
+                </li>
+            {% endif %}
+
+            {% for i in 1..pages %}
+                <li {% if i == currentPage %}class="active"{% endif %}>
+                    <a href="{{ path( "answers", {"offset": (i-1)*itemsPerPage} ) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if currentPage < pages %}
+                <li>
+                    <a href="{{ path( "answers", {"offset": (currentPage)*itemsPerPage} ) }}">»</a>
+                </li>
+            {% endif %}
+        </ul>
     </section>
 
 {% endblock %}

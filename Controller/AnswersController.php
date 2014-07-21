@@ -4,15 +4,17 @@ namespace MakingWaves\FormMakerBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use MakingWaves\FormMakerBundle\Entity\FormTypes;
-
-
+/**
+ * Class AnswersController
+ * @package MakingWaves\FormMakerBundle\Controller
+ */
 class AnswersController extends Controller
 {
     /**
      * Indicate how many answers should be displayed on one page
      * @var int
      */
-    CONST ITEMS_PER_PAGE = 5;
+    CONST ITEMS_PER_PAGE = 20;
 
     /**
      * Allowed length of summary text
@@ -21,24 +23,24 @@ class AnswersController extends Controller
     CONST SUMMARY_STRING_LENGTH = 120;
 
     /**
+     * Set of attribute types which will be used when generating answer summary
      * @var array
      */
-    private $summaryAttributes = array( FormTypes::TEXTLINE_ID, FormTypes::SELECT_ID, FormTypes::RADIO_ID, FormTypes::CHECKBOX_ID );
+    private $summaryAttributes = array( FormTypes::TEXTLINE_ID, FormTypes::SELECT_ID, FormTypes::RADIO_ID );
 
-    public function displayAction()
+    /**
+     * Action for displaying and paginating forms answers list
+     * @param int $offset
+     * @param int|null $formId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function displayAction( $offset, $formId = null )
     {
-        $repository = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswers' );
         $userNames = array();
-        $userService = $this->get( 'formmaker.user' );
-
-        $query = $repository->createQueryBuilder( 'fa' )
-            ->orderBy( 'fa.answerDate', 'DESC' )
-            ->setFirstResult( 0 )
-            ->setMaxResults( self::ITEMS_PER_PAGE )
-            ->getQuery();
-
-        $results = $query->getResult();
         $summaries = array();
+        $userService = $this->get( 'formmaker.user' );
+        $results = $this->getAnswers( $offset, $formId );
+        $allResultsCount = $this->getAnswersCount( $formId );
 
         // get users names
         foreach( $results as $answer ) {
@@ -59,9 +61,80 @@ class AnswersController extends Controller
             array(
                 'results' => $results,
                 'userNames' => $userNames,
-                'summaries' => $summaries
+                'summaries' => $summaries,
+                'allResultsCount' => $allResultsCount,
+                'pages' => $this->getNumberOfPages( $allResultsCount ),
+                'itemsPerPage' => self::ITEMS_PER_PAGE,
+                'currentPage' => $this->getCurrentPage( $offset ),
+                'offset' => $offset,
+                'formDefinitions' => $this->getDoctrine()->getRepository( 'FormMakerBundle:FormDefinitions' )->findAll()
             )
         );
+    }
+
+    /**
+     * Returns the count of all answers
+     * @param int|null $formId
+     * @return mixed
+     */
+    private function getAnswersCount( $formId = null )
+    {
+        $repository = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswers' );
+        $query = $repository->createQueryBuilder( 'fa' )
+            ->select( 'count(fa.id)' );
+
+        if ( !is_null( $formId ) ) {
+            $query->where( 'fa.id=' . $formId );
+        }
+
+        $result = $query->getQuery()->getSingleScalarResult();
+
+        return $result;
+    }
+
+    /**
+     * Returns the array of answers
+     * @param int $offset
+     * @param int|null $formId
+     * @return mixed
+     */
+    private function getAnswers( $offset, $formId = null )
+    {
+        $repository = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswers' );
+        $query = $repository->createQueryBuilder( 'fa' )
+            ->orderBy( 'fa.answerDate', 'DESC' )
+            ->setFirstResult( $offset )
+            ->setMaxResults( self::ITEMS_PER_PAGE );
+
+        if ( !is_null( $formId ) ) {
+            $query->where( 'fa.id=' . $formId );
+        }
+
+        $results = $query->getQuery()->getResult();
+
+        return $results;
+    }
+
+    /**
+     * Returns the number of pages with results
+     * @param int $resultsCount
+     * @return int
+     */
+    private function getNumberOfPages( $resultsCount )
+    {
+        $pages = round( $resultsCount / self::ITEMS_PER_PAGE );
+        return $pages;
+    }
+
+    /**
+     * Returns the integer value of current page
+     * @param int $offset
+     * @return float
+     */
+    private function getCurrentPage( $offset )
+    {
+        $currentPage = $offset / self::ITEMS_PER_PAGE + 1;
+        return $currentPage;
     }
 
     /**
@@ -80,11 +153,9 @@ class AnswersController extends Controller
         foreach( $answerAttributes as $answerField ) {
 
             $attribute = $answerField->getAttribute();
-            if ( !in_array( $attribute->getType()->getStringId(), $this->summaryAttributes ) ) {
-                continue;
-            }
+            if ( !in_array( $attribute->getType()->getStringId(), $this->summaryAttributes ) ||
+                 strlen( $output ) >= self::SUMMARY_STRING_LENGTH ) {
 
-            if ( strlen( $output ) >= self::SUMMARY_STRING_LENGTH ) {
                 continue;
             }
 

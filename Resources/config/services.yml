@@ -1,6 +1,6 @@
 parameters:
   test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\DefaultController
-  request.getter.class: Symfony\Component\HttpFoundation\Request
+  request.provider.class: Symfony\Component\HttpFoundation\Request
   list.controller.class: MakingWaves\FormMakerBundle\Controller\ListController
   edit.controller.class: MakingWaves\FormMakerBundle\Controller\EditController
   remove.controller.class: MakingWaves\FormMakerBundle\Controller\RemoveController
@@ -17,8 +17,8 @@ services:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
 
-  request.getter:
-    class: %request.getter.class%
+  request.provider:
+    class: %request.provider.class%
 
   list.controller:
     class: %list.controller.class%

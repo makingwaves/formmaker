@@ -78,6 +78,18 @@
                 <source>answer.summary</source>
                 <target>Answer summary</target>
             </trans-unit>
+            <trans-unit id="118">
+                <source>select.form</source>
+                <target>Select form:</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>all.forms</source>
+                <target>- all forms -</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>set</source>
+                <target>Set</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
