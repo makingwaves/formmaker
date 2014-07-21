@@ -13,18 +13,53 @@ use Doctrine\ORM\Mapping as ORM;
 class FormTypes
 {
     /**
+     * Text field string identifier
+     * @var string
+     */
+    const TEXTLINE_ID = 'text';
+
+    /**
+     * Textarea string identifier
+     * @var string
+     */
+    const TEXTAREA_ID = 'textarea';
+
+    /**
+     * Checkbox string identifier
+     * @var string
+     */
+    const CHECKBOX_ID = 'checkbox';
+
+    /**
+     * Radio button string identifier
+     * @var string
+     */
+    const RADIO_ID = 'radio';
+
+    /**
+     * Page separator string identifier
+     * @var string
+     */
+    const SEPARATOR_ID = 'separator';
+
+    /**
+     * Field type sting identifier
+     * @var string
+     */
+    const FILE_ID = 'file';
+
+    /**
+     * Select list string identifier
+     * @var string
+     */
+    const SELECT_ID = 'select';
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100, nullable=false)
      */
     private $name;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="template", type="string", length=100, nullable=false)
-     */
-    private $template;
 
     /**
      * @var boolean
@@ -49,6 +84,12 @@ class FormTypes
      */
     private $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="string_id", type="string", length=50, nullable=false, unique=true)
+     */
+    private $stringId;
 
 
     /**
@@ -72,29 +113,6 @@ class FormTypes
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set template
-     *
-     * @param string $template
-     * @return FormTypes
-     */
-    public function setTemplate($template)
-    {
-        $this->template = $template;
-
-        return $this;
-    }
-
-    /**
-     * Get template
-     *
-     * @return string 
-     */
-    public function getTemplate()
-    {
-        return $this->template;
     }
 
     /**
@@ -151,5 +169,28 @@ class FormTypes
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set stringId
+     *
+     * @param string $stringId
+     * @return FormTypes
+     */
+    public function setStringId( $stringId )
+    {
+        $this->stringId = $stringId;
+
+        return $this;
+    }
+
+    /**
+     * Get stringId
+     *
+     * @return string
+     */
+    public function getStringId()
+    {
+        return $this->stringId;
     }
 }

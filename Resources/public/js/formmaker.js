@@ -142,11 +142,4 @@ $(document).ready(function() {
             }
         } 
     }); 
-	$(".js-answers-list-table").tablesorter({ 
-        headers: { 
-			5: { 
-                sorter: false 
-            }
-        } 
-    }); 
 });

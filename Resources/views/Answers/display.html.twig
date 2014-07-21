@@ -7,15 +7,15 @@
             <h2>{{ "answers"|trans({}, "formmaker") }} <span class="badge">335</span></h2>
         </div>
 
-        <table class="js-answers-list-table table table-sorted table-striped table-bordered">
+        <table class="js-answers-list-table table table-striped table-bordered">
             <thead>
                 <tr>
                     <th class="no-icon header">#</th>
-                    <th class="header">{{ "answer.date"|trans({}, "formmaker") }}</th>
-                    <th class="header">{{ "form.name"|trans({}, "formmaker") }}</th>
-                    <th class="header">{{ "answer.summary"|trans({}, "formmaker") }}</th>
-                    <th class="header">{{ "author"|trans({}, "formmaker") }}</th>
-                    <th class="form-actions">{{ "actions"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "answer.date"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "form.name"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "answer.summary"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "author"|trans({}, "formmaker") }}</th>
+                    <th class="answer-actions">{{ "actions"|trans({}, "formmaker") }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +24,7 @@
                         <td class="number"></td>
                         <td><a href="">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
                         <td><a href="">{{ answer.getDefinition.getName }}</a></td>
-                        <td></td>
+                        <td>{{ summaries[answer.getId] }}</td>
                         <td>{{ userNames[answer.getUserId] }}</td>
                         <td>
                             <a href="" type="button" class="edit-form btn btn-info">

@@ -46,7 +46,7 @@ class FormAnswersAttributes
      *   @ORM\JoinColumn(name="answer_id", referencedColumnName="id")
      * })
      */
-    private $answer2;
+    private $answerId;
 
 
 
@@ -66,7 +66,7 @@ class FormAnswersAttributes
     /**
      * Get answer
      *
-     * @return string 
+     * @return string
      */
     public function getAnswer()
     {
@@ -107,25 +107,25 @@ class FormAnswersAttributes
     }
 
     /**
-     * Set answer2
+     * Set answer
      *
-     * @param \MakingWaves\FormMakerBundle\Entity\FormAnswers $answer2
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAnswers $answer
      * @return FormAnswersAttributes
      */
-    public function setAnswer2(\MakingWaves\FormMakerBundle\Entity\FormAnswers $answer2 = null)
+    public function setAnswerId(\MakingWaves\FormMakerBundle\Entity\FormAnswers $answer = null)
     {
-        $this->answer2 = $answer2;
+        $this->answerId = $answer;
 
         return $this;
     }
 
     /**
-     * Get answer2
+     * Get answer
      *
      * @return \MakingWaves\FormMakerBundle\Entity\FormAnswers 
      */
-    public function getAnswer2()
+    public function getAnswerId()
     {
-        return $this->answer2;
+        return $this->answerId;
     }
 }

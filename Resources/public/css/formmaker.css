@@ -165,6 +165,10 @@
 	text-align:center;
     width: 174px;
 }
+.formmaker .answer-actions {
+    text-align:center;
+    width: 97px;
+}
 .formmaker .edit-form,
 .formmaker .remove-form {
 	float:left;
