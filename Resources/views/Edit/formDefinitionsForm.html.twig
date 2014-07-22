@@ -10,7 +10,7 @@
         <button type="button" class="expand-section-panel js-expand-section-panel btn btn-default btn-sm">Show / Hide</button>
     </div>
 
-    <div class="expandable-section-panel panel panel-default" style="display: block">
+    <div class="expandable-section-panel panel panel-default" style="display: {% if isNew == true %}block{% endif %}">
         <div class="panel-body">
             <div class="well clearfix">
 

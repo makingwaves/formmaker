@@ -22,10 +22,12 @@ class EditController extends Controller
      */
     public function editAction(Request $request, $formId)
     {
+        $boolIsNew = false;
         if ( $formId == 0 ) {
             $formDefinitions = new FormDefinitions();
             $formDefinitions->setOwnerUser($this->getUser()->getApiUser()->id);
             $formDefinitions->setCreateDate(new \DateTime());
+            $boolIsNew = true;
         } else {
             $entityManager = $this->getDoctrine()->getManager();
             $formDefinitions = $entityManager->getRepository('FormMakerBundle:FormDefinitions')->find($formId);
@@ -33,10 +35,9 @@ class EditController extends Controller
                 $translator = $this->get('translator');
                 throw $this->createNotFoundException($translator->trans('form.not.found', array(), 'formmaker'));
             }
-        }
+        } // endif
 
         $formDefForm = $this->createForm(new FormDefinitionsType(), $formDefinitions);
-
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
@@ -46,12 +47,19 @@ class EditController extends Controller
             $entityManager->persist($formDefinitions);
             $entityManager->flush();
 
-            return $this->redirect($this->generateUrl('list_display'));
-        }
+            if ( $boolIsNew ) {
+                //redirect to edit again to add attributes etc
+                return $this->redirect($this->generateUrl('edit/'.$formDefinitions->getId()));
+            } else {
+                // redirect to list of forms
+                return $this->redirect($this->generateUrl('list_display'));
+            }
+        } // if isValid
 
         return $this->render(
             'FormMakerBundle:Edit:create.html.twig',
             array(
+                'isNew' => $boolIsNew,
                 'formDefForm' => $formDefForm->createView()
             )
         );
