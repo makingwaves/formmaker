@@ -1,0 +1,84 @@
+{% extends 'FormMakerBundle::admin_layout.html.twig' %}
+
+{% block content %}
+
+    <section class="attributes answer-list">
+        <div class="page-header">
+            <h2>{{ "answers"|trans({}, "formmaker") }} <span class="badge">{{ allResultsCount }}</span></h2>
+        </div>
+
+        <div class="form-inline list-filter">
+            <div class="form-group">
+                <form action="{{ url( "answers_clean" ) }}">
+                    <label for="">{{ "select.form"|trans( {}, "formmaker" ) }}</label>
+                    <select class="filter-options form-control">
+                        <option value="0">{{ "all.forms"|trans( {}, "formmaker" ) }}</option>
+                        {% for formDefinition in formDefinitions %}
+                            <option {% if formDefinition.getId == formId %}selected="selected"{% endif %} value="{{ formDefinition.getId }}">
+                                {{ formDefinition.getName }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" id="formmaker-set-answers-form" class="filter-button btn btn-success">{{ "set"|trans( {}, "formmaker" ) }}</button>
+                </form>
+            </div>
+        </div>
+
+        <table class="js-answers-list-table table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="no-icon header">#</th>
+                    <th class="no-icon header">{{ "answer.date"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "form.name"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "answer.summary"|trans({}, "formmaker") }}</th>
+                    <th class="no-icon header">{{ "author"|trans({}, "formmaker") }}</th>
+                    <th class="answer-actions">{{ "actions"|trans({}, "formmaker") }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for answer in results %}
+                    <tr>
+                        <td class="number">{{ offset + loop.index }}</td>
+                        <td><a href="{{ path( "answer", { "answerId": answer.getId } ) }}">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
+                        <td>
+                            {% if formId is empty %}
+                                <a href="{{ path( "answers", { "formId": answer.getDefinition.getId } ) }}">{{ answer.getDefinition.getName }}</a>
+                            {% else %}
+                                {{ answer.getDefinition.getName }}
+                            {% endif %}
+                        </td>
+                        <td>{{ summaries[answer.getId] }}</td>
+                        <td>{{ userNames[answer.getUserId] }}</td>
+                        <td>
+                            <a href="{{ path( "answer", { "answerId": answer.getId } ) }}" type="button" class="edit-form btn btn-info">
+                                <span class="glyphicon glyphicon-edit"></span>
+                                {{ "display"|trans({}, "formmaker") }}
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <ul class="pagination">
+            {% if currentPage > 1 %}
+                <li>
+                    <a href="{{ path( "answers", {"offset": (currentPage-2)*itemsPerPage, "formId": formId} ) }}">«</a>
+                </li>
+            {% endif %}
+
+            {% for i in 1..pages %}
+                <li {% if i == currentPage %}class="active"{% endif %}>
+                    <a href="{{ path( "answers", {"offset": (i-1)*itemsPerPage, "formId": formId} ) }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+
+            {% if currentPage < pages %}
+                <li>
+                    <a href="{{ path( "answers", {"offset": (currentPage)*itemsPerPage, "formId": formId} ) }}">»</a>
+                </li>
+            {% endif %}
+        </ul>
+    </section>
+
+{% endblock %}

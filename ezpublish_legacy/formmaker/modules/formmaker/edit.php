@@ -2,7 +2,7 @@
 
 $container = ezpKernel::instance()->getServiceContainer();
 $controller = $container->get( 'edit.controller' );
-$request = $container->get( 'request.getter' );
+$request = $container->get( 'request.provider' );
 
 $formId = isset($Params['id']) ? $Params['id'] : 0;
 

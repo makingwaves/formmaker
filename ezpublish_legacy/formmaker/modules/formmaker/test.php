@@ -8,6 +8,6 @@ $container = ezpKernel::instance()->getServiceContainer();
 
 /** @var \MakingWaves\FormMakerBundle\Controller\AdminController $controller */
 $controller = $container->get( 'test.admin.controller' );
-$request = $container->get( 'request.getter' );
+$request = $container->get( 'request.provider' );
 
 $Result['content'] = $controller->testAdminAction( $request::createFromGlobals(), 'blabla' )->getContent();
