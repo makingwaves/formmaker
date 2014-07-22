@@ -1,0 +1,33 @@
+{% extends 'FormMakerBundle::admin_layout.html.twig' %}
+
+{% block content %}
+
+    <section class="attributes answer-list">
+        <div class="page-header">
+            <h2>
+                "{{ answer.getDefinition.getName }}"
+                <small>{{ answer.getAnswerDate|date("Y-d-m H:i:s") }}</small>
+            </h2>
+        </div>
+
+        <table class="table table-sorted table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>{{ "query"|trans( {}, "formmaker" ) }}</th>
+                    <th>{{ "answer"|trans( {}, "formmaker" ) }}</th>
+                    <th>{{ "field.type"|trans( {}, "formmaker" ) }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attribute in answerAttributes %}
+                    <tr>
+                        <td>{{ attribute.getAttribute.getLabel }}</td>
+                        <td>{{ attribute.getAnswer }}</td>
+                        <td>{{ attribute.getAttribute.getType.getName }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+{% endblock %}

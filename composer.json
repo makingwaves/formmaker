@@ -1,0 +1,23 @@
+{
+    "name": "makingwaves/formmaker",
+    "type": "symfony-bundle",
+    "description": "Bundle which makes it easy to create and manage forms in eZ Publish 5",
+    "keywords": ["form", "forms", "ez", "ezpublish"],
+    "homepage": "http://github.com/makingwaves/formmaker",
+    "license": "MIT",
+
+    "authors": [
+        {
+            "name": "Making Waves",
+            "homepage": "http://www.makingwaves.pl"
+        }
+    ],
+
+    "require": {
+        "php":                          ">=5.3.3",
+        "symfony/framework-bundle":     "~2.0",
+        "twig/twig":                    "~1.5"
+    },
+
+    "target-dir": "MakingWaves/FormMakerBundle"
+}

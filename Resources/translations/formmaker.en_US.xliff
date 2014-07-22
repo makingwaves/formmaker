@@ -62,6 +62,46 @@
                 <source>formmaker</source>
                 <target>FormMaker</target>
             </trans-unit>
+            <trans-unit id="114">
+                <source>answers</source>
+                <target>Answers</target>
+            </trans-unit>
+            <trans-unit id="115">
+                <source>answer.date</source>
+                <target>Answer date</target>
+            </trans-unit>
+            <trans-unit id="116">
+                <source>form.name</source>
+                <target>Form name</target>
+            </trans-unit>
+            <trans-unit id="117">
+                <source>answer.summary</source>
+                <target>Answer summary</target>
+            </trans-unit>
+            <trans-unit id="118">
+                <source>select.form</source>
+                <target>Select form:</target>
+            </trans-unit>
+            <trans-unit id="119">
+                <source>all.forms</source>
+                <target>- all forms -</target>
+            </trans-unit>
+            <trans-unit id="120">
+                <source>set</source>
+                <target>Set</target>
+            </trans-unit>
+            <trans-unit id="121">
+                <source>query</source>
+                <target>Query</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>answer</source>
+                <target>Answer</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>field.type</source>
+                <target>Field type</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -1,10 +1,12 @@
 parameters:
   test.admin.controller.class: MakingWaves\FormMakerBundle\Controller\DefaultController
-  request.getter.class: Symfony\Component\HttpFoundation\Request
+  request.provider.class: Symfony\Component\HttpFoundation\Request
   list.controller.class: MakingWaves\FormMakerBundle\Controller\ListController
   edit.controller.class: MakingWaves\FormMakerBundle\Controller\EditController
   remove.controller.class: MakingWaves\FormMakerBundle\Controller\RemoveController
+  answers.controller.class: MakingWaves\FormMakerBundle\Controller\AnswersController
   formmaker.fieldType.form.class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Type
+  formmaker.user.class: MakingWaves\FormMakerBundle\Services\User
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -15,8 +17,8 @@ services:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
 
-  request.getter:
-    class: %request.getter.class%
+  request.provider:
+    class: %request.provider.class%
 
   list.controller:
     class: %list.controller.class%
@@ -35,6 +37,12 @@ services:
     calls:
     # This setter is mandatory to be able to use all shorthand methods
       - [setContainer, [@service_container]]
+
+  answers.controller:
+    class: %answers.controller.class%
+    calls:
+    # This setter is mandatory to be able to use all shorthand methods
+      - [setContainer, [@service_container]]
       
   # Register field type
   formmaker.fieldType.form:
@@ -48,4 +56,8 @@ services:
   formmaker.storageEngine.legacy.converter:
     class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\LegacyConverter
     tags:
-      - {name: ezpublish.storageEngine.legacy.converter, alias: form}      
+      - {name: ezpublish.storageEngine.legacy.converter, alias: form}
+
+  formmaker.user:
+    class: %formmaker.user.class%
+    arguments: [ @ezpublish.api.service.user ]
