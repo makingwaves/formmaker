@@ -40,7 +40,13 @@
                     <tr>
                         <td class="number">{{ offset + loop.index }}</td>
                         <td><a href="{{ path( "answer", { "answerId": answer.getId } ) }}">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
-                        <td><a href="">{{ answer.getDefinition.getName }}</a></td>
+                        <td>
+                            {% if formId is empty %}
+                                <a href="{{ path( "answers", { "formId": answer.getDefinition.getId } ) }}">{{ answer.getDefinition.getName }}</a>
+                            {% else %}
+                                {{ answer.getDefinition.getName }}
+                            {% endif %}
+                        </td>
                         <td>{{ summaries[answer.getId] }}</td>
                         <td>{{ userNames[answer.getUserId] }}</td>
                         <td>
