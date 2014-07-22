@@ -8,11 +8,15 @@ edit_create:
 
 answers:
     pattern:  /answers/(offset)/{offset}/(form_id)/{formId}
-    defaults: { _controller: formMakerBudnle:Answers:display, offset: 0, formId: null }
+    defaults: { _controller: formMakerBudnle:Answers:list, offset: 0, formId: null }
 
 answers_clean:
     pattern:  /answers
-    defaults: { _controller: formMakerBudnle:Answers:display }
+    defaults: { _controller: formMakerBudnle:Answers:list }
+
+answer:
+    pattern:  /answer/{answerId}
+    defaults: { _controller: FormMakerBundle:Answers:details }
 
 remove:
     pattern: /remove/{formId}

@@ -1,12 +1,16 @@
 <?php
 
+if ( !isset( $Params['id'] ) ) {
+    return $Params['Module']->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
+}
+
+$answer_id = $Params['id'];
+
 $container = ezpKernel::instance()->getServiceContainer();
 $controller = $container->get( 'answers.controller' );
-$offset = isset( $Params['UserParameters']['offset'] ) ? $Params['UserParameters']['offset'] : 0;
-$formId = isset( $Params['UserParameters']['form_id'] ) ? $Params['UserParameters']['form_id'] : null;
 
 $Result = array(
-    'content' => $controller->listAction( $offset, $formId )->getContent(),
+    'content' => $controller->detailsAction( $answer_id )->getContent(),
     'content_info' => array(
         'persistent_variable' => array(
             'left_menu' => false

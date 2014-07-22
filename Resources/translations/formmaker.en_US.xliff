@@ -90,6 +90,18 @@
                 <source>set</source>
                 <target>Set</target>
             </trans-unit>
+            <trans-unit id="121">
+                <source>query</source>
+                <target>Query</target>
+            </trans-unit>
+            <trans-unit id="122">
+                <source>answer</source>
+                <target>Answer</target>
+            </trans-unit>
+            <trans-unit id="123">
+                <source>field.type</source>
+                <target>Field type</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

@@ -34,7 +34,7 @@ class AnswersController extends Controller
      * @param int|null $formId
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function displayAction( $offset, $formId = null )
+    public function listAction( $offset, $formId = null )
     {
         $userNames = array();
         $summaries = array();
@@ -57,7 +57,7 @@ class AnswersController extends Controller
         }
 
         return $this->render(
-            'FormMakerBundle:Answers:display.html.twig',
+            'FormMakerBundle:Answers:list.html.twig',
             array(
                 'results' => $results,
                 'userNames' => $userNames,
@@ -150,9 +150,7 @@ class AnswersController extends Controller
     {
         $output = '';
         $separator = ' / ';
-        $answerAttributes = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswersAttributes' )->findBy( array(
-            'answerId' => $answerId
-        ) );
+        $answerAttributes = $this->getAnswerAttributes( $answerId );
 
         foreach( $answerAttributes as $answerField ) {
 
@@ -171,5 +169,38 @@ class AnswersController extends Controller
         }
 
         return $output;
+    }
+
+    /**
+     * Action displays the details of one particular answer
+     * @param int $answerId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailsAction( $answerId )
+    {
+        $answer = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswers' )->find( $answerId );
+        $answerAttributes = $this->getAnswerAttributes( $answerId );
+
+        return $this->render(
+            'FormMakerBundle:Answers:details.html.twig',
+            array(
+                'answer' => $answer,
+                'answerAttributes' => $answerAttributes
+            )
+        );
+    }
+
+    /**
+     * Returns the set of answer attributes
+     * @param int $answerId
+     * @return array
+     */
+    private function getAnswerAttributes( $answerId )
+    {
+        $answerAttributes = $this->getDoctrine()->getRepository( 'FormMakerBundle:FormAnswersAttributes' )->findBy( array(
+            'answerId' => $answerId
+        ) );
+
+        return $answerAttributes;
     }
 }

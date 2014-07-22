@@ -39,12 +39,12 @@
                 {% for answer in results %}
                     <tr>
                         <td class="number">{{ offset + loop.index }}</td>
-                        <td><a href="">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
+                        <td><a href="{{ path( "answer", { "answerId": answer.getId } ) }}">{{ answer.getAnswerDate|date("D Y-d-m H:i:s") }}</a></td>
                         <td><a href="">{{ answer.getDefinition.getName }}</a></td>
                         <td>{{ summaries[answer.getId] }}</td>
                         <td>{{ userNames[answer.getUserId] }}</td>
                         <td>
-                            <a href="" type="button" class="edit-form btn btn-info">
+                            <a href="{{ path( "answer", { "answerId": answer.getId } ) }}" type="button" class="edit-form btn btn-info">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 {{ "display"|trans({}, "formmaker") }}
                             </a>
