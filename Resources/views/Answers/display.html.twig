@@ -14,7 +14,9 @@
                     <select class="filter-options form-control">
                         <option value="0">{{ "all.forms"|trans( {}, "formmaker" ) }}</option>
                         {% for formDefinition in formDefinitions %}
-                            <option value="{{ formDefinition.getId }}">{{ formDefinition.getName }}</option>
+                            <option {% if formDefinition.getId == formId %}selected="selected"{% endif %} value="{{ formDefinition.getId }}">
+                                {{ formDefinition.getName }}
+                            </option>
                         {% endfor %}
                     </select>
                     <button type="button" id="formmaker-set-answers-form" class="filter-button btn btn-success">{{ "set"|trans( {}, "formmaker" ) }}</button>
@@ -55,19 +57,19 @@
         <ul class="pagination">
             {% if currentPage > 1 %}
                 <li>
-                    <a href="{{ path( "answers", {"offset": (currentPage-2)*itemsPerPage} ) }}">«</a>
+                    <a href="{{ path( "answers", {"offset": (currentPage-2)*itemsPerPage, "formId": formId} ) }}">«</a>
                 </li>
             {% endif %}
 
             {% for i in 1..pages %}
                 <li {% if i == currentPage %}class="active"{% endif %}>
-                    <a href="{{ path( "answers", {"offset": (i-1)*itemsPerPage} ) }}">{{ i }}</a>
+                    <a href="{{ path( "answers", {"offset": (i-1)*itemsPerPage, "formId": formId} ) }}">{{ i }}</a>
                 </li>
             {% endfor %}
 
             {% if currentPage < pages %}
                 <li>
-                    <a href="{{ path( "answers", {"offset": (currentPage)*itemsPerPage} ) }}">»</a>
+                    <a href="{{ path( "answers", {"offset": (currentPage)*itemsPerPage, "formId": formId} ) }}">»</a>
                 </li>
             {% endif %}
         </ul>

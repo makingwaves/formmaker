@@ -7,8 +7,8 @@ edit_create:
     defaults: { _controller: formMakerBundle:Edit:edit }
 
 answers:
-    pattern:  /answers/(offset)/{offset}
-    defaults: { _controller: formMakerBudnle:Answers:display, offset: 0 }
+    pattern:  /answers/(offset)/{offset}/(form_id)/{formId}
+    defaults: { _controller: formMakerBudnle:Answers:display, offset: 0, formId: null }
 
 answers_clean:
     pattern:  /answers

@@ -67,7 +67,8 @@ class AnswersController extends Controller
                 'itemsPerPage' => self::ITEMS_PER_PAGE,
                 'currentPage' => $this->getCurrentPage( $offset ),
                 'offset' => $offset,
-                'formDefinitions' => $this->getDoctrine()->getRepository( 'FormMakerBundle:FormDefinitions' )->findAll()
+                'formDefinitions' => $this->getDoctrine()->getRepository( 'FormMakerBundle:FormDefinitions' )->findAll(),
+                'formId' => $formId
             )
         );
     }
@@ -83,8 +84,8 @@ class AnswersController extends Controller
         $query = $repository->createQueryBuilder( 'fa' )
             ->select( 'count(fa.id)' );
 
-        if ( !is_null( $formId ) ) {
-            $query->where( 'fa.id=' . $formId );
+        if ( !empty( $formId ) ) {
+            $query->where( 'fa.definition=' . $formId );
         }
 
         $result = $query->getQuery()->getSingleScalarResult();
@@ -106,8 +107,8 @@ class AnswersController extends Controller
             ->setFirstResult( $offset )
             ->setMaxResults( self::ITEMS_PER_PAGE );
 
-        if ( !is_null( $formId ) ) {
-            $query->where( 'fa.id=' . $formId );
+        if ( !empty( $formId ) ) {
+            $query->where( 'fa.definition=' . $formId );
         }
 
         $results = $query->getQuery()->getResult();
@@ -123,6 +124,9 @@ class AnswersController extends Controller
     private function getNumberOfPages( $resultsCount )
     {
         $pages = round( $resultsCount / self::ITEMS_PER_PAGE );
+        // there's always at least one page (which is empty in case of no results)
+        $pages = $pages == 0 ? 1 : $pages;
+
         return $pages;
     }
 
