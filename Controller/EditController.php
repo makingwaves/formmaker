@@ -35,7 +35,8 @@ class EditController extends Controller
             }
         }
 
-        $formDefForm = $this->createForm(new FormDefinitionsType(), $formDefinitions);
+        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
+        $formDefForm = $this->createForm( new FormDefinitionsType( $viewTypes ), $formDefinitions );
 
         $formDefForm->handleRequest($request);
 

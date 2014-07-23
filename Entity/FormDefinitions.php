@@ -172,6 +172,13 @@ class FormDefinitions
      */
     private $ownerUser;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="view_type", type="string", length=100, nullable=false)
+     */
+    private $viewType;
+
 
 
     /**
@@ -575,6 +582,28 @@ class FormDefinitions
         return $this->ownerUser;
     }
 
+    /**
+     * Get viewType
+     *
+     * @return string
+     */
+    public function getViewType()
+    {
+        return $this->viewType;
+    }
+
+    /**
+     * Set viewType
+     *
+     * @param string $viewType
+     * @return $this
+     */
+    public function setViewType( $viewType )
+    {
+        $this->viewType = $viewType;
+
+        return $this;
+    }
 
     public function validateRecipients(ExecutionContextInterface $context)
     {

@@ -62,6 +62,10 @@
                 <source>form.label.process.class.name</source>
                 <target>Process class name:</target>
             </trans-unit>
+            <trans-unit id="15">
+                <source>form.label.view.type</source>
+                <target>View type:</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
