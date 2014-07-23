@@ -25,3 +25,7 @@ remove:
 default_test:
     pattern:  /test
     defaults: { _controller: formMakerBundle:Default:testAdmin }
+
+render_form:
+    pattern: /renderForm/{formId}
+    defaults: { _controller: FormMakerBundle:Ajax:renderForm }

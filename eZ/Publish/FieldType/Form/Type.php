@@ -156,9 +156,8 @@ class Type extends FieldType
      */
     private function createNewValue(array $data = array())
     {
-        $formDefinitions = $this->doctrine->getRepository('FormMakerBundle:FormDefinitions');
-        $data['formDefinition'] = !isset($data['formId']) ? null : $formDefinitions->find($data['formId']);
+        $data['doctrine'] = $this->doctrine;
 
-        return new Value($data);
+        return new Value ($data );
     }
 }
