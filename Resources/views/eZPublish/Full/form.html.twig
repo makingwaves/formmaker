@@ -1,0 +1,5 @@
+{% extends "eZDemoBundle::pagelayout.html.twig" %}
+
+{% block content %}
+    {{ ez_render_field( content, "form", { "viewType": content } ) }}
+{% endblock %}

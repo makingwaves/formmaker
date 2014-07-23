@@ -2,6 +2,9 @@
 
 {% block form_field %}
     <div class="form-content">
-        {{ dump(field.value.formDefinition.getName) }}
+        {{ include(
+            "FormMakerBundle:eZPublish/Fields/" ~ field.value.formDefinition.getViewType ~ ":form.html.twig",
+            { "field": field }
+        ) }}
     </div>
 {% endblock %}
