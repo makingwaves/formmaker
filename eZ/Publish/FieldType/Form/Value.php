@@ -78,7 +78,9 @@ class Value extends BaseValue
         if ( is_null( $this->formAttributes ) ) {
 
             $this->formAttributes = $this->doctrine->getRepository( 'FormMakerBundle:FormAttributes' )->findBy( array(
-                'definition' => $this->getFormDefinition()->getId()
+                'definition' => $this->getFormDefinition()->getId(),
+            ), array(
+                'attrOrder' => 'ASC'
             ) );
         }
 
@@ -134,11 +136,54 @@ class Value extends BaseValue
     }
 
     /**
+     * Returns the integer index of current page
      * @return int
      */
-    public function getCurrentPage()
+    public function getCurrentPageIndex()
     {
         // as for now return first page (start counting from 0)
         return 0;
+    }
+
+    /**
+     * Returns the attributes for current page index
+     * @return array
+     */
+    public function getCurrentPageAttributes()
+    {
+        $currentPageAttributes = $this->getPageAttributes( $this->getCurrentPageIndex() );
+
+        return $currentPageAttributes;
+    }
+
+    /**
+     * Returns the attributes for given page index
+     * @param int $pageIndex
+     * @return array
+     */
+    private function getPageAttributes( $pageIndex )
+    {
+        $loopPageIndex = 0;
+        $attributes = array();
+
+        foreach( $this->getFormAttributes() as $attribute ) {
+
+            switch( $attribute->getType()->getStringId() ) {
+
+                case FormTypes::SEPARATOR_ID;
+
+                    $loopPageIndex++;
+                    break;
+
+                default:
+
+                    if ( $loopPageIndex === $pageIndex ) {
+                        $attributes[] = $attribute;
+                    }
+                    break;
+            }
+        }
+
+        return $attributes;
     }
 }

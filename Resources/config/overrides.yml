@@ -1,11 +1,11 @@
 system:
   global:
     field_templates:
-      - {template: "FormMakerBundle:eZPublish/Fields:form.html.twig"}
+      - {template: "FormMakerBundle:Fields:form.html.twig"}
 
     location_view:
         full:
           formmaker:
-            template: "FormMakerBundle:eZPublish/Full:form.html.twig"
+            template: "FormMakerBundle:Full:form.html.twig"
             match:
               Identifier\ContentType: form

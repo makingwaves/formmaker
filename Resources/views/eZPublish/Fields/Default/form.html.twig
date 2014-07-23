@@ -1,9 +1,0 @@
-<form role="form">
-    <ol class="breadcrumb">
-        {% for breadcrumb in field.value.getBreadcrumb %}
-            <li {% if loop.index0 == field.value.getCurrentPage %}class="active"{% endif %}>
-                {{ breadcrumb }}
-            </li>
-        {% endfor %}
-    </ol>
-</form>

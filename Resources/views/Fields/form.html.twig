@@ -3,7 +3,7 @@
 {% block form_field %}
     <div class="formmaker" data-form-id="{{ field.value.getFormDefinition.getId }}">
         {{ include(
-            "FormMakerBundle:eZPublish/Fields/" ~ field.value.getFormDefinition.getViewType ~ ":form.html.twig",
+            "FormMakerBundle:Fields/" ~ field.value.getFormDefinition.getViewType ~ ":form.html.twig",
             { "field": field }
         ) }}
     </div>
