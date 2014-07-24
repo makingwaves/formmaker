@@ -1,5 +1,12 @@
 {% extends "eZDemoBundle::pagelayout.html.twig" %}
 
+{% block page_head %}
+    {{ parent() }}
+        {% stylesheets 'bundles/formmaker/css/front/*' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+{% endblock %}
+
 {% block content %}
     {{ ez_render_field( content, "form", { "viewType": content } ) }}
 {% endblock %}
