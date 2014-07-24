@@ -19,4 +19,17 @@
             </div>
         {% endfor %}
     </div>
+
+    <ul class="pager">
+        {% if field.value.getPagesContainer.previousPageExists %}
+            <li class="previous">
+                <a href="#">← {{ "previous"|trans( {}, "formmaker" ) }}</a>
+            </li>
+        {% endif %}
+        {% if field.value.getPagesContainer.nextPageExists %}
+            <li class="next">
+                <a href="#">{{ "next"|trans( {}, "formmaker" ) }} →</a>
+            </li>
+        {% endif %}
+    </ul>
 </form>

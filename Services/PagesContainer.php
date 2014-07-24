@@ -208,4 +208,26 @@ class PagesContainer
 
         return $attributes;
     }
+
+    /**
+     * Checks whether next page exists
+     * @return bool
+     */
+    public function nextPageExists()
+    {
+        $nextPageExists = $this->getCurrentPageIndex() < sizeof( $this->pages ) - 1;
+
+        return $nextPageExists;
+    }
+
+    /**
+     * Checks whether previous page exists
+     * @return bool
+     */
+    public function previousPageExists()
+    {
+        $previousPageExists = $this->getCurrentPageIndex() > 0;
+
+        return $previousPageExists;
+    }
 } 
