@@ -432,7 +432,7 @@ class FormMakerFunctionCollection
 
     /**
      * Method removes form session data
-     */
+    */
     private function removeSessionData()
     {
         foreach ( $_SESSION['_ezpubllish'] as $key => $value )
@@ -442,7 +442,7 @@ class FormMakerFunctionCollection
                 continue;
             }
             // clean up the session
-            unset( $_SESSION[$key] );
+            unset( $_SESSION['_ezpubllish'][$key] );
         }
     }
 
