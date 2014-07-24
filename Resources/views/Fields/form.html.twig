@@ -1,9 +1,10 @@
 {% extends "EzPublishCoreBundle::content_fields.html.twig" %}
 
 {% block form_field %}
-    <div class="formmaker" data-form-id="{{ field.value.getFormDefinition.getId }}">
+
+    <div class="formmaker" data-form-id="{{ field.value.getPagesContainer.getFormDefinition.getId }}">
         {{ include(
-            "FormMakerBundle:Fields/" ~ field.value.getFormDefinition.getViewType ~ ":form.html.twig",
+            "FormMakerBundle:FormMaker/Views/" ~ field.value.pagesContainer.getFormDefinition.getViewType ~ ":form.html.twig",
             { "field": field }
         ) }}
     </div>

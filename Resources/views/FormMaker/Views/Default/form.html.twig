@@ -1,0 +1,17 @@
+<form role="form">
+    <ol class="breadcrumb">
+        {% for page in field.value.getPagesContainer.getPages %}
+            <li {% if loop.index0 == field.value.getPagesContainer.getCurrentPageIndex %}class="active"{% endif %}>
+                {{ page.getTitle }}
+            </li>
+        {% endfor %}
+    </ol>
+
+    <div class="container">
+        {% for attribute in field.value.getPagesContainer.getCurrentPage.getAttributes %}
+            {{ include(
+                "FormMakerBundle:FormMaker/Attributes:" ~ attribute.getType.getStringId ~ ".html.twig"
+            ) }}
+        {% endfor %}
+    </div>
+</form>
