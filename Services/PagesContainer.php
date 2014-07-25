@@ -39,6 +39,11 @@ class PagesContainer
     private $entityManager;
 
     /**
+     * @var PagesFactory
+     */
+    private $pagesFactory;
+
+    /**
      * @var int
      */
     private $currentPageIndex = 0;
@@ -46,10 +51,12 @@ class PagesContainer
     /**
      * Default constructor
      * @param EntityManager $entityManager
+     * @param PagesFactory $pagesFactory
      */
-    public function __construct( EntityManager $entityManager )
+    public function __construct( EntityManager $entityManager, PagesFactory $pagesFactory )
     {
         $this->entityManager = $entityManager;
+        $this->pagesFactory = $pagesFactory;
     }
 
     /**
@@ -126,13 +133,13 @@ class PagesContainer
      */
     public function getPages()
     {
-        $pagesFactory = new PagesFactory( $this->formId );
+        $this->pagesFactory->setFormId( $this->formId );
         $index = 0;
 
         if ( sizeof( $this->pages ) === 0 ) {
 
             // first page first :)
-            $this->pages[$index] = $pagesFactory->factoryMethod(
+            $this->pages[$index] = $this->pagesFactory->factoryMethod(
                 new FirstPage(),
                 $this->getFormDefinition()->getFirstPage(),
                 null,
@@ -142,7 +149,7 @@ class PagesContainer
             // then all of enabled page separators
             foreach( $this->getPageSeparators() as $pageSeparator ) {
                 $index++;
-                $this->pages[$index] = $pagesFactory->factoryMethod(
+                $this->pages[$index] = $this->pagesFactory->factoryMethod(
                     new MiddlePage(),
                     null,
                     $pageSeparator,
@@ -153,12 +160,12 @@ class PagesContainer
             // then confirmation page, if enabled
             if ( $this->getFormDefinition()->getSummaryPage() ) {
                 $index++;
-                $this->pages[$index] = $pagesFactory->factoryMethod( new ConfirmationPage(), $this->getFormDefinition()->getSummaryLabel() );
+                $this->pages[$index] = $this->pagesFactory->factoryMethod( new ConfirmationPage(), $this->getFormDefinition()->getSummaryLabel() );
             }
 
             // last item is always receipt page
             $index++;
-            $this->pages[$index] = $pagesFactory->factoryMethod( new ReceiptPage(), $this->getFormDefinition()->getReceiptLabel() );
+            $this->pages[$index] = $this->pagesFactory->factoryMethod( new ReceiptPage(), $this->getFormDefinition()->getReceiptLabel() );
         }
 
         return $this->pages;
@@ -190,6 +197,7 @@ class PagesContainer
      */
     public function moveToNextPage()
     {
+        // WYWALIĆ TE KOMENTARZE!!!
 //        var_dump($this->nextPageExists());die;
 //        if ( $this->nextPageExists() ) {
             $this->currentPageIndex++;

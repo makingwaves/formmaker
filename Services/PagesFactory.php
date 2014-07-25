@@ -21,12 +21,15 @@ class PagesFactory
     private $formId;
 
     /**
+     * Set formId
      * @param $formId
+     * @return $this
      */
-    public function __construct( $formId )
+    public function setFormId( $formId )
     {
         $this->formId = $formId;
 
+        return $this;
     }
 
     /**
