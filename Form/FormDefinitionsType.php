@@ -6,8 +6,38 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+/**
+ * Class FormDefinitionsType
+ * @package MakingWaves\FormMakerBundle\Form
+ */
 class FormDefinitionsType extends AbstractType
 {
+    /**
+     * This setting comes from formmaker.yml
+     * @var array
+     */
+    private $viewTypes;
+
+    /**
+     * @param array $viewTypes
+     */
+    public function __construct( array $viewTypes = array() )
+    {
+        $this->viewTypes = $viewTypes;
+    }
+
+    /**
+     * Returns the viewType array which is ready to use in form
+     * @return array
+     */
+    private function getViewTypes()
+    {
+        // set same keys as values, i.e. array( 'Default' => 'Default' )
+        $result = array_combine( $this->viewTypes, $this->viewTypes );
+
+        return $result;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -21,6 +51,12 @@ class FormDefinitionsType extends AbstractType
             ->add('cssClass', 'text', array('label' => 'form.label.css.class',
                                             'required' => false
                                       ))
+            ->add( 'viewType', 'choice', array(
+                'label' => 'form.label.view.type',
+                'multiple' => false,
+                'choices' => $this->getViewTypes()
+            ) )
+
             ->add('summaryPage', 'checkbox', array('label' => 'form.label.want.confirmation',
                                                    'required' => false
                                              ))

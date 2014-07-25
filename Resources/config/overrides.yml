@@ -1,0 +1,11 @@
+system:
+  global:
+    field_templates:
+      - {template: "FormMakerBundle:Fields:form.html.twig"}
+
+    location_view:
+        full:
+          formmaker:
+            template: "FormMakerBundle:Full:form.html.twig"
+            match:
+              Identifier\ContentType: form

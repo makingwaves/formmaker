@@ -110,6 +110,14 @@
                 <source>form.type.not.found</source>
                 <target>Form type not found</target>
             </trans-unit>
+            <trans-unit id="124">
+                <source>previous</source>
+                <target>Previous</target>
+            </trans-unit>
+            <trans-unit id="125">
+                <source>next</source>
+                <target>Next</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

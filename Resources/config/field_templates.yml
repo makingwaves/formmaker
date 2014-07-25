@@ -1,4 +1,0 @@
-system:
-    global:
-        field_templates:
-            - {template: "FormMakerBundle:eZPublish/Fields:form.html.twig"}

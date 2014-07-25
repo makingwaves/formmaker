@@ -1,0 +1,8 @@
+
+<label>
+    <input name="{{ attribute.getId }}" type="checkbox" {% if attribute.getDefaultValue %}checked{% endif %} />
+    {{ attribute.getLabel }}
+</label>
+<p class="help-block">
+    {{ attribute.getDescription }}
+</p>

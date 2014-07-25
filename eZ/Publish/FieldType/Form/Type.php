@@ -2,12 +2,12 @@
 
 namespace MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form;
 
-use Doctrine\ORM\EntityManager;
 use eZ\Publish\Core\FieldType\FieldType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\SPI\FieldType\Value as SPIValue;
 use eZ\Publish\Core\FieldType\Value as CoreValue;
 use eZ\Publish\SPI\Persistence\Content\FieldValue;
+use MakingWaves\FormMakerBundle\Services\PagesContainer;
 
 /**
  * Class Type - implemented according to tutorial https://doc.ez.no/display/EZP/eZ+Publish+5+Field+Type+Tutorial
@@ -18,17 +18,17 @@ class Type extends FieldType
     private $typeIdentifier = 'form';
 
     /**
-     * @var \Doctrine\ORM\EntityManager
+     * @var PagesContainer
      */
-    private $doctrine;
+    private $pages;
 
     /**
-     * Constructor
-     * @param \Doctrine\ORM\EntityManager $doctrine
+     * Default constructor
+     * @param PagesContainer $pages
      */
-    public function __construct(EntityManager $doctrine)
+    public function __construct( PagesContainer $pages )
     {
-        $this->doctrine = $doctrine;
+        $this->pages = $pages;
     }
     
     /**
@@ -154,11 +154,10 @@ class Type extends FieldType
      * @param array $data
      * @return Value
      */
-    private function createNewValue(array $data = array())
+    private function createNewValue( array $data = array() )
     {
-        $formDefinitions = $this->doctrine->getRepository('FormMakerBundle:FormDefinitions');
-        $data['formDefinition'] = !isset($data['formId']) ? null : $formDefinitions->find($data['formId']);
+        $data['pagesContainer'] = $this->pages;
 
-        return new Value($data);
+        return new Value( $data );
     }
 }

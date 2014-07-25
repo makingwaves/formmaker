@@ -117,6 +117,14 @@ class FormAttributes
     private $validators;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="FormAttributesOptions", mappedBy="attr", cascade={"persist"})
+     * @ORM\OrderBy({"optOrder"="ASC"})
+     */
+    private $options;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="regex", type="string", length=255, nullable=true)
@@ -126,6 +134,15 @@ class FormAttributes
     public function __construct()
     {
         $this->validators = new ArrayCollection();
+        $this->options = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOptions()
+    {
+        return $this->options;
     }
 
     /**

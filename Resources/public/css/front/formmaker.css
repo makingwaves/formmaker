@@ -1,0 +1,54 @@
+/*
+ Name: Form Maker
+ Information: Using modified! Bootstrap v3.2.0 (more details in README.txt)
+ Version: 1.0
+*/
+
+/*
+ Form-maker
+--------------------------------------------------------------*/
+.formmaker, .formmaker .breadcrumb > li {
+    font:14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:#333;
+}
+.formmaker {
+	padding:20px;
+	background:#fff;
+}
+.formmaker .container:after,
+.formmaker .page-separator:before {
+	content:"";
+	display:table;
+	clear:both;
+}
+.formmaker .required-label:after {
+    color: #f15e22;
+    content: " *";
+}
+
+.formmaker .breadcrumb > .active {
+	color:#428bca;
+	font-weight:bold;
+}
+
+.formmaker input {
+    display:inline-block;
+    vertical-align:top;
+}
+.formmaker legend {
+    font-size:15px; line-height:21px;
+}
+
+.formmaker .form-nav {
+    overflow:hidden;
+}
+.formmaker .form-nav .btn-left {
+    float:left;
+}
+.formmaker .form-nav  .btn-right {
+    float:right;
+}
+
+.formmaker .radio, .formmaker .checkbox {
+    padding-left: 0;
+}

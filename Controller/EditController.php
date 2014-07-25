@@ -32,8 +32,8 @@ class EditController extends Controller
             throw $this->createNotFoundException($translator->trans('form.not.found', array(), 'formmaker'));
         }
 
-        $formDefForm = $this->createForm(new FormDefinitionsType(), $formDefinitions);
-        $formDefForm->handleRequest($request);
+        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
+        $formDefForm = $this->createForm( new FormDefinitionsType( $viewTypes ), $formDefinitions );
 
         if ( $formDefForm->isValid() ) {
             $entityManager->persist($formDefinitions);

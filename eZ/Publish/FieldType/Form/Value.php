@@ -4,6 +4,7 @@ namespace MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form;
 
 use eZ\Publish\Core\FieldType\Value as BaseValue;
 use MakingWaves\FormMakerBundle\Entity\FormDefinitions;
+use MakingWaves\FormMakerBundle\Entity\FormTypes;
 
 /**
  * Class Value
@@ -17,9 +18,20 @@ class Value extends BaseValue
     public $formId;
 
     /**
-     * @var \MakingWaves\FormMakerBundle\Entity\FormDefinitions
+     * @var \MakingWaves\FormMakerBundle\Services\PagesContainer
      */
-    public $formDefinition;
+    public $pagesContainer;
+
+
+    /**
+     * Runs parent constructor and sets the formId for currentPage
+     * @param array $properties
+     */
+    public function __construct( array $properties = array() )
+    {
+        parent::__construct( $properties );
+
+    }
 
     /**
      * @return string
@@ -30,24 +42,25 @@ class Value extends BaseValue
     }
 
     /**
+     * @return \MakingWaves\FormMakerBundle\Services\PagesContainer
+     */
+    public function getPagesContainer()
+    {
+        $this->pagesContainer->setFormId( $this->formId );
+        return $this->pagesContainer;
+    }
+
+    /**
      * Returns the name of current form, or empty string in case of empty set of data.
      * @return string
      */
     private function getFormName()
     {
         $formName = '';
-        if ($this->formDefinition instanceof FormDefinitions) {
-            $formName = $this->formDefinition->getName();
+        if ( $this->pagesContainer->getFormDefinition() instanceof FormDefinitions ) {
+            $formName = $this->pagesContainer->getFormDefinition()->getName();
         }
 
         return $formName;
-    }
-
-    /**
-     * @return FormDefinitions
-     */
-    public function getFormDefinition()
-    {
-        return $this->formDefinition;
     }
 }
