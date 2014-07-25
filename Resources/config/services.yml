@@ -7,6 +7,8 @@ parameters:
   answers.controller.class: MakingWaves\FormMakerBundle\Controller\AnswersController
   formmaker.fieldType.form.class: MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Type
   formmaker.user.class: MakingWaves\FormMakerBundle\Services\User
+  formmaker.pages.factory.class: MakingWaves\FormMakerBundle\Services\PagesFactory
+  formmaker.pages.container.class: MakingWaves\FormMakerBundle\Services\PagesContainer
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -50,7 +52,7 @@ services:
     class: %formmaker.fieldType.form.class%
     tags:
       - {name: ezpublish.fieldType, alias: form}
-    arguments: [ @doctrine.orm.entity_manager ]
+    arguments: [ @formmaker.pages.container ]
 
   # Register field type converter
   formmaker.storageEngine.legacy.converter:
@@ -61,3 +63,10 @@ services:
   formmaker.user:
     class: %formmaker.user.class%
     arguments: [ @ezpublish.api.service.user ]
+
+  formmaker.pages.factory:
+    class: %formmaker.pages.factory.class%
+
+  formmaker.pages.container:
+    class: %formmaker.pages.container.class%
+    arguments: [ @doctrine.orm.entity_manager, @formmaker.pages.factory ]

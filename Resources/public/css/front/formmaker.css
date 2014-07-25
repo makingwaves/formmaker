@@ -30,8 +30,21 @@
 	color:#428bca;
 	font-weight:bold;
 }
-.formmaker .pager li > a {
-	padding:8px 20px;
-	-webkit-border-radius:20px;
-	border-radius:20px;
+
+.formmaker input {
+    display:inline-block;
+    vertical-align:top;
+}
+.formmaker legend {
+    font-size:15px; line-height:21px;
+}
+
+.formmaker .form-nav {
+    overflow:hidden;
+}
+.formmaker .form-nav .btn-left {
+    float:left;
+}
+.formmaker .form-nav  .btn-right {
+    float:right;
 }
