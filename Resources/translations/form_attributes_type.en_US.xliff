@@ -24,15 +24,15 @@
             </trans-unit>
             <trans-unit id="6">
                 <source>label.email.receiver</source>
-                <target>Email receiver</target>
+                <target>Email receiver:</target>
             </trans-unit>
             <trans-unit id="7">
                 <source>label.description</source>
                 <target>Description:</target>
             </trans-unit>
-            <trans-unit id="8">
+            <trans-unit id="88">
                 <source>label.css</source>
-                <target>Css class</target>
+                <target>Css class:</target>
             </trans-unit>
             <trans-unit id="9">
                 <source>label.allowed.file.types</source>
@@ -41,6 +41,10 @@
             <trans-unit id="10">
                 <source>label.regex</source>
                 <target>Regex</target>
+            </trans-unit>
+            <trans-unit id="11">
+                <source>label.mandatory</source>
+                <target>Mandatory:</target>
             </trans-unit>
         </body>
     </file>

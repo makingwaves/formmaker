@@ -4,9 +4,6 @@ namespace MakingWaves\FormMakerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FormDefinitionsType extends AbstractType
@@ -61,8 +58,12 @@ class FormDefinitionsType extends AbstractType
                                              ))
             ->add('processClass', 'text', array('label' => 'form.label.process.class.name',
                                                 'required' => false,
-                                          ))
-            ->add('save', 'submit');
+                                          ));
+
+            $builder->add('attributes', 'collection', array('type' => new FormAttributesType()));
+
+
+        $builder->add('save', 'submit');
     } // buildForml
 
 
@@ -73,7 +74,7 @@ class FormDefinitionsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'MakingWaves\FormMakerBundle\Entity\FormDefinitions',
-            'translation_domain' => 'form_definitions_type'
+            'translation_domain' => 'form_definitions_type',
         ));
     }
 

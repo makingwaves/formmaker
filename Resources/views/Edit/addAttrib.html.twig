@@ -1,0 +1,14 @@
+{% trans_default_domain "formmaker" %}
+
+<div id="add_attrib_wrapper">
+    <div class="form-group">
+          <button type="button" id="add_attrib_btn" class="btn btn-default btn-sm"/>{{ 'add.attribute'|trans }}</button>
+          <div class="col-sm-4">
+              <select name="add_attrib_form_type" id="add_attrib_form_type" class="form-control">
+                  {% for type in types %}
+                      <option value="{{ type.getId }}">{{ type.getName }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+    </div>
+</div>

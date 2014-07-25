@@ -1,0 +1,50 @@
+{% form_theme form 'FormMakerBundle:Form:fields.html.twig' %}
+
+{% for attrib in form %}
+<li class="sortable-item">
+    <article class="attributes-item panel panel-default expandable-item">
+        <div class="panel-heading">
+            <span class="expand-panel js-expand-panel glyphicon glyphicon-chevron-up btn-xs"></span>
+            <h3 class="panel-title">{{ attrib.vars.value.type.name }}</h3>
+            <ul class="panel-menu">
+                <li>
+                    {{ form_label(attrib.enabled) }}
+                    {{ form_widget(attrib.enabled) }}
+                </li>
+                <li>
+                    <button type="button" class="close-panel js-close-panel" onclick="removePanel(this)">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                {{ form_label(attrib.label, null, {'label_attr': {'class': 'col-sm-2'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(attrib.label) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        {{ form_widget(attrib.mandatory) }}
+                        {{ form_label(attrib.mandatory) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_label(attrib.description, {'attr': {'class': 'col-sm-2'}}) }}
+                <div class="col-sm-10">
+                    {{ form_widget(attrib.description) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                {{ form_label(attrib.css) }}
+                <div class="col-sm-4">
+                    {{ form_widget(attrib.css) }}
+                </div>
+            </div>
+        </div>
+</li>
+{% endfor %}

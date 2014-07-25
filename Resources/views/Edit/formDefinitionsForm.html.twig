@@ -76,8 +76,20 @@
     <div>
 </article>
 
+<section class="attributes form-horizontal">
+    <div class="page-header">
+        <h2>Attributes</h2>
+        <!-- expand button -->
+        <button type="button" class="expand-all-panels js-expand-all-panels btn btn-default btn-sm">Expand / Collapse All</button>
+    </div>
+
+    <ul class="sortable js-sortable" id="form_attributes_list">
+        {% include 'FormMakerBundle:Edit:formAttributesForm.html.twig' with  { 'form': formDefForm.attributes } %}
+    </ul>
+</section>
+
 <div>
     {{ form_widget(formDefForm.save) }}
 </div>
 
-{{ form_end(formDefForm) }}
+{{ form_end(formDefForm, {'render_rest': false}) }}

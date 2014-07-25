@@ -7,7 +7,6 @@ $request = $container->get( 'request.provider' );
 $formId = isset($Params['id']) ? $Params['id'] : 0;
 
 $Result = array(
-    'content' => $controller->editAction($request::createFromGlobals(), $formId)->getContent(),
     'content_info' => array(
         'persistent_variable' => array(
             'left_menu' => false
@@ -19,3 +18,9 @@ $Result = array(
         )
     )
 );
+
+if ( $formId == 0 ) {
+    $Result['content'] = $controller->createAction($request::createFromGlobals())->getContent();
+} else {
+    $Result['content'] = $controller->editAction($request::createFromGlobals(), $formId)->getContent();
+} // endif

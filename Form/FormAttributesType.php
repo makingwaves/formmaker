@@ -8,36 +8,48 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FormAttributesType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('enabled', 'checkbox', array( 'label' => 'label.enabled' ))
+            ->add('label', 'text', array( 'label' => 'label.label',
+                                          'required' => false ))
             ->add('attrOrder', 'integer', array( 'label' => 'label.attr.order',
                                                  'required' => false
             ))
+            ->add('mandatory', 'checkbox', array('mapped' => false,
+                                                 'required' => false,
+                                                 'label' => 'label.mandatory'
+            ))
+            ->add('description', 'textarea', array( 'label' => 'label.description',
+                                                    'required' => false
+            ))
+            ->add('css', 'text', array( 'label' => 'label.css',
+                                        'required' => false
+            ))
+            // end of common fields
+            ;
+            /*
             ->add('identifier', 'text', array( 'label' => 'label.identifier',
                                                'required' => false
             ))
             ->add('defaultValue', 'text', array( 'label' => 'label.default.value',
                                                  'required' => false
             ))
-            ->add('enabled', 'checkbox', array( 'label' => 'label.enabled' ))
-            ->add('label', 'text', array( 'label' => 'label.label',
-                                          'required' => false
-            ))
+
             ->add('emailReceiver', 'integer', array( 'label' => 'label.email.receiver'))
-            ->add('description', 'textarea', array( 'label' => 'label.description'))
-            ->add('css', 'text', array( 'label' => 'label.css'))
+
+
             ->add('allowedFileTypes', 'text', array( 'label' => 'label.allowed.file.types'))
             ->add('regex', 'text', array( 'label' => 'label.regex',
                                           'required' => false
             ))
-            //->add('type', 'entity')
             ->add('validators')
-        ;
+        ;*/
     }
     
     /**

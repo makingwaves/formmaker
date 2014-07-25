@@ -1,8 +1,6 @@
 {% extends 'FormMakerBundle::admin_layout.html.twig' %}
 
 {% block content %}
-        {% include 'FormMakerBundle:Edit:formDefinitionsForm.html.twig' with { 'formDefForm': formDefForm } %}
-
-        kreate select here
+    {% include 'FormMakerBundle:Edit:formDefinitionsForm.html.twig' with { 'formDefForm': formDefForm, 'isNew': true } %}
 {% endblock %}
 

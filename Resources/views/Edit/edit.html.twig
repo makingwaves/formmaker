@@ -1,0 +1,8 @@
+{% extends 'FormMakerBundle::admin_layout.html.twig' %}
+
+{% block content %}
+    {% include 'FormMakerBundle:Edit:formDefinitionsForm.html.twig' with { 'formDefForm': formDefForm, 'isNew': false } %}
+
+    {% include 'FormMakerBundle:Edit:addAttrib.html.twig' %}
+{% endblock %}
+

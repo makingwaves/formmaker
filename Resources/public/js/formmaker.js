@@ -155,4 +155,17 @@ $(document).ready(function() {
 
         window.location.href = addr;
     });
+
+    // add new form attribute
+    $('#add_attrib_btn').click(function(){
+
+        var post_data = {'type_id': + $('#add_attrib_form_type').val() };
+        $.ez('formmaker::newattrib', post_data , function(data) {
+            if ( data.error_text ) {
+                alert(data.error_text);
+            } else {
+                $('#form_attributes_list').append(data.content);
+            }
+        });
+    });
 });

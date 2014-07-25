@@ -5,6 +5,7 @@ namespace MakingWaves\FormMakerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * FormDefinitions
  *
@@ -172,7 +173,23 @@ class FormDefinitions
      */
     private $ownerUser;
 
+    /**
+     * @ORM\OneToMany(targetEntity="FormAttributes", mappedBy="definition", cascade={"persist"})
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $attributes;
 
+
+    public function __construct()
+    {
+        $this->attributes = new ArrayCollection();
+    } // __construct
+
+
+    public function getAttributes()
+    {
+        return $this->attributes;
+    } // getAttributes
 
     /**
      * Set name
