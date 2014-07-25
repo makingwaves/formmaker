@@ -3,11 +3,11 @@
 namespace MakingWaves\FormMakerBundle\Services;
 
 use MakingWaves\FormMakerBundle\Entity\FormAttributes;
-use MakingWaves\FormMakerBundle\Services\Page\ConfirmationPage;
-use MakingWaves\FormMakerBundle\Services\Page\FirstPage;
-use MakingWaves\FormMakerBundle\Services\Page\MiddlePage;
-use MakingWaves\FormMakerBundle\Services\Page\Page;
-use MakingWaves\FormMakerBundle\Services\Page\ReceiptPage;
+use MakingWaves\FormMakerBundle\Pages\ConfirmationPage;
+use MakingWaves\FormMakerBundle\Pages\FirstPage;
+use MakingWaves\FormMakerBundle\Pages\MiddlePage;
+use MakingWaves\FormMakerBundle\Pages\Page;
+use MakingWaves\FormMakerBundle\Pages\ReceiptPage;
 
 /**
  * Class PagesFactory

@@ -1,6 +1,6 @@
 <?php
 
-namespace MakingWaves\FormMakerBundle\Services\Page;
+namespace MakingWaves\FormMakerBundle\Pages;
 
 use MakingWaves\FormMakerBundle\Entity\FormAttributes;
 

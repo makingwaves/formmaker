@@ -1,12 +1,12 @@
 <?php
 
-namespace MakingWaves\FormMakerBundle\Services\Page;
+namespace MakingWaves\FormMakerBundle\Pages;
 
 /**
- * Class ReceiptPage
+ * Class ConfirmationPage
  * @package MakingWaves\FormMakerBundle\Services\Page
  */
-class ReceiptPage extends Page
+class ConfirmationPage extends Page
 {
     /**
      * @var string
