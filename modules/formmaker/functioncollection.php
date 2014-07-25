@@ -435,7 +435,7 @@ class FormMakerFunctionCollection
      */
     private function removeSessionData()
     {
-        foreach ( $_SESSION as $key => $value )
+        foreach ( $_SESSION['_ezpubllish'] as $key => $value )
         {
             if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
             {
