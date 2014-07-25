@@ -1,4 +1,12 @@
 
 <fieldset>
     <legend>{{ attribute.getLabel }}:</legend>
+    {% for option in attribute.getOptions %}
+        <div class="radio">
+            <label>
+                <input type="radio" />
+                {{ option.getLabel }}
+            </label>
+        </div>
+    {% endfor %}
 </fieldset>
