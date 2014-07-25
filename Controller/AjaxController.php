@@ -4,11 +4,24 @@ namespace MakingWaves\FormMakerBundle\Controller;
 
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 
+/**
+ * Class AjaxController
+ * @package MakingWaves\FormMakerBundle\Controller
+ */
 class AjaxController extends Controller
 {
+    /**
+     * Action renders the form basing on given parameters
+     * @param int $locationId
+     * @param string(next|prev) $direction
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function renderFormAction( $locationId, $direction )
     {
         $formField = $this->getField( $locationId );
+        $postValues = $this->getRequest()->request->get( 'formData', array() );
+        $formField->value->getPagesContainer()->setValues( $postValues );
+
         switch( $direction ) {
 
             case 'next':
@@ -20,13 +33,17 @@ class AjaxController extends Controller
                 break;
         }
 
-
         return $this->render( 'FormMakerBundle:FormMaker/Views/Default:form.html.twig', array(
             'field' => $formField,
             'locationId' => $locationId
         ) );
     }
 
+    /**
+     * Returns the form field object
+     * @param int $locationId
+     * @return null
+     */
     private function getField( $locationId )
     {
         $repository = $this->get( 'ezpublish.api.repository' );
@@ -40,8 +57,6 @@ class AjaxController extends Controller
                 $formField = $field;
                 break;
             }
-
-            //file_put_contents( '/var/www/upgrade53/web/debug.log', var_export( $field->value->formId, true ), FILE_APPEND );
         }
 
         return $formField;

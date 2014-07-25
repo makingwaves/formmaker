@@ -9,6 +9,7 @@ parameters:
   formmaker.user.class: MakingWaves\FormMakerBundle\Services\User
   formmaker.pages.factory.class: MakingWaves\FormMakerBundle\Services\PagesFactory
   formmaker.pages.container.class: MakingWaves\FormMakerBundle\Services\PagesContainer
+  formmaker.form.session.class: MakingWaves\FormMakerBundle\Services\FormSession
 
 services:
   # Defining this controller as a service so it can be called from the container
@@ -66,7 +67,12 @@ services:
 
   formmaker.pages.factory:
     class: %formmaker.pages.factory.class%
+    arguments: [ @formmaker.form.session ]
+
+  formmaker.form.session:
+    class: %formmaker.form.session.class%
+    arguments: [ @session ]
 
   formmaker.pages.container:
     class: %formmaker.pages.container.class%
-    arguments: [ @doctrine.orm.entity_manager, @formmaker.pages.factory ]
+    arguments: [ @doctrine.orm.entity_manager, @formmaker.pages.factory, @formmaker.form.session ]

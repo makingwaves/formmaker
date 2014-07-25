@@ -21,6 +21,19 @@ class PagesFactory
     private $formId;
 
     /**
+     * @var FormSession
+     */
+    private $formSession;
+
+    /**
+     * @param FormSession $formSession
+     */
+    public function __construct( FormSession $formSession )
+    {
+        $this->formSession = $formSession;
+    }
+
+    /**
      * Set formId
      * @param $formId
      * @return $this
@@ -28,6 +41,7 @@ class PagesFactory
     public function setFormId( $formId )
     {
         $this->formId = $formId;
+        $this->formSession->setFormId( $formId );
 
         return $this;
     }
@@ -70,6 +84,8 @@ class PagesFactory
     {
         $page->setPageTitle( $pageTitle );
         $page->setPageAttributes( $pageAttributes );
+        // TODO: 2. Zapisywać dane z sesji w obiektach Page
+        $this->getPageAttributeValues();
     }
 
     /**
@@ -99,5 +115,12 @@ class PagesFactory
     {
         $page->setPageSeparator( $pageSeparator );
         $page->setPageAttributes( $pageAttributes );
+        // TODO: 2. Zapisywać dane z sesji w obiektach Page
+        $this->getPageAttributeValues();
+    }
+
+    private function getPageAttributeValues()
+    {
+        $this->formSession->getPageAttributeValues();
     }
 } 

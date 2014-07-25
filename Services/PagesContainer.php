@@ -44,19 +44,21 @@ class PagesContainer
     private $pagesFactory;
 
     /**
-     * @var int
+     * @var FormSession
      */
-    private $currentPageIndex = 0;
+    private $formSession;
 
     /**
      * Default constructor
      * @param EntityManager $entityManager
      * @param PagesFactory $pagesFactory
+     * @param FormSession $formSession
      */
-    public function __construct( EntityManager $entityManager, PagesFactory $pagesFactory )
+    public function __construct( EntityManager $entityManager, PagesFactory $pagesFactory, FormSession $formSession )
     {
         $this->entityManager = $entityManager;
         $this->pagesFactory = $pagesFactory;
+        $this->formSession = $formSession;
     }
 
     /**
@@ -123,6 +125,7 @@ class PagesContainer
     public function setFormId( $formId )
     {
         $this->formId = $formId;
+        $this->formSession->setFormId( $formId );
 
         return $this;
     }
@@ -188,7 +191,7 @@ class PagesContainer
      */
     public function getCurrentPageIndex()
     {
-        return $this->currentPageIndex;
+        return $this->formSession->getPageIndex();
     }
 
     /**
@@ -198,7 +201,7 @@ class PagesContainer
     public function moveToNextPage()
     {
         if ( $this->nextPageExists() ) {
-            $this->currentPageIndex++;
+            $this->formSession->increasePageIndex();
         }
 
         return $this;
@@ -211,7 +214,7 @@ class PagesContainer
     public function moveToPreviousPage()
     {
         if ( $this->previousPageExists() ) {
-            $this->currentPageIndex--;
+            $this->formSession->decreasePageIndex();
         }
 
         return $this;
@@ -268,5 +271,16 @@ class PagesContainer
         $previousPageExists = $this->getCurrentPageIndex() > 0;
 
         return $previousPageExists;
+    }
+
+    /**
+     * @param array $postValues
+     * @return $this
+     */
+    public function setValues( array $postValues )
+    {
+        $this->formSession->setValues( $postValues );
+
+        return $this;
     }
 } 
