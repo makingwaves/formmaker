@@ -67,6 +67,7 @@ services:
 
   formmaker.pages.factory:
     class: %formmaker.pages.factory.class%
+    arguments: [ @formmaker.form.session ]
 
   formmaker.form.session:
     class: %formmaker.form.session.class%

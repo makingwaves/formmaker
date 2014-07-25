@@ -19,6 +19,9 @@ class AjaxController extends Controller
     public function renderFormAction( $locationId, $direction )
     {
         $formField = $this->getField( $locationId );
+        $postValues = $this->getRequest()->request->get( 'formData', array() );
+        $formField->value->getPagesContainer()->setValues( $postValues );
+
         switch( $direction ) {
 
             case 'next':

@@ -1,6 +1,6 @@
 
-<label class="">
-    <input type="checkbox" {% if attribute.getDefaultValue %}checked{% endif %} />
+<label>
+    <input name="{{ attribute.getId }}" type="checkbox" {% if attribute.getDefaultValue %}checked{% endif %} />
     {{ attribute.getLabel }}
 </label>
 <p class="help-block">

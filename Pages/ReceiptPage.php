@@ -42,4 +42,22 @@ class ReceiptPage extends Page
     {
         return array();
     }
+
+    /**
+     * @param array $values
+     * @return mixed|void
+     */
+    public function setValues( array $values )
+    {
+        // do nothing, since this page doesn't have a values
+    }
+
+    /**
+     * Return empty array - there are no attributes on this page
+     * @return array
+     */
+    public function getValues()
+    {
+        return array();
+    }
 } 

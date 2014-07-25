@@ -47,9 +47,30 @@ class FormSession
      */
     private function getPageIndexIdentifier()
     {
-        $pageIndexIdentifier = 'formmaker_' . $this->formId . '_page_index';
+        $pageIndexIdentifier = $this->getSessionPrefix() . '.pageIndex';
 
         return $pageIndexIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    private function getSessionPrefix()
+    {
+        $sessionPrefix = 'formmaker.' . $this->formId;
+
+        return $sessionPrefix;
+    }
+
+    /**
+     * @param $attributeId
+     * @return string
+     */
+    private function getAttribuiteIdentifier( $attributeId )
+    {
+        $attributeIdentifier = $this->getSessionPrefix() . '.page.' . $this->getPageIndex() . '.attribute.' . $attributeId;
+
+        return $attributeIdentifier;
     }
 
     /**
@@ -87,5 +108,31 @@ class FormSession
         $this->session->set( $this->getPageIndexIdentifier(), $pageIndex );
 
         return $this;
+    }
+
+    /**
+     * Set the values from POST in session
+     * @param array $postValues
+     * @return $this
+     */
+    public function setValues( array $postValues )
+    {
+        foreach( $postValues as $postValue ) {
+
+            $this->session->set( $this->getAttribuiteIdentifier( $postValue['id'] ), $postValue['value'] );
+        }
+
+        return $this;
+    }
+
+    public function getPageAttributeValues()
+    {
+        $pageAttributeValues = array();
+
+        foreach( $this->session->all() as $key => $value ) {
+
+            // TODO: 1. Wygenerować tablicę z danymi strony
+            var_dump( $key, $value );
+        }
     }
 } 

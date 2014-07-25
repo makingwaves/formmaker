@@ -19,4 +19,17 @@ abstract class Page
      * @return array
      */
     abstract public function getAttributes();
+
+    /**
+     * Set the values from POST
+     * @param array $values
+     * @return mixed
+     */
+    abstract public function setValues( array $values );
+
+    /**
+     * Returns page attribute values
+     * @return array
+     */
+    abstract public function getValues();
 } 

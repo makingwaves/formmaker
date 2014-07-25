@@ -21,6 +21,11 @@ class MiddlePage extends Page
     private $pageAttributes;
 
     /**
+     * @var array
+     */
+    private $values;
+
+    /**
      * @param FormAttributes $pageSeparator
      */
     public function setPageSeparator( FormAttributes $pageSeparator )
@@ -53,5 +58,25 @@ class MiddlePage extends Page
     public function getAttributes()
     {
         return $this->pageAttributes;
+    }
+
+    /**
+     * @param array $values
+     * @return $this
+     */
+    public function setValues( array $values )
+    {
+        $this->values = $values;
+
+        return $this;
+    }
+
+    /**
+     * Return empty array - there are no attributes on this page
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 } 

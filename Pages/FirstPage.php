@@ -16,6 +16,11 @@ class FirstPage extends Page
     private $pageTitle;
 
     /**
+     * @var array
+     */
+    private $values;
+
+    /**
      * Get pageTitle
      * @return string
      */
@@ -53,5 +58,25 @@ class FirstPage extends Page
         $this->pageAttributes = $pageAttributes;
 
         return $this;
+    }
+
+    /**
+     * @param array $values
+     * @return $this
+     */
+    public function setValues( array $values )
+    {
+        $this->values = $values;
+
+        return $this;
+    }
+
+    /**
+     * Return empty array - there are no attributes on this page
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
     }
 } 

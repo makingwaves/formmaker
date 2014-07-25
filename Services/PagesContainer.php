@@ -44,7 +44,7 @@ class PagesContainer
     private $pagesFactory;
 
     /**
-     * @var Session
+     * @var FormSession
      */
     private $formSession;
 
@@ -271,5 +271,16 @@ class PagesContainer
         $previousPageExists = $this->getCurrentPageIndex() > 0;
 
         return $previousPageExists;
+    }
+
+    /**
+     * @param array $postValues
+     * @return $this
+     */
+    public function setValues( array $postValues )
+    {
+        $this->formSession->setValues( $postValues );
+
+        return $this;
     }
 } 

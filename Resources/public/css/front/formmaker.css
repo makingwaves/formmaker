@@ -48,3 +48,7 @@
 .formmaker .form-nav  .btn-right {
     float:right;
 }
+
+.formmaker .radio, .formmaker .checkbox {
+    padding-left: 0;
+}
