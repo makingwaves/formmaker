@@ -197,11 +197,9 @@ class PagesContainer
      */
     public function moveToNextPage()
     {
-        // WYWALIĆ TE KOMENTARZE!!!
-//        var_dump($this->nextPageExists());die;
-//        if ( $this->nextPageExists() ) {
+        if ( $this->nextPageExists() ) {
             $this->currentPageIndex++;
-        //}
+        }
 
         return $this;
     }
@@ -256,7 +254,7 @@ class PagesContainer
      */
     public function nextPageExists()
     {
-        $nextPageExists = $this->getCurrentPageIndex() < sizeof( $this->pages ) - 1;
+        $nextPageExists = $this->getCurrentPageIndex() < ( sizeof( $this->getPages() ) - 1 );
 
         return $nextPageExists;
     }
