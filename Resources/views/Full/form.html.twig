@@ -1,12 +1,20 @@
 {% extends "eZDemoBundle::pagelayout.html.twig" %}
 
-{% block page_head %}
-    {{ parent() }}
+{% block content %}
+
+    {# there's no defined block for stylesheets in ezdemo. #}
+    {% block formmakerFrontStylesheets %}
         {% stylesheets 'bundles/formmaker/css/front/*' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
-{% endblock %}
+    {% endblock %}
 
-{% block content %}
-    {{ ez_render_field( content, "form", { "viewType": content } ) }}
+    {# there's no defined block for javascripts in ezdemo. #}
+    {% block formmakerFrontJavascripts%}
+        {% javascripts '@FormMakerBundle/Resources/public/js/front/*' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endblock %}
+
+    {{ ez_render_field( content, "form", { "viewType": content, "locationId": location.id } ) }}
 {% endblock %}

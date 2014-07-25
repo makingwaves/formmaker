@@ -44,7 +44,7 @@ class PagesFactory
         }
         elseif ( $page instanceof MiddlePage ) {
 
-            $this->createMiddlePage( $page, $pageSeparator );
+            $this->createMiddlePage( $page, $pageSeparator, $pageAttributes );
         }
         elseif( $page instanceof ConfirmationPage ) {
 
@@ -90,9 +90,11 @@ class PagesFactory
     /**
      * @param MiddlePage $page
      * @param FormAttributes $pageSeparator
+     * @param array $pageAttributes
      */
-    private function createMiddlePage( MiddlePage $page, FormAttributes $pageSeparator )
+    private function createMiddlePage( MiddlePage $page, FormAttributes $pageSeparator, array $pageAttributes )
     {
         $page->setPageSeparator( $pageSeparator );
+        $page->setPageAttributes( $pageAttributes );
     }
 } 

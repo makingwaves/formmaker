@@ -20,16 +20,18 @@
         {% endfor %}
     </div>
 
-    <ul class="pager">
+    <div class="form-nav">
         {% if field.value.getPagesContainer.previousPageExists %}
-            <li class="previous">
-                <a href="#">← {{ "previous"|trans( {}, "formmaker" ) }}</a>
-            </li>
+            <button type="button" class="btn btn-default btn-lg btn-large btn-left previous"
+                    data-post-path="{{ path( "render_form", { "locationId": locationId, "direction": "prev" } ) }}">
+                ← {{ "previous"|trans( {}, "formmaker" ) }}
+            </button>
         {% endif %}
         {% if field.value.getPagesContainer.nextPageExists %}
-            <li class="next">
-                <a href="#">{{ "next"|trans( {}, "formmaker" ) }} →</a>
-            </li>
+            <button type="button" class="btn btn-primary btn-lg btn-right next"
+                    data-post-path="{{ path( "render_form", { "locationId": locationId, "direction": "next" } ) }}">
+                {{ "next"|trans( {}, "formmaker" ) }} →
+            </button>
         {% endif %}
-    </ul>
+    </div>
 </form>

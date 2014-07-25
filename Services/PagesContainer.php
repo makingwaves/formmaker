@@ -39,6 +39,11 @@ class PagesContainer
     private $entityManager;
 
     /**
+     * @var int
+     */
+    private $currentPageIndex = 0;
+
+    /**
      * Default constructor
      * @param EntityManager $entityManager
      */
@@ -165,7 +170,9 @@ class PagesContainer
      */
     public function getCurrentPage()
     {
-        return $this->pages[$this->getCurrentPageIndex()];
+        $pages = $this->getPages();
+
+        return $pages[$this->getCurrentPageIndex()];
     }
 
     /**
@@ -174,8 +181,34 @@ class PagesContainer
      */
     public function getCurrentPageIndex()
     {
-        // as for now return first page (start counting from 0)
-        return 0;
+        return $this->currentPageIndex;
+    }
+
+    /**
+     * Increment the page index
+     * @return $this
+     */
+    public function moveToNextPage()
+    {
+//        var_dump($this->nextPageExists());die;
+//        if ( $this->nextPageExists() ) {
+            $this->currentPageIndex++;
+        //}
+
+        return $this;
+    }
+
+    /**
+     * Decrement the page index
+     * @return $this
+     */
+    public function moveToPreviousPage()
+    {
+        if ( $this->previousPageExists() ) {
+            $this->currentPageIndex--;
+        }
+
+        return $this;
     }
 
     /**
