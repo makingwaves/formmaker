@@ -2,6 +2,7 @@
 
 namespace MakingWaves\FormMakerBundle\Form;
 
+use MakingWaves\FormMakerBundle\Form\EventListener\AttribFieldsSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -14,6 +15,8 @@ class FormAttributesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->addEventSubscriber(new AttribFieldsSubscriber());
+
         $builder
             ->add('enabled', 'checkbox', array( 'label' => 'label.enabled' ))
             ->add('label', 'text', array( 'label' => 'label.label',
@@ -34,7 +37,7 @@ class FormAttributesType extends AbstractType
             // end of common fields
             ;
             /*
-            ->add('identifier', 'text', array( 'label' => 'label.identifier',
+            ->add('identifier', 'text', array( 'label' => 'label.identifier',l
                                                'required' => false
             ))
             ->add('defaultValue', 'text', array( 'label' => 'label.default.value',

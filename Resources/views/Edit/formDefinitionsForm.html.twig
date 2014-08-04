@@ -2,6 +2,8 @@
 
 {{ form_start(formDefForm, {'attr': {'novalidate': 'novalidate', 'role': 'form'}}) }}
 
+{{ form_errors(formDefForm) }}
+
 <!-- START Definition -->
 <article class="definition">
     <div class="page-header">
@@ -10,7 +12,7 @@
         <button type="button" class="expand-section-panel js-expand-section-panel btn btn-default btn-sm">Show / Hide</button>
     </div>
 
-    <div class="expandable-section-panel panel panel-default" style="display: {% if isNew == true %}block{% endif %}">
+    <div class="expandable-section-panel panel panel-default" style="display: block{#}% if isNew == true %}block{% endif %#}">
         <div class="panel-body">
             <div class="well clearfix">
 
@@ -78,20 +80,23 @@
     <div>
 </article>
 
-<section class="attributes form-horizontal">
-    <div class="page-header">
-        <h2>Attributes</h2>
-        <!-- expand button -->
-        <button type="button" class="expand-all-panels js-expand-all-panels btn btn-default btn-sm">Expand / Collapse All</button>
-    </div>
+{% if isNew == false %}
+    <section class="attributes form-horizontal">
+        <div class="page-header">
+            <h2>Attributes</h2>
+            <!-- expand button -->
+            <button type="button" class="expand-all-panels js-expand-all-panels btn btn-default btn-sm">Expand / Collapse All</button>
+        </div>
 
-    <ul class="sortable js-sortable" id="form_attributes_list">
-        {% include 'FormMakerBundle:Edit:formAttributesForm.html.twig' with  { 'form': formDefForm.attributes } %}
-    </ul>
-</section>
+        <ul class="sortable js-sortable" id="form_attributes_list">
+            {% include 'FormMakerBundle:Edit:formAttributesList.html.twig' with  { 'form': formDefForm.attributes } %}
+        </ul>
+    </section>
+{% endif %}
 
 <div>
     {{ form_widget(formDefForm.save) }}
 </div>
 
-{{ form_end(formDefForm, {'render_rest': false}) }}
+{% do formDefForm.attributes.setRendered %}
+{{ form_end(formDefForm) }}

@@ -34,12 +34,18 @@ class EditController extends Controller
 
         $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
         $formDefForm = $this->createForm( new FormDefinitionsType( $viewTypes ), $formDefinitions );
+        $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
             $entityManager->persist($formDefinitions);
+            foreach($formDefinitions->getAttributes() as $attrib) {
+                $entityManager->persist($attrib);
+            }
             $entityManager->flush();
             // redirect to list of forms
-            return $this->redirect($this->generateUrl('list_display'));
+            //return $this->redirect($this->generateUrl('list_display'));
+            // redirect to edit
+            return $this->redirect($this->generateUrl('edit/'.$formDefinitions->getId()));
         } // if isValid
 
         // load attrib types for select tag
@@ -65,7 +71,8 @@ class EditController extends Controller
         $formDefinitions->setOwnerUser($this->getUser()->getApiUser()->id);
         $formDefinitions->setCreateDate(new \DateTime());
 
-        $formDefForm = $this->createForm(new FormDefinitionsType(), $formDefinitions);
+        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
+        $formDefForm = $this->createForm(new FormDefinitionsType( $viewTypes ), $formDefinitions);
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
@@ -110,7 +117,7 @@ class EditController extends Controller
         return $this->render(
             'FormMakerBundle:Edit:newAttrib.html.twig',
             array(
-                'form' => $attribForm->createView()
+                'attrib' => $attribForm->createView()
             )
         );
     } // newAttribAction

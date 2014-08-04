@@ -56,6 +56,13 @@ class FormValidators
         $this->attributes = new ArrayCollection();
     }
 
+
+    public function __toString()
+    {
+        return $this->description;
+    }
+
+
     /**
      * Set type
      *

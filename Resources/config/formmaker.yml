@@ -1,4 +1,4 @@
 parameters:
-
   formmaker.view_types:
       - Default
+      - Test

@@ -98,7 +98,7 @@ class FormAttributes
     /**
      * @var \MakingWaves\FormMakerBundle\Entity\FormDefinitions
      *
-     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormDefinitions")
+     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormDefinitions", inversedBy="attributes", cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * })
@@ -107,6 +107,8 @@ class FormAttributes
 
     /**
      * @var ArrayCollection
+     *
+     * ONE TO MANY HEREREER?
      *
      * @ORM\ManyToMany(targetEntity="FormValidators", inversedBy="attributes")
      * @ORM\JoinTable(name="form_attr_valid",
@@ -136,6 +138,22 @@ class FormAttributes
         $this->validators = new ArrayCollection();
         $this->options = new ArrayCollection();
     }
+
+
+    public function setValidators(FormValidators $validator)
+    {
+        $this->validators->add($validator);
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getValidators()
+    {
+        return $this->validators;
+    } // getValidators
+
 
     /**
      * @return ArrayCollection

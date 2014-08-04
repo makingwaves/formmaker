@@ -2,6 +2,10 @@ list_display:
     pattern:  /list
     defaults: { _controller: formMakerBundle:List:display }
 
+edit:
+    pattern:  /edit/{id}
+    defaults: { _controller: formMakerBundle:Edit:edit }
+
 edit_create:
     pattern:  /edit
     defaults: { _controller: formMakerBundle:Edit:edit }

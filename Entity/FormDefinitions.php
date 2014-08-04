@@ -179,6 +179,7 @@ class FormDefinitions
      * @ORM\Column(name="view_type", type="string", length=100, nullable=false)
      */
     private $viewType;
+
     /**
      * @ORM\OneToMany(targetEntity="FormAttributes", mappedBy="definition", cascade={"persist"})
      * @ORM\OrderBy({"id"="ASC"})

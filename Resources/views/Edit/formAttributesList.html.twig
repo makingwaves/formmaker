@@ -1,0 +1,5 @@
+{% form_theme form 'FormMakerBundle:Form:fields.html.twig' %}
+
+{% for attrib in form %}
+    {% include 'FormMakerBundle:Edit:formAttributesForm.html.twig' with { 'attrib': attrib } %}
+{% endfor %}

@@ -38,7 +38,7 @@ class FormAttributesOptions
     /**
      * @var \MakingWaves\FormMakerBundle\Entity\FormAttributes
      *
-     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormAttributes")
+     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormAttributes", inversedBy="options")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="attr_id", referencedColumnName="id")
      * })
