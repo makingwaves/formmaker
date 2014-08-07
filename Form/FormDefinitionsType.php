@@ -18,12 +18,15 @@ class FormDefinitionsType extends AbstractType
      */
     private $viewTypes;
 
+    private $em;
+
     /**
      * @param array $viewTypes
      */
-    public function __construct( array $viewTypes = array() )
+    public function __construct( $em, array $viewTypes = array() )
     {
         $this->viewTypes = $viewTypes;
+        $this->em = $em;
     }
 
     /**
@@ -74,10 +77,7 @@ class FormDefinitionsType extends AbstractType
                                                    'required' => false
                                             ))
             ->add('emailAction', 'checkbox', array('label' => 'form.label.send.data.via.email',
-                                                   'required' => false,
-                                                   'attr'  => array(
-                                                       'checked' => 'checked'
-                                                   )
+                                                   'required' => false
                                             ))
             ->add('emailTitle', 'text', array('label' => 'form.label.email.title',
                                               'required' => false,
@@ -96,11 +96,16 @@ class FormDefinitionsType extends AbstractType
                                                 'required' => false,
                                           ));
 
-            $builder->add('attributes', 'collection', array('type' => new FormAttributesType()));
+            $builder->add('attributes', 'collection', array(
+                                'type'      => new FormAttributesType($this->em),
+                                'required'  => false,
+                                'allow_add' => true,
+                                'prototype' => false
+            ));
 
 
         $builder->add('save', 'submit');
-    } // buildForml
+    } // buildForm
 
 
     /**

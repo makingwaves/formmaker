@@ -38,6 +38,11 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
          * @var FormAttributes $attribute
          */
         $attribute = $event->getData(); // form's entity
+        if ( $attribute == null ) {
+
+            return false;
+        }
+
         $strType = $attribute->getType()->getStringId();
         $form = $event->getForm();
         // we add diferent fields to the form, depending on attribute type
@@ -45,12 +50,12 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
             case FormTypes::CHECKBOX_ID:
                 break;
             case FormTypes::TEXTLINE_ID:
-                $this->addDefaultValueTextField($form);
-                $this->addValidationField($form);
+//                $this->addDefaultValueTextField($form);
+//                $this->addValidationField($form);
                 break;
             case FormTypes::RADIO_ID:
             case FormTypes::SELECT_ID:
-                $this->addOptionsField($form);
+                //$this->addOptionsField($form);
                 break;
         } // endswitch
     } // preSetData
@@ -76,8 +81,9 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
      */
     protected function addDefaultValueCheckboxField($form)
     {
-        $form->add('defaultValue', 'checkbox', array('label' => 'label.identifier',
-            'required' => false
+        $form->add('defaultValue', 'checkbox', array(
+                                                'label' => 'label.identifier',
+                                                'required' => false
         ));
     } // addDefaultValueCheckbox
 
@@ -90,9 +96,9 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
     protected function addValidationField($form)
     {
         $form->add('validators', 'entity', array(
-           'class'  => 'FormMakerBundle:FormValidators',
-           'property' => 'description',
-           'multiple' => false
+                                               'class'  => 'FormMakerBundle:FormValidators',
+                                               'property' => 'description',
+                                               'multiple' => false
         ));
     } // addValidationField
 
@@ -100,7 +106,7 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
     protected function addOptionsField($form)
     {
         $form->add('options', 'collection', array(
-            'type' => new FormAttributesOptionsType()
+                                             'type' => new FormAttributesOptionsType()
         ));
     } // addValidationField
 

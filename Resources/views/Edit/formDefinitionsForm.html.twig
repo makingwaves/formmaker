@@ -80,7 +80,7 @@
     <div>
 </article>
 
-{% if isNew == false %}
+{#{% if isNew == false %}#}
     <section class="attributes form-horizontal">
         <div class="page-header">
             <h2>Attributes</h2>
@@ -92,7 +92,7 @@
             {% include 'FormMakerBundle:Edit:formAttributesList.html.twig' with  { 'form': formDefForm.attributes } %}
         </ul>
     </section>
-{% endif %}
+{#{% endif %}#}
 
 <div>
     {{ form_widget(formDefForm.save) }}

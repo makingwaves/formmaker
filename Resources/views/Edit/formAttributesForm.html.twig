@@ -3,7 +3,7 @@
     <article class="attributes-item panel panel-default expandable-item">
         <div class="panel-heading">
             <span class="expand-panel js-expand-panel glyphicon glyphicon-chevron-up btn-xs"></span>
-            <h3 class="panel-title">{{ attrib.vars.value.type.name }}</h3>
+            <h3 class="panel-title">{{ attrib.vars.value.getTypeName }}</h3>
             <ul class="panel-menu">
                 <li>
                     {{ form_label(attrib.enabled) }}
@@ -48,6 +48,8 @@
                 </div>
             </div>
             {{ form_errors(attrib.css) }}
+
+            {{ form_row(attrib.type) }}
 
             {% if attrib.validators is defined %}
                 {{ form_row(attrib.validators) }}

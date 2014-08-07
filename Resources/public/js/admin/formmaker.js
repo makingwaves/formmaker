@@ -159,12 +159,13 @@ $(document).ready(function() {
     // add new form attribute
     $('#add_attrib_btn').click(function(){
 
-        var post_data = {'type_id': + $('#add_attrib_form_type').val() };
+        var post_data = {'type_id': $('#add_attrib_form_type').val(), 'attrib_index': $('.sortable-item').count};
         $.ez('formmaker::newattrib', post_data , function(data) {
             if ( data.error_text ) {
                 alert(data.error_text);
             } else {
-                $('#form_attributes_list').append(data.content);
+                var newAttribForm = data.content.replace(/__TO_BE_REPLACED__/g, '[attributes]['+$('.sortable-item').length+']');
+                $('#form_attributes_list').append(newAttribForm);
             }
         });
     });

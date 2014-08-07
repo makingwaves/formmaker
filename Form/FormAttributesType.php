@@ -2,6 +2,7 @@
 
 namespace MakingWaves\FormMakerBundle\Form;
 
+use MakingWaves\FormMakerBundle\DataTransformers\AttribTypeToIntTransformer;
 use MakingWaves\FormMakerBundle\Form\EventListener\AttribFieldsSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,13 +10,24 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FormAttributesType extends AbstractType
 {
+
+
+    private $em;
+
+
+    public function __construct($em)
+    {
+        $this->em = $em;
+    }
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventSubscriber(new AttribFieldsSubscriber());
+
 
         $builder
             ->add('enabled', 'checkbox', array( 'label' => 'label.enabled' ))
@@ -33,11 +45,15 @@ class FormAttributesType extends AbstractType
             ))
             ->add('css', 'text', array( 'label' => 'label.css',
                                         'required' => false
-            ))
+            ));
+            $builder->add(
+                $builder->create('type', 'hidden')
+                    ->addModelTransformer(new AttribTypeToIntTransformer($this->em))
+            );
             // end of common fields
             ;
             /*
-            ->add('identifier', 'text', array( 'label' => 'label.identifier',l
+            ->add('identifier', 'text', array( 'label' => 'label.identifier',
                                                'required' => false
             ))
             ->add('defaultValue', 'text', array( 'label' => 'label.default.value',
@@ -62,7 +78,8 @@ class FormAttributesType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'MakingWaves\FormMakerBundle\Entity\FormAttributes',
-            'translation_domain' => 'form_attributes_type'
+            'translation_domain' => 'form_attributes_type',
+
         ));
     }
 
@@ -71,6 +88,14 @@ class FormAttributesType extends AbstractType
      */
     public function getName()
     {
-        return 'makingwaves_formmakerbundle_formattributes';
-    }
+        /*
+         * A placeholder '__TO_BE_REPLACED__ is added so it can be replaced by javascript when loading new attrib's form via ajax:
+         * this form is always a part of FormDefinitions so the name we need is:
+         *  - makingwaves_formmakerbundle_formdefinitions_[attributes][0] - but sf2 doesn't allow to create such names here,
+         * we need to make them in js
+         *
+         */
+        //return 'makingwaves_formmakerbundle_attributes';
+        return 'makingwaves_formmakerbundle_formdefinitions__TO_BE_REPLACED__';
+    } //
 }

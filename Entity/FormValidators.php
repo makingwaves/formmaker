@@ -141,4 +141,37 @@ class FormValidators
     {
         return $this->id;
     }
+
+    /**
+     * Add attributes
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes
+     * @return FormValidators
+     */
+    public function addAttribute(\MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes)
+    {
+        $this->attributes[] = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Remove attributes
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes
+     */
+    public function removeAttribute(\MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes)
+    {
+        $this->attributes->removeElement($attributes);
+    }
+
+    /**
+     * Get attributes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }

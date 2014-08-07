@@ -51,28 +51,28 @@ class FormAttributes
     /**
      * @var integer
      *
-     * @ORM\Column(name="email_receiver", type="smallint", nullable=false)
+     * @ORM\Column(name="email_receiver", type="smallint", nullable=true)
      */
-    private $emailReceiver;
+    private $emailReceiver = 0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="css", type="string", length=255, nullable=false)
+     * @ORM\Column(name="css", type="string", length=255, nullable=true)
      */
     private $css;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="allowed_file_types", type="string", length=255, nullable=false)
+     * @ORM\Column(name="allowed_file_types", type="string", length=255, nullable=true)
      */
     private $allowedFileTypes;
 
@@ -133,17 +133,33 @@ class FormAttributes
      */
     private $regex;
 
+
+    /**
+     *
+     */
     public function __construct()
     {
         $this->validators = new ArrayCollection();
         $this->options = new ArrayCollection();
-    }
+    } // __construct
 
 
-    public function setValidators(FormValidators $validator)
+    /**
+     * @return string
+     */
+    public function getTypeName()
     {
-        $this->validators->add($validator);
-    }
+        if ( $this->getType() == null ) {
+            // workaround for forms, more specificly for form prototype which is
+            // created behind the scenes when we set 'allow_add' to true in FormDefinitionsType at attributes field.
+            // We dont use this prototype beacause we provide new forms for attribs ourselves
+
+            return 'DummyTypeName';
+        } else {
+
+            return $this->getType()->getName();
+        }
+    } // getTypeName
 
 
     /**
@@ -447,5 +463,51 @@ class FormAttributes
     public function getRegex()
     {
         return $this->regex;
+    }
+
+    /**
+     * Add validators
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormValidators $validators
+     * @return FormAttributes
+     */
+    public function addValidator(\MakingWaves\FormMakerBundle\Entity\FormValidators $validators)
+    {
+        $this->validators[] = $validators;
+
+        return $this;
+    }
+
+    /**
+     * Remove validators
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormValidators $validators
+     */
+    public function removeValidator(\MakingWaves\FormMakerBundle\Entity\FormValidators $validators)
+    {
+        $this->validators->removeElement($validators);
+    }
+
+    /**
+     * Add options
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributesOptions $options
+     * @return FormAttributes
+     */
+    public function addOption(\MakingWaves\FormMakerBundle\Entity\FormAttributesOptions $options)
+    {
+        $this->options[] = $options;
+
+        return $this;
+    }
+
+    /**
+     * Remove options
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributesOptions $options
+     */
+    public function removeOption(\MakingWaves\FormMakerBundle\Entity\FormAttributesOptions $options)
+    {
+        $this->options->removeElement($options);
     }
 }

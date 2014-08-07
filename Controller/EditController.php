@@ -33,19 +33,19 @@ class EditController extends Controller
         }
 
         $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
-        $formDefForm = $this->createForm( new FormDefinitionsType( $viewTypes ), $formDefinitions );
+        $formDefForm = $this->createForm( new FormDefinitionsType( $entityManager, $viewTypes ), $formDefinitions );
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
             $entityManager->persist($formDefinitions);
-            foreach($formDefinitions->getAttributes() as $attrib) {
-                $entityManager->persist($attrib);
-            }
+//            foreach($formDefinitions->getAttributes() as $attrib) {
+//                $entityManager->persist($attrib);
+//            }
             $entityManager->flush();
             // redirect to list of forms
             //return $this->redirect($this->generateUrl('list_display'));
             // redirect to edit
-            return $this->redirect($this->generateUrl('edit/'.$formDefinitions->getId()));
+            return $this->redirect($this->generateUrl('edit', array('id' => $formDefinitions->getId())));
         } // if isValid
 
         // load attrib types for select tag
@@ -72,17 +72,15 @@ class EditController extends Controller
         $formDefinitions->setCreateDate(new \DateTime());
 
         $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
-        $formDefForm = $this->createForm(new FormDefinitionsType( $viewTypes ), $formDefinitions);
+        $entityManager = $this->getDoctrine()->getManager();
+        $formDefForm = $this->createForm(new FormDefinitionsType( $entityManager, $viewTypes ), $formDefinitions);
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
-            if ( ! isset($entityManager) ) {
-                $entityManager = $this->getDoctrine()->getManager();
-            }
             $entityManager->persist($formDefinitions);
             $entityManager->flush();
 
-            return $this->redirect($this->generateUrl('edit/'.$formDefinitions->getId()));
+            return $this->redirect($this->generateUrl('edit', array('id' => $formDefinitions->getId())));
         } // endif
 
         return $this->render(
@@ -112,7 +110,7 @@ class EditController extends Controller
 
         $attribute = new FormAttributes();
         $attribute->setType($formType);
-        $attribForm = $this->createForm(new FormAttributesType(), $attribute);
+        $attribForm = $this->createForm(new FormAttributesType($entityManager), $attribute);
 
         return $this->render(
             'FormMakerBundle:Edit:newAttrib.html.twig',

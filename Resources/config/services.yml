@@ -76,3 +76,9 @@ services:
   formmaker.pages.container:
     class: %formmaker.pages.container.class%
     arguments: [ @doctrine.orm.entity_manager, @formmaker.pages.factory, @formmaker.form.session ]
+
+  formmaker.form.type_hidden:
+    class: MakingWaves\FormMakerBundle\Form\TypeHiddenType
+    arguments: ["@doctrine.orm.entity_manager"]
+    tags:
+      - { name: form.type, alias: type_hidden }

@@ -651,4 +651,29 @@ class FormDefinitions
             $context->validate($this, '', 'process_class_name', true);
         }
     } // validateRecipients
-} // class FormDefinitions
+
+    /**
+     * Add attributes
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes
+     * @return FormDefinitions
+     */
+    public function addAttribute(\MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes)
+    {
+        $this->attributes[] = $attributes;
+
+        $attributes->setDefinition($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove attributes
+     *
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes
+     */
+    public function removeAttribute(\MakingWaves\FormMakerBundle\Entity\FormAttributes $attributes)
+    {
+        $this->attributes->removeElement($attributes);
+    }
+}
