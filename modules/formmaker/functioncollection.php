@@ -459,7 +459,7 @@ class FormMakerFunctionCollection
         $i              = 0;
         $filled_only    = $this->ini->variable( 'ViewSettings_' . $view, 'SendOnlyFilledData' );
 
-        foreach ( $_SESSION as $key => $page )
+        foreach ( $_SESSION['_ezpublish'] as $key => $page )
         {
             if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
             {
