@@ -1,5 +1,50 @@
-Form Maker installation guide
-=============================
+FormMaker 5 DEVELOPMENT installation guide
+==========================================
+
+1. Put the code into folder <ezroot>/src/MakingWaves/FormMakerBundle
+
+2. Make a symbolic link for legacy extension:
+`cd <ezroot>/ezpublish_legacy/extension/`
+`ln -s ../../src/MakingWaves/FormMakerBundle/ezpublish_legacy/formmaker`
+
+3. Enable extension adding entry to site.ini.append.php:
+`[ExtensionSettings]
+ActiveExtensions[]=formmaker`
+
+4. Open file composer.json (placed in ezroot) and add Doctrine ORM into "required" section:
+`"doctrine/orm": "~2.2,>=2.2.3"`
+
+5. Edit file ezpublish/config/config.yml by adding formmaker.yml setting into 'imports' section, as follows:
+`imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: "@FormMakerBundle/Resources/config/formmaker.yml" }`
+
+6. In the same file, add following Doctrine configuration:
+`doctrine:
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true`
+
+7. Edit file ezpublish/config/routing.yml by adding following section:
+`formmakerbundle:
+    resource: "@FormMakerBundle/Resources/config/routing.yml"
+    prefix: /formmaker`
+
+8. Go to command line and run the composer:
+`php composer.phar update`
+
+9. Make sure that database is compatibile. If you're installing new FormMakerBundle, you should just run following script:
+`php ezpublish/console doctrine:schema:update --force`
+
+In case when you're upgrading from old FormMaker extension, run the same script, but before and after it, use the scripts from Sql/Update folder.
+
+10. Clear the cache:
+`php ezpublish/console cache:clear`
+
+
+Form Maker legacy installation guide
+====================================
 
 1. Get the extension. Go to your `extension` folder within your eZ installation, then run: `git clone git@github.com:makingwaves/formmaker.git`
 
