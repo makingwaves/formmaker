@@ -16,7 +16,15 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class FormDefinitions
 {
+    /**
+     * @var string
+     */
     const RECIPIENTS_SEPARATORS = ';';
+
+    /**
+     * @var string
+     */
+    const DEFAULT_VIEW_TYPE = 'Default';
 
     /**
      * @var string
@@ -589,7 +597,9 @@ class FormDefinitions
      */
     public function getViewType()
     {
-        return $this->viewType;
+        $viewType = strlen( $this->viewType ) === 0 ? self::DEFAULT_VIEW_TYPE : $this->viewType;
+
+        return $viewType;
     }
 
     /**

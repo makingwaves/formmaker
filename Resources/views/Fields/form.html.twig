@@ -4,8 +4,9 @@
 
     <div class="formmaker" data-form-id="{{ field.value.getPagesContainer.getFormDefinition.getId }}">
         {{ include(
-            "FormMakerBundle:FormMaker/Views/" ~ field.value.pagesContainer.getFormDefinition.getViewType ~ ":form.html.twig",
+            "FormMakerBundle:FormMaker/Views/" ~ field.value.getPagesContainer.getFormDefinition.getViewType ~ ":form.html.twig",
             { "field": field, "locationId": locationId }
         ) }}
     </div>
+
 {% endblock %}

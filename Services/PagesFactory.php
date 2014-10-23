@@ -78,14 +78,34 @@ class PagesFactory
     /**
      * @param FirstPage $page
      * @param string $pageTitle
-     * @param array $pageAttributes
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes[] $pageAttributes
      */
     private function createFirstPage( FirstPage $page, $pageTitle, array $pageAttributes )
     {
         $page->setPageTitle( $pageTitle );
+        $this->setAttributeSessionValues( $pageAttributes );
         $page->setPageAttributes( $pageAttributes );
-        // TODO: 2. Zapisywać dane z sesji w obiektach Page
-        $this->getPageAttributeValues();
+    }
+
+    /**
+     * Method sets the session data for attributes
+     * @param \MakingWaves\FormMakerBundle\Entity\FormAttributes[] $pageAttributes
+     * @return $this
+     */
+    private function setAttributeSessionValues( array $pageAttributes )
+    {
+        $sessionData = $this->formSession->getPageAttributeValues();
+
+        foreach( $pageAttributes as $attribute ) {
+
+            if ( !isset( $sessionData[$attribute->getId()] ) ) {
+                continue;
+            }
+
+            $attribute->setDefaultValue( $sessionData[$attribute->getId()] );
+        }
+
+        return $this;
     }
 
     /**
@@ -114,13 +134,7 @@ class PagesFactory
     private function createMiddlePage( MiddlePage $page, FormAttributes $pageSeparator, array $pageAttributes )
     {
         $page->setPageSeparator( $pageSeparator );
+        $this->setAttributeSessionValues( $pageAttributes );
         $page->setPageAttributes( $pageAttributes );
-        // TODO: 2. Zapisywać dane z sesji w obiektach Page
-        $this->getPageAttributeValues();
-    }
-
-    private function getPageAttributeValues()
-    {
-        $this->formSession->getPageAttributeValues();
     }
 } 

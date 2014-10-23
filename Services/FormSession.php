@@ -21,6 +21,11 @@ class FormSession
     private $formId;
 
     /**
+     * @var string
+     */
+    const SESSION_PREFIX = 'formmaker';
+
+    /**
      * Default constructor
      * @param Session $session
      */
@@ -57,7 +62,7 @@ class FormSession
      */
     private function getSessionPrefix()
     {
-        $sessionPrefix = 'formmaker.' . $this->formId;
+        $sessionPrefix = self::SESSION_PREFIX . '.' . $this->formId;
 
         return $sessionPrefix;
     }
@@ -125,14 +130,27 @@ class FormSession
         return $this;
     }
 
+    /**
+     * Returns the values for current page attributes
+     * @return array
+     */
     public function getPageAttributeValues()
     {
         $pageAttributeValues = array();
 
         foreach( $this->session->all() as $key => $value ) {
 
-            // TODO: 1. Wygenerować tablicę z danymi strony
-            var_dump( $key, $value );
+            $parts = explode( '.', $key );
+
+            if ( ( $parts[0] !== self::SESSION_PREFIX ) || ( !isset( $parts[1] ) || $parts[1] != $this->formId ) ||
+                 ( !isset( $parts[3] ) || $parts[3] != $this->getPageIndex() ) || !isset( $parts[5] )) {
+
+                continue;
+            }
+
+            $pageAttributeValues[$parts[5]] = $value;
         }
+
+        return $pageAttributeValues;
     }
 } 

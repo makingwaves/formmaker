@@ -78,7 +78,7 @@ class PagesContainer
 
     /**
      * Return a set of form attributes
-     * @return \MakingWaves\FormMakerBundle\Entity\FormAttributes
+     * @return \MakingWaves\FormMakerBundle\Entity\FormAttributes[]
      */
     private function getFormAttributes()
     {
@@ -131,15 +131,16 @@ class PagesContainer
     }
 
     /**
-     * Returns an array containing all pages with their labels
+     * Returns an array containing all pages with their labels. Use force flag to reload cached data.
+     * @param bool $force
      * @return array
      */
-    public function getPages()
+    public function getPages( $force = false )
     {
         $this->pagesFactory->setFormId( $this->formId );
         $index = 0;
 
-        if ( sizeof( $this->pages ) === 0 ) {
+        if ( sizeof( $this->pages ) === 0 || $force === true ) {
 
             // first page first :)
             $this->pages[$index] = $this->pagesFactory->factoryMethod(
@@ -175,12 +176,13 @@ class PagesContainer
     }
 
     /**
-     * Returns the object of current page
+     * Returns the object of current page. Use force flag to reload cached data.
+     * @param bool $force
      * @return Page
      */
-    public function getCurrentPage()
+    public function getCurrentPage( $force = false )
     {
-        $pages = $this->getPages();
+        $pages = $this->getPages( $force );
 
         return $pages[$this->getCurrentPageIndex()];
     }

@@ -39,7 +39,13 @@ ActiveExtensions[]=formmaker`
 
 In case when you're upgrading from old FormMaker extension, run the same script, but before and after it, use the scripts from Sql/Update folder.
 
-10. Clear the cache:
+10. Install the assets
+`php ezpublish/console assets:install`
+
+11. Dump the assets
+`php ezpublish/console assetic:dump`
+
+12. Clear the cache:
 `php ezpublish/console cache:clear`
 
 
