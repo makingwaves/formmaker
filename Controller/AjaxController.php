@@ -33,6 +33,7 @@ class AjaxController extends Controller
                 break;
         }
 
+        // @TODO: Check the 'Default' part
         return $this->render( 'FormMakerBundle:FormMaker/Views/Default:form.html.twig', array(
             'field' => $formField,
             'locationId' => $locationId
@@ -42,12 +43,14 @@ class AjaxController extends Controller
     /**
      * Returns the form field object
      * @param int $locationId
-     * @return null
+     * @return \MakingWaves\FormMakerBundle\eZ\Publish\FieldType\Form\Value
      */
     private function getField( $locationId )
     {
+        /** @var $repository \eZ\Publish\API\Repository\Repository */
         $repository = $this->get( 'ezpublish.api.repository' );
-        $content = $repository->getContentService()->loadContent( $locationId );
+        $location = $repository->getLocationService()->loadLocation( $locationId );
+        $content = $repository->getContentService()->loadContent( $location->getContentInfo()->id );
         $formField = null;
 
         foreach ( $content->getFields() as $field ) {

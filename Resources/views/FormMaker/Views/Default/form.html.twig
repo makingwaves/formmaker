@@ -1,3 +1,6 @@
+{# Get the current page, and force the data to reload. That will make the user entered data to appear. #}
+{% set currentPage = field.value.getPagesContainer.getCurrentPage( true ) %}
+
 <form role="form">
     <ol class="breadcrumb">
         {% for page in field.value.getPagesContainer.getPages %}
@@ -7,17 +10,12 @@
         {% endfor %}
     </ol>
 
-    <h1>{{ field.value.getPagesContainer.getCurrentPage.getTitle }}</h1>
+    <h1>{{ currentPage.getTitle }}</h1>
 
     <div class="container">
-        {% for attribute in field.value.getPagesContainer.getCurrentPage.getAttributes %}
-            <div class="form-group">
-                {{ include(
-                    "FormMakerBundle:FormMaker/Attributes:" ~ attribute.getType.getStringId ~ ".html.twig",
-                    { 'attribute': attribute }
-                ) }}
-            </div>
-        {% endfor %}
+        {% include "FormMakerBundle:FormMaker/Views/Default/Pages:" ~ currentPage.getType ~ ".html.twig" with {
+            "currentPage": currentPage
+        } %}
     </div>
 
     <div class="form-nav">

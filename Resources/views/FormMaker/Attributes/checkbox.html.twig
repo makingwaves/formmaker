@@ -1,6 +1,7 @@
 
 <label>
-    <input name="{{ attribute.getId }}" type="checkbox" {% if attribute.getDefaultValue %}checked{% endif %} />
+    <input name="{{ attribute.getId }}" type="checkbox"
+           {% if attribute.getDefaultValue == 1 %}checked="checked"{% endif %} />
     {{ attribute.getLabel }}
 </label>
 <p class="help-block">

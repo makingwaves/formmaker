@@ -4,7 +4,8 @@
     {% for option in attribute.getOptions %}
         <div class="radio">
             <label>
-                <input name="{{ attribute.getId }}" type="radio" />
+                <input  name="{{ attribute.getId }}" type="radio" data-value="{{ option.getId }}"
+                        {% if  attribute.getDefaultValue == option.getId %}checked="checked"{% endif %}/>
                 {{ option.getLabel }}
             </label>
         </div>
