@@ -32,4 +32,10 @@ abstract class Page
      * @return array
      */
     abstract public function getValues();
+
+    /**
+     * Returns the type name of current page
+     * @return string
+     */
+    abstract public function getType();
 } 

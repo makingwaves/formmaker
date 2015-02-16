@@ -14,6 +14,11 @@ class ConfirmationPage extends Page
     private $pageTitle;
 
     /**
+     * @var string
+     */
+    const TYPE = 'confirmation';
+
+    /**
      * Get pageTitle
      * @return string
      */
@@ -59,5 +64,14 @@ class ConfirmationPage extends Page
     public function getValues()
     {
         return array();
+    }
+
+    /**
+     * Returns the type name of current page
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 } 

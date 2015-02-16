@@ -1,0 +1,8 @@
+{% for attribute in currentPage.getAttributes %}
+    <div class="form-group">
+        {{ include(
+            "FormMakerBundle:FormMaker/Attributes:" ~ attribute.getType.getStringId ~ ".html.twig",
+            { 'attribute': attribute }
+        ) }}
+    </div>
+{% endfor %}

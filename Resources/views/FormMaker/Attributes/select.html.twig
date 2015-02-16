@@ -1,0 +1,10 @@
+
+<label>{{ attribute.getLabel }}:
+    <select name="{{ attribute.getId }}">
+        {% for option in attribute.getOptions %}
+            <option value="{{ option.getId }}" {% if attribute.getDefaultValue == option.getId %}selected="selected"{% endif %}>
+                {{ option.getLabel }}
+            </option>
+        {% endfor %}
+    </select>
+</label>

@@ -26,6 +26,11 @@ class MiddlePage extends Page
     private $values;
 
     /**
+     * @var string
+     */
+    const TYPE = 'middle';
+
+    /**
      * @param FormAttributes $pageSeparator
      */
     public function setPageSeparator( FormAttributes $pageSeparator )
@@ -78,5 +83,14 @@ class MiddlePage extends Page
     public function getValues()
     {
         return $this->values;
+    }
+
+    /**
+     * Returns the type name of current page
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 } 

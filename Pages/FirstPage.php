@@ -21,6 +21,11 @@ class FirstPage extends Page
     private $values;
 
     /**
+     * @var string
+     */
+    const TYPE = 'first';
+
+    /**
      * Get pageTitle
      * @return string
      */
@@ -78,5 +83,14 @@ class FirstPage extends Page
     public function getValues()
     {
         return $this->values;
+    }
+
+    /**
+     * Returns the type name of current page
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 } 
