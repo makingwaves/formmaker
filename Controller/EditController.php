@@ -5,8 +5,6 @@ namespace MakingWaves\FormMakerBundle\Controller;
 use eZ\Bundle\EzPublishCoreBundle\Controller;
 use MakingWaves\FormMakerBundle\Entity\FormAttributes;
 use MakingWaves\FormMakerBundle\Entity\FormDefinitions;
-use MakingWaves\FormMakerBundle\Form\FormAttributesType;
-use MakingWaves\FormMakerBundle\Form\FormDefinitionsType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,8 +30,9 @@ class EditController extends Controller
             throw $this->createNotFoundException($translator->trans('form.not.found', array(), 'formmaker'));
         }
 
-        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
-        $formDefForm = $this->createForm( new FormDefinitionsType( $entityManager, $viewTypes ), $formDefinitions );
+        $formDefinitionType = $this->get( 'formmaker.forms.type.definitions' );
+        $formDefForm = $this->createForm( $formDefinitionType, $formDefinitions );
+
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
@@ -71,9 +70,9 @@ class EditController extends Controller
         $formDefinitions->setOwnerUser($this->getUser()->getApiUser()->id);
         $formDefinitions->setCreateDate(new \DateTime());
 
-        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
         $entityManager = $this->getDoctrine()->getManager();
-        $formDefForm = $this->createForm(new FormDefinitionsType( $entityManager, $viewTypes ), $formDefinitions);
+        $formDefinitionType = $this->get( 'formmaker.forms.type.definitions' );
+        $formDefForm = $this->createForm($formDefinitionType, $formDefinitions);
         $formDefForm->handleRequest($request);
 
         if ( $formDefForm->isValid() ) {
@@ -110,7 +109,7 @@ class EditController extends Controller
 
         $attribute = new FormAttributes();
         $attribute->setType($formType);
-        $attribForm = $this->createForm(new FormAttributesType($entityManager), $attribute);
+        $attribForm = $this->createForm($this->get('formmaker.forms.type.attributes'), $attribute);
 
         return $this->render(
             'FormMakerBundle:Edit:newAttrib.html.twig',

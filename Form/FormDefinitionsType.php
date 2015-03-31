@@ -2,6 +2,8 @@
 
 namespace MakingWaves\FormMakerBundle\Form;
 
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -18,27 +20,41 @@ class FormDefinitionsType extends AbstractType
      */
     private $viewTypes;
 
-    private $em;
+    /**
+     * @var \eZ\Publish\Core\Base\ServiceContainer
+     */
+    private $container;
+
+
+    private $attributesType;
 
     /**
-     * @param array $viewTypes
+     * @param Container $container
      */
-    public function __construct( $em, array $viewTypes = array() )
+    public function __construct( Container $container, FormAttributesType $attribType)
     {
-        $this->viewTypes = $viewTypes;
-        $this->em = $em;
+        $this->container = $container;
+        $this->attributesType = $attribType;
+        $this->prepareViewTypes();
     }
 
     /**
-     * Returns the viewType array which is ready to use in form
+      * Prepares the viewType array which is ready to use in form
+     */
+    private function prepareViewTypes()
+    {
+        $viewTypes = $this->container->getParameter( 'formmaker.view_types' );
+        $this->viewTypes = array_combine( $viewTypes, $viewTypes );
+    }
+
+
+    /**
+     *
      * @return array
      */
     private function getViewTypes()
     {
-        // set same keys as values, i.e. array( 'Default' => 'Default' )
-        $result = array_combine( $this->viewTypes, $this->viewTypes );
-
-        return $result;
+        return $this->viewTypes;
     }
 
     /**
@@ -97,8 +113,7 @@ class FormDefinitionsType extends AbstractType
                                           ));
 
             $builder->add('attributes', 'collection', array(
-                                'type'      => new FormAttributesType($this->em),
-                                'required'  => false,
+                                'type'      => $this->attributesType,
                                 'allow_add' => true,
                                 'prototype' => false
             ));
@@ -126,4 +141,4 @@ class FormDefinitionsType extends AbstractType
     {
         return 'makingwaves_formmakerbundle_formdefinitions';
     }
-}
+} // class FormDefinitionsType

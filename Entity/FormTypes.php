@@ -92,6 +92,12 @@ class FormTypes
     private $stringId;
 
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+
     /**
      * Set name
      *

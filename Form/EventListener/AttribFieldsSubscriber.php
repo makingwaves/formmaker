@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: developer
- * Date: 7/29/14
- * Time: 2:46 PM
- */
 
 namespace MakingWaves\FormMakerBundle\Form\EventListener;
 
-use MakingWaves\FormMakerBundle\Entity\FormAttributesOptions;
+use MakingWaves\FormMakerBundle\Entity\FormAttributes;
+use MakingWaves\FormMakerBundle\Form\FormAttributesDecorator\FormAttributesDecoratorInterface;
+use Symfony\Component\DependencyInjection\Container;
 use MakingWaves\FormMakerBundle\Entity\FormTypes;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -16,6 +12,20 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class AttribFieldsSubscriber implements EventSubscriberInterface
 {
+
+    /**
+     * @var \Symfony\Component\DependencyInjection\Container
+     */
+    private $container;
+
+    private $typesConfig = array();
+
+    public function __construct(Container $serviceContainer)
+    {
+        $this->container = $serviceContainer;
+        $this->typesConfig = $this->container->getParameter( 'formmaker.attributes.fields' );
+    }
+
     /**
      * Attaches listeners to form events
      *
@@ -23,43 +33,66 @@ class AttribFieldsSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::PRE_SET_DATA => 'preSetData');
-    } // getSubscribedEvents
+        return array(FormEvents::POST_SET_DATA => 'postSetData');
+    }
 
 
     /**
-     * PRE_SET_DATA - kind of before rendering the form, during building it actually
-     *
      * @param FormEvent $event
+     * @return bool
      */
-    public function preSetData(FormEvent $event)
+    public function postSetData(FormEvent $event)
     {
+
+        $form = $event->getForm();
         /**
          * @var FormAttributes $attribute
          */
-        $attribute = $event->getData(); // form's entity
-        if ( $attribute == null ) {
+        $attribute = $form->getData(); // form's entity
+        if ( ! $attribute instanceof FormAttributes ) {
+
+            return false;
+        }
+        $type = $attribute->getType();
+        if ( ! $type instanceof FormTypes) {
 
             return false;
         }
 
-        $strType = $attribute->getType()->getStringId();
-        $form = $event->getForm();
-        // we add diferent fields to the form, depending on attribute type
-        switch($strType) {
-            case FormTypes::CHECKBOX_ID:
-                break;
-            case FormTypes::TEXTLINE_ID:
-//                $this->addDefaultValueTextField($form);
-//                $this->addValidationField($form);
-                break;
-            case FormTypes::RADIO_ID:
-            case FormTypes::SELECT_ID:
-                //$this->addOptionsField($form);
-                break;
-        } // endswitch
+        $config = $this->getConfigForType( $type->getStringId() );
+        if ( $config == null ) {
+
+            return false;
+        }
+
+        foreach ($config as $field) {
+            $objDecorator = $this->getDecoratorForField($field);
+            if ( ! $objDecorator instanceof FormAttributesDecoratorInterface ) {
+                continue;
+            }
+            $objDecorator->decorate($form);
+        }
+
     } // preSetData
 
+
+    private function getDecoratorForField($fieldName)
+    {
+        $class = 'MakingWaves\FormMakerBundle\Form\FormAttributesDecorator\\' . $this->container->camelize($fieldName) . 'Decorator';
+
+        return new $class;
+    }
+
+
+    private function getConfigForType($strType)
+    {
+        if ( isset($this->typesConfig[$strType]) ) {
+
+            return $this->typesConfig[$strType];
+        }
+
+        return null;
+    }
 
     /**
      * Adds text field for default value

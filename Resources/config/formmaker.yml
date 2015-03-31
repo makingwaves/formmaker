@@ -2,3 +2,11 @@ parameters:
   formmaker.view_types:
       - Default
       - Test
+  formmaker.attributes.fields:
+      text:      [label, required, description, css, default_value, validation]
+      textarea:  [label, required, description, css]
+      checkbox:  [label, required, description, css, default_checked]
+      radio:     [label, required, description, css, options]
+      separator: [label]
+      file:      [label, required, description, css]
+      select:    [label, required, description, css, options]

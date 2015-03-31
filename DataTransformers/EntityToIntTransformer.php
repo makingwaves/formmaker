@@ -19,7 +19,6 @@ class EntityToIntTransformer implements DataTransformerInterface
 
     private $entity_repo;
 
-
     /**
      * @param ObjectManager $em
      */
@@ -37,7 +36,8 @@ class EntityToIntTransformer implements DataTransformerInterface
     public function transform($entity)
     {
         if ( $entity === null || !($entity instanceof $this->entity_class )) {
-            throw new TransformationFailedException($this->entity_type.' object must be provided');
+            
+            return null;
         }
 
         return $entity->getId();

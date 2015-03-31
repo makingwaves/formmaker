@@ -11,6 +11,6 @@ class AttribTypeToIntTransformer extends EntityToIntTransformer
         parent::__construct($om);
         $this->setEntityClass('MakingWaves\FormMakerBundle\Entity\FormTypes');
         $this->setEntityRepo('FormMakerBundle:FormTypes');
-        $this->setEntityType('FromType');
+        $this->setEntityType('FormType');
     } // __construct
 } // class AttribTypeToIntTransformer

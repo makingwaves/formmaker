@@ -98,7 +98,7 @@ class FormAttributes
     /**
      * @var \MakingWaves\FormMakerBundle\Entity\FormDefinitions
      *
-     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormDefinitions", inversedBy="attributes", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="MakingWaves\FormMakerBundle\Entity\FormDefinitions", inversedBy="attributes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="definition_id", referencedColumnName="id")
      * })
@@ -107,8 +107,6 @@ class FormAttributes
 
     /**
      * @var ArrayCollection
-     *
-     * ONE TO MANY HEREREER?
      *
      * @ORM\ManyToMany(targetEntity="FormValidators", inversedBy="attributes")
      * @ORM\JoinTable(name="form_attr_valid",
@@ -407,7 +405,7 @@ class FormAttributes
         $this->type = $type;
 
         return $this;
-    }
+    } // setType
 
     /**
      * Get type
@@ -457,7 +455,7 @@ class FormAttributes
 
     /**
      * Get regex
-     *
+     *l
      * @return string
      */
     public function getRegex()
@@ -509,5 +507,19 @@ class FormAttributes
     public function removeOption(\MakingWaves\FormMakerBundle\Entity\FormAttributesOptions $options)
     {
         $this->options->removeElement($options);
+    }
+
+
+    public function setTypeId($id)
+    {
+
+    }
+
+    public function getTypeId()
+    {
+        if ( ! $this->getType() ) {
+            return '69';
+        }
+        return $this->getType()->getId();
     }
 }

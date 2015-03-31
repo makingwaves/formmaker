@@ -181,7 +181,7 @@ class FormDefinitions
     private $viewType;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormAttributes", mappedBy="definition", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="FormAttributes", mappedBy="definition", cascade={"ALL"})
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $attributes;
@@ -197,6 +197,7 @@ class FormDefinitions
     {
         return $this->attributes;
     } // getAttributes
+
 
     /**
      * Set name
@@ -622,6 +623,9 @@ class FormDefinitions
         return $this;
     }
 
+    /**
+     * @param ExecutionContextInterface $context
+     */
     public function validateRecipients(ExecutionContextInterface $context)
     {
         $strRecipients = trim($this->getRecipients());
