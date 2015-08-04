@@ -73,7 +73,7 @@ When adding a new form, FormMaker comes with a several options (not all are requ
 
 * **Form name (required)** - this name will be used for identifying a from on a list.
 * **First page label** (required) - a label which will be displayed on a first page. If you want to have a more than one page, you will define the labels in page separator.
-* **Form CSS class** - just a CSS class that will be added into <form /> tag.
+* **Form CSS class** - just a CSS class that will be added into [form] tag.
 * **I want a confirmation page with the following label** (checkbox and text field) - if checked, confirmation page will be displayed as a last step of a form. More informations can be found under Setting confirmation page.
 * **Receipt page label** (required) - receipt page is always displayed (as a last form step), so it needs a header, which needs to be defined here.
 * **Receipt page intro text** - here you can place the plain text that will display under the receipt header.
@@ -133,7 +133,7 @@ Text attribute is a simple text typed input field. However, it can look differen
 * **Mandatory** - indicates whether field will be required or not
 * **Description**
 * **Default value** - will be placed inside the input field
-* **CSS class** - string placed here will be added as a CSS class to <input /> tag
+* **CSS class** - string placed here will be added as a CSS class to [input] tag
 * **Validation** - you can pick one of possible validation methods
 
 Text attribute filled with data will be rendered on a form page as follows:
@@ -159,7 +159,7 @@ Example regular expression accepts only letters. Putting other characters in suc
 * **Mandatory** - indicates whether field will be required or not. In checkbox context it means that input needs to be selected to proceed.
 * **Description**
 * **Default value** - if checked, input on front will be checked by default
-* **CSS class** - string placed here will be added as a CSS class to <input /> tag
+* **CSS class** - string placed here will be added as a CSS class to [input] tag
 
 Checkbox attribute filled with data will be rendered on a form page as follows:
 
@@ -173,7 +173,7 @@ Checkbox attribute filled with data will be rendered on a form page as follows:
 * **Identifier** - can by used by developers to identify the field
 * **Mandatory** - indicates whether field will be required or not. This setting is useful when there is no default option checked (that's because after any radio is checked, there is no way back to un-check it - except reloading the page of course (smile))
 * **Description**
-* **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of all radio inputs defined in options field
+* **CSS class** - string placed here will be added as a CSS class to [span] tag, which is a parent of all radio inputs defined in options field
 * **Options** - this is most important setting for radio attribute. Here you need to define radio buttons which will be displayed on front. To add new item use Add option button. One of defined here items can be set as default. You can move up/down options by using arrows. Item can be removed by clicking delete icon.
 
 Radio buttons attribute filled with data will be rendered on a form page as follows:
@@ -188,7 +188,7 @@ Radio buttons attribute filled with data will be rendered on a form page as foll
 * **Identifier** - can by used by developers to identify the field
 * **Mandatory** - indicates whether field will be required or not. The point of this setting is that all select list has a default option "- please select -", so mandatory setting makes sure that user chosen correct value.
 * **Description**
-* **CSS class** - string placed here will be added as a CSS class to <span /> tag, which is a parent of select input.
+* **CSS class** - string placed here will be added as a CSS class to [span] tag, which is a parent of select input.
 * **Options** - this is most important setting for select list attribute. Here you need to define options which will be displayed on front.
     * To add new item use **Add option** button
     * One of defined here items can be set as default
@@ -209,7 +209,7 @@ Textarea attribute is a bit simplier than text attribute. It doesn't have valida
 * **Identifier** - can by used by developers to identify the field
 * **Mandatory** - indicates whether field will be required or not
 * **Description**
-* **CSS class** - string placed here will be added as a CSS class to <textarea /> tag
+* **CSS class** - string placed here will be added as a CSS class to [textarea] tag
 
 That's the front result of textarea configured with given data:
 
