@@ -339,7 +339,16 @@ class FormMakerFunctionCollection
             return false;
         }
 
-        $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
+          $email_sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'FormmakerPleaseUseEmailSenderFromForm' );
+        if ($email_sender != null && $email_sender == "enabled") {
+            $fle = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'FormmakerLocationOfEmailAttribute' );
+            $sender = $email_data[$fle[0]][$fle[1]][$fle[2]][$fle[3]];
+            eZLog::write('Uses email_sender ' . $sender . ' from form' ,'formmaker.log');
+        } else {
+            $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
+            eZLog::write('Uses standard email_sender ' . $sender .  ' from settingsfile' ,'formmaker.log');
+        }
+
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
             case 'eZMail':
