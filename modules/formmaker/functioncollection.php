@@ -339,7 +339,16 @@ class FormMakerFunctionCollection
             return false;
         }
 
-        $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
+        $email_sender = eZINI::instance( 'formmaker.ini' )->variable( 'MailSettings', 'FormmakerPleaseUseEmailSenderFromForm' );
+        if ($email_sender != null && $email_sender == "enabled") {
+            $loc = eZINI::instance( 'formmaker.ini' )->variable( 'MailSettings', 'FormmakerLocationOfEmailAttribute' );
+            $sender = $email_data[$loc[0]][$loc[1]][$loc[2]][$loc[3]];
+            eZLog::write('Uses email_sender ' . $sender . ' from form' ,'formmaker.log');
+        } else {
+            $sender = eZINI::instance( 'site.ini' )->variable( 'MailSettings', 'EmailSender' );
+            eZLog::write('Uses standard email_sender ' . $sender .  ' from settingsfile' ,'formmaker.log');
+        }
+
         switch ( $this->ini->variable( 'Mail', 'MailClass' ) )
         {
             case 'eZMail':
@@ -432,17 +441,17 @@ class FormMakerFunctionCollection
 
     /**
      * Method removes form session data
-     */
+    */
     private function removeSessionData()
     {
-        foreach ( $_SESSION['_ezpubllish'] as $key => $value )
+        foreach ( $_SESSION['_ezpublish'] as $key => $value )
         {
             if ( !preg_match( '/^' . formDefinitions::PAGE_SESSION_PREFIX . '/', $key ) )
             {
                 continue;
             }
             // clean up the session
-            unset( $_SESSION[$key] );
+            unset( $_SESSION['_ezpubllish'][$key] );
         }
     }
 
